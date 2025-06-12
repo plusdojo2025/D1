@@ -1,6 +1,9 @@
 package dto;
 
-public class Schedule {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Schedule implements Serializable{
 	private int scheduleId;     //スケジュールID
 	private int teacherId;      //教師ID
 	private int classId;        //授業対象クラスID
@@ -8,11 +11,39 @@ public class Schedule {
 	private String period;      //時限
 	private String content;     //各コマの予定
 	private String type;        //対象種別
-	private int year;           //年度
+	private Date year;           //年度
 	private String semester;    //学期
 	private String memo;        //メモ欄
 	private String day_of_week; //曜日
 	
+	public Schedule(int scheduleId, int teacherId, int classId, String date, String period, String content, String type,
+			Date year, String semester, String memo, String day_of_week) {
+		this.scheduleId = scheduleId;
+		this.teacherId = teacherId;
+		this.classId = classId;
+		this.date = date;
+		this.period = period;
+		this.content = content;
+		this.type = type;
+		this.year = year;
+		this.semester = semester;
+		this.memo = memo;
+		this.day_of_week = day_of_week;
+	}
+	
+	public Schedule() {
+		this.scheduleId = -1;
+		this.teacherId = -1;
+		this.classId = -1;
+		this.date = "";
+		this.period = "";
+		this.content = "";
+		this.type = "";
+		this.year =new Date();
+		this.semester = "";
+		this.memo = "";
+		this.day_of_week = "";
+	}
 	
 	public int getScheduleId() {
 		return scheduleId;
@@ -56,10 +87,10 @@ public class Schedule {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getYear() {
+	public Date getYear() {
 		return year;
 	}
-	public void setYear(int year) {
+	public void setYear(Date year) {
 		this.year = year;
 	}
 	public String getSemester() {
@@ -82,32 +113,5 @@ public class Schedule {
 	}
 	
 	
-	public Schedule(int scheduleId, int teacherId, int classId, String date, String period, String content, String type,
-			int year, String semester, String memo, String day_of_week) {
-		this.scheduleId = scheduleId;
-		this.teacherId = teacherId;
-		this.classId = classId;
-		this.date = date;
-		this.period = period;
-		this.content = content;
-		this.type = type;
-		this.year = year;
-		this.semester = semester;
-		this.memo = memo;
-		this.day_of_week = day_of_week;
-	}
 	
-	public Schedule() {
-		this.scheduleId = -1;
-		this.teacherId = -1;
-		this.classId = -1;
-		this.date = "";
-		this.period = "";
-		this.content = "";
-		this.type = "";
-		this.year = "";
-		this.semester = "";
-		this.memo = "";
-		this.day_of_week = "";
-	}
 }
