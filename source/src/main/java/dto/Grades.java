@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Grades implements Serializable{
-	private int GradesId; 	    // 成績ID
+	private int gradesId; 	    // 成績ID
 	private int studentId; 	    // 生徒ID
 	private int subjectId; 	    // 教科ID
 	private int score;     //　点数
 	private String testType;     //　テスト種別
 	private Date date;     //　日付
 	
-	public Grades(int GradesId,int studentId,int subjectId, 
+	public Grades(int gradesId,int studentId,int subjectId, 
 			int score,String testType,Date date) {
 		
-		this.GradesId = GradesId;
+		this.gradesId = gradesId;
 		this.studentId = studentId;
 		this.subjectId = subjectId;
 		this.score = score;
@@ -25,7 +25,7 @@ public class Grades implements Serializable{
 
 	public Grades() {
 		
-		this.GradesId = -1;
+		this.gradesId = -1;
 		this.studentId = -1;
 		this.subjectId = -1;
 		this.score = -1;
@@ -35,11 +35,11 @@ public class Grades implements Serializable{
 	}
 
 	public int getGradesId() {
-		return GradesId;
+		return gradesId;
 	}
 
 	public void setGradesId(int gradesId) {
-		GradesId = gradesId;
+		this.gradesId = gradesId;
 	}
 
 	public int getStudentId() {
