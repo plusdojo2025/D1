@@ -46,16 +46,17 @@ public class ClassRoomDAO {
 
 			// 結果表をコレクションにコピーする
 			while (rs.next()) { 
-				Class class = new Class(rs.getInt("classId"),
+				ClassRoom classroom = new ClassRoom(rs.getInt("classId"),
                                                  rs.getInt("grade"),
-                                            rs.getString("ClassName"));                                                                                          clList.add(class);
+                                            rs.getString("ClassName")); 
+				csList.add(classroom);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			clList = null;
+			csList = null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			clList = null;
+			csList = null;
 		} finally {
 			// データベースを切断
 			if (conn != null) {
@@ -63,13 +64,13 @@ public class ClassRoomDAO {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					clList = null;
+					csList = null;
 				}
 			}
 		}
 		
 		// 結果を返す
-		return stList;
+		return csList;
 	}
 
 }
