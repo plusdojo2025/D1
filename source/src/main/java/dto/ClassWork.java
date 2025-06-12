@@ -9,14 +9,16 @@ public class ClassWork {
 	private Date date;
 	private String period;
 	private String contents;
+	private int subjectId;
 	
-	public ClassWork(int classWorkId, int teacherId, int classId, Date date, String period, String contents) {
+	public ClassWork(int classWorkId, int teacherId, int classId, Date date, String period, String contents, int subjectId) {
 		this.classWorkId = classWorkId;
 		this.teacherId = teacherId;
 		this.classId = classId;
 		this.date = date;
 		this.period = period;
 		this.contents = contents;
+		this.subjectId = subjectId;
 	}
 	
 	public ClassWork() {
@@ -26,6 +28,7 @@ public class ClassWork {
 		this.date = new Date();
 		this.period = "";
 		this.contents = "";
+		this.subjectId = -1;
 	}
 
 	public int getClassWorkId() {
@@ -74,6 +77,14 @@ public class ClassWork {
 
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+
+	public int getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
 	}
 	
 }

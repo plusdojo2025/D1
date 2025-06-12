@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,36 +14,38 @@
 
 	<main>
 		<!-- 基本情報 -->
-		<div>やまだたろう</div>
-		<div class="field">
-			<div>山田太郎</div>
-			<div>2年</div>
-			<div>1組</div>
-			<div>30番</div>
-		</div>
-		<div class="field">
-			<div>出席率</div>
-			<div>98.8%</div>
-			<div>出席日数</div>
-			<div>89</div>
-			<div>出席すべき日数</div>
-			<div>90</div>
-		</div>
-		<div class="field">
-			<div>提出率</div>
-			<div>88.%</div>
-			<div>提出数</div>
-			<div>15</div>
-			<div>提出すべき課題数</div>
-			<div>17</div>
-		</div>
-		<div class="field">
-			<div>授業外活動</div>
-			<div>休学・停学・復学・退学・留年等</div>
-		</div>
-		<div class="field">
-			<div>サッカー部 県大会8位</div>
-			<div>なし</div>
+		<div class="baseInfo">
+			<div>やまだたろう</div>
+			<div class="field">
+				<div>山田太郎</div>
+				<div>2年</div>
+				<div>1組</div>
+				<div>30番</div>
+			</div>
+			<div class="field">
+				<div>出席率</div>
+				<div>98.8%</div>
+				<div>出席日数</div>
+				<div>89</div>
+				<div>出席すべき日数</div>
+				<div>90</div>
+			</div>
+			<div class="field">
+				<div>提出率</div>
+				<div>88.%</div>
+				<div>提出数</div>
+				<div>15</div>
+				<div>提出すべき課題数</div>
+				<div>17</div>
+			</div>
+			<div class="field">
+				<div>授業外活動</div>
+				<div>休学・停学・復学・退学・留年等</div>
+			</div>
+			<div class="field">
+				<div>サッカー部 県大会8位</div>
+				<div>なし</div>
+			</div>
 		</div>
 
 		<!-- 科目・月選択プルダウン -->
@@ -70,7 +73,9 @@
 			<option value="thirdclass">保健体育</option>
 			<option value="thirdclass">学活</option>
 			<option value="thirdclass">その他</option>
-		</select> <select name="month">
+		</select>
+		
+		<select name="month">
 			<option value="1">1月</option>
 			<option value="2">2月</option>
 			<option value="3">3月</option>
@@ -85,16 +90,73 @@
 			<option value="12">12月</option>
 		</select>
 
-		<div>表示項目選択 <br>
-			<input type="checkbox" name="display" value="出席状況">出席状況
-			<input type="checkbox" name="display" value="提出物状況">提出物状況
-			<input type="checkbox" name="display" value="成績状況">成績状況 
-			<input type="checkbox" name="display" value="授業態度">授業態度 
-			<input type="checkbox" name="display" value="面談記録">面談記録
+		<div id="display">表示項目選択 <br>
+			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked>出席状況</label>
+			<label><input type="checkbox" name="display" value="提出物状況" id="submissionCheck" checked>提出物状況</label>
+			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked>成績状況</label>
+			<label><input type="checkbox" name="display" value="授業態度" id="attitudeCheck" checked>授業態度</label>
+			<label><input type="checkbox" name="display" value="面談記録" id="interviewCheck" checked>面談記録</label>
 		</div>
 		
-		<div>出席状況
+		<div id="attendance">出席状況
+			<span>出席率</span>
+			<span>90.0％</span>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td>曜日</td>
+					<td>時限</td>
+					<td>出席</td>
+					<td>備考</td>
+				</tr>
+				
+			</table>
+		</div>
+		
+		<div id="submission">提出物状況 <br>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="grades">成績状況 <br>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="attitude">授業態度 <br>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="interview">面談記録 <br>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
 		</div>
 	</main>
+	
+	<footer>
+	</footer>
+	
+	<script src="js/info_student.js"></script>
 </body>
 </html>
