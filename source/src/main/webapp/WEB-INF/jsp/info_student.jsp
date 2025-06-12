@@ -7,12 +7,18 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/info_student.css">
 </head>
-<body id="top">
+<body>
 	<header>
 		<!-- ヘッダー挿入箇所 -->
 	</header>
 
 	<main>
+	<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
+		<form >
+			<input type="submit" name="edit" value="編集">
+			<input type="submit" name="back" value="戻る">
+		</form>
+		
 		<!-- 基本情報 -->
 		<div class="baseInfo">
 			<div>やまだたろう</div>
@@ -110,15 +116,32 @@
 					<td>備考</td>
 				</tr>
 				
+				<!-- 繰り返し処理 -->
+				<tr>
+					<td>06/12</td>
+					<td>木</td>
+					<td>1</td>
+					<td>○</td>
+					<td>なし</td>
+				</tr>
 			</table>
 		</div>
 		
-		<div id="submission">提出物状況 <br>
+		<div id="submission">提出物状況
+			<span>提出率</span>
+			<span>50.0％</span>
 			<table>
 				<tr>
-					<td>日付</td>
-					<td></td>
-					<td></td>
+					<td>課題内容</td>
+					<td>提出状況</td>
+					<td>提出日</td>
+				</tr>
+				
+				<!-- 繰り返し処理 -->
+				<tr>
+					<td>ワーク</td>
+					<td>○</td>
+					<td>2025/06/01</td>
 				</tr>
 			</table>
 		</div>
@@ -126,9 +149,16 @@
 		<div id="grades">成績状況 <br>
 			<table>
 				<tr>
-					<td>日付</td>
-					<td></td>
-					<td></td>
+					<td>種別</td>
+					<td>点数</td>
+					<td>平均点</td>
+				</tr>
+				
+				<!-- 繰り返し処理 -->
+				<tr>
+					<td>中間考査</td>
+					<td>88</td>
+					<td>65</td>
 				</tr>
 			</table>
 		</div>
@@ -136,19 +166,50 @@
 		<div id="attitude">授業態度 <br>
 			<table>
 				<tr>
-					<td>日付</td>
-					<td></td>
-					<td></td>
+					<td>授業態度</td>
+					<td>前年度授業態度</td>
+				</tr>
+				<tr>
+					<td>特になし</td>
+					<td>特になし</td>
 				</tr>
 			</table>
 		</div>
 		
-		<div id="interview">面談記録 <br>
+		<div id="interview">
+			面談記録 <br>
 			<table>
 				<tr>
 					<td>日付</td>
-					<td></td>
-					<td></td>
+					<td>曜日</td>
+					<td>内容</td>
+					<td>備考</td>
+				</tr>
+				
+				<!-- 繰り返し処理 -->
+				<tr>
+					<td>05/15</td>
+					<td>木</td>
+					<td>三者面談</td>
+					<td>特になし</td>
+				</tr>
+			</table>
+			
+			前年度面談記録 <br>
+			<table>
+				<tr>
+					<td>日付</td>
+					<td>曜日</td>
+					<td>内容</td>
+					<td>備考</td>
+				</tr>
+				
+				<!-- 繰り返し処理 -->
+				<tr>
+					<td>05/15</td>
+					<td>木</td>
+					<td>進路面談</td>
+					<td>ABC大学希望</td>
 				</tr>
 			</table>
 		</div>
