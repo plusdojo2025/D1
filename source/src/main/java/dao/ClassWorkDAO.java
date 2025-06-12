@@ -32,7 +32,7 @@ public class ClassWorkDAO {
 			String sql = "SELECT * FROM ClassWork "
 					+ "WHERE classWorkId = ? AND teacherId = ? AND classId = ? AND "
 					+ "year(date) like ? AND month(date) like ? date(date) like ? AND "
-					+ "period = ? AND contents = ?;";
+					+ "period = ? AND contents = ? AND subjectId;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -58,6 +58,8 @@ public class ClassWorkDAO {
 				pStmt.setString(8, "%");
 			}
 
+			pStmt.setInt(9, _cw.getSubjectId());
+			
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
 
@@ -66,7 +68,7 @@ public class ClassWorkDAO {
 				Date date = sdFormat.parse(rs.getString("date"));
 
 				ClassWork cw = new ClassWork(rs.getInt("ClassWorkId"), rs.getInt("teacherId"), rs.getInt("classId"), date, 
-						rs.getString("period"), rs.getString("contents"));
+						rs.getString("period"), rs.getString("contents"), rs.getInt("subjectId"));
 				cwList.add(cw);
 			}
 		} catch (SQLException e) {
@@ -108,7 +110,7 @@ public class ClassWorkDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO ClassWork VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO ClassWork VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -131,6 +133,8 @@ public class ClassWorkDAO {
 			} else {
 				pStmt.setString(6, "%");
 			}
+			
+			pStmt.setInt(7, _cw.getSubjectId());
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -169,8 +173,8 @@ public class ClassWorkDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE ClassWork SET ClassWorkId=?, teacherId=?, date=?, studentId=?, "
-					+ "contents=?, remarks=?, subjectId=?;";
+			String sql = "UPDATE ClassWork SET classWorkId=?, teacherId=?, classId=?, date=?, period=?, "
+					+ "contents=?, subjectId=?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -193,6 +197,8 @@ public class ClassWorkDAO {
 			} else {
 				pStmt.setString(6, "%");
 			}
+			
+			pStmt.setInt(7, _cw.getSubjectId());
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
