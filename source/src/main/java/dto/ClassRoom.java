@@ -1,18 +1,18 @@
 package dto;
 
-public class Class {
+public class ClassRoom {
 	private int classId;                 /*クラスID*/
 	private int grade;             /*学年*/       
 	private String className;          /*クラス名*/
 	
-	public Class(int classId, int grade, String className) {
+	public ClassRoom(int classId, int grade, String className) {
 		this.classId = classId;
 		this.grade = grade;
 		this.className = className;
 		
 	}
 	
-	public Class() {
+	public ClassRoom() {
 		this.classId = -1;
 		this.grade = -1;
 		this.className = "";

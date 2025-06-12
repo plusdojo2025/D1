@@ -11,7 +11,7 @@ import java.util.List;
 import dto.Students;
 
 public class StudentsDAO {
-	// 引数students指定された項目で検索して、取得されたデータのリストを返す
+	// 引数st指定された項目で検索して、取得されたデータのリストを返す
 	public List<Students> select(Students st) {
 		Connection conn = null;
 		List<Students> stList = new ArrayList<Students>();
@@ -184,7 +184,7 @@ public class StudentsDAO {
 		return result;
 	}
 	
-	// 引数_stで指定されたレコードを更新し、成功したらtrueを返す
+	// 引数stで指定されたレコードを更新し、成功したらtrueを返す
 	public boolean update(Students st) {
 		Connection conn = null;
 		boolean result = false;
