@@ -24,56 +24,56 @@ public class AttendanceRecordsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords "
 					+ "WHERE recordId = ? AND studentId = ? AND classId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ?"
+					+ "year(date) like ? AND month(date) like ? date(date) like ? AND"
 					+ "period = ? AND subjectId = ? AND "
-					+ "status = ? AND remarks = ?";
-			
+					+ "status = ? AND remarks = ?;";
+
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(_ar.getDate());
-			
+
 			pStmt.setInt(1, _ar.getRecordId());
 			pStmt.setInt(2, _ar.getStudentId());
 			pStmt.setInt(3, _ar.getClassId());
-			pStmt.setInt(4, calendar.get(calendar.YEAR));
-			pStmt.setInt(5, calendar.get(calendar.MONTH));
-			pStmt.setInt(6, calendar.get(calendar.DAY_OF_MONTH));
-			
+			pStmt.setInt(4, calendar.get(Calendar.YEAR));
+			pStmt.setInt(5, calendar.get(Calendar.MONTH));
+			pStmt.setInt(6, calendar.get(Calendar.DAY_OF_MONTH));
+
 			if (_ar.getPeriod() != null) {
 				pStmt.setString(7, _ar.getPeriod());
 			} else {
 				pStmt.setString(7, "%");
 			}
-			
+
 			pStmt.setInt(8, _ar.getSubjectId());
-			
+
 			if (_ar.getStatus() != null) {
 				pStmt.setString(9, _ar.getStatus());
 			} else {
 				pStmt.setString(9, "%");
 			}
-			
+
 			if (_ar.getRemarks() != null) {
 				pStmt.setString(10, _ar.getRemarks());
 			} else {
 				pStmt.setString(10, "%");
 			}
-			
+
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
-			
+
 			while (rs.next()) {
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-	            Date date = sdFormat.parse(rs.getString("date"));
-				
+				Date date = sdFormat.parse(rs.getString("date"));
+
 				AttendanceRecords ar = new AttendanceRecords(rs.getInt("recordId"), rs.getInt("studentId"), rs.getInt("classId"), 
 						date, rs.getString("period"), rs.getInt("subjectId"), rs.getString("status"), rs.getString("remarks"));
 				arList.add(ar);
@@ -85,9 +85,9 @@ public class AttendanceRecordsDAO {
 			e.printStackTrace();
 			arList = null;
 		} catch (ParseException e) {
-            e.printStackTrace();
-            arList = null;
-        } finally {
+			e.printStackTrace();
+			arList = null;
+		} finally {
 			// データベースを切断
 			if (conn != null) {
 				try {
@@ -98,8 +98,237 @@ public class AttendanceRecordsDAO {
 				}
 			}
 		}
-		
+
 		// 結果を返す
 		return arList;
+	}
+
+	// 引数_arで指定されたレコードを登録し、成功したらtrueを返す
+	public boolean insert(AttendanceRecords _ar) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "INSERT INTO AttendanceRecords VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			// SQL文を完成させる
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(_ar.getDate());
+
+			pStmt.setInt(1, _ar.getRecordId());
+			pStmt.setInt(2, _ar.getStudentId());
+			pStmt.setInt(3, _ar.getClassId());
+			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
+			if (_ar.getPeriod() != null) {
+				pStmt.setString(5, _ar.getPeriod());
+			} else {
+				pStmt.setString(5, "%");
+			}
+
+			pStmt.setInt(6, _ar.getSubjectId());
+
+			if (_ar.getStatus() != null) {
+				pStmt.setString(7, _ar.getStatus());
+			} else {
+				pStmt.setString(7, "%");
+			}
+
+			if (_ar.getRemarks() != null) {
+				pStmt.setString(8, _ar.getRemarks());
+			} else {
+				pStmt.setString(8, "%");
+			}
+
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return result;
+	}
+
+	// 引数_arで指定されたレコードを更新し、成功したらtrueを返す
+	public boolean update(AttendanceRecords _ar) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "UPDATE AttendanceRecords SET recordId=?, studentId=?, classId=?,"
+					+ "date=?, period=?, subjectId=?, status=?, remarks=?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			// SQL文を完成させる
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(_ar.getDate());
+
+			pStmt.setInt(1, _ar.getRecordId());
+			pStmt.setInt(2, _ar.getStudentId());
+			pStmt.setInt(3, _ar.getClassId());
+			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
+			if (_ar.getPeriod() != null) {
+				pStmt.setString(5, _ar.getPeriod());
+			} else {
+				pStmt.setString(5, "%");
+			}
+
+			pStmt.setInt(6, _ar.getSubjectId());
+
+			if (_ar.getStatus() != null) {
+				pStmt.setString(7, _ar.getStatus());
+			} else {
+				pStmt.setString(7, "%");
+			}
+
+			if (_ar.getRemarks() != null) {
+				pStmt.setString(8, _ar.getRemarks());
+			} else {
+				pStmt.setString(8, "%");
+			}
+
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return result;
+	}
+
+	// 引数_arで指定された番号のレコードを削除し、成功したらtrueを返す
+	public boolean delete(AttendanceRecords _ar) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "DELETE FROM AttendanceRecords WHERE recordId=?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			// SQL文を完成させる
+			pStmt.setInt(1, _ar.getRecordId());
+
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return result;
+	}
+
+	// 引数recordIdで指定された番号のレコードを削除し、成功したらtrueを返す
+	public boolean delete(int recordId) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "DELETE FROM AttendanceRecords WHERE recordId=?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			// SQL文を完成させる
+			pStmt.setInt(1, recordId);
+
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return result;
 	}
 }
