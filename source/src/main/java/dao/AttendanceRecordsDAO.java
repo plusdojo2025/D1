@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import dto.AttendanceRecords;
 
@@ -27,15 +31,51 @@ public class AttendanceRecordsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords "
 					+ "WHERE recordId = ? AND studentId = ? AND classId = ? AND "
-					+ "select * from smp where year(date) like ? AND month(date) like ? date(date) like ?"
+					+ "year(date) like ? AND month(date) like ? date(date) like ?"
 					+ "period = ? AND subjectId = ? AND "
 					+ "status = ? AND remarks = ?";
 			
 			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(_ar.getDate());
+			
+			pStmt.setInt(1, _ar.getRecordId());
+			pStmt.setInt(2, _ar.getStudentId());
+			pStmt.setInt(3, _ar.getClassId());
+			pStmt.setInt(4, calendar.get(calendar.YEAR));
+			pStmt.setInt(5, calendar.get(calendar.MONTH));
+			pStmt.setInt(6, calendar.get(calendar.DAY_OF_MONTH));
+			
+			if (_ar.getPeriod() != null) {
+				pStmt.setString(7, _ar.getPeriod());
+			} else {
+				pStmt.setString(7, "%");
+			}
+			
+			pStmt.setInt(8, _ar.getSubjectId());
+			
+			if (_ar.getStatus() != null) {
+				pStmt.setString(9, _ar.getStatus());
+			} else {
+				pStmt.setString(9, "%");
+			}
+			
+			if (_ar.getRemarks() != null) {
+				pStmt.setString(10, _ar.getRemarks());
+			} else {
+				pStmt.setString(10, "%");
+			}
+			
+			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
 			
 			while (rs.next()) {
-				AttendanceRecords ar = new AttendanceRecords();
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+	            Date date = sdFormat.parse(rs.getString("date"));
+				
+				AttendanceRecords ar = new AttendanceRecords(rs.getInt("recordId"), rs.getInt("studentId"), rs.getInt("classId"), 
+						date, rs.getString("period"), rs.getInt("subjectId"), rs.getString("status"), rs.getString("remarks"));
 				arList.add(ar);
 			}
 		} catch (SQLException e) {
@@ -44,7 +84,10 @@ public class AttendanceRecordsDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			arList = null;
-		} finally {
+		} catch (ParseException e) {
+            e.printStackTrace();
+            arList = null;
+        } finally {
 			// データベースを切断
 			if (conn != null) {
 				try {
