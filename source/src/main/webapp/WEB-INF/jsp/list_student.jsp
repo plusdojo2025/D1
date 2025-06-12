@@ -93,46 +93,35 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>
-                            <p>1日</p>
-                        </td>
-
-                        <td>
-                            <p>2日</p>
-                        </td>
-
-                        <td>
-                            <p>3日</p>
-                        </td>
+                        <c:forEach var="e" items="${studentList}">
+                        	<td>
+                            	${e.data}
+                        	</td>
+                        </c:forEach>
                     </tr>
 
-                    <tr>
-                        <td>
-                            <p>出席番号</p>
-                        </td>
+					<tr>
+						<td>
+							<p>出席番号</p>
+						</td>
 
-                        <td>
-                            <p>氏名</p>
-                        </td>
+						<td>
+							<p>氏名</p>
+						</td>
 
-                        <td>
-                            <p>ふりがな</p>
-                        </td>
+						<td>
+							<p>ふりがな</p>
+						</td>
 
-                        <td>
-                            <p>1限</p>
-                        </td>
+						<c:forEach var="e" items="${studentList}">
+							<td>${e.period}限</td>
+						</c:forEach>
+					</tr>
 
-                        <td>
-                            <p>3限</p>
-                        </td>
-
-                        <td>
-                            <p>5限</p>
-                        </td>
-                    </tr>
-
-                    <tr>
+					<tr>
+						<c:forEach var="e" items="${studentList}">
+							<td>${e.studentNum}限</td>
+						</c:forEach>
                         <td>
                             <p>1</p>
                         </td>
