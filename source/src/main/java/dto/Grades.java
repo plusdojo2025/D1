@@ -22,6 +22,17 @@ public class Grades implements Serializable{
 		this.date = date;
 		
 	}
+	
+	public Grades(int studentId,int subjectId) {
+		
+		this.gradesId = -1;
+		this.studentId = studentId;
+		this.subjectId = subjectId;
+		this.score = -1;
+		this.testType = "";
+		this.date = null;
+		
+	}
 
 	public Grades() {
 		

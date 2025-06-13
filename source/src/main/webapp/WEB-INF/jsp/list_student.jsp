@@ -88,17 +88,15 @@
 
             <div id="attendance">
                 <p>出席状況</p>
-                <table border="1">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <c:forEach var="e" items="${studentList}">
-                        	<td>
-                            	${e.data}
-                        	</td>
-                        </c:forEach>
-                    </tr>
+				<table border="1">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<c:forEach var="e" items="${attendanceList}">
+							<td>${e.date}</td>
+						</c:forEach>
+					</tr>
 
 					<tr>
 						<td>
@@ -113,41 +111,27 @@
 							<p>ふりがな</p>
 						</td>
 
-						<c:forEach var="e" items="${studentList}">
+						<c:forEach var="e" items="${attendanceList}">
 							<td>${e.period}限</td>
 						</c:forEach>
 					</tr>
 
-					<tr>
-						<c:forEach var="e" items="${studentList}">
-							<td>${e.studentNum}限</td>
-						</c:forEach>
-                        <td>
-                            <p>1</p>
-                        </td>
 
-                        <td>
-                            <p>相沢</p>
-                        </td>
+					<c:forEach var="e" items="${studentList}">
+						<tr>
+							<td>${e.studentNum}</td>
+							<td>${e.name}</td>
+							<td>${e.nameRuby}</td>
+							<c:forEach var="a" items="${attendanceList}">
+								<c:if test="${e.studentId == a.studentId}">
+									<td>${a.status}</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</c:forEach>
 
-                        <td>
-                            <p>あいざわ</p>
-                        </td>
-
-                        <td>
-                            <p>◯</p>
-                        </td>
-
-                        <td>
-                            <p>◯</p>
-                        </td>
-
-                        <td>
-                            <p>公</p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+				</table>
+			</div>
 
             <div id="submission">
                 <span>
@@ -209,52 +193,31 @@
                             <p>出席番号</p>
                         </td>
 
-                        <td>
-                            <p>氏名</p>
-                        </td>
+						<td>
+							<p>氏名</p>
+						</td>
 
-                        <td>
-                            <p>ふりがな</p>
-                        </td>
+						<td>
+							<p>ふりがな</p>
+						</td>
 
-                        <td>
-                            <p>1</p>
-                        </td>
-
-                        <td>
-                            <p>2</p>
-                        </td>
-
-                        <td>
-                            <p>3</p>
-                        </td>
+						<c:forEach var="e" items="${assignmentsList}">
+							<td>${e.content}</td>
+						</c:forEach>
                     </tr>
 
-                    <tr>
-                        <td>
-                            <p>1</p>
-                        </td>
-
-                        <td>
-                            <p>相沢</p>
-                        </td>
-
-                        <td>
-                            <p>あいざわ</p>
-                        </td>
-
-                        <td>
-                            <p>◯</p>
-                        </td>
-
-                        <td>
-                            <p>✕</p>
-                        </td>
-
-                        <td>
-                            <p>◯</p>
-                        </td>
-                    </tr>
+					<c:forEach var="e" items="${studentList}">
+						<tr>
+							<td>${e.studentNum}</td>
+							<td>${e.name}</td>
+							<td>${e.nameRuby}</td>
+							<c:forEach var="a" items="${assignmentsList}">
+								<c:if test="${e.studentId == a.studentId}">
+									<td>${a.submissionStatus}</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</c:forEach>
                 </table>
             </div>
 
@@ -271,17 +234,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>
-                            <p>1学期中間</p>
-                        </td>
-
-                        <td>
-                            <p>1学期期末</p>
-                        </td>
-
-                        <td>
-                            <p>小テスト</p>
-                        </td>
+                        <c:forEach var="e" items="${gradesList}">
+							<td>${e.testType}</td>
+						</c:forEach>
                     </tr>
 
                     <tr>
