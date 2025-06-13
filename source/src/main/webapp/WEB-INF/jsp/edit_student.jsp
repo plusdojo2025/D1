@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +13,13 @@
 	</header>
 
 	<main>
+	<form method="post" action="?">
+	
 		<!-- 基本情報 -->
 		<div class="baseInfo">
-			<div>やまだたろう</div>
+			<input type="text" name="">やまだたろう
 			<div class="field">
-				<div>山田太郎</div>
+				<input type="text" name="name">山田太郎
 				<div>2年</div>
 				<div>1組</div>
 				<div>30番</div>
@@ -42,8 +45,8 @@
 				<div>休学・停学・復学・退学・留年等</div>
 			</div>
 			<div class="field">
-				<div>サッカー部 県大会8位</div>
-				<div>なし</div>
+				<input type="text" name="extracurricularActivities">サッカー部 県大会8位
+				<input type="text" name="enrollmentStatus">なし
 			</div>
 		</div>
 
@@ -111,11 +114,11 @@
 				
 				<!-- 繰り返し処理 -->
 				<tr>
-					<td>06/12</td>
-					<td>木</td>
-					<td>1</td>
-					<td>○</td>
-					<td>なし</td>
+					<td><input type="hidden" name="recordId"><input type="text" name="date"></td>
+					<td><input type="text" name="week"></td>
+					<td><input type="text" name="period"></td>
+					<td><input type="text" name="status"></td>
+					<td><input type="text" name="remarks"></td>
 				</tr>
 			</table>
 		</div>
@@ -132,9 +135,9 @@
 				
 				<!-- 繰り返し処理 -->
 				<tr>
-					<td>ワーク</td>
-					<td>○</td>
-					<td>2025/06/01</td>
+					<td><input type="hidden" name="assignmentId"><input type="text" name="content"></td>
+					<td><input type="text" name="submissionStatus"></td>
+					<td><input type="text" name="submissionDate"></td>
 				</tr>
 			</table>
 		</div>
@@ -206,6 +209,7 @@
 				</tr>
 			</table>
 		</div>
+		</form>
 	</main>
 	
 	<footer>

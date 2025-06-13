@@ -14,9 +14,10 @@
 
 	<main>
 	<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
-		<form >
-			<input type="submit" name="edit" value="編集">
-			<input type="submit" name="back" value="戻る">
+		<form method="get" action="?">
+			<input type="hidden" name="number" value="${studentId}}">
+			<input type="submit" name="edit" value="編集" formaction='/D1/EditStudentServlet'>
+			<input type="submit" name="back" value="戻る" formaction='/D1/ListStudentServlet'>
 		</form>
 		
 		<!-- 基本情報 -->

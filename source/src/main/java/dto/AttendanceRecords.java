@@ -1,5 +1,6 @@
 package dto;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class AttendanceRecords {
@@ -12,6 +13,8 @@ public class AttendanceRecords {
 	private String status;
 	private String remarks;
 	
+	private String week; // 曜日
+	
 	public AttendanceRecords(int recordId, int studentId, int classId, Date date, String period, int subjectId, String status, String remarks) {
 		this.recordId = recordId;
 		this.studentId = studentId;
@@ -21,6 +24,8 @@ public class AttendanceRecords {
 		this.subjectId = subjectId;
 		this.status = status;
 		this.remarks = remarks;
+		
+		setWeek(this.date);
 	}
 	
 	public AttendanceRecords() {
@@ -32,6 +37,8 @@ public class AttendanceRecords {
 		this.subjectId = -1;
 		this.status = "";
 		this.remarks = "";
+		
+		setWeek(this.date);
 	}
 
 	public int getRecordId() {
@@ -98,4 +105,19 @@ public class AttendanceRecords {
 		this.remarks = remarks;
 	}
 	
+	public String getWeek() {
+		return week;
+	}
+
+	public void setWeek(String week) {
+		this.week = week;
+	}
+	
+	public void setWeek(Date date) {
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String[] weekDays = {"", "日", "月", "火", "水", "木", "金", "土"};
+        this.setWeek(weekDays[dayOfWeek]);
+	}
 }
