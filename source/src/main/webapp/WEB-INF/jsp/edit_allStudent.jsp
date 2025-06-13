@@ -65,28 +65,28 @@
             <p>表示項目選択</p>
 
             <span>
-                <input type="checkbox" checked value="attendance" id="attendanceCheckbox">
+                <input type="checkbox" checked value="attendance" id="attendanceCheck">
             </span>
             <span>
                 出席状況
             </span>
 
             <span>
-                <input type="checkbox" checked value="submission" id="submissionCheckbox">
+                <input type="checkbox" checked value="submission" id="submissionCheck">
             </span>
             <span>
                 提出物状況
             </span>
 
             <span>
-                <input type="checkbox" checked value="grades" id="gradesCheckbox">
+                <input type="checkbox" checked value="grades" id="gradesCheck">
             </span>
             <span>
                 成績状況
             </span>
 
 
-            <div id="attendanceList">
+            <div id="attendance">
                 <p class="attendance">出席状況</p>
                 <table border="1">
                     <tr>
@@ -178,7 +178,7 @@
                 </table>
             </div>
 
-            <div id="submissionList">
+            <div id="submission">
                 <p class="submission">提出物状況</p>
                 <table border="1">
 
@@ -245,7 +245,7 @@
                 </table>
             </div>
 
-            <div id="gradesList">
+            <div id="grades">
                 <p class="grades">成績状況</p>
                 <table border="1">
                     <tr>
@@ -326,28 +326,7 @@
         </form>
     </main>
 
-    <script>
-        
-            if (attendanceCheckbox.checked) {
-                console.log('出席状況');
-            } else {
-                document.getElementById('attendanceList').innerText = "出席状況";
-            }
-
-            if (submissionCheckbox.checked) {
-                console.log('提出物状況');
-            } else {
-                document.getElementById('submissionList').innerText = "出席状況";
-            }
-
-            if (gradesCheckbox.checked) {
-                console.log('成績状況');
-            } else {
-                document.getElementById('gradesList').innerText = "出席状況";
-            }
-        
-
-    </script>
+    <script src="js/edit_allStudent.js"></script>
 
 
 </body>

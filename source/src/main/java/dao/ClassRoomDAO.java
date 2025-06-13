@@ -25,9 +25,9 @@ public class ClassRoomDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			// SQL文を準備する
-			String sql = "SELECT * FROM Class"
+			String sql = "SELECT * FROM Class "
 					+ "WHERE classId = ? AND grade = ? AND"
-					+ "className = ?";
+					+ " className LIKE ?";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 		
@@ -97,7 +97,7 @@ public class ClassRoomDAO {
 			// SQL文を完成させる			
 			pStmt.setInt(1, cr.getClassId());
 			pStmt.setInt(2, cr.getGrade());
-			pStmt.setString(3, cr.getClassName());
+			//pStmt.setString(3, cr.getClassName());
 			
 
 			if (cr.getClassName() != null) {
@@ -144,21 +144,21 @@ public class ClassRoomDAO {
 					"root", "password");
 			
 			// SQL文を準備する
-			String sql = "UPDATE Class SET classId =?, grade=?,"
-					+ "className=?";
+			String sql = "UPDATE Class SET grade=?,"
+					+ "className=? WHERE classId=?";
+			//String sql = "UPDATE Class SET classId =?, grade=?, className=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
     
-			// SQL文を完成させる
-			pStmt.setInt(1, cr.getClassId());
-			pStmt.setInt(2, cr.getGrade());
-			pStmt.setString(3, cr.getClassName());
-
+			// SQL文を完成させる			
+			pStmt.setInt(1, cr.getGrade());
+			//pStmt.setString(2, cr.getClassName());
+			pStmt.setInt(3, cr.getClassId());
 			
 			
 			if (cr.getClassName() != null) {
-				pStmt.setString(3, cr.getClassName());
+				pStmt.setString(2, cr.getClassName());
 			} else {
-				pStmt.setString(3, "");
+				pStmt.setString(2, "");
 			}
 
 			// SQL文を実行する
@@ -199,7 +199,7 @@ public class ClassRoomDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Students WHERE classId=?;";
+			String sql = "DELETE FROM Class WHERE classId=?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

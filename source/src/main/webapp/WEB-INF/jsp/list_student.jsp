@@ -65,28 +65,28 @@
             <p>表示項目選択</p>
 
             <span>
-                <input type="checkbox" checked value="attendance" id="attendanceCheckbox">
+                <input type="checkbox" checked value="attendance" id="attendanceCheck">
             </span>
             <span>
                 出席状況
             </span>
 
             <span>
-                <input type="checkbox" checked value="submission" id="submissionCheckbox">
+                <input type="checkbox" checked value="submission" id="submissionCheck">
             </span>
             <span>
                 提出物状況
             </span>
 
             <span>
-                <input type="checkbox" checked value="grades" id="gradesCheckbox">
+                <input type="checkbox" checked value="grades" id="gradesCheck">
             </span>
             <span>
                 成績状況
             </span>
 
 
-            <div id="attendanceList">
+            <div id="attendance">
                 <p>出席状況</p>
                 <table border="1">
                     <tr>
@@ -149,7 +149,7 @@
                 </table>
             </div>
 
-            <div id="submissionList">
+            <div id="submission">
                 <span>
                     提出物状況
                 </span>
@@ -258,7 +258,7 @@
                 </table>
             </div>
 
-            <div id="gradesList">
+            <div id="grades">
                 <span>
                     成績状況
                 </span>
@@ -338,33 +338,11 @@
                 </table>
             </div>
 
-
-
-
-
         </form>
     </main>
 
     <script>
-        /*チェックボックスで表示切替*/
-        if (attendanceCheckbox.checked) {
-            console.log('出席状況');
-        } else {
-            document.getElementById('attendanceList').textContent = "出席状況";
-        }
-
-        if (submissionCheckbox.checked) {
-            console.log('提出物状況');
-        } else {
-            document.getElementById('submissionList').textContent = "出席状況";
-        }
-
-        if (gradesCheckbox.checked) {
-            console.log('成績状況');
-        } else {
-            document.getElementById('gradesList').textContent = "出席状況";
-        }
-
+        
         /*モーダル*/
         const submissionbutton = document.getElementById("submissionButton");
         const submissionModal = document.getElementById("submissionModal");
@@ -387,7 +365,7 @@
         closeButton.addEventListener("click", closeModal);
     </script>
 
-
+	<script src="js/list_student.js"></script>
 </body>
 
 </html>
