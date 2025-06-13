@@ -130,11 +130,11 @@ public class StudentsDAO {
 			pStmt.setInt(2, st.getGrade());
 			pStmt.setInt(3, st.getClassId());
             pStmt.setInt(4, st.getStudentNum());
-			pStmt.setString(5, st.getName());
-			pStmt.setString(6, st.getNameRuby());
-			pStmt.setString(7, st.getEnrollmentStatus());
-			pStmt.setString(8, st.getExtracurricularActivities());
-			pStmt.setString(9, st.getAttitude());
+			//pStmt.setString(5, st.getName());
+			//pStmt.setString(6, st.getNameRuby());
+			//pStmt.setString(7, st.getEnrollmentStatus());
+			//pStmt.setString(8, st.getExtracurricularActivities());
+			//pStmt.setString(9, st.getAttitude());
 
 			if (st.getName() != null) {
 				pStmt.setString(5, st.getName());
@@ -199,21 +199,21 @@ public class StudentsDAO {
 					"root", "password");
 			
 			// SQL文を準備する
-			String sql = "UPDATE Students SET studentId=?, grade=?, classId=?,"
+			String sql = "UPDATE Students SET grade=?, classId=?,"
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?,"
-					+ "extracurricularActivities=?, attitude=?";
+					+ "extracurricularActivities=?, attitude=? WHERE studentId=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
     
 			// SQL文を完成させる
-			pStmt.setInt(1, st.getStudentId());
-			pStmt.setInt(2, st.getGrade());
-			pStmt.setInt(3, st.getClassId());
-			pStmt.setInt(4, st.getStudentNum());
-			pStmt.setString(5, st.getName());
-			pStmt.setString(6, st.getNameRuby());
-			pStmt.setString(7, st.getEnrollmentStatus());
-			pStmt.setString(8, st.getExtracurricularActivities());
-			pStmt.setString(9, st.getAttitude());
+			pStmt.setInt(1, st.getGrade());
+			pStmt.setInt(2, st.getClassId());
+			pStmt.setInt(3, st.getStudentNum());
+			pStmt.setString(4, st.getName());
+			//pStmt.setString(5, st.getNameRuby());
+			//pStmt.setString(6, st.getEnrollmentStatus());
+			//pStmt.setString(7, st.getExtracurricularActivities());
+			//pStmt.setString(8, st.getAttitude());
+			pStmt.setInt(9,  st.getStudentId());
 			
 			if (st.getName() != null) {
 				pStmt.setString(5, st.getName());
