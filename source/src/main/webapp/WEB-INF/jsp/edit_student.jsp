@@ -17,9 +17,9 @@
 	
 		<!-- 基本情報 -->
 		<div class="baseInfo">
-			<input type="text" name="">やまだたろう
+			<input type="text" name="nameRuby">
 			<div class="field">
-				<input type="text" name="name">山田太郎
+				<input type="text" name="name">
 				<div>2年</div>
 				<div>1組</div>
 				<div>30番</div>
@@ -45,36 +45,37 @@
 				<div>休学・停学・復学・退学・留年等</div>
 			</div>
 			<div class="field">
-				<input type="text" name="extracurricularActivities">サッカー部 県大会8位
-				<input type="text" name="enrollmentStatus">なし
+				<input type="text" name="extracurricularActivities">
+				<input type="text" name="enrollmentStatus">
 			</div>
 		</div>
 
 		<!-- 科目・月選択プルダウン -->
-		<select name="script">
-			<option value="modernSentence">現代文</option>
-			<option value="classic">古典</option>
-			<option value="mathematicsIA">数学IA</option>
-			<option value="mathematicsⅡB">数学ⅡB</option>
-			<option value="mathematicsⅢC">数学ⅢC</option>
-			<option value="englishExpression">英語表現</option>
-			<option value="communicationEnglish">コミュニケーション英語</option>
-			<option value="physics">物理</option>
-			<option value="chemistry">化学</option>
-			<option value="biology">生物</option>
-			<option value="geology">地学</option>
-			<option value="thirdclass">日本史</option>
-			<option value="thirdclass">世界史</option>
-			<option value="thirdclass">地理</option>
-			<option value="thirdclass">公民</option>
-			<option value="thirdclass">情報</option>
-			<option value="thirdclass">技術</option>
-			<option value="thirdclass">家庭科</option>
-			<option value="thirdclass">美術</option>
-			<option value="thirdclass">書道</option>
-			<option value="thirdclass">保健体育</option>
-			<option value="thirdclass">学活</option>
-			<option value="thirdclass">その他</option>
+		<select name="subject">
+				<option value="modernSentence">現代文</option>
+				<option value="classic">古典</option>
+				<option value="mathematicsIA">数学IA</option>
+				<option value="mathematicsⅡB">数学ⅡB</option>
+				<option value="mathematicsⅢC">数学ⅢC</option>
+				<option value="englishExpression">英語表現</option>
+				<option value="communicationEnglish">コミュニケーション英語</option>
+				<option value="physics">物理</option>
+				<option value="chemistry">化学</option>
+				<option value="biology">生物</option>
+				<option value="geology">地学</option>
+				<option value="japaneseHistory">日本史</option>
+				<option value="worldHistory">世界史</option>
+				<option value="geography">地理</option>
+				<option value="citizens">公民</option>
+				<option value="information">情報</option>
+				<option value="technology">技術</option>
+				<option value="homeEconomics">家庭科</option>
+				<option value="art">美術</option>
+				<option value="calligraphy">書道</option>
+				<option value="physicalEducation">保健体育</option>
+				<option value="music">音楽</option>
+				<option value="academicActivities">学活</option>
+				<option value="others">その他</option>
 		</select>
 		
 		<select name="month">
@@ -152,9 +153,9 @@
 				
 				<!-- 繰り返し処理 -->
 				<tr>
-					<td>中間考査</td>
-					<td>88</td>
-					<td>65</td>
+					<td><input type="text" name="testType"></td>
+					<td><input type="text" name="score"></td>
+					<td><input type="text" name="average"></td>
 				</tr>
 			</table>
 		</div>
@@ -166,8 +167,8 @@
 					<td>前年度授業態度</td>
 				</tr>
 				<tr>
-					<td>特になし</td>
-					<td>特になし</td>
+					<td><input type="text" name="attitude"></td>
+					<td><input type="text" name="lastAttitude"></td>
 				</tr>
 			</table>
 		</div>
@@ -184,10 +185,10 @@
 				
 				<!-- 繰り返し処理 -->
 				<tr>
-					<td>05/15</td>
-					<td>木</td>
-					<td>三者面談</td>
-					<td>特になし</td>
+					<td><input type="hidden" name="interviewId"><input type="text" name="date"></td>
+					<td></td>
+					<td><input type="text" name="contents"></td>
+					<td><input type="text" name="remarks"></td>
 				</tr>
 			</table>
 			

@@ -1,4 +1,5 @@
 'use strict'
+
 // チェックボックスのエレメントを取得
 let attendanceCheck = document.getElementById('attendanceCheck');
 let submissionCheck = document.getElementById('submissionCheck');
@@ -52,3 +53,15 @@ function changeDisplay(event) {
 		element.style.display = 'none';
 	}
 };
+
+  xhr = new XMLHttpRequest();
+
+  // サーバからのデータ受信を行った際の動作
+  xhr.onload = function (e) {
+  };
+
+// 計算ボタンを押した際の動作
+function subjectChange() {
+	window.location.href = '/D1/InfoStudentServlet';
+}
+
