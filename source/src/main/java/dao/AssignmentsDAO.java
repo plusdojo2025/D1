@@ -184,7 +184,6 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET assignmentId=?, studentId=?, subjectId=?, content=?,"
 			String sql = "UPDATE Assignments SET assignmentId=?, studentId=?, subjectId=?,"
 					+ "submissionStatus=?, content=?, createdDate=?, submissionDate;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
