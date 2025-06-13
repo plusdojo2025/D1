@@ -14,8 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
+import dao.ClassRoomDAO;
+import dao.StudentsDAO;
+import dao.SubjectDAO;
+import dto.Assignments;
 import dto.AttendanceRecords;
+import dto.ClassRoom;
+import dto.Students;
+import dto.Subject;
 
 /**
  * Servlet implementation class ListStudentServlet
@@ -74,9 +82,9 @@ public class ListStudentServlet extends HttpServlet {
 				int subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
 				String subjectName = request.getParameter("subjectName");  //教科
 				String period = request.getParameter("period");            //時限
-				String studentNum = request.getParameter("studentNum");    //出席番号
-				String name = request.getParameter("name");                //氏名
-				String nameRuby = request.getParameter("nameRuby");        //ふりがな
+				//String studentNum = request.getParameter("studentNum");    //出席番号
+				//String name = request.getParameter("name");                //氏名
+				//String nameRuby = request.getParameter("nameRuby");        //ふりがな
 				String status = request.getParameter("status");            //出欠
 				String content = request.getParameter("content");          //提出内容
 				String submissionStatus = request.getParameter("submissionStatus");  //提出状況
@@ -86,12 +94,33 @@ public class ListStudentServlet extends HttpServlet {
 				
 				// 検索処理を行う
 				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
-				List<AttendanceRecords> List = aDao.select(new AttendanceRecords
+				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
 						(0, studentId, classId, date, period, subjectId, status, remarks));
 
 				// 検索結果をリクエストスコープに格納する
-				request.setAttribute("cardList", List);
+				request.setAttribute("List", attendanceList);
+				
+				studentId = Integer.parseInt(request.getParameter("studentNum"));    //出席番号
+				classId = Integer.parseInt(request.getParameter("classId"));      //クラス
+				subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
+				
+				StudentsDAO studentDao = new StudentsDAO();
+				List<Students> studentList = studentDao.select(new Students(studentId));
+				request.setAttribute("studentList", studentList);
+				
+				ClassRoomDAO classDao = new ClassRoomDAO();
+				List<ClassRoom> classList = classDao.select(new ClassRoom(0,grade,className));
+				request.setAttribute("classList", classList);
+				
+				SubjectDAO subjectDao = new SubjectDAO();
+				List<Subject> subjectList = subjectDao.select(new Subject(0,subjectName));
+				request.setAttribute("subjectList", subjectList);
 
+				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+				List<Assignments> assignmentsList = assignmentsDao.select(new Assignments(studentId,subjectId));
+				request.setAttribute("assignmentsList", assignmentsList);
+				
+				
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 				dispatcher.forward(request, response);
