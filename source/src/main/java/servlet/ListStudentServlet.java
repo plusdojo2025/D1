@@ -73,22 +73,22 @@ public class ListStudentServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				int grade = 1; //学年
-				int studentId = Integer.parseInt(request.getParameter("studentNum"));    //出席番号
+				int grade = Integer.parseInt(request.getParameter("grade"));;          //学年
+				int studentId = Integer.parseInt(request.getParameter("studentNum"));  //出席番号
 				int classId = Integer.parseInt(request.getParameter("classId"));       //クラス
-				String className = "1";      //クラス
-				int subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
-				String subjectName = request.getParameter("subjectName");  //教科
-				String period = request.getParameter("period");            //時限
-				//String studentNum = request.getParameter("studentNum");    //出席番号
-				//String name = request.getParameter("name");                //氏名
-				//String nameRuby = request.getParameter("nameRuby");        //ふりがな
-				String status = request.getParameter("status");            //出欠
-				//String content = request.getParameter("content");          //提出内容
+				String className =request.getParameter("className");                   //クラス
+				int subjectId = Integer.parseInt(request.getParameter("subjectId"));   //教科Id
+				String subjectName = request.getParameter("subjectName");              //教科
+				String period = request.getParameter("period");                        //時限
+				//String studentNum = request.getParameter("studentNum");              //出席番号
+				//String name = request.getParameter("name");                          //氏名
+				//String nameRuby = request.getParameter("nameRuby");                  //ふりがな
+				String status = request.getParameter("status");                        //出欠
+				//String content = request.getParameter("content");                    //提出内容
 				//String submissionStatus = request.getParameter("submissionStatus");  //提出状況
-				//String testType = request.getParameter("testType");        //テスト種別
-				//int score = Integer.parseInt(request.getParameter("score"));              //点数
-				String remarks = request.getParameter("remarks");              //備考
+				//String testType = request.getParameter("testType");                  //テスト種別
+				//int score = Integer.parseInt(request.getParameter("score"));         //点数
+				String remarks = request.getParameter("remarks");                      //備考
 				
 				// 検索処理を行う
 				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<% int i = 0; %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,7 +14,7 @@
     <header></header>
 
     <main>
-        <form action="EditAllStudentServlet.java">
+        <form action="EditAllStudentServlet.java" method ="POST" id="list_student_form">
 
             <select name="grede">
                 <option value="firstGrade" >1年</option>
@@ -263,33 +264,26 @@
                         <td>
                             <p>点数</p>
                         </td>
-                    </tr>
-
-                    <tr>
                         <td>
-                            <p>1</p>
+                            <p>点数</p>
                         </td>
-
                         <td>
-                            <p>相沢</p>
-                        </td>
-
-                        <td>
-                            <p>あいざわ</p>
-                        </td>
-
-                        <td>
-                            80
-                        </td>
-
-                        <td>
-                            76
-                        </td>
-
-                        <td>
-                            60
+                            <p>点数</p>
                         </td>
                     </tr>
+
+                    <c:forEach var="e" items="${studentList}">
+						<tr>
+							<td>${e.studentNum}</td>
+							<td>${e.name}</td>
+							<td>${e.nameRuby}</td>
+							<c:forEach var="a" items="${gradesList}">
+								<c:if test="${e.studentId == a.gradesList}">
+									<td>${a.score}</td>
+								</c:if>
+							</c:forEach>
+						</tr>
+					</c:forEach>
                 </table>
             </div>
 

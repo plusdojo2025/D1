@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/edit_allstudent.css">
+    <link rel="stylesheet" href="edit_allstudent.css">
     <title>項目ごとに編集</title>
 </head>
 
@@ -13,10 +14,10 @@
     <header></header>
 
     <main>
-        <form action="EditAllStudentServlet.java">
+        <form action="EditAllStudentServlet.java" method ="POST" id="edit_allstudent_form">
 
             <select name="grede">
-                <option value="firstGrade" name>1年</option>
+                <option value="firstGrade" >1年</option>
                 <option value="secondGrade">2年</option>
                 <option value="thirdGrade">3年</option>
             </select>
@@ -325,9 +326,7 @@
 
         </form>
     </main>
-
-    <script src="js/edit_allStudent.js"></script>
-
+    <script src="list_student.js"></script>
 
 </body>
 
