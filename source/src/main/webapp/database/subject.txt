@@ -1,0 +1,34 @@
+/*教科データを入れておくsubjectテーブル作成*/
+
+use sample;
+
+create table grades(
+    gradesId int primary key auto_increment,
+    testType varchar(30) not null
+ );
+ 
+ /*名刺データの追加*/
+
+insert into Bc values( 1,　'現代文'　);
+insert into Bc values( 2,　'古典' );
+insert into Bc values( 3,　'数学IA' );
+insert into Bc values( 4,　'数学ⅡB' );
+insert into Bc values( 5,　'数学ⅢC' );
+insert into Bc values( 6,　'英語表現' );
+insert into Bc values( 7,　'物理' );
+insert into Bc values( 8,　'化学' );
+insert into Bc values( 9,　'生物' );
+insert into Bc values( 10,　'地学' );
+insert into Bc values( 11,　'日本史' );
+insert into Bc values( 12,　'世界史' );
+insert into Bc values( 13,　'地理' );
+insert into Bc values( 14,　'公民' );
+insert into Bc values( 15,　'情報' );
+insert into Bc values( 16,　'技術' );
+insert into Bc values( 17,　'家庭科' );
+insert into Bc values( 18,　'美術' );
+insert into Bc values( 19,　'書道' );
+insert into Bc values( 20,　'保健体育' );
+insert into Bc values( 21,　'音楽' );
+insert into Bc values( 22,　'学活' );
+insert into Bc values( 23,　'その他 ' );
