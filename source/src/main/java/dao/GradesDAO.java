@@ -38,10 +38,26 @@ public class GradesDAO {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(gs.getDate());
 
-			pStmt.setInt(1, gs.getGradesId());
-			pStmt.setInt(2, gs.getStudentId());
-			pStmt.setInt(3, gs.getSubjectId());
-			pStmt.setInt(4, gs.getScore());
+			if (gs.getGradesId() != -1) {
+				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (gs.getStudentId() != -1) {
+				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+			} else {
+				pStmt.setString(2, "%");
+			}
+			if (gs.getSubjectId() != -1) {
+				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+			} else {
+				pStmt.setString(3, "%");
+			}
+			if (gs.getScore() != -1) {
+				pStmt.setString(4, "%" + gs.getScore() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
 			if (gs.getTestType() != null) {
 				pStmt.setString(5, "%" + gs.getTestType() + "%");
 			} else {
@@ -116,11 +132,26 @@ public class GradesDAO {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(gs.getDate());
 
-			pStmt.setInt(1, gs.getGradesId());
-			pStmt.setInt(2, gs.getStudentId());
-			pStmt.setInt(3, gs.getSubjectId());
-			pStmt.setInt(4, gs.getScore());
-			
+			if (gs.getGradesId() != -1) {
+				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (gs.getStudentId() != -1) {
+				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+			} else {
+				pStmt.setString(2, "%");
+			}
+			if (gs.getSubjectId() != -1) {
+				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+			} else {
+				pStmt.setString(3, "%");
+			}
+			if (gs.getScore() != -1) {
+				pStmt.setString(4, "%" + gs.getScore() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
 			if (gs.getTestType() != null) {
 				pStmt.setString(5, gs.getTestType());
 			} else {
@@ -175,11 +206,26 @@ public class GradesDAO {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(gs.getDate());
 
-			pStmt.setInt(1, gs.getGradesId());
-			pStmt.setInt(2, gs.getStudentId());
-			pStmt.setInt(3, gs.getSubjectId());
-			pStmt.setInt(4, gs.getScore());
-			
+			if (gs.getGradesId() != -1) {
+				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (gs.getStudentId() != -1) {
+				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+			} else {
+				pStmt.setString(2, "%");
+			}
+			if (gs.getSubjectId() != -1) {
+				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+			} else {
+				pStmt.setString(3, "%");
+			}
+			if (gs.getScore() != -1) {
+				pStmt.setString(4, "%" + gs.getScore() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
 			if (gs.getTestType() != null) {
 				pStmt.setString(5, gs.getTestType());
 			} else {

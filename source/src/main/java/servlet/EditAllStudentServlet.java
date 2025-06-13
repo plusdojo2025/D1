@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
+import dao.GradesDAO;
+import dto.Assignments;
 import dto.AttendanceRecords;
+import dto.Grades;
 
 /**
  * Servlet implementation class EditAllStudentServlet
@@ -41,37 +45,70 @@ public class EditAllStudentServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		Date createdDate=new Date(); ;
+		try {
+			createdDate = DateFormat.getDateInstance().parse(request.getParameter("createdDate"));
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		Date submissionDate=new Date(); ;
+		try {
+			submissionDate = DateFormat.getDateInstance().parse(request.getParameter("submissionDate"));
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 		
 		int grade = Integer.parseInt(request.getParameter("grade"));;          //学年
 		int studentId = Integer.parseInt(request.getParameter("studentNum"));  //出席番号
 		int classId = Integer.parseInt(request.getParameter("classId"));       //クラスId
-		String className =request.getParameter("className");                   //クラス
+		//String className =request.getParameter("className");                   //クラス
 		int subjectId = Integer.parseInt(request.getParameter("subjectId"));   //教科Id
-		String subjectName = request.getParameter("subjectName");              //教科
+		//String subjectName = request.getParameter("subjectName");              //教科
 		String period = request.getParameter("period");                        //時限
-		String studentNum = request.getParameter("studentNum");                //出席番号
-		String name = request.getParameter("name");                            //氏名
-		String nameRuby = request.getParameter("nameRuby");                    //ふりがな
+		//String studentNum = request.getParameter("studentNum");                //出席番号
+		//String name = request.getParameter("name");                            //氏名
+		//String nameRuby = request.getParameter("nameRuby");                    //ふりがな
+		int recordId = Integer.parseInt(request.getParameter("recordId"));   //出欠情報ID
 		String status = request.getParameter("status");                        //出欠
+		int assignmentId = Integer.parseInt(request.getParameter("assignmentId"));   //提出物状況ID
 		String content = request.getParameter("content");                      //提出内容
 		String submissionStatus = request.getParameter("submissionStatus");    //提出状況
+		int gradesId = Integer.parseInt(request.getParameter("gradesId"));           //成績ID
 		String testType = request.getParameter("testType");                    //テスト種別
 		int score = Integer.parseInt(request.getParameter("score"));           //点数
+		String remarks = request.getParameter("remarks");                    //テスト種別
 		
 		
 		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-		if (attendanceRecordsDao.update(new AttendanceRecords(idnumber,company, department, post, name, hiragana, postcode, address, TEL, FAX, mail, remarks))) { // 更新成功
+		if (attendanceRecordsDao.update(new AttendanceRecords(recordId, studentId, classId, date, period, 
+				subjectId, status, remarks))) { // 更新成功
 			System.out.println("更新成功");
 			
-			
 		} else { // 更新失敗
-			System.out.println("更新失敗");
+			System.out.println("出席更新失敗");
 			
 		}
 		
+		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+		if (assignmentsDao.update(new Assignments(assignmentId, studentId, subjectId, 
+				 submissionStatus, content, createdDate, submissionDate))) { // 更新成功
+			System.out.println("更新成功");
+			
+		} else { // 更新失敗
+			System.out.println("提出物更新失敗");
+			
+		}
 		
-		
-		
+		GradesDAO gradesDao = new GradesDAO();
+		if (gradesDao.update(new Grades( gradesId, studentId, subjectId,  score, testType, date))) { // 更新成功
+			System.out.println("更新成功");
+			
+		} else { // 更新失敗
+			System.out.println("テスト更新失敗");
+			
+		}
 		
 		
 		

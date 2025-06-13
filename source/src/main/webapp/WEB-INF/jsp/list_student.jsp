@@ -17,45 +17,45 @@
         <form action="EditAllStudentServlet.java" method ="POST" id="list_student_form">
 
             <select name="grede">
-                <option value="firstGrade" >1年</option>
-                <option value="secondGrade">2年</option>
-                <option value="thirdGrade">3年</option>
+                <option value="1" >1年</option>
+                <option value="2">2年</option>
+                <option value="3">3年</option>
             </select>
 
-            <select name="class">
-                <option value="firstclass">1組</option>
-                <option value="secondclass">2組</option>
-                <option value="thirdclass">3組</option>
-                <option value="thirdclass">4組</option>
-                <option value="thirdclass">5組</option>
-                <option value="thirdclass">6組</option>
+            <select name="className">
+                <option value="1">1組</option>
+                <option value="2">2組</option>
+                <option value="3">3組</option>
+                <option value="4">4組</option>
+                <option value="5">5組</option>
+                <option value="6">6組</option>
             </select>
 
-            <select name="subject">
-                <option value="modernSentence">現代文</option>
-                <option value="classic">古典</option>
-                <option value="mathematicsIA">数学IA</option>
-                <option value="mathematicsⅡB">数学ⅡB</option>
-                <option value="mathematicsⅢC">数学ⅢC</option>
-                <option value="englishExpression">英語表現</option>
-                <option value="communicationEnglish">コミュニケーション英語</option>
-                <option value="physics">物理</option>
-                <option value="chemistry">化学</option>
-                <option value="biology">生物</option>
-                <option value="geology">地学</option>
-                <option value="japaneseHistory">日本史</option>
-                <option value="worldHistory">世界史</option>
-                <option value="geography">地理</option>
-                <option value="citizens">公民</option>
-                <option value="information">情報</option>
-                <option value="technology">技術</option>
-                <option value="homeEconomics">家庭科</option>
-                <option value="art">美術</option>
-                <option value="calligraphy">書道</option>
-                <option value="physicalEducation">保健体育</option>
-                <option value="music">音楽</option>
-                <option value="academicActivities">学活</option>
-                <option value="others">その他</option>
+            <select name="subjectName">
+                <option value="現代文">現代文</option>
+                <option value="古典">古典</option>
+                <option value="数学IA">数学IA</option>
+                <option value="数学ⅡB">数学ⅡB</option>
+                <option value="数学ⅢC">数学ⅢC</option>
+                <option value="英語表現">英語表現</option>
+                <option value="コミュニケーション英語">コミュニケーション英語</option>
+                <option value="物理">物理</option>
+                <option value="化学">化学</option>
+                <option value="生物">生物</option>
+                <option value="地学">地学</option>
+                <option value="日本史">日本史</option>
+                <option value="世界史">世界史</option>
+                <option value="地理">地理</option>
+                <option value="公民">公民</option>
+                <option value="情報">情報</option>
+                <option value="技術">技術</option>
+                <option value="家庭科">家庭科</option>
+                <option value="美術">美術</option>
+                <option value="書道">書道</option>
+                <option value="保健体育">保健体育</option>
+                <option value="音楽">音楽</option>
+                <option value="学活">学活</option>
+                <option value="その他">その他</option>
             </select>
 
             <input type="submit" name="edit" placeholder="編集" id="edit" value="編集">
