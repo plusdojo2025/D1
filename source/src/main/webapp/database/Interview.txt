@@ -1,0 +1,17 @@
+// CREATE
+CREATE TABLE Interview (
+interviewId int auto_increment PRIMARY KEY,
+teacherId int,
+date dateTime,
+studentId int,
+contents varchar(255),
+remarks varchar(255),
+subjectId int
+);
+
+// 仮データ登録
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 1, '進路希望', '京都大学志望', 1);
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 1, '三者面談', '', 1);
+INSERT INTO Interview VALUES (0, 1, '2025-06-01', 2, '進路希望', '早稲田大学志望', 1);
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 2, '三者面談', '', 1);
+INSERT INTO Interview VALUES (0, 1, '2025-06-01', 1, '進路希望', '東京大学志望', 1);

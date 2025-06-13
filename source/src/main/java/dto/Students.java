@@ -24,6 +24,18 @@ public class Students {
         this.attitude = attitude;
 	}
 	
+	public Students(int studentId) {
+		this.studentId = studentId;
+		this.grade = -1;
+		this.classId = -1;
+		this.studentNum = -1;
+		this.name = "";
+		this.nameRuby = "";
+		this.enrollmentStatus = "";
+        this.extracurricularActivities = "";
+        this.attitude = "";
+	}
+	
 	public Students() {
 		this.studentId = -1;
 		this.grade = -1;
