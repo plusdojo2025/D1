@@ -17,11 +17,13 @@ import javax.servlet.http.HttpSession;
 import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
 import dao.ClassRoomDAO;
+import dao.GradesDAO;
 import dao.StudentsDAO;
 import dao.SubjectDAO;
 import dto.Assignments;
 import dto.AttendanceRecords;
 import dto.ClassRoom;
+import dto.Grades;
 import dto.Students;
 import dto.Subject;
 
@@ -71,14 +73,10 @@ public class ListStudentServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				String year = request.getParameter("year");      //年
-				String month = request.getParameter("month");      //月
-				String day = request.getParameter("day");      //日
-				
-				int grade = Integer.parseInt(request.getParameter("grade")); //学年
+				int grade = 1; //学年
 				int studentId = Integer.parseInt(request.getParameter("studentNum"));    //出席番号
-				int classId = Integer.parseInt(request.getParameter("classId"));      //クラス
-				String className = request.getParameter("className");      //クラス
+				int classId = Integer.parseInt(request.getParameter("classId"));       //クラス
+				String className = "1";      //クラス
 				int subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
 				String subjectName = request.getParameter("subjectName");  //教科
 				String period = request.getParameter("period");            //時限
@@ -86,10 +84,10 @@ public class ListStudentServlet extends HttpServlet {
 				//String name = request.getParameter("name");                //氏名
 				//String nameRuby = request.getParameter("nameRuby");        //ふりがな
 				String status = request.getParameter("status");            //出欠
-				String content = request.getParameter("content");          //提出内容
-				String submissionStatus = request.getParameter("submissionStatus");  //提出状況
-				String testType = request.getParameter("testType");        //テスト種別
-				int score = Integer.parseInt(request.getParameter("score"));              //点数
+				//String content = request.getParameter("content");          //提出内容
+				//String submissionStatus = request.getParameter("submissionStatus");  //提出状況
+				//String testType = request.getParameter("testType");        //テスト種別
+				//int score = Integer.parseInt(request.getParameter("score"));              //点数
 				String remarks = request.getParameter("remarks");              //備考
 				
 				// 検索処理を行う
@@ -97,12 +95,13 @@ public class ListStudentServlet extends HttpServlet {
 				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
 						(0, studentId, classId, date, period, subjectId, status, remarks));
 
-				// 検索結果をリクエストスコープに格納する
 				request.setAttribute("List", attendanceList);
 				
 				studentId = Integer.parseInt(request.getParameter("studentNum"));    //出席番号
 				classId = Integer.parseInt(request.getParameter("classId"));      //クラス
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
+				
+				attendanceList.add(null);
 				
 				StudentsDAO studentDao = new StudentsDAO();
 				List<Students> studentList = studentDao.select(new Students(studentId));
@@ -120,6 +119,9 @@ public class ListStudentServlet extends HttpServlet {
 				List<Assignments> assignmentsList = assignmentsDao.select(new Assignments(studentId,subjectId));
 				request.setAttribute("assignmentsList", assignmentsList);
 				
+				GradesDAO gradesDao = new GradesDAO();
+				List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
+				request.setAttribute("gradesList", gradesList);
 				
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
