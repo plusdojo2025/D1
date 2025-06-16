@@ -36,23 +36,23 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
             </select>
             
             <select name="year">
-            	<option value="${yearNow - 5}">${yearNow - 5}</option>
-                <option value="${yearNow - 4}">${yearNow - 4}</option>
-                <option value="${yearNow - 3}">${yearNow - 3}</option>
-                <option value="${yearNow - 2}">${yearNow - 2}</option>
-                <option value="${yearNow - 1}">${yearNow - 1}</option>
-                <option value="${yearNow}" selected>${yearNow}</option>
-                <option value="${yearNow + 1}">${yearNow + 1}</option>
+            	<c:forEach var="e" begin="-5" end="1">
+					<c:choose>
+						<c:when test="${yearNow + e == year}">
+							<option value="${yearNow + e}" selected>${yearNow + e}年</option>
+						</c:when>
+
+						<c:otherwise>
+							<option value="${yearNow + e}">${yearNow + e}年</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
             </select>
             
             <select name="month">
             	<c:forEach var="e" begin="1" end="12">
 					<c:choose>
 						<c:when test="${e == month}">
-							<option value="${e}" selected>${e}月</option>
-						</c:when>
-						
-						<c:when test="${e == monthNow}">
 							<option value="${e}" selected>${e}月</option>
 						</c:when>
 
