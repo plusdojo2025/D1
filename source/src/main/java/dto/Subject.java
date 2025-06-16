@@ -9,7 +9,11 @@ public class Subject implements Serializable {
 	public Subject(int subjectId, String subjectName) {
 		this.subjectId = subjectId;
 		this.subjectName = subjectName;
-		
+	}
+	
+	public Subject(String subjectName) {
+		this.subjectId = -1;
+		this.subjectName = subjectName;
 	}
 
 	public Subject() {

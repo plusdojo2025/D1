@@ -81,62 +81,58 @@ public class EditAllStudentServlet extends HttpServlet {
 		String testType = request.getParameter("testType");                          //テスト種別
 		int score = Integer.parseInt(request.getParameter("score"));                 //点数
 		String remarks = request.getParameter("remarks");                            //テスト種別
-		
-		if (request.getParameter("submit").equals("編集")) {
-			
-			request.setAttribute("grade", grade);
-			request.setAttribute("classId", className);
-			request.setAttribute("grade", year);
-			request.setAttribute("grade", month);
-			request.setAttribute("subjectId", subjectName);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/ListStudentServlet");
-	        dispatcher.forward(request, response);
 
-		}else if (request.getParameter("submit").equals("編集完了")) {
 
-			//classIDを取得
-			ClassRoomDAO classDao = new ClassRoomDAO();
-			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
-			request.setAttribute("classList", classList);
-			
-			//subjectIDを取得
-			SubjectDAO subjectDao = new SubjectDAO();
-			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
-			request.setAttribute("subjectList", subjectList);
-			
-			classId = Integer.parseInt(request.getParameter("classId"));      //クラス
-			subjectId = Integer.parseInt(request.getParameter("subjectId"));  //教科Id
-			
-			
-			//出欠情報を取得
-			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-			if (attendanceRecordsDao.update(new AttendanceRecords(recordId, studentId, classId, date, period, 
-					subjectId, status, remarks))) { // 更新成功
-				System.out.println("更新成功");
-			} else { // 更新失敗
-				System.out.println("出席更新失敗");
-			}
+		//classIDを取得
+		ClassRoomDAO classDao = new ClassRoomDAO();
+		List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+		request.setAttribute("classList", classList);
 
-			//提出物状況を取得
-			AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-			if (assignmentsDao.update(new Assignments(assignmentId, studentId, subjectId, 
-					submissionStatus, content, year, month, submissionDate))) { // 更新成功
-				System.out.println("更新成功");
-			} else { // 更新失敗
-				System.out.println("提出物更新失敗");
-			}
+		//subjectIDを取得
+		SubjectDAO subjectDao = new SubjectDAO();
+		List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+		request.setAttribute("subjectList", subjectList);
 
-			//成績情報を取得
-			GradesDAO gradesDao = new GradesDAO();
-			if (gradesDao.update(new Grades(gradesId, studentId, subjectId, score, testType, year, month))) { // 更新成功
-				System.out.println("更新成功");
-			} else { // 更新失敗
-				System.out.println("テスト更新失敗");
-			}
+		classId = Integer.parseInt(request.getParameter("classId"));      //クラス
+		subjectId = Integer.parseInt(request.getParameter("subjectId"));  //教科Id
+
+
+		//出欠情報を取得
+		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
+		if (attendanceRecordsDao.update(new AttendanceRecords(recordId, studentId, classId, date, period, 
+				subjectId, status, remarks))) { // 更新成功
+			System.out.println("更新成功");
+		} else { // 更新失敗
+			System.out.println("出席更新失敗");
 		}
 
+		//提出物状況を取得
+		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+		if (assignmentsDao.update(new Assignments(assignmentId, studentId, subjectId, 
+				submissionStatus, content, year, month, submissionDate))) { // 更新成功
+			System.out.println("更新成功");
+		} else { // 更新失敗
+			System.out.println("提出物更新失敗");
+		}
+
+		//成績情報を取得
+		GradesDAO gradesDao = new GradesDAO();
+		if (gradesDao.update(new Grades(gradesId, studentId, subjectId, score, testType, year, month))) { // 更新成功
+			System.out.println("更新成功");
+		} else { // 更新失敗
+			System.out.println("テスト更新失敗");
+		}
+
+		request.setAttribute("grade", grade);
+		request.setAttribute("className", className);
+		request.setAttribute("year", year);
+		request.setAttribute("month", month);
+		request.setAttribute("subjectName", subjectName);
 		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/InfoStudentServlet");
+        dispatcher.forward(request, response);
+
+
 		
 		
 		

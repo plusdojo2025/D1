@@ -18,7 +18,7 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
     <header></header>
 
     <main>
-        <form action="EditAllStudentServlet.java" method ="POST" id="list_student_form">
+        <form action="ListStudentServlet.java" method ="POST" id="list_student_form">
 
             <select name="grede">
                 <option value="1"><input type="submit" name="change" placeholder="1年"></option>

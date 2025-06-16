@@ -144,7 +144,7 @@ public class ListStudentServlet extends HttpServlet {
 				//出欠情報を取得
 				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
-						(0, studentId, classId, date, period, subjectId, status, remarks));
+						(-1, studentId, classId, date, period, subjectId, status, remarks));
 				request.setAttribute("List", attendanceList);
 				
 				//提出物状況を取得
@@ -163,10 +163,14 @@ public class ListStudentServlet extends HttpServlet {
 				request.setAttribute("month", month);
 				request.setAttribute("subjectName", subjectName);
 				
+				if(request.getParameter("submit").equals("編集")) {
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_allstudent.jsp");
+					dispatcher.forward(request, response);
+				}else {
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 				dispatcher.forward(request, response);
-				
+				}
 				}
 				
 				
