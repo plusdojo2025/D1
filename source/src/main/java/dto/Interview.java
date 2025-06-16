@@ -12,6 +12,9 @@ public class Interview {
 	private String remarks;
 	private int subjectId;
 	
+	private int year;
+	private int month;
+	private int day;
 	private String week; // 曜日
 	
 	public Interview(int interviewId, int teacherId, Date date, int studentId, String contents, String remarks, int subjectId) {
@@ -23,6 +26,23 @@ public class Interview {
 		this.remarks = remarks;
 		this.subjectId = subjectId;
 		
+		this.year = dateToYear(date);
+		this.month = dateToMonth(date);
+		this.day = dateToDay(date);
+		setWeek(this.date);
+	}
+	
+	public Interview(int interviewId, int teacherId, int year, int month, int day, int studentId, String contents, String remarks, int subjectId) {
+		this.interviewId = interviewId;
+		this.teacherId = teacherId;
+		this.studentId = studentId;
+		this.contents = contents;
+		this.remarks = remarks;
+		this.subjectId = subjectId;
+		
+		this.year = year;
+		this.month = month;
+		this.day = day;
 		setWeek(this.date);
 	}
 	
@@ -108,5 +128,47 @@ public class Interview {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         String[] weekDays = {"", "日", "月", "火", "水", "木", "金", "土"};
         this.setWeek(weekDays[dayOfWeek]);
+	}
+	
+	public int dateToYear(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.YEAR);
+	}
+	
+	public int dateToMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.MONTH);
+	}
+	
+	public int dateToDay(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
 	}
 }

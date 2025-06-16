@@ -43,8 +43,8 @@
 	  	 
 	  <tr>
 		 <td>	
-		    <label for="class-select">クラス<br>
-		     <select name="classId" id="class-select">
+		    <label for="classId-select">クラス<br>
+		     <select name="classId" id="classId-select">
                       <option value="">クラス</option>
                       <option value="1">1組</option>
                       <option value="2">2組</option>

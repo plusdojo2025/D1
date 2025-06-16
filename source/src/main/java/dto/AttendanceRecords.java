@@ -13,6 +13,9 @@ public class AttendanceRecords {
 	private String status;
 	private String remarks;
 	
+	private int year;
+	private int month;
+	private int day;
 	private String week; // 曜日
 	
 	public AttendanceRecords(int recordId, int studentId, int classId, Date date, String period, int subjectId, String status, String remarks) {
@@ -25,6 +28,24 @@ public class AttendanceRecords {
 		this.status = status;
 		this.remarks = remarks;
 		
+		this.setYear(dateToYear(date));
+		this.setMonth(dateToMonth(date));
+		this.setDay(dateToDay(date));
+		setWeek(this.date);
+	}
+	
+	public AttendanceRecords(int recordId, int studentId, int classId, int year, int month, int day, String period, int subjectId, String status, String remarks) {
+		this.recordId = recordId;
+		this.studentId = studentId;
+		this.classId = classId;
+		this.period = period;
+		this.subjectId = subjectId;
+		this.status = status;
+		this.remarks = remarks;
+		
+		this.setYear(year);
+		this.setMonth(month);
+		this.setDay(day);
 		setWeek(this.date);
 	}
 	
@@ -38,6 +59,9 @@ public class AttendanceRecords {
 		this.status = "";
 		this.remarks = "";
 		
+		this.setYear(dateToYear(date));
+		this.setMonth(dateToMonth(date));
+		this.setDay(dateToDay(date));
 		setWeek(this.date);
 	}
 
@@ -119,5 +143,47 @@ public class AttendanceRecords {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         String[] weekDays = {"", "日", "月", "火", "水", "木", "金", "土"};
         this.setWeek(weekDays[dayOfWeek]);
+	}
+	
+	public int dateToYear(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.YEAR);
+	}
+	
+	public int dateToMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.MONTH);
+	}
+	
+	public int dateToDay(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(Calendar.DAY_OF_MONTH);
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
 	}
 }
