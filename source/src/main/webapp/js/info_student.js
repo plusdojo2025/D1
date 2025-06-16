@@ -54,14 +54,17 @@ function changeDisplay(event) {
 	}
 };
 
-  xhr = new XMLHttpRequest();
-
-  // サーバからのデータ受信を行った際の動作
-  xhr.onload = function (e) {
-  };
-
-// 計算ボタンを押した際の動作
+// 教科プルダウンを押した際の動作
 function subjectChange() {
 	window.location.href = '/D1/InfoStudentServlet';
+}
+
+let subject = '${subject}';
+console.log(subject);
+var subjects = document.getElementsByClassName(".subject");
+for (var i = 0; i < subjects.length; i++) {
+	if (subjects[i].value === subject) {
+		subjects[i].setAttribute('selected', 'selected');
+	}
 }
 

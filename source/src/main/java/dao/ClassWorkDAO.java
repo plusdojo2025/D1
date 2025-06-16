@@ -31,7 +31,7 @@ public class ClassWorkDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM ClassWork "
 					+ "WHERE classWorkId = ? AND teacherId = ? AND classId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ? AND "
+					+ "year(date) like ? AND month(date) like ? AND day(date) like ? AND "
 					+ "period = ? AND contents = ? AND subjectId;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);

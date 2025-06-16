@@ -31,7 +31,7 @@ public class AttendanceRecordsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords "
 					+ "WHERE recordId = ? AND studentId = ? AND classId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ? AND"
+					+ "year(date) like ? AND month(date) like ? AND day(date) like ? AND "
 					+ "period = ? AND subjectId = ? AND "
 					+ "status = ? AND remarks = ?;";
 
@@ -102,6 +102,61 @@ public class AttendanceRecordsDAO {
 		// 結果を返す
 		return arList;
 	}
+	
+	public List<AttendanceRecords> select(int studentId) {
+		Connection conn = null;
+		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT * FROM AttendanceRecords WHERE studentId = ?;";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, studentId);
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = sdFormat.parse(rs.getString("date"));
+
+				AttendanceRecords ar = new AttendanceRecords(rs.getInt("recordId"), rs.getInt("studentId"), rs.getInt("classId"), 
+						date, rs.getString("period"), rs.getInt("subjectId"), rs.getString("status"), rs.getString("remarks"));
+				arList.add(ar);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			arList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			arList = null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			arList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					arList = null;
+				}
+			}
+		}
+
+		// 結果を返す
+		return arList;
+	}
 
 	// 引数_arで指定されたレコードを登録し、成功したらtrueを返す
 	public boolean insert(AttendanceRecords _ar) {
@@ -118,36 +173,35 @@ public class AttendanceRecordsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO AttendanceRecords VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO AttendanceRecords VALUES (0, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(_ar.getDate());
 
-			pStmt.setInt(1, _ar.getRecordId());
-			pStmt.setInt(2, _ar.getStudentId());
-			pStmt.setInt(3, _ar.getClassId());
-			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setInt(1, _ar.getStudentId());
+			pStmt.setInt(2, _ar.getClassId());
+			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 			if (_ar.getPeriod() != null) {
-				pStmt.setString(5, _ar.getPeriod());
+				pStmt.setString(4, _ar.getPeriod());
 			} else {
-				pStmt.setString(5, "%");
+				pStmt.setString(4, "%");
 			}
 
-			pStmt.setInt(6, _ar.getSubjectId());
+			pStmt.setInt(5, _ar.getSubjectId());
 
 			if (_ar.getStatus() != null) {
-				pStmt.setString(7, _ar.getStatus());
+				pStmt.setString(6, _ar.getStatus());
 			} else {
-				pStmt.setString(7, "%");
+				pStmt.setString(6, "%");
 			}
 
 			if (_ar.getRemarks() != null) {
-				pStmt.setString(8, _ar.getRemarks());
+				pStmt.setString(7, _ar.getRemarks());
 			} else {
-				pStmt.setString(8, "%");
+				pStmt.setString(7, "%");
 			}
 
 			// SQL文を実行する
@@ -188,39 +242,25 @@ public class AttendanceRecordsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE AttendanceRecords SET recordId=?, studentId=?, classId=?,"
-					+ "date=?, period=?, subjectId=?, status=?, remarks=?;";
+			String sql = "UPDATE AttendanceRecords SET status=?, remarks=? WHERE studentId = ? AND subjectId = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_ar.getDate());
-
-			pStmt.setInt(1, _ar.getRecordId());
-			pStmt.setInt(2, _ar.getStudentId());
-			pStmt.setInt(3, _ar.getClassId());
-			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-
-			if (_ar.getPeriod() != null) {
-				pStmt.setString(5, _ar.getPeriod());
-			} else {
-				pStmt.setString(5, "%");
-			}
-
-			pStmt.setInt(6, _ar.getSubjectId());
-
 			if (_ar.getStatus() != null) {
-				pStmt.setString(7, _ar.getStatus());
+				pStmt.setString(1, _ar.getStatus());
 			} else {
-				pStmt.setString(7, "%");
+				pStmt.setString(1, "%");
 			}
 
 			if (_ar.getRemarks() != null) {
-				pStmt.setString(8, _ar.getRemarks());
+				pStmt.setString(2, _ar.getRemarks());
 			} else {
-				pStmt.setString(8, "%");
+				pStmt.setString(2, "%");
 			}
-
+			
+			pStmt.setInt(3, _ar.getStudentId());
+			pStmt.setInt(4, _ar.getSubjectId());
+			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
 				result = true;

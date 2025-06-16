@@ -31,7 +31,7 @@ public class InterviewDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Interview "
 					+ "WHERE interviewId = ? AND teacherId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ? AND "
+					+ "year(date) like ? AND month(date) like ? AND day(date) like ? AND "
 					+ "studentId = ? AND remarks = ? AND subjectId?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
