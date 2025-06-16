@@ -141,51 +141,41 @@
                 <span>
                     <button id="submissionButton" type="button">課題追加</button>
                     <div id="submissionModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <select name="subject">
-                                <option value="modernSentence">現代文</option>
-                                <option value="classic">古典</option>
-                                <option value="mathematicsIA">数学IA</option>
-                                <option value="mathematicsⅡB">数学ⅡB</option>
-                                <option value="mathematicsⅢC">数学ⅢC</option>
-                                <option value="englishExpression">英語表現</option>
-                                <option value="communicationEnglish">コミュニケーション英語</option>
-                                <option value="physics">物理</option>
-                                <option value="chemistry">化学</option>
-                                <option value="biology">生物</option>
-                                <option value="geology">地学</option>
-                                <option value="japaneseHistory">日本史</option>
-                                <option value="worldHistory">世界史</option>
-                                <option value="geography">地理</option>
-                                <option value="citizens">公民</option>
-                                <option value="information">情報</option>
-                                <option value="technology">技術</option>
-                                <option value="homeEconomics">家庭科</option>
-                                <option value="art">美術</option>
-                                <option value="calligraphy">書道</option>
-                                <option value="physicalEducation">保健体育</option>
-                                <option value="music">音楽</option>
-                                <option value="academicActivities">学活</option>
-                                <option value="others">その他</option>
-                            </select>
-
-                            <span>
-                                課題内容
-                            </span>
-                            <span>
-                                <input type="text" name="submissionAdd">
-                            </span><br>
-
-                            <span>
-                                <button id="return">戻る</button>
-                            </span>
-                            <span>
-                                <input type="submit" value="課題追加" name="add">
-                            </span>
-                        </div>
-                    </div>
-                </span>
+						<div class="modal-content">
+							<span class="close">&times;</span> <select name="subject">
+								<option value="現代文">現代文</option>
+								<option value="古典">古典</option>
+								<option value="数学IA">数学IA</option>
+								<option value="数学ⅡB">数学ⅡB</option>
+								<option value="数学ⅢC">数学ⅢC</option>
+								<option value="英語表現">英語表現</option>
+								<option value="コミュニケーション英語">コミュニケーション英語</option>
+								<option value="物理">物理</option>
+								<option value="化学">化学</option>
+								<option value="生物">生物</option>
+								<option value="地学">地学</option>
+								<option value="日本史">日本史</option>
+								<option value="世界史">世界史</option>
+								<option value="地理">地理</option>
+								<option value="公民">公民</option>
+								<option value="情報">情報</option>
+								<option value="技術">技術</option>
+								<option value="家庭科">家庭科</option>
+								<option value="美術">美術</option>
+								<option value="書道">書道</option>
+								<option value="保健体育">保健体育</option>
+								<option value="音楽">音楽</option>
+								<option value="学活">学活</option>
+								<option value="その他">その他</option>
+							</select> <span> 課題内容 </span> <span> <input type="text"
+								name="submissionAdd">
+							</span><br> <span>
+								<button id="return">戻る</button>
+							</span> <span> <input type="submit" value="課題追加" name="add">
+							</span>
+						</div>
+					</div>
+				</span>
 
                 <table border="1">
 
