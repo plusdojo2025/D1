@@ -64,6 +64,13 @@ public class ListStudentServlet extends HttpServlet {
 					return;
 				}
 				
+				if (request.getParameter("submit").equals("infoStudent")) {
+					
+					//studentID subjectID year month
+					
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/InfoStudentServlet");
+			        dispatcher.forward(request, response);
+				}else {
 				// リクエストパラメータを取得する
 				request.setCharacterEncoding("UTF-8");
 				Date date=new Date(); ;
@@ -129,7 +136,7 @@ public class ListStudentServlet extends HttpServlet {
 				
 				//生徒情報を取得
 				StudentsDAO studentDao = new StudentsDAO();
-				List<Students> studentList = studentDao.select(new Students(studentId));
+				List<Students> studentList = studentDao.select(new Students(classId));
 				request.setAttribute("studentList", studentList);
 				
 				studentId = Integer.parseInt(request.getParameter("studentId"));    //出席番号
@@ -160,7 +167,7 @@ public class ListStudentServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 				dispatcher.forward(request, response);
 				
-				
+				}
 				
 				
 				

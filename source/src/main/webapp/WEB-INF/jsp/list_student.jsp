@@ -161,7 +161,9 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td>${e.name}</td>
+							<td>
+								<input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent">
+							</td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -240,7 +242,7 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td>${e.name}</td>
+							<td><input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -305,7 +307,7 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
                     <c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td>${e.name}</td>
+							<td><input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${gradesList}">
 								<c:if test="${e.studentId == a.gradesList}">
