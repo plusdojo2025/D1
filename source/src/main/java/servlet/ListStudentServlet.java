@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,15 +74,34 @@ public class ListStudentServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				int year = Integer.parseInt(request.getParameter("year"));;                //年
-				int month = Integer.parseInt(request.getParameter("month"));;                //月
+				int year = Integer.parseInt(request.getParameter("year"));;            //年
+				if(year ==0 || year == -1) {
+					year = Calendar.getInstance().get(Calendar.YEAR);;
+				}
+				
+				int month = Integer.parseInt(request.getParameter("month"));;          //月
+				if(month ==0 || month == -1) {
+					month = Calendar.getInstance().get(Calendar.MONTH);;
+				}
 				
 				int grade = Integer.parseInt(request.getParameter("grade"));;          //学年
-				int studentId = Integer.parseInt(request.getParameter("studentNum"));  //出席番号
+				if(grade ==0 || grade == -1) {
+					grade = 1;
+				}
+				
+				int studentId = Integer.parseInt(request.getParameter("studentId"));  //出席番号
 				int classId = Integer.parseInt(request.getParameter("classId"));       //クラス
 				String className =request.getParameter("className");                   //クラス
+				if(className == null || className.isEmpty()) {
+					className = "1";
+				}
+				
 				int subjectId = Integer.parseInt(request.getParameter("subjectId"));   //教科Id
 				String subjectName = request.getParameter("subjectName");              //教科
+				if(subjectName == null || subjectName.isEmpty()) {
+					subjectName = "現代文";
+				}
+				
 				String period = request.getParameter("period");                        //時限
 				//String studentNum = request.getParameter("studentNum");              //出席番号
 				//String name = request.getParameter("name");                          //氏名
@@ -94,33 +114,38 @@ public class ListStudentServlet extends HttpServlet {
 				String remarks = request.getParameter("remarks");                      //備考
 				
 				// 検索処理を行う
-				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
-				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
-						(0, studentId, classId, date, period, subjectId, status, remarks));
-
-				request.setAttribute("List", attendanceList);
+				//classIDを取得
+				ClassRoomDAO classDao = new ClassRoomDAO();
+				List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+				request.setAttribute("classList", classList);
 				
-				studentId = Integer.parseInt(request.getParameter("studentId"));    //出席番号
+				//subjectIDを取得
+				SubjectDAO subjectDao = new SubjectDAO();
+				List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+				request.setAttribute("subjectList", subjectList);
+				
 				classId = Integer.parseInt(request.getParameter("classId"));      //クラス
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
 				
-				
+				//生徒情報を取得
 				StudentsDAO studentDao = new StudentsDAO();
 				List<Students> studentList = studentDao.select(new Students(studentId));
 				request.setAttribute("studentList", studentList);
 				
-				ClassRoomDAO classDao = new ClassRoomDAO();
-				List<ClassRoom> classList = classDao.select(new ClassRoom(0,grade,className));
-				request.setAttribute("classList", classList);
-				
-				SubjectDAO subjectDao = new SubjectDAO();
-				List<Subject> subjectList = subjectDao.select(new Subject(0,subjectName));
-				request.setAttribute("subjectList", subjectList);
+				studentId = Integer.parseInt(request.getParameter("studentId"));    //出席番号
 
+				//出欠情報を取得
+				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
+				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
+						(0, studentId, classId, date, period, subjectId, status, remarks));
+				request.setAttribute("List", attendanceList);
+				
+				//提出物状況を取得
 				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
 				List<Assignments> assignmentsList = assignmentsDao.select(new Assignments(studentId,subjectId));
 				request.setAttribute("assignmentsList", assignmentsList);
 				
+				//成績情報を取得
 				GradesDAO gradesDao = new GradesDAO();
 				List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
 				request.setAttribute("gradesList", gradesList);
