@@ -73,6 +73,9 @@ public class ListStudentServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+				int year = Integer.parseInt(request.getParameter("year"));;                //年
+				int month = Integer.parseInt(request.getParameter("month"));;                //月
+				
 				int grade = Integer.parseInt(request.getParameter("grade"));;          //学年
 				int studentId = Integer.parseInt(request.getParameter("studentNum"));  //出席番号
 				int classId = Integer.parseInt(request.getParameter("classId"));       //クラス
@@ -97,11 +100,10 @@ public class ListStudentServlet extends HttpServlet {
 
 				request.setAttribute("List", attendanceList);
 				
-				studentId = Integer.parseInt(request.getParameter("studentNum"));    //出席番号
+				studentId = Integer.parseInt(request.getParameter("studentId"));    //出席番号
 				classId = Integer.parseInt(request.getParameter("classId"));      //クラス
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));      //教科Id
 				
-				attendanceList.add(null);
 				
 				StudentsDAO studentDao = new StudentsDAO();
 				List<Students> studentList = studentDao.select(new Students(studentId));
@@ -122,6 +124,12 @@ public class ListStudentServlet extends HttpServlet {
 				GradesDAO gradesDao = new GradesDAO();
 				List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
 				request.setAttribute("gradesList", gradesList);
+				
+				request.setAttribute("grade", grade);
+				request.setAttribute("className", className);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("subjectName", subjectName);
 				
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");

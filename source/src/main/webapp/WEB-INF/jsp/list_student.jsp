@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <%@ page import="java.util.Calendar" %>
 <% Calendar cal = Calendar.getInstance(); 
-int year = cal.get(Calendar.YEAR);
-int month = cal.get(Calendar.MONTH) + 1;%>
+int yearNow = cal.get(Calendar.YEAR);
+int monthNow = cal.get(Calendar.MONTH) + 1;%>
 
 <html>
 <head>
@@ -36,19 +36,23 @@ int month = cal.get(Calendar.MONTH) + 1;%>
             </select>
             
             <select name="year">
-            	<option value="${year - 5}">${year - 5}</option>
-                <option value="${year - 4}">${year - 4}</option>
-                <option value="${year - 3}">${year - 3}</option>
-                <option value="${year - 2}">${year - 2}</option>
-                <option value="${year - 1}">${year - 1}</option>
-                <option value="${year}" selected>${year}</option>
-                <option value="${year + 1}">${year + 1}</option>
+            	<option value="${yearNow - 5}">${yearNow - 5}</option>
+                <option value="${yearNow - 4}">${yearNow - 4}</option>
+                <option value="${yearNow - 3}">${yearNow - 3}</option>
+                <option value="${yearNow - 2}">${yearNow - 2}</option>
+                <option value="${yearNow - 1}">${yearNow - 1}</option>
+                <option value="${yearNow}" selected>${yearNow}</option>
+                <option value="${yearNow + 1}">${yearNow + 1}</option>
             </select>
             
             <select name="month">
             	<c:forEach var="e" begin="1" end="12">
 					<c:choose>
 						<c:when test="${e == month}">
+							<option value="${e}" selected>${e}月</option>
+						</c:when>
+						
+						<c:when test="${e == monthNow}">
 							<option value="${e}" selected>${e}月</option>
 						</c:when>
 
