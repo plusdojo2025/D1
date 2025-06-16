@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,72 +15,110 @@ import dto.Schedule;
 public class ScheduleDAO {
 
     // スケジュール一覧（条件検索）を取得する
-    public List<Schedule> select(Schedule schedule) {
-    	Connection conn = null;
-        List<Schedule> scheduleList = new ArrayList<>();
+	public List<Schedule> select(Schedule schedule) {
+	    Connection conn = null;
+	    List<Schedule> scheduleList = new ArrayList<>();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TeachMate?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String sql = "SELECT scheduleId, teacherId, classId, date, period, content, type, year, semester, memo, day_of_week "
-                       + "FROM Schedule "
-                       + "WHERE teacherId LIKE ? AND classId LIKE ? AND date LIKE ? AND period LIKE ? "
-                       + "AND content LIKE ? AND type LIKE ? AND semester LIKE ? AND day_of_week LIKE ? "
-                       + "ORDER BY scheduleId";
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+	                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+	                "root", "password");
 
-            PreparedStatement pStmt = conn.prepareStatement(sql);
+	        String sql = "SELECT scheduleId, teacherId, classId, date, period, content, type, year, semester, memo, day_of_week "
+	                   + "FROM Schedule "
+	                   + "WHERE (scheduleId = ? OR ? = -1) "
+	                   + "AND (teacherId = ? OR ? = -1) "
+	                   + "AND (classId = ? OR ? = -1) "
+	                   + "AND (date = ? OR ? IS NULL) "
+	                   + "AND period LIKE ? "
+	                   + "AND content LIKE ? "
+	                   + "AND type LIKE ? "
+	                   + "AND (year = ? OR ? IS NULL) "
+	                   + "AND semester LIKE ? "
+	                   + "AND day_of_week LIKE ? "
+	                   + "ORDER BY scheduleId";
 
-            // teacherId と classId は int なので、-1なら全件対象、それ以外はその値で検索
-            if(schedule.getTeacherId() != -1) {
-                pStmt.setString(1, String.valueOf(schedule.getTeacherId()));
-            } else {
-                pStmt.setString(1, "%");
-            }
+	        PreparedStatement pStmt = conn.prepareStatement(sql);
 
-            if(schedule.getClassId() != -1) {
-                pStmt.setString(2, String.valueOf(schedule.getClassId()));
-            } else {
-                pStmt.setString(2, "%");
-            }
+	        // ここでパラメータを順番に設定する（計14個）
 
-            pStmt.setString(3, schedule.getDate() != null && !schedule.getDate().isEmpty() ? "%" + schedule.getDate() + "%" : "%");
-            pStmt.setString(4, schedule.getPeriod() != null && !schedule.getPeriod().isEmpty() ? "%" + schedule.getPeriod() + "%" : "%");
-            pStmt.setString(5, schedule.getContent() != null && !schedule.getContent().isEmpty() ? "%" + schedule.getContent() + "%" : "%");
-            pStmt.setString(6, schedule.getType() != null && !schedule.getType().isEmpty() ? "%" + schedule.getType() + "%" : "%");
-            pStmt.setString(7, schedule.getSemester() != null && !schedule.getSemester().isEmpty() ? "%" + schedule.getSemester() + "%" : "%");
-            pStmt.setString(8, schedule.getDay_of_week() != null && !schedule.getDay_of_week().isEmpty() ? "%" + schedule.getDay_of_week() + "%" : "%");
+	        // scheduleId（1,2）
+	        pStmt.setInt(1, schedule.getScheduleId());
+	        pStmt.setInt(2, schedule.getScheduleId());
 
-            ResultSet rs = pStmt.executeQuery();
+	        // teacherId（3,4）
+	        pStmt.setInt(3, schedule.getTeacherId());
+	        pStmt.setInt(4, schedule.getTeacherId());
 
-            while (rs.next()) {
-                Schedule sc = new Schedule(
-                    rs.getInt("scheduleId"),
-                    rs.getInt("teacherId"),
-                    rs.getInt("classId"),
-                    rs.getString("date"),
-                    rs.getString("period"),
-                    rs.getString("content"),
-                    rs.getString("type"),
-                    rs.getDate("year"),
-                    rs.getString("semester"),
-                    rs.getString("memo"),
-                    rs.getString("day_of_week")
-                );
-                scheduleList.add(sc);
-            }
+	        // classId（5,6）
+	        pStmt.setInt(5, schedule.getClassId());
+	        pStmt.setInt(6, schedule.getClassId());
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            scheduleList = null;
-        } finally {
-            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-        }
-        return scheduleList;
-    }
+	        // date（7,8）
+	        if (schedule.getDate() != null) {
+	            Timestamp tsDate = Timestamp.valueOf(schedule.getDate());
+	            pStmt.setTimestamp(7, tsDate);
+	            pStmt.setTimestamp(8, tsDate);
+	        } else {
+	            pStmt.setNull(7, Types.TIMESTAMP);
+	            pStmt.setNull(8, Types.TIMESTAMP);
+	        }
+
+	        // period（9）
+	        pStmt.setString(9, schedule.getPeriod() != null && !schedule.getPeriod().isEmpty() ? "%" + schedule.getPeriod() + "%" : "%");
+
+	        // content（10）
+	        pStmt.setString(10, schedule.getContent() != null && !schedule.getContent().isEmpty() ? "%" + schedule.getContent() + "%" : "%");
+
+	        // type（11）
+	        pStmt.setString(11, schedule.getType() != null && !schedule.getType().isEmpty() ? "%" + schedule.getType() + "%" : "%");
+
+	        // year（12,13）
+	        if (schedule.getYear() != null) {
+	            Timestamp tsYear = Timestamp.valueOf(schedule.getYear());
+	            pStmt.setTimestamp(12, tsYear);
+	            pStmt.setTimestamp(13, tsYear);
+	        } else {
+	            pStmt.setNull(12, Types.TIMESTAMP);
+	            pStmt.setNull(13, Types.TIMESTAMP);
+	        }
+
+	        // semester（14）
+	        pStmt.setString(14, schedule.getSemester() != null && !schedule.getSemester().isEmpty() ? "%" + schedule.getSemester() + "%" : "%");
+
+	        // day_of_week（15）
+	        pStmt.setString(15, schedule.getDay_of_week() != null && !schedule.getDay_of_week().isEmpty() ? "%" + schedule.getDay_of_week() + "%" : "%");
+
+	        ResultSet rs = pStmt.executeQuery();
+
+	        while (rs.next()) {
+	            Schedule sc = new Schedule(
+	                rs.getInt("scheduleId"),
+	                rs.getInt("teacherId"),
+	                rs.getInt("classId"),
+	                rs.getTimestamp("date") != null ? rs.getTimestamp("date").toLocalDateTime() : null,
+	                rs.getString("period"),
+	                rs.getString("content"),
+	                rs.getString("type"),
+	                rs.getTimestamp("year") != null ? rs.getTimestamp("year").toLocalDateTime() : null,
+	                rs.getString("semester"),
+	                rs.getString("memo"),
+	                rs.getString("day_of_week")
+	            );
+	            scheduleList.add(sc);
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	        scheduleList = null;
+	    } finally {
+	        if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+	    }
+	    return scheduleList;
+	}
+
 
     // 新規登録
     public boolean insert(Schedule schedule) {
@@ -87,10 +127,10 @@ public class ScheduleDAO {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TeachMate?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+                    + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+                    "root", "password");
 
             String sql = "INSERT INTO Schedule(scheduleId, teacherId, classId, date, period, content, type, year, semester, memo, day_of_week) "
                        + "VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -98,16 +138,16 @@ public class ScheduleDAO {
 
             pStmt.setInt(1, schedule.getTeacherId());
             pStmt.setInt(2, schedule.getClassId());
-            pStmt.setString(3, schedule.getDate() != null ? schedule.getDate() : "");
+            pStmt.setTimestamp(3, schedule.getDate() != null ? Timestamp.valueOf(schedule.getDate()) : null);
             pStmt.setString(4, schedule.getPeriod() != null ? schedule.getPeriod() : "");
             pStmt.setString(5, schedule.getContent() != null ? schedule.getContent() : "");
             pStmt.setString(6, schedule.getType() != null ? schedule.getType() : "");
-            pStmt.setDate(7, schedule.getYear() != null ? new java.sql.Date(schedule.getYear().getTime()) : null);
+            pStmt.setTimestamp(7, schedule.getYear() != null ? Timestamp.valueOf(schedule.getYear()) : null);
             pStmt.setString(8, schedule.getSemester() != null ? schedule.getSemester() : "");
             pStmt.setString(9, schedule.getMemo() != null ? schedule.getMemo() : "");
             pStmt.setString(10, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : "");
 
-            if(pStmt.executeUpdate() == 1) {
+            if (pStmt.executeUpdate() == 1) {
                 result = true;
             }
 
@@ -126,10 +166,10 @@ public class ScheduleDAO {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TeachMate?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+                    + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+                    "root", "password");
 
             String sql = "UPDATE Schedule SET teacherId=?, classId=?, date=?, period=?, content=?, type=?, year=?, semester=?, memo=?, day_of_week=? "
                        + "WHERE scheduleId=?";
@@ -137,17 +177,17 @@ public class ScheduleDAO {
 
             pStmt.setInt(1, schedule.getTeacherId());
             pStmt.setInt(2, schedule.getClassId());
-            pStmt.setString(3, schedule.getDate() != null ? schedule.getDate() : "");
+            pStmt.setTimestamp(3, schedule.getDate() != null ? Timestamp.valueOf(schedule.getDate()) : null);
             pStmt.setString(4, schedule.getPeriod() != null ? schedule.getPeriod() : "");
             pStmt.setString(5, schedule.getContent() != null ? schedule.getContent() : "");
             pStmt.setString(6, schedule.getType() != null ? schedule.getType() : "");
-            pStmt.setDate(7, schedule.getYear() != null ? new java.sql.Date(schedule.getYear().getTime()) : null);
+            pStmt.setTimestamp(7, schedule.getYear() != null ? Timestamp.valueOf(schedule.getYear()) : null);
             pStmt.setString(8, schedule.getSemester() != null ? schedule.getSemester() : "");
             pStmt.setString(9, schedule.getMemo() != null ? schedule.getMemo() : "");
             pStmt.setString(10, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : "");
             pStmt.setInt(11, schedule.getScheduleId());
 
-            if(pStmt.executeUpdate() == 1) {
+            if (pStmt.executeUpdate() == 1) {
                 result = true;
             }
 
@@ -166,17 +206,17 @@ public class ScheduleDAO {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TeachMate?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+                    + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+                    "root", "password");
 
             String sql = "DELETE FROM Schedule WHERE scheduleId=?";
             PreparedStatement pStmt = conn.prepareStatement(sql);
 
             pStmt.setInt(1, schedule.getScheduleId());
 
-            if(pStmt.executeUpdate() == 1) {
+            if (pStmt.executeUpdate() == 1) {
                 result = true;
             }
 
