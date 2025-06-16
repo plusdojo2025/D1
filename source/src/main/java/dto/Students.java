@@ -1,6 +1,8 @@
 package dto;
 
-public class Students {
+import java.io.Serializable;
+
+public class Students implements Serializable {
 	private int studentId;                     /*学生ID*/
 	private int grade;                         /*学年*/       
 	private int classId;                       /*クラスID*/
