@@ -13,6 +13,13 @@ public class Students implements Serializable {
 	private String extracurricularActivities;  /*授業外活動*/ 
 	private String attitude;                   /*授業態度*/
 
+
+
+
+    //studentIdとclassIdをどちらもオーバーライドする
+	
+	
+	
 	public Students(int studentId, int grade, int classId, int studentNum, 
 			String name, String nameRuby, String enrollmentStatus, String extracurricularActivities, String attitude) {
 		this.studentId = studentId;
@@ -26,10 +33,10 @@ public class Students implements Serializable {
         this.attitude = attitude;
 	}
 	
-	public Students(int studentId) {
+	public Students(int studentId, int classId) {
 		this.studentId = studentId;
 		this.grade = -1;
-		this.classId = -1;
+		this.classId = classId;
 		this.studentNum = -1;
 		this.name = "";
 		this.nameRuby = "";
@@ -38,6 +45,8 @@ public class Students implements Serializable {
         this.attitude = "";
 	}
 	
+	
+	
 	public Students() {
 		this.studentId = -1;
 		this.grade = -1;
@@ -45,11 +54,11 @@ public class Students implements Serializable {
 		this.studentNum = -1;
 		this.name = "";
 		this.nameRuby = "";
-		this.enrollmentStatus = "";
+	    this.enrollmentStatus = "";
         this.extracurricularActivities = "";
         this.attitude = "";
 	}
-
+	
     public int getStudentId() {
 		return studentId;
 	}

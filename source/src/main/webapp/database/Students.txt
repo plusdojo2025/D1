@@ -1,5 +1,5 @@
 /*生徒情報のデータ Studentsテーブル*/
-/*サンプルです*/
+/*テスト用のサンプルです*/
 
 
 create table studentssample_test(
