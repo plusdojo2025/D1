@@ -21,15 +21,15 @@ public class StudentsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			// SQL文を準備する
-			String sql = "SELECT * FROM Students"
-					+ "WHERE studentId = ? AND grade = ? AND"
-					+ "classId = ? AND studentNum = ? AND"
-					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND"
-					+ "extracurricularActivities = ? AND attitude = ?";
+			String sql = "SELECT * FROM studentssample_test "     //変更箇所//
+					+ "WHERE studentId = ? AND grade = ? AND "
+					+ "classId = ? AND studentNum = ? AND "
+					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
+					+ "extracurricularActivities = ? AND attitude = ? ";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 		
@@ -115,14 +115,14 @@ public class StudentsDAO {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 
-			// SQL文を準備する
-			String sql = "INSERT INTO Students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			// SQL文を準備する      変更箇所
+			String sql = "INSERT INTO studentssample_test VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
 			
 			// SQL文を完成させる			
@@ -193,61 +193,63 @@ public class StudentsDAO {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			
-			// SQL文を準備する
-			String sql = "UPDATE Students SET grade=?, classId=?,"
-					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?,"
-					+ "extracurricularActivities=?, attitude=? WHERE studentId=?";
+			// SQL文を準備する　　変更箇所
+			String sql = "UPDATE studentssample_test SET grade=?, classId=?, "
+					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
+					+ "extracurricularActivities=?, attitude=? WHERE studentId=?, ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
-    
+ 
+			//set grade=?  where studentId=?
+			
+			
 			// SQL文を完成させる
 			pStmt.setInt(1, st.getGrade());
 			pStmt.setInt(2, st.getClassId());
 			pStmt.setInt(3, st.getStudentNum());
-			pStmt.setString(4, st.getName());
+			//pStmt.setString(, st.getName());
 			//pStmt.setString(5, st.getNameRuby());
 			//pStmt.setString(6, st.getEnrollmentStatus());
 			//pStmt.setString(7, st.getExtracurricularActivities());
 			//pStmt.setString(8, st.getAttitude());
-			pStmt.setInt(9,  st.getStudentId());
 			
 			if (st.getName() != null) {
-				pStmt.setString(5, st.getName());
+				pStmt.setString(4, st.getName());
+			} else {
+				pStmt.setString(4, "");
+			}
+
+
+			if (st.getNameRuby() != null) {
+				pStmt.setString(5, st.getNameRuby());
 			} else {
 				pStmt.setString(5, "");
 			}
 
 
-			if (st.getNameRuby() != null) {
-				pStmt.setString(6, st.getNameRuby());
+			if (st.getEnrollmentStatus() != null) {
+				pStmt.setString(6, st.getEnrollmentStatus());
 			} else {
 				pStmt.setString(6, "");
 			}
 
 
-			if (st.getEnrollmentStatus() != null) {
-				pStmt.setString(7, st.getEnrollmentStatus());
+			if (st.getExtracurricularActivities() != null) {
+				pStmt.setString(7, st.getExtracurricularActivities());
 			} else {
 				pStmt.setString(7, "");
 			}
 
-
-			if (st.getExtracurricularActivities() != null) {
-				pStmt.setString(8, st.getExtracurricularActivities());
+			if (st.getAttitude() != null) {
+				pStmt.setString(8, st.getAttitude());
 			} else {
 				pStmt.setString(8, "");
 			}
-
-			if (st.getAttitude() != null) {
-				pStmt.setString(9, st.getAttitude());
-			} else {
-				pStmt.setString(9, "");
-			}
-
+			pStmt.setInt(9,  st.getStudentId());
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -281,13 +283,13 @@ public class StudentsDAO {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			// SQL文を準備する
-			String sql = "DELETE FROM Students WHERE studentId=?;";
+			// SQL文を準備する　　　　変更箇所
+			String sql = "DELETE FROM studentssample_test WHERE studentId=? ;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

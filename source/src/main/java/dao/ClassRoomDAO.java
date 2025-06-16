@@ -26,8 +26,8 @@ public class ClassRoomDAO {
 					"root", "password");
 			// SQL文を準備する
 			String sql = "SELECT * FROM Class "
-					+ "WHERE classId = ? AND grade = ? AND"
-					+ " className LIKE ?";
+					+ "WHERE classId = ? AND grade = ? AND "
+					+ " className= ?";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 		
@@ -152,7 +152,6 @@ public class ClassRoomDAO {
 			// SQL文を完成させる			
 			pStmt.setInt(1, cr.getGrade());
 			//pStmt.setString(2, cr.getClassName());
-			pStmt.setInt(3, cr.getClassId());
 			
 			
 			if (cr.getClassName() != null) {
@@ -161,6 +160,8 @@ public class ClassRoomDAO {
 				pStmt.setString(2, "");
 			}
 
+			pStmt.setInt(3, cr.getClassId());
+			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
 				result = true;

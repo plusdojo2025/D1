@@ -198,41 +198,39 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Grades SET gradesId=?, studentId=?, subjectId=?, "
-					+ "score=?, testType=?, date=?, submissionDate;";
+			String sql = "UPDATE Grades SET score=?, testType=? WHERE gradesId=? AND studentId=? AND subjectId=?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(gs.getDate());
 
-			if (gs.getGradesId() != -1) {
-				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+			if (gs.getScore() != -1) {
+				pStmt.setString(1, "%" + gs.getScore() + "%");
 			} else {
 				pStmt.setString(1, "%");
 			}
-			if (gs.getStudentId() != -1) {
-				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+			if (gs.getTestType() != null) {
+				pStmt.setString(2, gs.getTestType());
 			} else {
-				pStmt.setString(2, "%");
+				pStmt.setString(2, "");
 			}
-			if (gs.getSubjectId() != -1) {
-				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+			
+			if (gs.getGradesId() != -1) {
+				pStmt.setString(3, "%" + gs.getGradesId() + "%");
 			} else {
 				pStmt.setString(3, "%");
 			}
-			if (gs.getScore() != -1) {
-				pStmt.setString(4, "%" + gs.getScore() + "%");
+			if (gs.getStudentId() != -1) {
+				pStmt.setString(4, "%" + gs.getStudentId() + "%");
 			} else {
 				pStmt.setString(4, "%");
 			}
-			if (gs.getTestType() != null) {
-				pStmt.setString(5, gs.getTestType());
+			if (gs.getSubjectId() != -1) {
+				pStmt.setString(5, "%" + gs.getSubjectId() + "%");
 			} else {
-				pStmt.setString(5, "");
+				pStmt.setString(5, "%");
 			}
-			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 			
 
 			// SQL文を実行する

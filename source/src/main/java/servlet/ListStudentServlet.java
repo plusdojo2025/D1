@@ -42,7 +42,7 @@ public class ListStudentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
-			response.sendRedirect("/webappAns/LoginServlet");
+			response.sendRedirect("LoginServlet");
 			return;
 		}
 
@@ -59,7 +59,7 @@ public class ListStudentServlet extends HttpServlet {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
 				if (session.getAttribute("id") == null) {
-					response.sendRedirect("/webappAns/LoginServlet");
+					response.sendRedirect("LoginServlet");
 					return;
 				}
 				
