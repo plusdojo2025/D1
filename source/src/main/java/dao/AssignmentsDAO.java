@@ -30,15 +30,14 @@ public class AssignmentsDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Assignments "
-					+ "WHERE assignmentId = ? AND studentId = ? AND content = ? AND submissionStatus like ? "
-					+ "AND content like ? year(createdDate) like ? AND month(createdDate) like ? "
-					+ "date(createdDate) like ? AND year(submissionDate) like ? AND month(submissionDate) like ? "
+					+ "WHERE assignmentId = ? AND studentId = ? AND subjectId = ? AND submissionStatus like ? "
+					+ "AND content = ? year(createdDate) like ? AND month(createdDate) like ? "
+					+ "AND year(submissionDate) like ? AND month(submissionDate) like ? "
 					+ "date(submissionDate) like ? ;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(as.getCreatedDate());
 			calendar.setTime(as.getSubmissionDate());
 
 			if (as.getAssignmentId() != -1) {
@@ -67,12 +66,19 @@ public class AssignmentsDAO {
 				pStmt.setString(5, "%");
 			}
 			
-			pStmt.setInt(6, calendar.get(Calendar.YEAR));
-			pStmt.setInt(7, calendar.get(Calendar.MONTH));
-			pStmt.setInt(8, calendar.get(Calendar.DAY_OF_MONTH));
-			pStmt.setInt(9, calendar.get(Calendar.YEAR));
-			pStmt.setInt(10, calendar.get(Calendar.MONTH));
-			pStmt.setInt(11, calendar.get(Calendar.DAY_OF_MONTH));
+			if (as.getCreatedYear() != -1) {
+				pStmt.setString(6, "%" + as.getCreatedYear() + "%");
+			} else {
+				pStmt.setString(6, "%");
+			}
+			if (as.getCreatedMonth() != -1) {
+				pStmt.setString(7, "%" + as.getCreatedMonth() + "%");
+			} else {
+				pStmt.setString(7, "%");
+			}
+			pStmt.setInt(8, calendar.get(Calendar.YEAR));
+			pStmt.setInt(9, calendar.get(Calendar.MONTH));
+			pStmt.setInt(10, calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
@@ -87,7 +93,8 @@ public class AssignmentsDAO {
 						rs.getInt("subjectId"), 
 						rs.getString("submissionStatus"), 
 						rs.getString("content"),
-						date, 
+						rs.getInt("createdYear"), 
+						rs.getInt("createdMonth"), 
 						date
 						);
 				arList.add(ar);
@@ -137,7 +144,6 @@ public class AssignmentsDAO {
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(as.getCreatedDate());
 			calendar.setTime(as.getSubmissionDate());
 
 			if (as.getAssignmentId() != -1) {
@@ -161,13 +167,15 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(4, "");
 			}
+			
+			pStmt.setString(5, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			
 			if (as.getContent() != null) {
-				pStmt.setString(5, as.getContent());
+				pStmt.setString(6, as.getContent());
 			} else {
-				pStmt.setString(5, "");
+				pStmt.setString(6, "");
 			}
 			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 			pStmt.setString(7, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQL文を実行する
@@ -208,44 +216,44 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET assignmentId=?, studentId=?, subjectId=?,"
-					+ "submissionStatus=?, content=?, createdDate=?, submissionDate;";
+			String sql = "UPDATE Assignments SET submissionStatus=?, content=?, submissionDate=?,"
+					+ "WHERE assignmentId=? AND studentId=? AND subjectId=?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(as.getCreatedDate());
 			calendar.setTime(as.getSubmissionDate());
-
-			if (as.getAssignmentId() != -1) {
-				pStmt.setString(1, "%" + as.getAssignmentId() + "%");
-			} else {
-				pStmt.setString(1, "%");
-			}
-			if (as.getStudentId() != -1) {
-				pStmt.setString(2, "%" + as.getStudentId() + "%");
-			} else {
-				pStmt.setString(2, "%");
-			}
-			if (as.getSubjectId() != -1) {
-				pStmt.setString(3, "%" + as.getSubjectId() + "%");
-			} else {
-				pStmt.setString(3, "%");
-			}
 			
 			if (as.getSubmissionStatus() != null) {
-				pStmt.setString(4, as.getSubmissionStatus());
+				pStmt.setString(1, as.getSubmissionStatus());
 			} else {
-				pStmt.setString(4, "");
-			}
-			if (as.getContent() != null) {
-				pStmt.setString(5, as.getContent());
-			} else {
-				pStmt.setString(5, "");
+				pStmt.setString(1, "");
 			}
 			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-			pStmt.setString(7, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			if (as.getContent() != null) {
+				pStmt.setString(2, as.getContent());
+			} else {
+				pStmt.setString(2, "");
+			}
+			
+			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
+						
+			if (as.getAssignmentId() != -1) {
+				pStmt.setString(4, "%" + as.getAssignmentId() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
+			if (as.getStudentId() != -1) {
+				pStmt.setString(5, "%" + as.getStudentId() + "%");
+			} else {
+				pStmt.setString(5, "%");
+			}
+			if (as.getSubjectId() != -1) {
+				pStmt.setString(6, "%" + as.getSubjectId() + "%");
+			} else {
+				pStmt.setString(6, "%");
+			}
 			
 			
 

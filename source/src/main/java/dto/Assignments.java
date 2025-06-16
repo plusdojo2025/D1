@@ -9,18 +9,20 @@ public class Assignments implements Serializable{
 	private int subjectId; 	    // 教科ID
 	private String submissionStatus;     //　提出状況
 	private String content;     //　内容
-	private Date createdDate;     //　登録日
+	private int createdYear;     //　登録年
+	private int createdMonth;     //　登録月
 	private Date submissionDate;     //　提出日
 	
 	public Assignments(int assignmentId,int studentId,int subjectId, 
-			String submissionStatus,String content,Date createdDate,Date submissionDate) {
+			String submissionStatus,String content,int createdYear,int createdMonth,Date submissionDate) {
 		
 		this.assignmentId = assignmentId;
 		this.studentId = studentId;
 		this.subjectId = subjectId;
 		this.submissionStatus = submissionStatus;
 		this.content = content;
-		this.createdDate = createdDate;
+		this.createdYear = createdYear;
+		this.createdMonth = createdMonth;
 		this.submissionDate = submissionDate;
 		
 	}
@@ -32,7 +34,8 @@ public class Assignments implements Serializable{
 		this.subjectId = subjectId;
 		this.submissionStatus = "";
 		this.content = "";
-		this.createdDate = new Date();
+		this.createdYear = -1;
+		this.createdMonth = -1;
 		this.submissionDate = new Date();
 		
 	}
@@ -44,9 +47,26 @@ public class Assignments implements Serializable{
 		this.subjectId = -1;
 		this.submissionStatus = "";
 		this.content = "";
-		this.createdDate = new Date();
+		this.createdYear = -1;
+		this.createdMonth = -1;
 		this.submissionDate = new Date();
 		
+	}
+
+	public int getCreatedYear() {
+		return createdYear;
+	}
+
+	public void setCreatedYear(int createdYear) {
+		this.createdYear = createdYear;
+	}
+
+	public int getCreatedMonth() {
+		return createdMonth;
+	}
+
+	public void setCreatedMonth(int createdMonth) {
+		this.createdMonth = createdMonth;
 	}
 
 	public int getAssignmentId() {
@@ -87,14 +107,6 @@ public class Assignments implements Serializable{
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
 	}
 
 	public Date getSubmissionDate() {

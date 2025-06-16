@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,35 +29,21 @@ public class ClassWorkDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM ClassWork "
-					+ "WHERE classWorkId = ? AND teacherId = ? AND classId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ? AND "
-					+ "period = ? AND contents = ? AND subjectId;";
+					+ "WHERE year(date) like ? AND month(date) like ? AND "
+					+ "period　like ? AND subjectId = ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_cw.getDate());
-
-			pStmt.setInt(1, _cw.getClassWorkId());
-			pStmt.setInt(2, _cw.getTeacherId());
-			pStmt.setInt(3, _cw.getClassId());
-			pStmt.setInt(4, calendar.get(Calendar.YEAR));
-			pStmt.setInt(5, calendar.get(Calendar.MONTH));
-			pStmt.setInt(6, calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setInt(1, _cw.getYear());
+			pStmt.setInt(2, _cw.getMonth());
 
 			if (_cw.getPeriod() != null) {
-				pStmt.setString(7, "%" + _cw.getPeriod() + "%");
+				pStmt.setString(3, "%" + _cw.getPeriod() + "%");
 			} else {
-				pStmt.setString(7, "%");
-			}
-			
-			if (_cw.getContents() != null) {
-				pStmt.setString(8, "%" + _cw.getContents() + "%");
-			} else {
-				pStmt.setString(8, "%");
+				pStmt.setString(3, "%");
 			}
 
-			pStmt.setInt(9, _cw.getSubjectId());
+			pStmt.setInt(4, _cw.getSubjectId());
 			
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
@@ -105,36 +90,32 @@ public class ClassWorkDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO ClassWork VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO ClassWork VALUES (0, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_cw.getDate());
-
-			pStmt.setInt(1, _cw.getClassWorkId());
-			pStmt.setInt(2, _cw.getTeacherId());
-			pStmt.setInt(3, _cw.getClassId());
-			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setInt(1, _cw.getTeacherId());
+			pStmt.setInt(2, _cw.getClassId());
+			pStmt.setString(3, _cw.getYear() + "-" + _cw.getMonth() + "-" + _cw.getDay());
 			
 			if (_cw.getPeriod() != null) {
-				pStmt.setString(5, "%" + _cw.getPeriod() + "%");
+				pStmt.setString(4, "%" + _cw.getPeriod() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
+			
+			if (_cw.getContents() != null) {
+				pStmt.setString(5, "%" + _cw.getContents() + "%");
 			} else {
 				pStmt.setString(5, "%");
 			}
 			
-			if (_cw.getContents() != null) {
-				pStmt.setString(6, "%" + _cw.getContents() + "%");
-			} else {
-				pStmt.setString(6, "%");
-			}
-			
-			pStmt.setInt(7, _cw.getSubjectId());
+			pStmt.setInt(6, _cw.getSubjectId());
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -168,80 +149,34 @@ public class ClassWorkDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE ClassWork SET classWorkId=?, teacherId=?, classId=?, date=?, period=?, "
-					+ "contents=?, subjectId=?;";
+			String sql = "UPDATE ClassWork SET teacherId=?, classId=?, date=?, period=?, "
+					+ "contents=?, subjectId=? WHERE classWorkId = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_cw.getDate());
-
-			pStmt.setInt(1, _cw.getClassWorkId());
-			pStmt.setInt(2, _cw.getTeacherId());
-			pStmt.setInt(3, _cw.getClassId());
-			pStmt.setString(4, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setInt(1, _cw.getTeacherId());
+			pStmt.setInt(2, _cw.getClassId());
+			pStmt.setString(3, _cw.getYear() + "-" + _cw.getMonth() + "-" + _cw.getDay());
 			
 			if (_cw.getPeriod() != null) {
-				pStmt.setString(5, "%" + _cw.getPeriod() + "%");
+				pStmt.setString(4, "%" + _cw.getPeriod() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
+			
+			if (_cw.getContents() != null) {
+				pStmt.setString(5, "%" + _cw.getContents() + "%");
 			} else {
 				pStmt.setString(5, "%");
 			}
 			
-			if (_cw.getContents() != null) {
-				pStmt.setString(6, "%" + _cw.getContents() + "%");
-			} else {
-				pStmt.setString(6, "%");
-			}
-			
-			pStmt.setInt(7, _cw.getSubjectId());
-
-			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// 結果を返す
-		return result;
-	}
-
-	public boolean delete(ClassWork _cw) {
-		Connection conn = null;
-		boolean result = false;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "DELETE FROM ClassWork WHERE ClassWorkId=?;";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			// SQL文を完成させる
-			pStmt.setInt(1, _cw.getClassWorkId());
+			pStmt.setInt(6, _cw.getSubjectId());
+			pStmt.setInt(7, _cw.getClassWorkId());
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -275,7 +210,7 @@ public class ClassWorkDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 

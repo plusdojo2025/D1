@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<% int i = 0; %>
+<%@ page import="java.util.Calendar" %>
+<% Calendar cal = Calendar.getInstance(); 
+int yearNow = cal.get(Calendar.YEAR);
+int monthNow = cal.get(Calendar.MONTH) + 1;%>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,45 +21,81 @@
         <form action="EditAllStudentServlet.java" method ="POST" id="list_student_form">
 
             <select name="grede">
-                <option value="1" >1年</option>
-                <option value="2">2年</option>
-                <option value="3">3年</option>
+                <option value="1"><input type="submit" name="change" placeholder="1年"></option>
+                <option value="2"><input type="submit" name="change" placeholder="2年"></option>
+                <option value="3"><input type="submit" name="change" placeholder="3年"></option>
             </select>
 
             <select name="className">
-                <option value="1">1組</option>
-                <option value="2">2組</option>
-                <option value="3">3組</option>
-                <option value="4">4組</option>
-                <option value="5">5組</option>
-                <option value="6">6組</option>
+                <option value="1"><input type="submit" name="change" placeholder="1組"></option>
+                <option value="2"><input type="submit" name="change" placeholder="2組"></option>
+                <option value="3"><input type="submit" name="change" placeholder="3組"></option>
+                <option value="4"><input type="submit" name="change" placeholder="4組"></option>
+                <option value="5"><input type="submit" name="change" placeholder="5組"></option>
+                <option value="6"><input type="submit" name="change" placeholder="6組"></option>
+            </select>
+            
+            <select name="year">
+            	<c:forEach var="e" begin="-5" end="1">
+					<c:choose>
+						<c:when test="${yearNow + e == year}">
+							<option value="${yearNow + e}" selected>
+							<input type="submit" name="change" placeholder="${yearNow + e}年">
+							</option>
+						</c:when>
+
+						<c:otherwise>
+							<option value="${yearNow + e}">
+							<input type="submit" name="change" placeholder="${yearNow + e}年">
+							</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+            </select>
+            
+            <select name="month">
+            	<c:forEach var="e" begin="1" end="12">
+					<c:choose>
+						<c:when test="${e == month}">
+							<option value="${e}" selected>
+							<input type="submit" name="change" placeholder="${e}月">
+							</option>
+						</c:when>
+
+						<c:otherwise>
+							<option value="${e}">
+							<input type="submit" name="change" placeholder="${e}月">
+							</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
             </select>
 
             <select name="subjectName">
-                <option value="現代文">現代文</option>
-                <option value="古典">古典</option>
-                <option value="数学IA">数学IA</option>
-                <option value="数学ⅡB">数学ⅡB</option>
-                <option value="数学ⅢC">数学ⅢC</option>
-                <option value="英語表現">英語表現</option>
-                <option value="コミュニケーション英語">コミュニケーション英語</option>
-                <option value="物理">物理</option>
-                <option value="化学">化学</option>
-                <option value="生物">生物</option>
-                <option value="地学">地学</option>
-                <option value="日本史">日本史</option>
-                <option value="世界史">世界史</option>
-                <option value="地理">地理</option>
-                <option value="公民">公民</option>
-                <option value="情報">情報</option>
-                <option value="技術">技術</option>
-                <option value="家庭科">家庭科</option>
-                <option value="美術">美術</option>
-                <option value="書道">書道</option>
-                <option value="保健体育">保健体育</option>
-                <option value="音楽">音楽</option>
-                <option value="学活">学活</option>
-                <option value="その他">その他</option>
+                <option value="現代文"><input type="submit" name="change" placeholder="現代文"></option>
+                <option value="古典"><input type="submit" name="change" placeholder="古典"></option>
+                <option value="数学IA"><input type="submit" name="change" placeholder="数学IA"></option>
+                <option value="数学ⅡB"><input type="submit" name="change" placeholder="数学ⅡB"></option>
+                <option value="数学ⅢC"><input type="submit" name="change" placeholder="数学ⅢC"></option>
+                <option value="英語表現"><input type="submit" name="change" placeholder="英語表現"></option>
+                <option value="コミュニケーション英語"><input type="submit" name="change" placeholder="コミュニケーション英語"></option>
+                <option value="物理"><input type="submit" name="change" placeholder="物理"></option>
+                <option value="化学"><input type="submit" name="change" placeholder="化学"></option>
+                <option value="生物"><input type="submit" name="change" placeholder="生物"></option>
+                <option value="地学"><input type="submit" name="change" placeholder="地学"></option>
+                <option value="日本史"><input type="submit" name="change" placeholder="日本史"></option>
+                <option value="世界史"><input type="submit" name="change" placeholder="世界史"></option>
+                <option value="地理"><input type="submit" name="change" placeholder="地理"></option>
+                <option value="公民"><input type="submit" name="change" placeholder="公民"></option>
+                <option value="情報"><input type="submit" name="change" placeholder="情報"></option>
+                <option value="技術"><input type="submit" name="change" placeholder="技術"></option>
+                <option value="家庭科"><input type="submit" name="change" placeholder="家庭科"></option>
+                <option value="美術"><input type="submit" name="change" placeholder="美術"></option>
+                <option value="書道"><input type="submit" name="change" placeholder="書道"></option>
+                <option value="保健体育"><input type="submit" name="change" placeholder="保健体育"></option>
+                <option value="音楽"><input type="submit" name="change" placeholder="音楽"></option>
+                <option value="学活"><input type="submit" name="change" placeholder="学活"></option>
+                <option value="その他"><input type="submit" name="change" placeholder="その他"></option>
             </select>
 
             <input type="submit" name="edit" placeholder="編集" id="edit" value="編集">

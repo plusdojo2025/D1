@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,20 +29,13 @@ public class InterviewDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Interview "
-					+ "WHERE interviewId = ? AND teacherId = ? AND "
-					+ "year(date) like ? AND month(date) like ? date(date) like ? AND "
-					+ "studentId = ? AND remarks = ? AND subjectId?;";
+					+ "WHERE year(date) like ? AND month(date) like ? AND "
+					+ "studentId = ? AND remarks LIKE ? AND subjectId = ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_itv.getDate());
-
-			pStmt.setInt(1, _itv.getInterviewId());
-			pStmt.setInt(2, _itv.getTeacherId());
-			pStmt.setInt(3, calendar.get(Calendar.YEAR));
-			pStmt.setInt(4, calendar.get(Calendar.MONTH));
-			pStmt.setInt(5, calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setInt(1, _itv.getYear());
+			pStmt.setInt(2, _itv.getMonth());
 			pStmt.setInt(6, _itv.getStudentId());
 			
 			if (_itv.getContents() != null) {
@@ -105,7 +97,7 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -114,12 +106,9 @@ public class InterviewDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_itv.getDate());
-
 			pStmt.setInt(1, _itv.getInterviewId());
 			pStmt.setInt(2, _itv.getTeacherId());
-			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(3, _itv.getYear() + "-" + _itv.getMonth() + "-" + _itv.getDay());
 			pStmt.setInt(4, _itv.getStudentId());
 			
 			if (_itv.getContents() != null) {
@@ -168,7 +157,7 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -178,12 +167,9 @@ public class InterviewDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_itv.getDate());
-
 			pStmt.setInt(1, _itv.getInterviewId());
 			pStmt.setInt(2, _itv.getTeacherId());
-			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(3,  _itv.getYear() + "-" + _itv.getMonth() + "-" + _itv.getDay());
 			pStmt.setInt(4, _itv.getStudentId());
 			
 			if (_itv.getContents() != null) {
@@ -223,49 +209,6 @@ public class InterviewDAO {
 		return result;
 	}
 
-	public boolean delete(Interview _itv) {
-		Connection conn = null;
-		boolean result = false;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "DELETE FROM Interview WHERE interviewId=?;";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			// SQL文を完成させる
-			pStmt.setInt(1, _itv.getInterviewId());
-
-			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
-				result = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// 結果を返す
-		return result;
-	}
-
 	public boolean delete(int interviewId) {
 		Connection conn = null;
 		boolean result = false;
@@ -275,7 +218,7 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 

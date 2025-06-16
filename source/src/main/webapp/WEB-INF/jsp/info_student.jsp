@@ -59,30 +59,30 @@
 
 		<!-- 科目・月選択プルダウン -->
 		<select name="subject" id="subject" onchange="subjectChange()">
-			<option value="modernSentence">現代文</option>
-			<option value="classic">古典</option>
-			<option value="mathematicsIA">数学IA</option>
-			<option value="mathematicsⅡB">数学ⅡB</option>
-			<option value="mathematicsⅢC">数学ⅢC</option>
-			<option value="englishExpression">英語表現</option>
-			<option value="communicationEnglish">コミュニケーション英語</option>
-			<option value="physics">物理</option>
-			<option value="chemistry">化学</option>
-			<option value="biology">生物</option>
-			<option value="geology">地学</option>
-			<option value="japaneseHistory">日本史</option>
-			<option value="worldHistory">世界史</option>
-			<option value="geography">地理</option>
-			<option value="citizens">公民</option>
-			<option value="information">情報</option>
-			<option value="technology">技術</option>
-			<option value="homeEconomics">家庭科</option>
-			<option value="art">美術</option>
-			<option value="calligraphy">書道</option>
-			<option value="physicalEducation">保健体育</option>
-			<option value="music">音楽</option>
-			<option value="academicActivities">学活</option>
-			<option value="others">その他</option>
+			<option value="modernSentence" class="subject">現代文</option>
+			<option value="classic" class="subject">古典</option>
+			<option value="mathematicsIA" class="subject">数学IA</option>
+			<option value="mathematicsIIB" class="subject">数学ⅡB</option>
+			<option value="mathematicsIIIC" class="subject">数学ⅢC</option>
+			<option value="englishExpression" class="subject">英語表現</option>
+			<option value="communicationEnglish" class="subject">コミュニケーション英語</option>
+			<option value="physics" class="subject">物理</option>
+			<option value="chemistry" class="subject">化学</option>
+			<option value="biology" class="subject">生物</option>
+			<option value="geology" class="subject">地学</option>
+			<option value="japaneseHistory" class="subject">日本史</option>
+			<option value="worldHistory" class="subject">世界史</option>
+			<option value="geography" class="subject">地理</option>
+			<option value="citizens" class="subject">公民</option>
+			<option value="information" class="subject">情報</option>
+			<option value="technology" class="subject">技術</option>
+			<option value="homeEconomics" class="subject">家庭科</option>
+			<option value="art" class="subject">美術</option>
+			<option value="calligraphy" class="subject">書道</option>
+			<option value="physicalEducation" class="subject">保健体育</option>
+			<option value="music" class="subject">音楽</option>
+			<option value="academicActivities" class="subject">学活</option>
+			<option value="others" class="subject">その他</option>
 		</select>
 		
 		<select name="year">
@@ -105,7 +105,7 @@
 			<option value="10">10月</option>
 			<option value="11">11月</option>
 			<option value="12">12月</option>
-		</select>
+		</select><br>
 
 		<div id="display">表示項目選択 <br>
 			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked>出席状況</label>
@@ -113,7 +113,7 @@
 			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked>成績状況</label>
 			<label><input type="checkbox" name="display" value="授業態度" id="attitudeCheck" checked>授業態度</label>
 			<label><input type="checkbox" name="display" value="面談記録" id="interviewCheck" checked>面談記録</label>
-		</div>
+		</div><br>
 		
 		<div id="attendance">出席状況
 			<span>出席率</span>
@@ -127,7 +127,7 @@
 					<td>備考</td>
 				</tr>
 				
-				<c:forEach var="att" items="attendanceRecords">
+				<c:forEach var="att" items="${attendanceRecords}">
 				<tr>
 					<td><fmt:formatDate value="${att.date}" pattern="yyyy/MM/dd"></fmt:formatDate></td>
 					<td>${att.week}</td>
@@ -136,7 +136,7 @@
 					<td>${att.remarks}</td>
 				</tr>
 				</c:forEach>
-			</table>
+			</table><br>
 		</div>
 		
 		<div id="submission">提出物状況
@@ -149,14 +149,14 @@
 					<td>提出日</td>
 				</tr>
 				
-				<c:forEach var="sub" items="assignmentsList">
+				<c:forEach var="sub" items="${assignmentsList}">
 				<tr>
 					<td>${sub.content}</td>
 					<td>${sub.submissionStatus}</td>
 					<td>${sub.submissionDate}</td>
 				</tr>
 				</c:forEach>
-			</table>
+			</table><br>
 		</div>
 		
 		<div id="grades">成績状況 <br>
@@ -167,14 +167,14 @@
 					<td>平均点</td>
 				</tr>
 				
-				<c:forEach var="gra" items="gradesList">
+				<c:forEach var="gra" items="${gradesList}">
 				<tr>
 					<td>${gra.testType}</td>
 					<td>${gra.score}</td>
 					<td>${average}</td>
 				</tr>
 				</c:forEach>
-			</table>
+			</table><br>
 		</div>
 		
 		<div id="attitude">授業態度 <br>
@@ -187,7 +187,7 @@
 					<td>${student.attitude}</td>
 					<td></td>
 				</tr>
-			</table>
+			</table><br>
 		</div>
 		
 		<div id="interview">
@@ -200,7 +200,7 @@
 					<td>備考</td>
 				</tr>
 				
-				<c:forEach var="itv" items="interviewList">
+				<c:forEach var="itv" items="${interviewList}">
 				<tr>
 					<td>${itv.date}</td>
 					<td>${itv.week}</td>
@@ -208,7 +208,7 @@
 					<td>${itv.remarks}</td>
 				</tr>
 				</c:forEach>
-			</table>
+			</table><br>
 			
 			前年度面談記録 <br>
 			<table>
@@ -219,7 +219,7 @@
 					<td>備考</td>
 				</tr>
 				
-				<c:forEach var="itv" items="lastInterviewList">
+				<c:forEach var="itv" items="${lastInterviewList}">
 				<tr>
 					<td>${itv.date}</td>
 					<td>${itv.week}</td>
@@ -227,7 +227,7 @@
 					<td>${itv.remarks}</td>
 				</tr>
 				</c:forEach>
-			</table>
+			</table><br>
 		</div>
 		 
 	</main>
