@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<% int i = 0; %>
+<%@ page import="java.util.Calendar" %>
+<% Calendar cal = Calendar.getInstance(); 
+int year = cal.get(Calendar.YEAR);
+int month = cal.get(Calendar.MONTH) + 1;%>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -29,6 +33,30 @@
                 <option value="4">4組</option>
                 <option value="5">5組</option>
                 <option value="6">6組</option>
+            </select>
+            
+            <select name="year">
+            	<option value="${year - 5}">${year - 5}</option>
+                <option value="${year - 4}">${year - 4}</option>
+                <option value="${year - 3}">${year - 3}</option>
+                <option value="${year - 2}">${year - 2}</option>
+                <option value="${year - 1}">${year - 1}</option>
+                <option value="${year}" selected>${year}</option>
+                <option value="${year + 1}">${year + 1}</option>
+            </select>
+            
+            <select name="month">
+            	<c:forEach var="e" begin="1" end="12">
+					<c:choose>
+						<c:when test="${e == month}">
+							<option value="${e}" selected>${e}月</option>
+						</c:when>
+
+						<c:otherwise>
+							<option value="${e}">${e}月</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
             </select>
 
             <select name="subjectName">

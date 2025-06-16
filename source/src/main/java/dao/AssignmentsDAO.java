@@ -208,44 +208,45 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET assignmentId=?, studentId=?, subjectId=?,"
-					+ "submissionStatus=?, content=?, createdDate=?, submissionDate;";
+			String sql = "UPDATE Assignments SET submissionStatus=?, content=?, submissionDate=?,"
+					+ "WHERE assignmentId=? AND studentId=? AND subjectId=?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(as.getCreatedDate());
 			calendar.setTime(as.getSubmissionDate());
-
-			if (as.getAssignmentId() != -1) {
-				pStmt.setString(1, "%" + as.getAssignmentId() + "%");
-			} else {
-				pStmt.setString(1, "%");
-			}
-			if (as.getStudentId() != -1) {
-				pStmt.setString(2, "%" + as.getStudentId() + "%");
-			} else {
-				pStmt.setString(2, "%");
-			}
-			if (as.getSubjectId() != -1) {
-				pStmt.setString(3, "%" + as.getSubjectId() + "%");
-			} else {
-				pStmt.setString(3, "%");
-			}
 			
 			if (as.getSubmissionStatus() != null) {
-				pStmt.setString(4, as.getSubmissionStatus());
+				pStmt.setString(1, as.getSubmissionStatus());
 			} else {
-				pStmt.setString(4, "");
-			}
-			if (as.getContent() != null) {
-				pStmt.setString(5, as.getContent());
-			} else {
-				pStmt.setString(5, "");
+				pStmt.setString(1, "");
 			}
 			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-			pStmt.setString(7, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			if (as.getContent() != null) {
+				pStmt.setString(2, as.getContent());
+			} else {
+				pStmt.setString(2, "");
+			}
+			
+			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
+						
+			if (as.getAssignmentId() != -1) {
+				pStmt.setString(4, "%" + as.getAssignmentId() + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
+			if (as.getStudentId() != -1) {
+				pStmt.setString(5, "%" + as.getStudentId() + "%");
+			} else {
+				pStmt.setString(5, "%");
+			}
+			if (as.getSubjectId() != -1) {
+				pStmt.setString(6, "%" + as.getSubjectId() + "%");
+			} else {
+				pStmt.setString(6, "%");
+			}
 			
 			
 
