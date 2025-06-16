@@ -47,13 +47,6 @@ public class EditAllStudentServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		Date createdDate=new Date(); ;
-		try {
-			createdDate = DateFormat.getDateInstance().parse(request.getParameter("createdDate"));
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
 		Date submissionDate=new Date(); ;
 		try {
 			submissionDate = DateFormat.getDateInstance().parse(request.getParameter("submissionDate"));
@@ -109,7 +102,7 @@ public class EditAllStudentServlet extends HttpServlet {
 
 			AssignmentsDAO assignmentsDao = new AssignmentsDAO();
 			if (assignmentsDao.update(new Assignments(assignmentId, studentId, subjectId, 
-					submissionStatus, content, createdDate, submissionDate))) { // 更新成功
+					submissionStatus, content, year, month, submissionDate))) { // 更新成功
 				System.out.println("更新成功");
 
 			} else { // 更新失敗
@@ -118,7 +111,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			}
 
 			GradesDAO gradesDao = new GradesDAO();
-			if (gradesDao.update(new Grades( gradesId, studentId, subjectId, score, testType, date))) { // 更新成功
+			if (gradesDao.update(new Grades( gradesId, studentId, subjectId, score, testType, year, month))) { // 更新成功
 				System.out.println("更新成功");
 
 			} else { // 更新失敗
