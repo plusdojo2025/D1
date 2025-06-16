@@ -1,7 +1,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Grades implements Serializable{
 	private int gradesId; 	    // 成績ID
@@ -9,20 +8,34 @@ public class Grades implements Serializable{
 	private int subjectId; 	    // 教科ID
 	private int score;     //　点数
 	private String testType;     //　テスト種別
-	private Date date;     //　日付
+	private int year;     //　日付
+	private int month;     //　日付
 	
 	public Grades(int gradesId,int studentId,int subjectId, 
-			int score,String testType,Date date) {
+			int score,String testType,int year,int month) {
 		
 		this.gradesId = gradesId;
 		this.studentId = studentId;
 		this.subjectId = subjectId;
 		this.score = score;
 		this.testType = testType;
-		this.date = date;
-		
+		this.year = year;
+		this.month = month;
+
 	}
-	
+
+	public Grades(int studentId,int subjectId,int year,int month) {
+
+		this.gradesId = -1;
+		this.studentId = studentId;
+		this.subjectId = subjectId;
+		this.score = -1;
+		this.testType = "";
+		this.year = year;
+		this.month = month;
+
+	}
+
 	public Grades(int studentId,int subjectId) {
 		
 		this.gradesId = -1;
@@ -30,7 +43,8 @@ public class Grades implements Serializable{
 		this.subjectId = subjectId;
 		this.score = -1;
 		this.testType = "";
-		this.date = null;
+		this.year = -1;
+		this.month = -1;
 		
 	}
 
@@ -41,8 +55,25 @@ public class Grades implements Serializable{
 		this.subjectId = -1;
 		this.score = -1;
 		this.testType = "";
-		this.date = new Date();
+		this.year = -1;
+		this.month = -1;
 		
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
 	}
 
 	public int getGradesId() {
@@ -83,14 +114,6 @@ public class Grades implements Serializable{
 
 	public void setTestType(String testType) {
 		this.testType = testType;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 }

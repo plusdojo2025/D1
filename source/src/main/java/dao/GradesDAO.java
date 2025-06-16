@@ -5,11 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import dto.Grades;
@@ -31,12 +28,10 @@ public class GradesDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Grades "
 					+ "WHERE gradesId = ? AND studentId = ? AND subjectId = ? AND score like ? "
-					+ "AND testType like ? year(date) like ? AND month(date) like ? date(date) like ? ;";
+					+ "AND testType like ? year(date) like ? AND month(date) like ? ;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(gs.getDate());
 
 			if (gs.getGradesId() != -1) {
 				pStmt.setString(1, "%" + gs.getGradesId() + "%");
@@ -63,25 +58,29 @@ public class GradesDAO {
 			} else {
 				pStmt.setString(5, "%");
 			}
-			
-			pStmt.setInt(6, calendar.get(Calendar.YEAR));
-			pStmt.setInt(7, calendar.get(Calendar.MONTH));
-			pStmt.setInt(8, calendar.get(Calendar.DAY_OF_MONTH));
+			if (gs.getYear() != -1) {
+				pStmt.setString(6, "%" + gs.getYear() + "%");
+			} else {
+				pStmt.setString(6, "%");
+			}
+			if (gs.getMonth() != -1) {
+				pStmt.setString(7, "%" + gs.getMonth() + "%");
+			} else {
+				pStmt.setString(7, "%");
+			}
 
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
 
 			while (rs.next()) {
-				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = sdFormat.parse(rs.getString("date"));
-
 				Grades ar = new Grades(
 						rs.getInt("gradesId"), 
 						rs.getInt("studentId"), 
 						rs.getInt("subjectId"), 
 						rs.getInt("score"), 
 						rs.getString("testType"), 
-						date
+						rs.getInt("year"), 
+						rs.getInt("month")
 						);
 				arList.add(ar);
 			}
@@ -89,9 +88,6 @@ public class GradesDAO {
 			e.printStackTrace();
 			arList = null;
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			arList = null;
-		} catch (ParseException e) {
 			e.printStackTrace();
 			arList = null;
 		} finally {
@@ -130,7 +126,6 @@ public class GradesDAO {
 
 			// SQL文を完成させる
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(gs.getDate());
 
 			if (gs.getGradesId() != -1) {
 				pStmt.setString(1, "%" + gs.getGradesId() + "%");
@@ -202,8 +197,6 @@ public class GradesDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(gs.getDate());
 
 			if (gs.getScore() != -1) {
 				pStmt.setString(1, "%" + gs.getScore() + "%");
