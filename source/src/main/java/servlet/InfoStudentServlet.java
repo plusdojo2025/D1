@@ -27,16 +27,18 @@ public class InfoStudentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("subject") != null) {
-			String subject = request.getParameter("subject");
-			request.setAttribute("subject", subject);
+		request.setCharacterEncoding("UTF-8");
+		
+		// プルダウンの情報
+		if (request.getParameter("subjectId") != null) {
+			String subject = request.getParameter("subjectId");
+			request.setAttribute("subjectId", subject);
 		} else {
-			request.setAttribute("subject", "modernSentence");
+			request.setAttribute("subjectId", 1);
 		}
 		
 		StudentsDAO stuDAO = new StudentsDAO();
 		
-		request.setCharacterEncoding("UTF-8");
 		String studentId = request.getParameter("studentId");
 		//List<Students> studentsList = stuDAO.select(null);
 		Students st = new Students(1,1,1,1,"山田太郎","やまだたろう","","","");

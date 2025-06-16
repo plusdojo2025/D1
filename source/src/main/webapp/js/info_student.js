@@ -56,15 +56,7 @@ function changeDisplay(event) {
 
 // 教科プルダウンを押した際の動作
 function subjectChange() {
-	window.location.href = '/D1/InfoStudentServlet';
+	var element = document.getElementById('subjectSelect');
+	console.log(element.value);
+	window.location.href = "/D1/InfoStudentServlet?subjectId=" + element.value;
 }
-
-let subject = '${subject}';
-console.log(subject);
-var subjects = document.getElementsByClassName(".subject");
-for (var i = 0; i < subjects.length; i++) {
-	if (subjects[i].value === subject) {
-		subjects[i].setAttribute('selected', 'selected');
-	}
-}
-

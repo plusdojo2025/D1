@@ -58,53 +58,54 @@
 		</div>
 
 		<!-- 科目・月選択プルダウン -->
-		<select name="subject" id="subject" onchange="subjectChange()">
-			<option value="modernSentence" class="subject">現代文</option>
-			<option value="classic" class="subject">古典</option>
-			<option value="mathematicsIA" class="subject">数学IA</option>
-			<option value="mathematicsIIB" class="subject">数学ⅡB</option>
-			<option value="mathematicsIIIC" class="subject">数学ⅢC</option>
-			<option value="englishExpression" class="subject">英語表現</option>
-			<option value="communicationEnglish" class="subject">コミュニケーション英語</option>
-			<option value="physics" class="subject">物理</option>
-			<option value="chemistry" class="subject">化学</option>
-			<option value="biology" class="subject">生物</option>
-			<option value="geology" class="subject">地学</option>
-			<option value="japaneseHistory" class="subject">日本史</option>
-			<option value="worldHistory" class="subject">世界史</option>
-			<option value="geography" class="subject">地理</option>
-			<option value="citizens" class="subject">公民</option>
-			<option value="information" class="subject">情報</option>
-			<option value="technology" class="subject">技術</option>
-			<option value="homeEconomics" class="subject">家庭科</option>
-			<option value="art" class="subject">美術</option>
-			<option value="calligraphy" class="subject">書道</option>
-			<option value="physicalEducation" class="subject">保健体育</option>
-			<option value="music" class="subject">音楽</option>
-			<option value="academicActivities" class="subject">学活</option>
-			<option value="others" class="subject">その他</option>
+		<!-- 初期値を一覧ページで選択した値にする -->
+		<select name="subjectId" id="subjectSelect" onchange="subjectChange()">
+			<option value="1" class="subject">現代文</option>
+			<option value="2" class="subject">古典</option>
+			<option value="3" class="subject">数学IA</option>
+			<option value="4" class="subject">数学ⅡB</option>
+			<option value="5" class="subject">数学ⅢC</option>
+			<option value="6" class="subject">英語表現</option>
+			<option value="7" class="subject">コミュニケーション英語</option>
+			<option value="8" class="subject">物理</option>
+			<option value="9" class="subject">化学</option>
+			<option value="10" class="subject">生物</option>
+			<option value="11" class="subject">地学</option>
+			<option value="12" class="subject">日本史</option>
+			<option value="13" class="subject">世界史</option>
+			<option value="14" class="subject">地理</option>
+			<option value="15" class="subject">公民</option>
+			<option value="16" class="subject">情報</option>
+			<option value="17" class="subject">技術</option>
+			<option value="18" class="subject">家庭科</option>
+			<option value="19" class="subject">美術</option>
+			<option value="20" class="subject">書道</option>
+			<option value="21" class="subject">保健体育</option>
+			<option value="22" class="subject">音楽</option>
+			<option value="23" class="subject">学活</option>
+			<option value="24" class="subject">その他</option>
 		</select>
 		
-		<select name="year">
-			<option value="1">1年次</option> 
-			<option value="2">2年次</option>
-			<option value="3">3年次</option>
+		<select name="year" id="yearSelect" onchange="yearChange()">
+			<option value="1" class="year">1年次</option> 
+			<option value="2" class="year">2年次</option>
+			<option value="3" class="year">3年次</option>
 			<!-- 入学年度（登録年度）と登録時の学年を元に、データがある年次だけ表示する -->
 		</select>
 		
-		<select name="month">
-			<option value="1">1月</option>
-			<option value="2">2月</option>
-			<option value="3">3月</option>
-			<option value="4">4月</option>
-			<option value="5">5月</option>
-			<option value="6">6月</option>
-			<option value="7">7月</option>
-			<option value="8">8月</option>
-			<option value="9">9月</option>
-			<option value="10">10月</option>
-			<option value="11">11月</option>
-			<option value="12">12月</option>
+		<select name="month" id="monthSelect" onchange="monthChange()">
+			<option value="1" class="month">1月</option>
+			<option value="2" class="month">2月</option>
+			<option value="3" class="month">3月</option>
+			<option value="4" class="month">4月</option>
+			<option value="5" class="month">5月</option>
+			<option value="6" class="month">6月</option>
+			<option value="7" class="month">7月</option>
+			<option value="8" class="month">8月</option>
+			<option value="9" class="month">9月</option>
+			<option value="10" class="month">10月</option>
+			<option value="11" class="month">11月</option>
+			<option value="12" class="month">12月</option>
 		</select><br>
 
 		<div id="display">表示項目選択 <br>
@@ -236,5 +237,32 @@
 	</footer>
 	
 	<script src="js/info_student.js"></script>
+	<script>
+	'use strict';
+	// 前画面で設定した学年・月・科目を持ち越す
+	let subject = '${subjectId}';
+	var subjects = document.getElementsByClassName("subject");
+	for (var i = 0; i < subjects.length; i++) {
+		if (subjects[i].value === subject) {
+			subjects[i].setAttribute('selected', 'selected');
+		}
+	}
+	
+	let year = '${yearId}';
+	var years = document.getElementsByClassName("year");
+	for (var i = 0; i < years.length; i++) {
+		if (years[i].value === year) {
+			years[i].setAttribute('selected', 'selected');
+		}
+	}
+	
+	let month = '${monthId}';
+	var months = document.getElementsByClassName("year");
+	for (var i = 0; i < months.length; i++) {
+		if (months[i].value === month) {
+			months[i].setAttribute('selected', 'selected');
+		}
+	}
+	</script>
 </body>
 </html>
