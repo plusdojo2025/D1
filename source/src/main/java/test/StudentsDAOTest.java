@@ -18,7 +18,7 @@ public class StudentsDAOTest {
 		
 		for (Students st : stList) {
 			System.out.println("学生ID：" + st.getStudentId());
-			Syste,.out.println("入学年：" + st.getYear());
+			System.out.println("入学年：" + st.getYear());
 			System.out.println("学年：" + st.getGrade());
 			System.out.println("クラスID：" + st.getClassId());
             System.out.println("出席番号：" + st.getStudentNum());
@@ -56,7 +56,7 @@ public class StudentsDAOTest {
 		
 		// insert()のテスト
 		System.out.println("---------- insert()のテスト ----------");
-		Students insRec = new Students(70, 1, 6, 5, "栃木　三郎", "とちき　さぶろう", "", "", "");
+		Students insRec = new Students(70, 1, 6, 5, , "栃木　三郎", "とちき　さぶろう", "", "", "");
 		if (dao.insert(insRec)) {
 			System.out.println("登録成功！");
 			List<Students> stListIns = dao.select(new Students(70, 1, 6, 5, "栃木　三郎", "とちき　さぶろう", "", "", ""));
