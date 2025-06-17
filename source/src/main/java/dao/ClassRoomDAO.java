@@ -27,7 +27,7 @@ public class ClassRoomDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Class "
 					+ "WHERE classId LIKE ? AND grade LIKE ? AND "
-					+ " className LIKE ?";
+					+ " className LIKE ?;";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 		
