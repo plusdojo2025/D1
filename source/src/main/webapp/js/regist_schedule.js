@@ -6,7 +6,7 @@ function validateForm() {
   const period = document.getElementById('period');
   const classId = document.getElementById('classId');
   const content = document.getElementById('content');
-
+  
   const errorMessage = document.getElementById('jsErrorMessage');
 
   if (!year.value || !semester.value || !type || !day.value || !period.value || !classId.value || content.value.trim() === '') {

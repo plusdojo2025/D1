@@ -3,7 +3,10 @@
   String error = (String) request.getAttribute("error");
   boolean hasError = (error != null && !error.isEmpty());
 %>
-
+<%
+    // テスト用：ここで強制的に例外を発生させる
+    throw new RuntimeException("テスト用エラー");
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
