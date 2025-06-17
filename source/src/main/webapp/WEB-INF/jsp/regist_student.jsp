@@ -26,7 +26,7 @@
 
 <!-- メイン（ここから） -->
 <h2>新規登録</h2>
-<form id="regist_form" method="POST" action="/D1/RegistStudentServlet">
+<form id="regist_form" method="POST" action="/webapp/RegistStudentServlet">
   <table>
 	  <tr>
 		 <td>

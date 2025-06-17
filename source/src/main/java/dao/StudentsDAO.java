@@ -173,7 +173,10 @@ public class StudentsDAO {
 			}
             // SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
-				result = true;
+				result = true;			  
+			}
+			else {
+				result = false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
