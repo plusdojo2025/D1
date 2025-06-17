@@ -45,7 +45,7 @@ public class RegistScheduleServlet extends HttpServlet {
         if (isEmpty(year) || isEmpty(semester) || isEmpty(type)
                 || isEmpty(day_of_week) || isEmpty(period) || isEmpty(content)) {
 
-        	request.setAttribute("error", "必須項目を入力してください。");
+        	request.setAttribute("error", "必須項目を入力してください");
 
             // 入力値の再設定（フォーム再表示用）
             request.setAttribute("year", year);
@@ -62,7 +62,7 @@ public class RegistScheduleServlet extends HttpServlet {
         // --- DB登録処理等 ---
 
         // 登録完了メッセージを設定
-        request.setAttribute("message", "スケジュールを登録しました。");
+        request.setAttribute("message", "スケジュールを登録しました");
         request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp").forward(request, response);
     }
 

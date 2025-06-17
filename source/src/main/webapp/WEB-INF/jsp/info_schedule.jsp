@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>スケジュールの閲覧</title>
-<link rel="stylesheet" href="/webapp/css/info_schedule.css">
+<link rel="stylesheet" href="css/info_schedule.css">
 </head>
 <body>
 
 <h1>スケジュールの閲覧</h1>
-<form action="ScheduleServlet" method="get">
+<form action="/webapp/EditScheduleServlet" method="post">
   <div class="form-row">
     <label>① 年度：</label>
     <select name="year">
@@ -61,8 +61,8 @@
 </div>
 
 <!-- 編集・戻るボタン -->
-<form action="edit_schedule.jsp" method="get" style="display: inline;">
-  <button type="submit" class="btn">③ 編集</button>
+<form action="EditScheduleServlet" method="get" style="display: inline;">
+  <button type="submit" class="btn">編集</button>
 </form>
 
 <form action="menu.jsp" method="get" style="display: inline;">
