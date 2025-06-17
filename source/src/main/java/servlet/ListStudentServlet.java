@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -88,13 +87,33 @@ public class ListStudentServlet extends HttpServlet {
 		List<Students> studentList = studentDao.select(new Students(-1,classId));
 		request.setAttribute("studentList", studentList);
 		
-		//int studentId = studentList.get(0).getStudentId();    //出席番号
-		List<Integer> studentId = new ArrayList();
+		int studentId = 0;    //出席番号
+		//List<Integer> studentId = new ArrayList();
 
+		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
+		List<AttendanceRecords> attendanceList = (List<AttendanceRecords>) new AttendanceRecords();
+		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+		List<Assignments> assignmentsList = (List<Assignments>) new Assignments();
+		GradesDAO gradesDao = new GradesDAO();
+		List<Grades> gradesList = (List<Grades>) new Grades();
+		
 		for(int i=0;studentList.size()>i;i++) {
-			studentId.add(studentList.get(i).getStudentId());
+			//studentId.add(studentList.get(i).getStudentId());
+			
+			studentId = studentList.get(i).getStudentId();
+			
+			attendanceList.add((AttendanceRecords) aDao.select(studentId, classId));
+			
+			assignmentsList.add((Assignments) assignmentsDao.select(new Assignments(studentId,subjectId)));
+			
+			gradesList.add((Grades) gradesDao.select(new Grades(studentId,subjectId)));
 		}
 		
+		request.setAttribute("attendanceList", attendanceList);
+		request.setAttribute("assignmentsList", assignmentsList);
+		request.setAttribute("gradesList", gradesList);
+		
+		/*
 		//出欠情報を取得
 		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 		List<AttendanceRecords> attendanceList = aDao.select(studentId, classId);
@@ -109,6 +128,7 @@ public class ListStudentServlet extends HttpServlet {
 		GradesDAO gradesDao = new GradesDAO();
 		List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
 		request.setAttribute("gradesList", gradesList);
+		*/
 		
 		request.setAttribute("grade", grade);
 		request.setAttribute("className", className);
