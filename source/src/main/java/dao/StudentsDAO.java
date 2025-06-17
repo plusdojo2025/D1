@@ -211,7 +211,7 @@ public class StudentsDAO {
 			// SQL文を準備する  変更箇所
 			String sql = "UPDATE studentssample_test SET grade=?, classId=?, "
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
-					+ "extracurricularActivities=?, attitude=? WHERE studentId=? ";
+					+ "extracurricularActivities=?, attitude=? WHERE studentId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
  
 			//set grade=?  where studentId=?
@@ -259,7 +259,15 @@ public class StudentsDAO {
 			} else {
 				pStmt.setString(8, "");
 			}
-			pStmt.setInt(9,  st.getStudentId());
+						
+			
+            if (st.getStudentId() >0) {
+        		pStmt.setString(9, ""+ st.getStudentId());
+            } else {
+        		pStmt.setString(9, "%");
+            }			
+			
+			
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
