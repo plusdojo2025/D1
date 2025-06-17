@@ -2,6 +2,9 @@
 /*テスト用のサンプルです*/
 
 
+/*生徒ID, 入学年, 学年, クラスID, 出席番号, 氏名, 氏名ふりがな, 在籍状態, 授業外活動, 授業態度*/ 
+
+
 create table students(
 studentId int primary key auto_increment,
 year int not null,
