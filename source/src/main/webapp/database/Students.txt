@@ -81,7 +81,7 @@ insert into students values( 36, 2, 6, 3, '遠藤　悦子', 'えんどう　え
 /*1学年*/
 /*1組*/
 insert into students values( 37, 1, 1, 1, '安藤　治', 'あんどう　はる', '', '', '');
-insert into students values( 38, 1, 1, 2, '金子　翔琉, 'かねこ　かける', '', '', '');
+insert into students values( 38, 1, 1, 2, '金子　翔琉', 'かねこ　かける', '', '', '');
 insert into students values( 39, 1, 1, 3, '大久保　恵那', 'おおくぼ　えな', '', 'ボランティア活動', '');
 
 /*2組*/

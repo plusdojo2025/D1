@@ -12,7 +12,7 @@ public class AttendanceRecordsDAOTest {
 
 		System.out.println("--SELECT1--");
 		Date date = new Date();
-		AttendanceRecords ar = new AttendanceRecords(0, 1, 1, date, "", 1, "○", "");
+		AttendanceRecords ar = new AttendanceRecords(0, -1, -1, date, "", -1, "○", "");
 		List<AttendanceRecords> arList = arDAO.select(ar);
 		for (int i = 0; i < arList.size(); i++) {
 			System.out.println(arList.get(i).getRecordId() + " : " + arList.get(i).getStatus());
