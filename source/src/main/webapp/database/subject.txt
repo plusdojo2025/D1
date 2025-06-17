@@ -1,6 +1,6 @@
 /*教科データを入れておくsubjectテーブル作成*/
 
-use sample;
+use D1;
 
 create table subject(
     gradesId int primary key auto_increment,
@@ -31,4 +31,4 @@ insert into subject values( 19, '書道' );
 insert into subject values( 20, '保健体育' );
 insert into subject values( 21, '音楽' );
 insert into subject values( 22, '学活' );
-insert into subject values( 23, 'その他 );
+insert into subject values( 23, 'その他' );
