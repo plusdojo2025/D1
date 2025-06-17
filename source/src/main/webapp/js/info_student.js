@@ -60,3 +60,15 @@ function subjectChange() {
 	console.log(element.value);
 	window.location.href = "/D1/InfoStudentServlet?subjectId=" + element.value;
 }
+
+function yearChange() {
+	var element = document.getElementById('yearSelect');
+	console.log(element.value);
+	window.location.href = "/D1/InfoStudentServlet?yearId=" + element.value;
+}
+
+function monthChange() {
+	var element = document.getElementById('monthSelect');
+	console.log(element.value);
+	window.location.href = "/D1/InfoStudentServlet?monthId=" + element.value;
+}

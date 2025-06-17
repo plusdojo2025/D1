@@ -23,34 +23,40 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Interview "
-					+ "WHERE year(date) like ? AND month(date) like ? AND "
-					+ "studentId = ? AND remarks LIKE ? AND subjectId = ?;";
+					+ "WHERE year(date) LIKE ? AND month(date) LIKE ? AND "
+					+ "studentId LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			pStmt.setInt(1, _itv.getYear());
-			pStmt.setInt(2, _itv.getMonth());
-			pStmt.setInt(6, _itv.getStudentId());
-			
-			if (_itv.getContents() != null) {
-				pStmt.setString(7, "%" + _itv.getContents() + "%");
+			if (_itv.getYear() > 0) {
+				pStmt.setString(1, "" + _itv.getYear());
 			} else {
-				pStmt.setString(7, "%");
+				pStmt.setString(1, "%");
 			}
 			
-			if (_itv.getRemarks() != null) {
-				pStmt.setString(8, "%" + _itv.getRemarks() + "%");
+			if (_itv.getMonth() > 0) {
+				pStmt.setString(2, "" + _itv.getMonth());
 			} else {
-				pStmt.setString(8, "%");
+				pStmt.setString(2, "%");
 			}
 			
-			pStmt.setInt(9, _itv.getSubjectId());
+			if (_itv.getStudentId() > 0) {
+				pStmt.setString(3, "" + _itv.getStudentId());
+			} else {
+				pStmt.setString(3, "%");
+			}
+			
+			if (_itv.getSubjectId() > 0) {
+				pStmt.setString(4, "" + _itv.getSubjectId());
+			} else {
+				pStmt.setString(4, "%");
+			}
 
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
@@ -97,7 +103,7 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -112,15 +118,15 @@ public class InterviewDAO {
 			pStmt.setInt(4, _itv.getStudentId());
 			
 			if (_itv.getContents() != null) {
-				pStmt.setString(5, "%" + _itv.getContents() + "%");
+				pStmt.setString(5, _itv.getContents());
 			} else {
-				pStmt.setString(5, "%");
+				pStmt.setString(5, "");
 			}
 			
 			if (_itv.getRemarks() != null) {
-				pStmt.setString(6, "%" + _itv.getRemarks() + "%");
+				pStmt.setString(6, _itv.getRemarks());
 			} else {
-				pStmt.setString(6, "%");
+				pStmt.setString(6, "");
 			}
 			
 			pStmt.setInt(7, _itv.getSubjectId());
@@ -157,13 +163,13 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
 			String sql = "UPDATE Interview SET interviewId=?, teacherId=?, date=?, studentId=?, "
-					+ "contents=?, remarks=?, subjectId=?;";
+					+ "contents=?, remarks=? WHERE subjectId LIKE ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -173,18 +179,22 @@ public class InterviewDAO {
 			pStmt.setInt(4, _itv.getStudentId());
 			
 			if (_itv.getContents() != null) {
-				pStmt.setString(5, "%" + _itv.getContents() + "%");
+				pStmt.setString(5, _itv.getContents());
 			} else {
-				pStmt.setString(5, "%");
+				pStmt.setString(5, "");
 			}
 			
 			if (_itv.getRemarks() != null) {
-				pStmt.setString(6, "%" + _itv.getRemarks() + "%");
+				pStmt.setString(6, _itv.getRemarks());
 			} else {
-				pStmt.setString(6, "%");
+				pStmt.setString(6, "");
 			}
 			
-			pStmt.setInt(7, _itv.getSubjectId());
+			if (_itv.getSubjectId() > 0) {
+				pStmt.setString(7, "" + _itv.getSubjectId());
+			} else {
+				pStmt.setString(7, "");
+			}
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -218,7 +228,7 @@ public class InterviewDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
