@@ -2,7 +2,7 @@
 
 use sample;
 
-create table grades(
+create table subject(
     gradesId int primary key auto_increment,
     testType varchar(30) not null
  );
