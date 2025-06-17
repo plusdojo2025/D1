@@ -20,7 +20,7 @@ public class SubjectDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -29,7 +29,7 @@ public class SubjectDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			if (sub.getSubjectId() != -1) {
+			if (sub.getSubjectId() > 0) {
 				pStmt.setString(1, "%" + sub.getSubjectId() + "%");
 			} else {
 				pStmt.setString(1, "%");

@@ -136,7 +136,7 @@ public class ListStudentServlet extends HttpServlet {
 				
 				//生徒情報を取得
 				StudentsDAO studentDao = new StudentsDAO();
-				List<Students> studentList = studentDao.select(new Students(classId));
+				List<Students> studentList = studentDao.select(new Students(-1,classId));
 				request.setAttribute("studentList", studentList);
 				
 				studentId = Integer.parseInt(request.getParameter("studentId"));    //出席番号
