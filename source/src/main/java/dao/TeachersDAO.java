@@ -25,7 +25,7 @@ public class TeachersDAO {
                     "root", "password");
 			
 			// SQL文の準備する
-            String sql = "SELECT * FROM Teachers WHERE teacherId = ? AND name LIKE ? AND password = ?";
+            String sql = "SELECT * FROM Teachers WHERE teacherId = ? AND password = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, teacher.getTeacherId());
             stmt.setString(2, teacher.getPassword());
