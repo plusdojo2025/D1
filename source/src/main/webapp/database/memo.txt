@@ -1,0 +1,23 @@
+CREATE TABLE Memo (
+    memoId INT AUTO_INCREMENT PRIMARY KEY,
+    teacherId INT,
+    classId INT,
+    content VARCHAR(255),
+    date DATETIME,
+    period VARCHAR(30),
+    FOREIGN KEY (teacherId) REFERENCES Teachers(teacherId),
+    FOREIGN KEY (classId) REFERENCES Class(classId)
+);
+
+
+INSERT INTO Memo (teacherId, classId, content, date, period) VALUES
+(1, 2, '授業計画の確認', '2025-06-01 09:00:00', '1限'),
+(2, 3, '小テスト実施予定', '2025-06-02 10:30:00', '2限'),
+(3, 1, '保護者面談準備', '2025-06-03 13:00:00', '5限'),
+(1, 4, '教材印刷依頼', '2025-06-04 11:00:00', '3限'),
+(2, 5, 'グループ発表の順番決め', '2025-06-05 14:00:00', '6限'),
+(3, 2, '進捗確認メモ', '2025-06-06 09:45:00', '1限'),
+(1, 5, '課題提出状況チェック', '2025-06-07 15:00:00', '7限'),
+(2, 1, '生徒面談', '2025-06-08 08:50:00', '1限'),
+(3, 3, '学級会の記録', '2025-06-09 12:00:00', '4限'),
+(1, 1, '補講予定メモ', '2025-06-10 16:00:00', '2限');

@@ -19,7 +19,7 @@ public class MemoDAO {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp2?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9",
 					"root", "password");
 
@@ -59,7 +59,7 @@ public class MemoDAO {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp2?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9",
 					"root", "password");
 
@@ -106,7 +106,7 @@ public class MemoDAO {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp2?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9",
 					"root", "password");
 
@@ -141,7 +141,7 @@ public class MemoDAO {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp2?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9",
 					"root", "password");
 
@@ -177,7 +177,7 @@ public class MemoDAO {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp2?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9",
 					"root", "password");
 

@@ -2,7 +2,7 @@
 /*テスト用のサンプルです*/
 
 
-create table studentssample_test(
+create table students(
 studentId int primary key auto_increment,
 grade int not null,
 classId int not null,
@@ -17,95 +17,95 @@ attitude varchar(255)
 /*3学年の人から学生IDつけていきます  1クラス3人　6クラス*/
 /*3学年*/
 /*1組*/
-insert into studentssample_test values( 1, 3, 1, 1, '石田　悠真', 'いしだ　ゆうま', '', '', '');
-insert into studentssample_test values( 2, 3, 1, 2, '鈴木　海斗', 'すずき　かいと', '', 'ボランティア活動', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
-insert into studentssample_test values( 3, 3, 1, 3, '土井　千夏', 'どい　ちなつ', '', '', '');
+insert into students values( 1, 3, 1, 1, '石田　悠真', 'いしだ　ゆうま', '', '', '');
+insert into students values( 2, 3, 1, 2, '鈴木　海斗', 'すずき　かいと', '', 'ボランティア活動', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 3, 3, 1, 3, '土井　千夏', 'どい　ちなつ', '', '', '');
 
 /*2組*/
-insert into studentssample_test values( 4, 3, 2, 1, '高橋　翔', 'たかはし　しょう', '', '', '');
-insert into studentssample_test values( 5, 3, 2, 2, '長谷川　千里', 'はせがわ　ちさと', '', '', '');
-insert into studentssample_test values( 6, 3, 2, 3, '寺田　舞', 'てらだ　まい', '', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
+insert into students values( 4, 3, 2, 1, '高橋　翔', 'たかはし　しょう', '', '', '');
+insert into students values( 5, 3, 2, 2, '長谷川　千里', 'はせがわ　ちさと', '', '', '');
+insert into students values( 6, 3, 2, 3, '寺田　舞', 'てらだ　まい', '', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
 
 /*3組*/
-insert into studentssample_test values( 7, 3, 3, 1, '原田　拓海', 'はらだ　たくみ', '', '', '授業内容への理解を深めようとする姿勢が発言によく表れている。');
-insert into studentssample_test values( 8, 3, 3, 2, '沢口　さえ', 'さわぐち　さえ', '', '', '');
-insert into studentssample_test values( 9, 3, 3, 3, '関口　涼音', 'せきぐち　すずね', '', 'ボランティア活動', '');
+insert into students values( 7, 3, 3, 1, '原田　拓海', 'はらだ　たくみ', '', '', '授業内容への理解を深めようとする姿勢が発言によく表れている。');
+insert into students values( 8, 3, 3, 2, '沢口　さえ', 'さわぐち　さえ', '', '', '');
+insert into students values( 9, 3, 3, 3, '関口　涼音', 'せきぐち　すずね', '', 'ボランティア活動', '');
 
 /*4組*/
-insert into studentssample_test values( 10, 3, 4, 1, '岩本　翼', 'いわもと　つばさ', '', '', '');
-insert into studentssample_test values( 11, 3, 4, 2, '松本　大地', 'まつもと　だいち', '', '', '');
-insert into studentssample_test values( 12, 3, 4, 3, '北村　雲母', 'きたむら　きらら', '', '', '');
+insert into students values( 10, 3, 4, 1, '岩本　翼', 'いわもと　つばさ', '', '', '');
+insert into students values( 11, 3, 4, 2, '松本　大地', 'まつもと　だいち', '', '', '');
+insert into students values( 12, 3, 4, 3, '北村　雲母', 'きたむら　きらら', '', '', '');
 
 /*5組*/
-insert into studentssample_test values( 13, 3, 5, 1, '小林　大翔', 'こばやし　はると', '', '', '');
-insert into studentssample_test values( 14, 3, 5, 2, '増田　陸', 'ますだ　りく', '', '', '');
-insert into studentssample_test values( 15, 3, 5, 3, '岩田　礼', 'いわた　れい', '', 'ボランティア活動', '');
+insert into students values( 13, 3, 5, 1, '小林　大翔', 'こばやし　はると', '', '', '');
+insert into students values( 14, 3, 5, 2, '増田　陸', 'ますだ　りく', '', '', '');
+insert into students values( 15, 3, 5, 3, '岩田　礼', 'いわた　れい', '', 'ボランティア活動', '');
 
 /*6組*/
-insert into studentssample_test values( 16, 3, 6, 1, '永井　匠', 'ながい　たくみ', '', '', '授業中に眠気から集中力を欠く場面が散見される。');
-insert into studentssample_test values( 17, 3, 6, 2, '西川　俊', 'にしかわ　しゅん', '', '', '');
-insert into studentssample_test values( 18, 3, 6, 3, '伊藤　郁美', 'いとう　いくみ', '', '', '');
+insert into students values( 16, 3, 6, 1, '永井　匠', 'ながい　たくみ', '', '', '授業中に眠気から集中力を欠く場面が散見される。');
+insert into students values( 17, 3, 6, 2, '西川　俊', 'にしかわ　しゅん', '', '', '');
+insert into students values( 18, 3, 6, 3, '伊藤　郁美', 'いとう　いくみ', '', '', '');
 
 
 /*2学年*/
 /*1組*/
-insert into studentssample_test values( 19, 2, 1, 1, '岸　孝之', 'きし　たかゆき', '', '', '');
-insert into studentssample_test values( 20, 2, 1, 2, '小林　誠', 'こばやし　まこと', '', '', '');
-insert into studentssample_test values( 21, 2, 1, 3, '小山　小春', 'こやま　こはる', '', '柔道部全国大会出場', '');
+insert into students values( 19, 2, 1, 1, '岸　孝之', 'きし　たかゆき', '', '', '');
+insert into students values( 20, 2, 1, 2, '小林　誠', 'こばやし　まこと', '', '', '');
+insert into students values( 21, 2, 1, 3, '小山　小春', 'こやま　こはる', '', '柔道部全国大会出場', '');
 
 /*2組*/
-insert into studentssample_test values( 22, 2, 2, 1, '森　琢磨', 'もり　たくま', '停学', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
-insert into studentssample_test values( 23, 2, 2, 2, '古賀　涼', 'こが　すず', '休学', '', '');
-insert into studentssample_test values( 24, 2, 2, 3, '坂本　紗耶香', 'さかもと　さやか', '', 'ボランティア活動', '');
+insert into students values( 22, 2, 2, 1, '森　琢磨', 'もり　たくま', '停学', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
+insert into students values( 23, 2, 2, 2, '古賀　涼', 'こが　すず', '休学', '', '');
+insert into students values( 24, 2, 2, 3, '坂本　紗耶香', 'さかもと　さやか', '', 'ボランティア活動', '');
 
 /*3組*/
-insert into studentssample_test values( 25, 2, 3, 1, '大野　青空', 'おおの　そら', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
-insert into studentssample_test values( 26, 2, 3, 2, '藤井　敬', 'ふじい　けい', '', '', '');
-insert into studentssample_test values( 27, 2, 3, 3, '佐野　静香', 'さの　しずか', '', '', '');
+insert into students values( 25, 2, 3, 1, '大野　青空', 'おおの　そら', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 26, 2, 3, 2, '藤井　敬', 'ふじい　けい', '', '', '');
+insert into students values( 27, 2, 3, 3, '佐野　静香', 'さの　しずか', '', '', '');
 
 /*4組*/
-insert into studentssample_test values( 28, 2, 4, 1, '青木　春斗', 'あおき　はると', '', 'ボランティア活動', '');
-insert into studentssample_test values( 29, 2, 4, 2, '岡崎　壮太', 'おかざき　そうた', '', '', '');
-insert into studentssample_test values( 30, 2, 4, 3, '杉山　香里', 'すぎやま　かおり', '', '', '');
+insert into students values( 28, 2, 4, 1, '青木　春斗', 'あおき　はると', '', 'ボランティア活動', '');
+insert into students values( 29, 2, 4, 2, '岡崎　壮太', 'おかざき　そうた', '', '', '');
+insert into students values( 30, 2, 4, 3, '杉山　香里', 'すぎやま　かおり', '', '', '');
 
 /*5組*/
-insert into studentssample_test values( 31, 2, 5, 1, '加藤　優斗', 'かとう　ゆうと', '', '男子バスケットボール部県大会出場', '');
-insert into studentssample_test values( 32, 2, 5, 2, '川口　花蓮', 'かわぐち　かれん', '', '', '');
-insert into studentssample_test values( 33, 2, 5, 3, '喜田　楓', 'きた　かえで', '', '', '');
+insert into students values( 31, 2, 5, 1, '加藤　優斗', 'かとう　ゆうと', '', '男子バスケットボール部県大会出場', '');
+insert into students values( 32, 2, 5, 2, '川口　花蓮', 'かわぐち　かれん', '', '', '');
+insert into students values( 33, 2, 5, 3, '喜田　楓', 'きた　かえで', '', '', '');
 
 /*6組*/
-insert into studentssample_test values( 34, 2, 6, 1, '柴田　玲央', 'しばた　れお', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
-insert into studentssample_test values( 35, 2, 6, 2, '谷口　晴喜', 'たにぐち　はるき', '', '', '');
-insert into studentssample_test values( 36, 2, 6, 3, '遠藤　悦子', 'えんどう　えつこ', '', '女子卓球部県大会出場', '');
+insert into students values( 34, 2, 6, 1, '柴田　玲央', 'しばた　れお', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
+insert into students values( 35, 2, 6, 2, '谷口　晴喜', 'たにぐち　はるき', '', '', '');
+insert into students values( 36, 2, 6, 3, '遠藤　悦子', 'えんどう　えつこ', '', '女子卓球部県大会出場', '');
 
 /*1学年*/
 /*1組*/
-insert into studentssample_test values( 37, 1, 1, 1, '安藤　治', 'あんどう　はる', '', '', '');
-insert into studentssample_test values( 38, 1, 1, 2, '金子　翔琉, 'かねこ　かける', '', '', '');
-insert into studentssample_test values( 39, 1, 1, 3, '大久保　恵那', 'おおくぼ　えな', '', 'ボランティア活動', '');
+insert into students values( 37, 1, 1, 1, '安藤　治', 'あんどう　はる', '', '', '');
+insert into students values( 38, 1, 1, 2, '金子　翔琉, 'かねこ　かける', '', '', '');
+insert into students values( 39, 1, 1, 3, '大久保　恵那', 'おおくぼ　えな', '', 'ボランティア活動', '');
 
 /*2組*/
-insert into studentssample_test values( 40, 1, 2, 1, '飯田　龍', 'いしだ　りゅう', '', '', '');
-insert into studentssample_test values( 41, 1, 2, 2, '福田　流星', 'ふくだ　りゅうせい', '', '', '');
-insert into studentssample_test values( 42, 1, 2, 3, '秋山　茜', 'あきやま　あかね', '', '', '');
+insert into students values( 40, 1, 2, 1, '飯田　龍', 'いしだ　りゅう', '', '', '');
+insert into students values( 41, 1, 2, 2, '福田　流星', 'ふくだ　りゅうせい', '', '', '');
+insert into students values( 42, 1, 2, 3, '秋山　茜', 'あきやま　あかね', '', '', '');
 
 /*3組*/
-insert into studentssample_test values( 43, 1, 3, 1, '竹内　真人', 'たけうち　まさと', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
-insert into studentssample_test values( 44, 1, 3, 2, '平田　和真', 'ひらた　かずま', '', '', '');
-insert into studentssample_test values( 45, 1, 3, 3, '津田　司', 'つだ　つかさ', '', '', '');
+insert into students values( 43, 1, 3, 1, '竹内　真人', 'たけうち　まさと', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
+insert into students values( 44, 1, 3, 2, '平田　和真', 'ひらた　かずま', '', '', '');
+insert into students values( 45, 1, 3, 3, '津田　司', 'つだ　つかさ', '', '', '');
 
 /*4組*/
-insert into studentssample_test values( 46, 1, 4, 1, '小松　圭太', 'こまつ　けいた', '', '', '');
-insert into studentssample_test values( 47, 1, 4, 2, '白石　鈴', 'しらいし　すず', '', '', '');
-insert into studentssample_test values( 48, 1, 4, 3, '筒井　千尋', 'つつい　ちひろ', '', 'ボランティア活動', '');
+insert into students values( 46, 1, 4, 1, '小松　圭太', 'こまつ　けいた', '', '', '');
+insert into students values( 47, 1, 4, 2, '白石　鈴', 'しらいし　すず', '', '', '');
+insert into students values( 48, 1, 4, 3, '筒井　千尋', 'つつい　ちひろ', '', 'ボランティア活動', '');
 
 /*5組*/
-insert into studentssample_test values( 49, 1, 5, 1, '黒田　琉希', 'くろだ　りゅうき', '', '', '');
-insert into studentssample_test values( 50, 1, 5, 2, '和田　日向', 'わだ　ひなた', '', '', '');
-insert into studentssample_test values( 51, 1, 5, 3, '戸田　天', 'とだ　てん', '', '', '授業中に居眠りをする場面が複数回見られる。');
+insert into students values( 49, 1, 5, 1, '黒田　琉希', 'くろだ　りゅうき', '', '', '');
+insert into students values( 50, 1, 5, 2, '和田　日向', 'わだ　ひなた', '', '', '');
+insert into students values( 51, 1, 5, 3, '戸田　天', 'とだ　てん', '', '', '授業中に居眠りをする場面が複数回見られる。');
 
 
 /*6組*/
-insert into studentssample_test values( 52, 1, 6, 1, '柳　陽介', 'やなぎ　ようすけ', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
-insert into studentssample_test values( 53, 1, 6, 2, '後藤　ことね', 'ごとう　ことね', '', 'ボランティア活動', '');
-insert into studentssample_test values( 54, 1, 6, 3, '田辺　凛', 'たなべ　りん', '', '', '');
+insert into students values( 52, 1, 6, 1, '柳　陽介', 'やなぎ　ようすけ', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 53, 1, 6, 2, '後藤　ことね', 'ごとう　ことね', '', 'ボランティア活動', '');
+insert into students values( 54, 1, 6, 3, '田辺　凛', 'たなべ　りん', '', '', '');

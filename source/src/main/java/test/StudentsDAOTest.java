@@ -35,7 +35,7 @@ public class StudentsDAOTest {
 
 		// select()のテスト1
 		System.out.println("---------- select()のテスト1 ----------");
-		List<Students> stListSel1 = dao.select(new Students(70, 0, 0, 0, "", "", "", "", ""));
+		List<Students> stListSel1 = dao.select(new Students(-1, -1, -1, -1, "栃木", "", "", "", ""));
 		StudentsDAOTest.showAllData(stListSel1);
 
 		// select()のテスト2

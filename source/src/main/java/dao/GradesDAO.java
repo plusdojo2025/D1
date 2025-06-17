@@ -21,34 +21,34 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Grades "
-					+ "WHERE gradesId = ? AND studentId = ? AND subjectId = ? AND score like ? "
+					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? AND score like ? "
 					+ "AND testType like ? year(date) like ? AND month(date) like ? ;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 
-			if (gs.getGradesId() != -1) {
+			if (gs.getGradesId() > 0) {
 				pStmt.setString(1, "%" + gs.getGradesId() + "%");
 			} else {
 				pStmt.setString(1, "%");
 			}
-			if (gs.getStudentId() != -1) {
+			if (gs.getStudentId() > 0) {
 				pStmt.setString(2, "%" + gs.getStudentId() + "%");
 			} else {
 				pStmt.setString(2, "%");
 			}
-			if (gs.getSubjectId() != -1) {
+			if (gs.getSubjectId() > 0) {
 				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
 			} else {
 				pStmt.setString(3, "%");
 			}
-			if (gs.getScore() != -1) {
+			if (gs.getScore() > 0) {
 				pStmt.setString(4, "%" + gs.getScore() + "%");
 			} else {
 				pStmt.setString(4, "%");
@@ -58,12 +58,12 @@ public class GradesDAO {
 			} else {
 				pStmt.setString(5, "%");
 			}
-			if (gs.getYear() != -1) {
+			if (gs.getYear() > 0) {
 				pStmt.setString(6, "%" + gs.getYear() + "%");
 			} else {
 				pStmt.setString(6, "%");
 			}
-			if (gs.getMonth() != -1) {
+			if (gs.getMonth() > 0) {
 				pStmt.setString(7, "%" + gs.getMonth() + "%");
 			} else {
 				pStmt.setString(7, "%");
@@ -116,7 +116,7 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -188,12 +188,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Grades SET score=?, testType=? WHERE gradesId=? AND studentId=? AND subjectId=?;";
+			String sql = "UPDATE Grades SET score = ?, testType = ? WHERE gradesId like ? AND studentId like ? AND subjectId like ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -259,7 +259,7 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -303,7 +303,7 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
