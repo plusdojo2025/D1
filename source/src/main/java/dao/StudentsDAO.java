@@ -26,7 +26,7 @@ public class StudentsDAO {
 					"root", "password");
 			// SQL文を準備する
 			String sql = "SELECT * FROM Students "     //変更箇所//
-					+ "WHERE studentId like ? year like ? AND grade like ? AND "
+					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
 					+ "classId = ? AND studentNum = ? AND "
 					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
 					+ "extracurricularActivities = ? AND attitude = ? ";

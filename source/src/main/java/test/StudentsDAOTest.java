@@ -18,6 +18,7 @@ public class StudentsDAOTest {
 		
 		for (Students st : stList) {
 			System.out.println("学生ID：" + st.getStudentId());
+			Syste,.out.println("入学年：" + st.getYear());
 			System.out.println("学年：" + st.getGrade());
 			System.out.println("クラスID：" + st.getClassId());
             System.out.println("出席番号：" + st.getStudentNum());
@@ -35,7 +36,7 @@ public class StudentsDAOTest {
 
 		// select()のテスト1
 		System.out.println("---------- select()のテスト1 ----------");
-		List<Students> stListSel1 = dao.select(new Students(-1, -1, -1, -1, "栃木", "", "", "", ""));
+		List<Students> stListSel1 = dao.select(new Students(-1, -1, -1, -1, -1, "石田　悠馬", "いしだ　ゆうま", "", "", ""));
 		StudentsDAOTest.showAllData(stListSel1);
 
 		// select()のテスト2
