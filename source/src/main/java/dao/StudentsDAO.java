@@ -26,15 +26,25 @@ public class StudentsDAO {
 					"root", "password");
 			// SQL文を準備する
 			String sql = "SELECT * FROM studentssample_test "     //変更箇所//
-					+ "WHERE studentId = ? AND grade = ? AND "
+					+ "WHERE studentId like ? AND grade like ? AND "
 					+ "classId = ? AND studentNum = ? AND "
 					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
 					+ "extracurricularActivities = ? AND attitude = ? ";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
-		
-			pStmt.setInt(1, st.getStudentId());
-			pStmt.setInt(2, st.getGrade());
+
+            if (st.getStudentId() >0) {
+        		pStmt.setString(1, ""+ st.getStudentId());
+            } else {
+        		pStmt.setString(1, "%");
+            }
+            if (st.getGrade() >0) {
+        		pStmt.setString(2, ""+ st.getGrade());
+            } else {
+        		pStmt.setString(2, "%");
+            }
+            
+
 			pStmt.setInt(3, st.getClassId());
 			pStmt.setInt(4, st.getStudentNum());
 			
@@ -193,15 +203,15 @@ public class StudentsDAO {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
+			// データベースに接続する                                      変更箇所
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			
-			// SQL文を準備する　　変更箇所
+			// SQL文を準備する  変更箇所
 			String sql = "UPDATE studentssample_test SET grade=?, classId=?, "
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
-					+ "extracurricularActivities=?, attitude=? WHERE studentId=?, ";
+					+ "extracurricularActivities=?, attitude=? WHERE studentId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
  
 			//set grade=?  where studentId=?
@@ -211,7 +221,7 @@ public class StudentsDAO {
 			pStmt.setInt(1, st.getGrade());
 			pStmt.setInt(2, st.getClassId());
 			pStmt.setInt(3, st.getStudentNum());
-			//pStmt.setString(, st.getName());
+			//pStmt.setString(4, st.getName());
 			//pStmt.setString(5, st.getNameRuby());
 			//pStmt.setString(6, st.getEnrollmentStatus());
 			//pStmt.setString(7, st.getExtracurricularActivities());
@@ -288,8 +298,8 @@ public class StudentsDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			// SQL文を準備する　　　　変更箇所
-			String sql = "DELETE FROM studentssample_test WHERE studentId=? ;";
+			// SQL文を準備する            変更箇所
+			String sql = "DELETE FROM studentssample_test WHERE studentId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
