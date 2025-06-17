@@ -37,6 +37,20 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("subjectId", 1);
 		}
 		
+		if (request.getParameter("yearId") != null) {
+			String year = request.getParameter("yearId");
+			request.setAttribute("yearId", year);
+		} else {
+			request.setAttribute("yearId", 1);
+		}
+		
+		if (request.getParameter("monthId") != null) {
+			String month = request.getParameter("monthId");
+			request.setAttribute("monthId", month);
+		} else {
+			request.setAttribute("monthId", 1);
+		}
+		
 		StudentsDAO stuDAO = new StudentsDAO();
 		
 		String studentId = request.getParameter("studentId");
