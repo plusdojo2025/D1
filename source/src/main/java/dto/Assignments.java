@@ -27,6 +27,19 @@ public class Assignments implements Serializable{
 		
 	}
 	
+	public Assignments(int studentId,int subjectId,int createdYear,int createdMonth) {
+		
+		this.assignmentId = -1;
+		this.studentId = studentId;
+		this.subjectId = subjectId;
+		this.submissionStatus = "";
+		this.content = "";
+		this.createdYear = createdYear;
+		this.createdMonth = createdMonth;
+		this.submissionDate = new Date();
+		
+	}
+	
 	public Assignments(int studentId,int subjectId) {
 		
 		this.assignmentId = -1;

@@ -77,7 +77,10 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("subjectList", subjectList);
 		
 		int classId = classList.get(0).getClassId();      //クラス
+		System.out.println(classId);
+		
 		int subjectId = subjectList.get(0).getSubjectId();      //教科Id
+		System.out.println(subjectId);
 		
 		//生徒情報を取得
 		StudentsDAO studentDao = new StudentsDAO();
