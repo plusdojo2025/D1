@@ -39,11 +39,12 @@ public class RegistScheduleServlet extends HttpServlet {
         String type = request.getParameter("type");
         String day_of_week = request.getParameter("day_of_week");
         String period = request.getParameter("period");
+        String classId = request.getParameter("classId");
         String content = request.getParameter("content");
 
         // 必須チェック（空ならエラー）
         if (isEmpty(year) || isEmpty(semester) || isEmpty(type)
-                || isEmpty(day_of_week) || isEmpty(period) || isEmpty(content)) {
+                || isEmpty(day_of_week) || isEmpty(period) || isEmpty(classId) || isEmpty(content)) {
 
         	request.setAttribute("error", "必須項目を入力してください");
 
@@ -53,6 +54,7 @@ public class RegistScheduleServlet extends HttpServlet {
             request.setAttribute("type", type);
             request.setAttribute("day_of_week", day_of_week);
             request.setAttribute("period", period);
+            request.setAttribute("classId", classId);
             request.setAttribute("content", content);
 
             request.getRequestDispatcher("/WEB-INF/jsp/regist_schedule.jsp").forward(request, response);

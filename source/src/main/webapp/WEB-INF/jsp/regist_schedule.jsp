@@ -4,12 +4,6 @@
   boolean hasError = (error != null && !error.isEmpty());
 %>
 
-
-<%
-    // テスト用：ここで強制的に例外を発生させる
-    throw new RuntimeException("テスト用エラー");
-%>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,7 +22,7 @@
       onsubmit="return validateForm();">
 
 
-    <h2>スケジュール登録フォーム</h2>
+    <h1>スケジュール登録フォーム</h1>
     
 <%
   String errorStyle = "color: red; font-weight: bold; margin-bottom: 10px;" + (hasError ? "" : " display:none;");
@@ -38,7 +32,7 @@
 </p>
 
 
-	<label for="year">年度：
+	<label for="year">年度:
 <%
     String selectedYear = (String) request.getAttribute("year");
     if (selectedYear == null) {
@@ -79,7 +73,7 @@
     }
 %>
 
-<label>種別：</label><br>
+<label>種別:</label><br>
 <span style="display: inline-block; margin-right: 10px;">
   <input type="radio" id="type-授業" name="type" value="授業" <%= "授業".equals(selectedType) ? " checked" : "" %>>
   <label for="type-授業">授業</label>
@@ -88,11 +82,11 @@
   <input type="radio" id="type-授業以外" name="type" value="授業以外" <%= "授業以外".equals(selectedType) ? " checked" : "" %>>
   <label for="type-授業以外">授業以外</label>
 </span>
-
+<br><br>
 
 <label for="day_of_week">曜日:
-<%
 
+<%
 String selectedDay = (String) request.getAttribute("day_of_week");
 if (selectedDay == null) {
     selectedDay = request.getParameter("day_of_week");
@@ -142,6 +136,35 @@ String[] days = {"月", "火", "水", "木", "金", "土", "日"};
     }
 %>
 
+<%
+String selectedClassId = (String)request.getAttribute("classId");
+if(selectedClassId == null) {
+	selectedClassId = request.getParameter("classId");
+}
+
+String[] grades = {"1年", "2年", "3年"};
+String[] groups = {"A組", "B組", "C組", "D組", "E組", "F組"};
+%>
+
+<label for="classId">クラス
+<select id="classId" name="classId">
+<option value="">-- 選択してください --</option>
+<%
+for(String grade : grades) {
+	for(String group : groups) {
+		String classOption = grade + group;
+		String selected = classOption .equals(selectedClassId) ? " selected" : "";
+%>
+<option value="<%=classOption %>"<%= selected %>><%= classOption %></option>
+<% 
+			
+	}
+}
+%>
+</select>
+</label>
+<br><br>
+
 <label for="content">各コマの予定:
   <input type="text" id="content" name="content" maxlength="100" value="<%= contentValue != null ? contentValue : "" %>">
 </label>
@@ -177,24 +200,21 @@ function validateForm() {
 	  const content = document.getElementById('content');
 
 	  const errorMessage = document.getElementById('jsErrorMessage');
-	  const alwaysMessage = document.getElementById('alwaysMessage');
 
 	  if (!year.value || !semester.value || !type || !day.value || !period.value || content.value.trim() === '') {
 	    errorMessage.textContent = '必須項目を入力してください';
 	    errorMessage.style.display = 'block';
 
-	    // グレーのメッセージはそのまま表示し続けるので操作しない
-	    // alwaysMessage.style.display = 'block'; // ←不要です
+	    // スクロールしてエラー位置に移動
+	    errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
 	    return false;
 	  } else {
 	    errorMessage.textContent = '';
 	    errorMessage.style.display = 'none';
-
 	    return true;
 	  }
 	}
-
 </script>
 
 </body>

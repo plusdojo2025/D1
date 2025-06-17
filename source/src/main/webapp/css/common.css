@@ -7,147 +7,126 @@
   color: #333;
 }
 
+/*フォントをGoogle Fonts Poppinsに変更*/
 body {
-  background-color: #f9fafe;
-  line-height: 1.6;
-  font-size: 16px;
-  min-height: 60vh;
-  padding:0px;
+	font-family: 'Poppins', sans-serif;
+  background-color:linear-gradient(135deg,#e0f7fa, #ffffff);
+  color:#2c3e50;
+  min-height:70vh;
+  padding: 40px 20px;
 }
 
-/* ======= Container ======= */
+/* ======= Container ======= グラデーション背景*/
 .container {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
-  background: #fff;
-  padding: 30px 40px;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10 25px rgba(0,0,0,0.1);
+}
+  .contaner:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* ======= Headings ======= */
-h1, h2, h3 {
-  color: #004080;
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
+/* 見出し */
 h1 {
-  font-size: 2.2rem;
+	font-size: 2.5rem;
+	border-bottom: 3px solid #2980b9;
+	padding-bottom: 8px;
 }
 
 h2 {
-  font-size: 1.8rem;
+	font-size: 1.8rem;
 }
 
 h3 {
-  font-size: 1.4rem;
+	font-size: 1.5rem;
 }
 
-/* ======= Forms ======= */
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
+h1, h2, h3 {
+  color: #2980b9;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
+/*フォームの入力欄*/
 input[type="text"],
-input[type="email"],
-input[type="password"],
-select,
-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 18px;
-  border: 1.8px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+select {
+	width: 100%;
+	padding: 14px 16px;
+	margin-bottom: 22px;
+	border: 1.5px solid #bdc3c7;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	transition: all 0.3s ease;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-select:focus,
-textarea:focus {
-  border-color: #004080;
-  outline: none;
+select:focus {
+	border-color: #3498db;
+	box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+	outline: none;
 }
 
-/* ======= Buttons ======= */
-button,
+/*ラベル*/
+label {
+	font-weight:600;
+	margin-bottom:8px;
+	display: black;
+	color: #34495e;
+}
+
+/*ボタン*/
+botton,
 input[type="submit"],
 input[type="reset"] {
-  background-color: #004080;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-right: 10px;
+	back-ground: linear-gradient(45deg, #3498db, #2980b9);
+	color: white;
+	border: none;
+	padding: 14px 28px;
+	font-size:1.1rem;
+	border-radius:14px;
+	cursor: pointer;
+	transition: background 0.4s ease, transform 0.3s ease;
+	box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+	 margin-right: 12px;
 }
 
 button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #002952;
+	background: linear-gradient(45deg, #2980b9, #1c5980);
+	transform: scale(1.05);
+	box-shadow: 0 8px 20px rgba(41, 128, 185, 0.6);
 }
 
-/* ======= Radio and Checkbox ======= */
-input[type="radio"],
-input[type="checkbox"] {
-  margin-right: 6px;
-  cursor: pointer;
+/* ラジオボタン */
+input[type="radio"]　{
+	accent-color: #3498db;
+	cursor: ponter;
+	margin-right:8px;
 }
 
-/* ======= Messages ======= */
+/* エラーメッセージ */
 .message-error {
-  color: #cc0000;
+  color: #e74c3c;
   font-weight: 700;
   margin-bottom: 20px;
+  font-size: 1.05rem;
 }
-
-.message-info {
-  color: #007acc;
-  margin-bottom: 20px;
-  font-style: italic;
-}
-
-/* ======= Table Styles (for schedules, lists, etc.) ======= */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-table thead {
-  background-color: #004080;
-  color: white;
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-}
-
-table tbody tr:hover {
-  background-color: #f0f8ff;
-}
-
-/* ======= Responsive ======= */
-@media (max-width: 600px) {
-  .container {
-    padding: 20px;
-  }
-  
-  input[type="submit"],
-  input[type="reset"],
-  button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+/*　メディアクエリ(スマホ対応) */
+@media(max-width: 600px) {
+	.container {
+	padding: 30px 20px;
+	}
+	
+	button,
+	input[type="submit"],
+	input[type="reset"] {
+	width: 100%;
+	margin: 10px 0;
+	}
 }
