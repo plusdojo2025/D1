@@ -33,7 +33,7 @@ public class AssignmentsDAO {
 					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? AND submissionStatus like ? "
 					+ "AND content = ? year(createdDate) like ? AND month(createdDate) like ? "
 					+ "AND year(submissionDate) like ? AND month(submissionDate) like ? "
-					+ "date(submissionDate) like ? ;";
+					+ "date(submissionDate) like ? ";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
