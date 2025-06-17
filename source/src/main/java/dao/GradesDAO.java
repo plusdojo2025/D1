@@ -28,7 +28,7 @@ public class GradesDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Grades "
 					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? AND score like ? "
-					+ "AND testType like ? year(date) like ? AND month(date) like ? ;";
+					+ "AND testType like ? year(date) like ? AND month(date) like ? ";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -121,7 +121,7 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Grades VALUES (?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO Grades VALUES (?, ?, ?, ?, ?, ?) ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -193,7 +193,8 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Grades SET score = ?, testType = ? WHERE gradesId like ? AND studentId like ? AND subjectId like ?;";
+			String sql = "UPDATE Grades SET score = ?, testType = ? "
+					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -264,7 +265,7 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Grades WHERE gradesId=?;";
+			String sql = "DELETE FROM Grades WHERE gradesId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -308,7 +309,7 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Grades WHERE gradesId=?;";
+			String sql = "DELETE FROM Grades WHERE gradesId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

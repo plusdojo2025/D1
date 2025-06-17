@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import dto.AttendanceRecords;
 
@@ -42,19 +42,19 @@ public class AttendanceRecordsDAO {
 			} else {
 				pStmt.setString(1, "%");
 			}
-			
+
 			if (_ar.getClassId() > 0) {
 				pStmt.setString(2, "" + _ar.getClassId());
 			} else {
 				pStmt.setString(2, "%");
 			}
-			
+
 			if (_ar.getYear() > 0) {
 				pStmt.setString(3, "" + _ar.getYear());
 			} else {
 				pStmt.setString(3, "%");
 			}
-			
+
 			if (_ar.getMonth() > 0 && _ar.getMonth() <= 12) {
 				pStmt.setString(4, "" + _ar.getMonth());
 			} else {
@@ -199,7 +199,7 @@ public class AttendanceRecordsDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, studentId);
 			pStmt.setInt(2, subjectId);
-			
+
 			if (studentId > 0) {
 				pStmt.setString(1, "" + studentId);
 			} else {
@@ -248,7 +248,7 @@ public class AttendanceRecordsDAO {
 	}
 
 	// 学年ごとの検索
-	public List<AttendanceRecords> select_Grade(int grade, int classId, int month, int subjectId) {
+	public List<AttendanceRecords> select_Grade(int grade, String classId, int month, int subjectId) {
 		Connection conn = null;
 		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
 
@@ -267,25 +267,25 @@ public class AttendanceRecordsDAO {
 					+ "WHERE grade LIKE ? AND classId LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+
 			if (grade > 0 && grade <= 3) {
 				pStmt.setString(1, "" + grade);
 			} else {
 				pStmt.setString(1, "%");
 			}
-			
-			if (classId > 0) {
+
+			if (classId != null) {
 				pStmt.setString(2, "" + classId);
 			} else {
 				pStmt.setString(2, "%");
 			}
-			
+
 			if (month > 0 && month <= 12) {
 				pStmt.setString(3, "" + month);
 			} else {
 				pStmt.setString(3, "%");
 			}
-			
+
 			if (subjectId > 0) {
 				pStmt.setString(4, "" + subjectId);
 			} else {
@@ -348,29 +348,29 @@ public class AttendanceRecordsDAO {
 					+ "WHERE year(date) LIKE ? AND classId LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+
 			int year;
 			if (month <= 3) year = fiscalYear + 1; // 年度から年に修正
 			else year = fiscalYear;
-			
+
 			if (year > 0) {
 				pStmt.setString(1, "" + year);
 			} else {
 				pStmt.setString(1, "%");
 			}
-			
+
 			if (classId > 0) {
 				pStmt.setString(2, "" + classId);
 			} else {
 				pStmt.setString(2, "%");
 			}
-			
+
 			if (month > 0 && month <= 12) {
 				pStmt.setString(3, "" + month);
 			} else {
 				pStmt.setString(3, "%");
 			}
-			
+
 			if (subjectId > 0) {
 				pStmt.setString(4, "" + subjectId);
 			} else {
@@ -506,7 +506,7 @@ public class AttendanceRecordsDAO {
 			if (_ar.getStatus() != null) {
 				pStmt.setString(1, _ar.getStatus());
 			} else {
-				pStmt.setString(1, "");
+				pStmt.setString(1, "%");
 			}
 
 			if (_ar.getRemarks() != null) {
@@ -514,13 +514,13 @@ public class AttendanceRecordsDAO {
 			} else {
 				pStmt.setString(2, "");
 			}
-			
+
 			if (_ar.getStudentId() > 0) {
 				pStmt.setString(3, "" + _ar.getStudentId());
 			} else {
 				pStmt.setString(3, "");
 			}
-			
+
 			if (_ar.getSubjectId() > 0) {
 				pStmt.setString(4, "" + _ar.getSubjectId());
 			} else {
@@ -636,5 +636,237 @@ public class AttendanceRecordsDAO {
 
 		// 結果を返す
 		return result;
+	}
+
+	// 引数で指定した生徒の出席日数を返す
+	public int GetAttendedNum(int studentId) {
+		Connection conn = null;
+		int count = -1;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
+					+ "WHERE studentId LIKE ? AND status = '%';";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("AttendedNum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 引数で指定した生徒の出席すべき日数を返す
+	public int GetShouldAttendedNum(int studentId) {
+		Connection conn = null;
+		int count = -1;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
+					+ "WHERE studentId LIKE ?;";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("AttendedNum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 出席率を百分率/小数点第二位までのString型で返す
+	public String GetAttendedRate(int studentId) {
+		float attendedNum = GetAttendedNum(studentId);
+		float shouldAttendedNum = GetShouldAttendedNum(studentId);
+
+		String rate = String.format("%.1f", (attendedNum / shouldAttendedNum * 100.0f));
+		return rate;
+	}
+
+	// 引数で指定した生徒/科目の出席日数を返す
+	public int GetAttendedNum(int studentId, int subjectId) {
+		Connection conn = null;
+		int count = -1;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
+					+ "WHERE studentId LIKE ? AND subjectId LIKE ? AND status = '%';";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (subjectId > 0) {
+				pStmt.setString(2, "" + subjectId);
+			} else {
+				pStmt.setString(2, "%");
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("AttendedNum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 引数で指定した生徒/科目の出席すべき日数を返す
+	public int GetShouldAttendedNum(int studentId, int subjectId) {
+		Connection conn = null;
+		int count = -1;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
+					+ "WHERE studentId LIKE ? AND subjectId LIKE ?;";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (subjectId > 0) {
+				pStmt.setString(2, "" + subjectId);
+			} else {
+				pStmt.setString(2, "%");
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("AttendedNum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 出席率を百分率/小数点第二位までのString型で返す
+	public String GetAttendedRate(int studentId, int subjectId) {
+		float attendedNum = GetAttendedNum(studentId, subjectId);
+		float shouldAttendedNum = GetShouldAttendedNum(studentId, subjectId);
+
+		String rate = String.format("%.1f", (attendedNum / shouldAttendedNum * 100.0f));
+		return rate;
 	}
 }

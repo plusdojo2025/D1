@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +95,148 @@ public class InterviewDAO {
 		return itvList;
 	}
 
+	public List<Interview> select_thisYear(int studentId) {
+		Connection conn = null;
+		List<Interview> itvList = new ArrayList<Interview>();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT * FROM Interview "
+					+ "WHERE studentId LIKE ? AND "
+					+ "date >= '?-4-1' AND date < '?-3-31';";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			
+			Calendar cal = Calendar.getInstance();
+			if (cal.get(Calendar.MONTH) >= 4) {
+				pStmt.setInt(2, cal.get(Calendar.YEAR));
+				pStmt.setInt(3, cal.get(Calendar.YEAR) + 1);
+			} else {
+				pStmt.setInt(2, cal.get(Calendar.YEAR) - 1);
+				pStmt.setInt(3, cal.get(Calendar.YEAR));
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = sdFormat.parse(rs.getString("date"));
+
+				Interview itv = new Interview(rs.getInt("interviewId"), rs.getInt("teacherId"), date, 
+						rs.getInt("studentId"), rs.getString("contents"), rs.getString("remarks"), rs.getInt("subjectId"));
+				itvList.add(itv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			itvList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			itvList = null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			itvList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					itvList = null;
+				}
+			}
+		}
+
+		// 結果を返す
+		return itvList;
+	}
+	
+	public List<Interview> select_lastYear(int studentId) {
+		Connection conn = null;
+		List<Interview> itvList = new ArrayList<Interview>();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT * FROM Interview "
+					+ "WHERE studentId LIKE ? AND "
+					+ "date >= '?-4-1' AND date < '?-3-31';";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			
+			Calendar cal = Calendar.getInstance();
+			if (cal.get(Calendar.MONTH) >= 4) {
+				pStmt.setInt(2, cal.get(Calendar.YEAR) - 1);
+				pStmt.setInt(3, cal.get(Calendar.YEAR));
+			} else {
+				pStmt.setInt(2, cal.get(Calendar.YEAR) - 2);
+				pStmt.setInt(3, cal.get(Calendar.YEAR) - 1);
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = sdFormat.parse(rs.getString("date"));
+
+				Interview itv = new Interview(rs.getInt("interviewId"), rs.getInt("teacherId"), date, 
+						rs.getInt("studentId"), rs.getString("contents"), rs.getString("remarks"), rs.getInt("subjectId"));
+				itvList.add(itv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			itvList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			itvList = null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			itvList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					itvList = null;
+				}
+			}
+		}
+
+		// 結果を返す
+		return itvList;
+	}
+	
 	public boolean insert(Interview _itv) {
 		Connection conn = null;
 		boolean result = false;

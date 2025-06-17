@@ -3,8 +3,8 @@
 use D1;
 
 create table subject(
-    gradesId int primary key auto_increment,
-    testType varchar(30) not null
+    subjectId int primary key auto_increment,
+    subjectName varchar(30) not null
  );
  
  /*名刺データの追加*/
