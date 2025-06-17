@@ -21,11 +21,11 @@ public class StudentsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			// SQL文を準備する
-			String sql = "SELECT * FROM studentssample_test "     //変更箇所//
+			String sql = "SELECT * FROM Students "     //変更箇所//
 					+ "WHERE studentId like ? AND grade like ? AND "
 					+ "classId = ? AND studentNum = ? AND "
 					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
@@ -126,13 +126,13 @@ public class StudentsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	
 			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 
 			// SQL文を準備する      変更箇所
-			String sql = "INSERT INTO studentssample_test VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
 			
 			// SQL文を完成させる			
@@ -204,12 +204,12 @@ public class StudentsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する                                      変更箇所
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			
 			// SQL文を準備する  変更箇所
-			String sql = "UPDATE studentssample_test SET grade=?, classId=?, "
+			String sql = "UPDATE Students SET grade=?, classId=?, "
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
 					+ "extracurricularActivities=?, attitude=? WHERE studentId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
@@ -302,12 +302,12 @@ public class StudentsDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　変更箇所
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentssample_test?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する            変更箇所
-			String sql = "DELETE FROM studentssample_test WHERE studentId=? ";
+			String sql = "DELETE FROM Students WHERE studentId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
