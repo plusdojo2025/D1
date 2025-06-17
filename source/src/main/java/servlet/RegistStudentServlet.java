@@ -25,7 +25,9 @@ public class RegistStudentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	
+	 protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	
 			throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
 		HttpSession session = request.getSession();
@@ -43,6 +45,7 @@ public class RegistStudentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
