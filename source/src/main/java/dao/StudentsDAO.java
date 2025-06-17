@@ -27,9 +27,7 @@ public class StudentsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Students "     //変更箇所//
 					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
-					+ "classId = ? AND studentNum = ? AND "
-					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
-					+ "extracurricularActivities = ? AND attitude = ? ";
+					+ "classId = ? AND studentNum = ?;";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 
@@ -52,36 +50,6 @@ public class StudentsDAO {
 
 			pStmt.setInt(4, st.getClassId());
 			pStmt.setInt(5, st.getStudentNum());
-			
-            if (st.getName() != null) {
-            		pStmt.setString(6, "%" + st.getName() + "%");
-            } else {
-            		pStmt.setString(6, "%");
-            }
-
-            if (st.getNameRuby() != null) {
-            		pStmt.setString(7, "%" + st.getNameRuby() + "%");
-            } else {
-            		pStmt.setString(7, "%");
-            }
-
-            if (st.getEnrollmentStatus() != null) {
-            		pStmt.setString(8, "%" + st.getEnrollmentStatus() + "%");
-            } else {
-            		pStmt.setString(8, "%");
-            }
-
-            if (st.getExtracurricularActivities() != null) {
-            		pStmt.setString(9, "%" + st.getExtracurricularActivities() + "%");
-            } else {
-            		pStmt.setString(9, "%");
-            }
-
-            if (st.getAttitude() != null) {
-            		pStmt.setString(10, "%" + st.getAttitude() + "%");
-            } else {
-            		pStmt.setString(10, "%");
-            }	
 			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();  
@@ -228,8 +196,8 @@ public class StudentsDAO {
 			
 			
 			// SQL文を完成させる
-			pStmt.setInt(1, st.getGrade());
-			pStmt.setInt(2, st.getYear());
+			pStmt.setInt(1, st.getYear());
+			pStmt.setInt(2, st.getGrade());
 			pStmt.setInt(3, st.getClassId());
 			pStmt.setInt(4, st.getStudentNum());
 
