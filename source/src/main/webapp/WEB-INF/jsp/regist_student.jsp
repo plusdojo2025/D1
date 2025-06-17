@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <title>生徒登録</title>
 <!-- CSSファイルをリンク -->
-<link rel="stylesheet" type="text/css" href="/webapp/css/common.css"> 
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/regist_student.css' />">
 </head>
 <body>
 <div class="wrapper">
@@ -16,20 +17,20 @@
 
 
     <ul id="nav">
-    <li><a href="/webapp/Servlet">生徒管理</a></li>
-    <li><a href="/webapp/InfoScheduleServlet">スケジュール</a></li>
-    <li><a href="/webapp/LoginServlet">ログアウト</a></li>
+    <li><a href="/D1/Servlet">生徒管理</a></li>
+    <li><a href="/D1/InfoScheduleServlet">スケジュール</a></li>
+    <li><a href="/D1//LoginServlet">ログアウト</a></li>
     </ul>
   <!-- ヘッダー（ここまで） -->
 
 
 <!-- メイン（ここから） -->
 <h2>新規登録</h2>
-<form id="regist_form" method="POST" action="/webapp/RegistStudentServlet">
+<form id="regist_form" method="POST" action="/D1/RegistStudentServlet">
   <table>
 	  <tr>
 		 <td>
-		    <label for="grade-select">学年<br>
+		    <label for="grade-select">学年
 		     <select name="grade" id="grade-select">
                       <option value="">学年</option>
                       <option value="1">1年</option>
@@ -43,7 +44,7 @@
 	  	 
 	  <tr>
 		 <td>	
-		    <label for="classId-select">クラス<br>
+		    <label for="classId-select">クラス
 		     <select name="classId" id="classId-select">
                       <option value="">クラス</option>
                       <option value="1">1組</option>
@@ -59,34 +60,44 @@
 
 	  <tr> 
 		 <td>
-		    <label>出席番号<br>
-		    <input type="text" name="studentNum">
+		    <label>出席番号（数字は半角のみ）
+		    <input type="text" name="studentNum" placeholder="例) 23"> 番
 		    </label>
-		</td>
-          </tr>
-          <tr>
+		 </td>
+      </tr>
+      <tr>
 		 <td>
-		    <label>氏名<br>
-		    <input type="text" name="name" placeholder="姓と名の間に全角1文字空けてください">
+		    <label>氏名
+		    <input type="text" name="name" placeholder="例) 山田　太郎">
 		    </label>
 		 </td> 
 	  </tr>
 	  <tr>	  
 		 <td>
-		    <label>ふりがな<br>
-		    <input type="text" name="nameRuby" placeholder="せいとめいの間に全角1文字空けてください">
+		    <label>ふりがな
+		    <input type="text" name="nameRuby" placeholder="例) やまだ　たろう">
 		    </label>
 		 </td>	    			    
 	  </tr>
 	  <tr>
+	     <td>
+	        <p><span class="zenkaku">※【氏名・ふりがな】は姓名の間に全角1文字空けてください</span></p>
+	     </td>
+	  </tr>
+	  <tr>
 		 <td colspan="2">
             <span id="error_message"></span>
-            <input type="submit" name="cancel" value="キャンセル">
-            <input type="submit" name="regist" value="登録">	    			         </td>
-          </tr>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <input type="submit" name="cancel" value="キャンセル" onclick="window.location.href='/D1/InfoScheduleServlet';">
+            <input type="submit" name="regist" value="登録">
+         </td>
+      </tr>
   </table>
 </form>     
-<!-- メイン（ここまで） -->
+<!-- メイン（ここまで）syussek -->
 
 <!-- フッター（ここから） -->
 
@@ -108,6 +119,11 @@ const nameRubyInput = document.getElementById('nameRuby');
 
 /* [登録]ボタンをクリックしたときの処理 */
 formObj.onsubmit = function() {
+  /* 学年を必須選択項目とします */
+  if (!formObj.grade.value) {
+	errorMessageObj.textContent = '※学年を選択してください';
+	return false;
+	  }	
   /* クラスを必須選択項目とします */
   if (!formObj.classId.value) {
     errorMessageObj.textContent = '※クラスを選択してください';
@@ -118,27 +134,6 @@ formObj.onsubmit = function() {
     errorMessageObj.textContent = '※出席番号を入力してください';
     return false;
   }
-
-  /* 入力時に全角スペースを挿入する関数 */
-  function insertFullWidthSpace(inputElement) {
-    inputElement.addEventListener('input', function() {
-      let value = inputElement.value.trim();
-
-      /* 姓と名の間に全角スペースがない場合、全角スペースを挿入 */
-      if (!/　/.test(value) && value.length > 0) {
-        const words = value.split(/\s+/);
-        if (words.length > 1) {
-          inputElement.value = words.join('　'); // 全角スペースで結合
-        }
-      }
-    });
-  }
-
-  // 入力欄に対して全角スペース挿入機能を適用
-  insertFullWidthSpace(nameInput);
-  insertFullWidthSpace(nameRubyInput);
-
-
   /* 氏名を必須入力項目とします */
   if (!formObj.name.value) {
     errorMessageObj.textContent = '※氏名を入力してください';
@@ -150,13 +145,12 @@ formObj.onsubmit = function() {
     errorMessageObj.textContent = '※ふりがなを入力してください';
     return false;
   }
-
   
   errorMessageObj.textContent = null;
 };
 
 /* [キャンセル]ボタンをクリックしたときの処理 */
-formObj.onreset = function() {
+formObj.oncancel = function() {
   errorMessageObj.textContent = null;
 };
 
