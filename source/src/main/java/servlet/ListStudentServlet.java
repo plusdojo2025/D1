@@ -89,7 +89,7 @@ public class ListStudentServlet extends HttpServlet {
 		//出欠情報を取得
 		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 		List<AttendanceRecords> attendanceList = aDao.select(studentId, classId);
-		request.setAttribute("List", attendanceList);
+		request.setAttribute("attendanceList", attendanceList);
 		
 		//提出物状況を取得
 		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
@@ -204,7 +204,7 @@ public class ListStudentServlet extends HttpServlet {
 				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
 						(-1, studentId, classId, date, period, subjectId, status, remarks));
-				request.setAttribute("List", attendanceList);
+				request.setAttribute("attendanceList", attendanceList);
 				
 				//提出物状況を取得
 				AssignmentsDAO assignmentsDao = new AssignmentsDAO();

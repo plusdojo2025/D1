@@ -30,7 +30,7 @@ public class SubjectDAO {
 
 			// SQL文を完成させる
 			if (sub.getSubjectId() > 0) {
-				pStmt.setString(1, "%" + sub.getSubjectId() + "%");
+				pStmt.setString(1, "" + sub.getSubjectId());
 			} else {
 				pStmt.setString(1, "%");
 			}
