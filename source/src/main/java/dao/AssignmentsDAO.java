@@ -30,15 +30,11 @@ public class AssignmentsDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Assignments "
-					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? AND submissionStatus like ? "
-					+ "AND content = ? year(createdDate) like ? AND month(createdDate) like ? "
-					+ "AND year(submissionDate) like ? AND month(submissionDate) like ? "
-					+ "date(submissionDate) like ? ";
+					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? "
+					+ "year(createdDate) like ? AND month(createdDate) like ? ";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(as.getSubmissionDate());
 
 			if (as.getAssignmentId() > 0) {
 				pStmt.setString(1, "%" + as.getAssignmentId() + "%");
@@ -55,17 +51,6 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(3, "%");
 			}
-			if (as.getSubmissionStatus() != null) {
-				pStmt.setString(4, "%" + as.getSubmissionStatus() + "%");
-			} else {
-				pStmt.setString(4, "%");
-			}
-			if (as.getContent() != null) {
-				pStmt.setString(5, "%" + as.getContent() + "%");
-			} else {
-				pStmt.setString(5, "%");
-			}
-			
 			if (as.getCreatedYear() > 0) {
 				pStmt.setString(6, "%" + as.getCreatedYear() + "%");
 			} else {
@@ -76,9 +61,6 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(7, "%");
 			}
-			pStmt.setInt(8, calendar.get(Calendar.YEAR));
-			pStmt.setInt(9, calendar.get(Calendar.MONTH));
-			pStmt.setInt(10, calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
@@ -139,7 +121,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Assignments VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO Assignments VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -216,8 +198,8 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET submissionStatus=?, content=?, submissionDate=?,"
-					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ?;";
+			String sql = "UPDATE Assignments SET submissionStatus=?, content=?, submissionDate=? "
+					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -295,7 +277,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Assignments WHERE assignmentId=?;";
+			String sql = "DELETE FROM Assignments WHERE assignmentId=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -339,7 +321,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Assignments WHERE assignmentId=?;";
+			String sql = "DELETE FROM Assignments WHERE assignmentId=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
