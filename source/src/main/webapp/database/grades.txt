@@ -1,6 +1,6 @@
 /*テスト・成績データを入れておくgradesテーブル作成*/
 
-use sample;
+use D1;
 
 create table grades(
     gradesId int primary key auto_increment,
