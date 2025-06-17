@@ -10,34 +10,22 @@
 <!-- メイン -->
 	<h2>ログイン</h2>
 	
-<!-- ログインフォーム -->	
-<form id="login_form" method="post" action="LoginServlet">
+<form action="LoginServlet" method="post">
 	<table>
-	 <tr>
-	  <td>
-	   <label>教員ID<br>
-	   <input type="text" name="teacherId">
-	   </label>
-	  </td>
-	 </tr>
-	 <tr>
-	  <td>
-	   <label>パスワード<br>
-	   <input type="password" name="password">
-	   </label>
-	  </td>
-	 </tr>
-	 <tr>
-	  <td>
-	  	<input type="submit" name="submit" value="ログイン">
-	  	<input type="reset" name="reset" value="リセット">
-	  	<span id="error_message"></span>
-	  </td>
-	 </tr>
-	</table>	
+		<tr>
+			<td>教員ID：</td>
+			<td><input type="text" name="teacherId" required></td>
+		</tr>
+		<tr>
+			<td>パスワード：</td>
+			<td><input type="password" name="password" required></td>
+		</tr>
+	</table>
+	<br>
+	<input type="submit" value="ログイン">
 </form>
 <!-- フッター -->
-
+<!-- JavaScript -->
 
 </body>
 </html>
