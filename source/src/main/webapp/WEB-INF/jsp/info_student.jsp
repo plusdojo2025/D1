@@ -87,25 +87,17 @@
 		</select>
 		
 		<select name="year" id="yearSelect" onchange="yearChange()">
-			<option value="1" class="year">1年次</option> 
-			<option value="2" class="year">2年次</option>
-			<option value="3" class="year">3年次</option>
-			<!-- 入学年度（登録年度）と登録時の学年を元に、データがある年次だけ表示する -->
+			<c:forEach var="i" begin="1" end="3">
+				<c:if test="${i} <= ${student.grade}">
+				<option value="${i}" class="year">${i}年次</option> 
+				</c:if>
+			</c:forEach>
 		</select>
 		
 		<select name="month" id="monthSelect" onchange="monthChange()">
-			<option value="1" class="month">1月</option>
-			<option value="2" class="month">2月</option>
-			<option value="3" class="month">3月</option>
-			<option value="4" class="month">4月</option>
-			<option value="5" class="month">5月</option>
-			<option value="6" class="month">6月</option>
-			<option value="7" class="month">7月</option>
-			<option value="8" class="month">8月</option>
-			<option value="9" class="month">9月</option>
-			<option value="10" class="month">10月</option>
-			<option value="11" class="month">11月</option>
-			<option value="12" class="month">12月</option>
+			<c:forEach var="i" begin="1" end="12">
+			<option value="${i}" class="month">${i}月</option>
+			</c:forEach>
 		</select><br>
 
 		<div id="display">表示項目選択 <br>
@@ -257,7 +249,7 @@
 	}
 	
 	let month = '${monthId}';
-	var months = document.getElementsByClassName("year");
+	var months = document.getElementsByClassName("month");
 	for (var i = 0; i < months.length; i++) {
 		if (months[i].value === month) {
 			months[i].setAttribute('selected', 'selected');
