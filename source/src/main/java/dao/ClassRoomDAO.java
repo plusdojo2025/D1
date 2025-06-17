@@ -154,7 +154,7 @@ public class ClassRoomDAO {
 			
 			// SQL文を準備する
 			String sql = "UPDATE Class SET grade=?,"
-					+ "className=? WHERE classId=?";
+					+ "className=? WHERE classId LIKE ?";
 			//String sql = "UPDATE Class SET classId =?, grade=?, className=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
     
@@ -169,7 +169,14 @@ public class ClassRoomDAO {
 				pStmt.setString(2, "");
 			}
 
-			pStmt.setInt(3, cr.getClassId());
+            if (cr.getClassId() >0) {
+        		pStmt.setString(3, ""+ cr.getClassId());
+            } else {
+        		pStmt.setString(3, "%");
+            }						
+			
+			
+
 			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
