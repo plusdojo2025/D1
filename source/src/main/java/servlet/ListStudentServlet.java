@@ -52,6 +52,60 @@ public class ListStudentServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 		
 		*/
+		
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		
+		Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        
+		int grade = 1;
+		String className = "1組";
+		String subjectName = "現代文";
+		
+		// 検索処理を行う
+		//classIDを取得
+		ClassRoomDAO classDao = new ClassRoomDAO();
+		List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+		request.setAttribute("classList", classList);
+		
+		//subjectIDを取得
+		SubjectDAO subjectDao = new SubjectDAO();
+		List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+		request.setAttribute("subjectList", subjectList);
+		
+		int classId = classList.get(0).getClassId();      //クラス
+		int subjectId = subjectList.get(0).getSubjectId();      //教科Id
+		
+		//生徒情報を取得
+		StudentsDAO studentDao = new StudentsDAO();
+		List<Students> studentList = studentDao.select(new Students(-1,classId));
+		request.setAttribute("studentList", studentList);
+		
+		int studentId = studentList.get(0).getStudentId();    //出席番号
+
+		//出欠情報を取得
+		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
+		List<AttendanceRecords> attendanceList = aDao.select(studentId, classId);
+		request.setAttribute("attendanceList", attendanceList);
+		
+		//提出物状況を取得
+		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+		List<Assignments> assignmentsList = assignmentsDao.select(new Assignments(studentId,subjectId));
+		request.setAttribute("assignmentsList", assignmentsList);
+		
+		//成績情報を取得
+		GradesDAO gradesDao = new GradesDAO();
+		List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
+		request.setAttribute("gradesList", gradesList);
+		
+		request.setAttribute("grade", grade);
+		request.setAttribute("className", className);
+		request.setAttribute("year", year);
+		request.setAttribute("month", month);
+		request.setAttribute("subjectName", subjectName);
 	}
 
 	/**
@@ -150,7 +204,7 @@ public class ListStudentServlet extends HttpServlet {
 				AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 				List<AttendanceRecords> attendanceList = aDao.select(new AttendanceRecords
 						(-1, studentId, classId, date, period, subjectId, status, remarks));
-				request.setAttribute("List", attendanceList);
+				request.setAttribute("attendanceList", attendanceList);
 				
 				//提出物状況を取得
 				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
