@@ -1,1 +1,65 @@
 @charset "UTF-8";
+body {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-row label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .form-row select {
+    margin-right: 40px;
+    padding: 5px;
+  }
+
+  .memo-section {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+  .memo-label {
+    font-weight: bold;
+  }
+
+  .memo-box {
+    width: 600px;
+    height: 80px;
+    border: 1px solid #555;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  table, th, td {
+    border: 1px solid #999;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+  }

@@ -35,7 +35,7 @@ public class ScheduleDAOTest {
 		LocalDateTime now = LocalDateTime.now();
 		// select()のテスト1
 		System.out.println("---------- select()のテスト1 ----------");
-		List<Schedule> scheduleListSel1 = dao.select(new Schedule(-1,-1,-1,null,"","","",null, "","",""));
+		List<Schedule> scheduleListSel1 = dao.select(new Schedule(-1,-1,-1,null,"","","",-1, "","",""));
 		ScheduleDAOTest.showAllData(scheduleListSel1);
 
 //		// select()のテスト2
@@ -45,10 +45,10 @@ public class ScheduleDAOTest {
 //
 		// insert()のテスト
 		System.out.println("---------- insert()のテスト ----------");
-		Schedule insRec = new Schedule(0,4,2,now,"7限","インサートテスト","class",now, "2学期","メモテスト","月曜日");
+		Schedule insRec = new Schedule(0,4,2,now,"7限","インサートテスト","class",2025, "前期","メモテスト","月曜日");
 		if (dao.insert(insRec)) {
 			System.out.println("登録成功！");
-			List<Schedule> scheduleListIns = dao.select(new Schedule(-1,-1,-1,null,"","","",null, "","",""));
+			List<Schedule> scheduleListIns = dao.select(new Schedule(-1,-1,-1,null,"","","",-1, "","",""));
 			ScheduleDAOTest.showAllData(scheduleListIns);
 		} else {
 			System.out.println("登録失敗！");
@@ -57,14 +57,14 @@ public class ScheduleDAOTest {
 //		// update()のテスト
 		System.out.println("---------- update()のテスト ----------");
 
-		List<Schedule> scheduleListUp = dao.select(new Schedule(12,-1,-1,null,"","","",null,"","",""));
+		List<Schedule> scheduleListUp = dao.select(new Schedule(11,-1,-1,null,"","","",-1,"","",""));
 
 		if (!scheduleListUp.isEmpty()) {
 		    Schedule upRec = scheduleListUp.get(0);
 		    upRec.setContent("更新テストです");  // ← content を更新
 		    if (dao.update(upRec)) {
 		        System.out.println("更新成功！");
-		        List<Schedule> updatedList = dao.select(new Schedule(-1,-1,-1,null,"","","",null, "","","")); // 全件表示
+		        List<Schedule> updatedList = dao.select(new Schedule(-1,-1,-1,null,"","","",-1, "","","")); // 全件表示
 		        ScheduleDAOTest.showAllData(updatedList);
 		    } else {
 		        System.out.println("更新失敗！");
@@ -75,11 +75,11 @@ public class ScheduleDAOTest {
 //
 //		// delete()のテスト
 		System.out.println("---------- delete()のテスト ----------");
-		List<Schedule> scheduleListDel = dao.select(new Schedule(15,-1,-1,null,"","","",null, "","",""));
+		List<Schedule> scheduleListDel = dao.select(new Schedule(11,-1,-1,null,"","","",-1, "","",""));
 		Schedule delRec = scheduleListDel.get(0);
 		if (dao.delete(delRec)) {
 			System.out.println("削除成功！");
-			scheduleListDel = dao.select(new Schedule(-1,-1,-1,null,"","","",null, "","",""));
+			scheduleListDel = dao.select(new Schedule(-1,-1,-1,null,"","","",-1, "","",""));
 			ScheduleDAOTest.showAllData(scheduleListDel);
 		} else {
 			System.out.println("削除失敗！");
