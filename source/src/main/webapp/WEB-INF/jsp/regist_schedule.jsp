@@ -4,6 +4,12 @@
   boolean hasError = (error != null && !error.isEmpty());
 %>
 
+
+<%
+    // テスト用：ここで強制的に例外を発生させる
+    throw new RuntimeException("テスト用エラー");
+%>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,23 +22,21 @@
 <body>
 
 <div class="container">
-  <form class="schedule-form" name="scheduleForm" 
-        action="<%=request.getContextPath() %>/RegistScheduleServlet" 
-        method="post"
-        onsubmit="return validateForm();">
+  <form name="scheduleForm" class="schedule-form"
+      method="post"
+      action="<%=request.getContextPath() %>/RegistScheduleServlet"
+      onsubmit="return validateForm();">
+
 
     <h2>スケジュール登録フォーム</h2>
+    
 <%
   String errorStyle = "color: red; font-weight: bold; margin-bottom: 10px;" + (hasError ? "" : " display:none;");
 %>
-
 <p id="jsErrorMessage" style="<%= errorStyle %>">
   <%= hasError ? error : "" %>
 </p>
-<p id="jsErrorMessage" style="display: none; color: red; font-weight: bold; margin-bottom: 10px;">
-  <!-- 初期は空にしてください -->
-  <%= (error != null && !error.isEmpty()) ? error : "" %>
-</p>
+
 
 	<label for="year">年度：
 <%
