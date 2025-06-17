@@ -50,9 +50,12 @@ public class LoginServlet extends HttpServlet {
 			// セッションスコープにIDを格納する
 			HttpSession session = request.getSession();
 			session.setAttribute("teacherId", teacherId);
+			
+		//スケジュール管理閲覧画面に遷移
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
+		dispatcher.forward(request, response);
+	
 
-			// メニューサーブレットにリダイレクトする
-			response.sendRedirect("/webapp/MenuServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、エラーメッセージを格納する
 			request.setAttribute("errorMessage", "教員IDまたはパスワードに間違いがあります。");
