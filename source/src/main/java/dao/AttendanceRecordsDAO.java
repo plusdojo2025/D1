@@ -197,8 +197,6 @@ public class AttendanceRecordsDAO {
 			String sql = "SELECT * FROM AttendanceRecords WHERE studentId LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, studentId);
-			pStmt.setInt(2, subjectId);
 
 			if (studentId > 0) {
 				pStmt.setString(1, "" + studentId);
@@ -247,8 +245,74 @@ public class AttendanceRecordsDAO {
 		return arList;
 	}
 
-	// 学年ごとの検索
-	public List<AttendanceRecords> select_Grade(int grade, String classId, int month, int subjectId) {
+	// クラス+科目ごとの検索
+	public List<AttendanceRecords> select_Class(int classId, int subjectId) {
+		Connection conn = null;
+		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT * FROM AttendanceRecords WHERE classId LIKE ? AND subjectId LIKE ?;";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (classId > 0) {
+				pStmt.setString(1, "" + classId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			if (subjectId > 0) {
+				pStmt.setString(2, "" + subjectId);
+			} else {
+				pStmt.setString(2, "%");
+			}
+
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = sdFormat.parse(rs.getString("date"));
+
+				AttendanceRecords ar = new AttendanceRecords(rs.getInt("recordId"), rs.getInt("studentId"), rs.getInt("classId"), 
+						date, rs.getString("period"), rs.getInt("subjectId"), rs.getString("status"), rs.getString("remarks"));
+				arList.add(ar);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			arList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			arList = null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			arList = null;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					arList = null;
+				}
+			}
+		}
+
+		// 結果を返す
+		return arList;
+	}
+	
+	// 学年+クラス+科目ごとの検索
+	public List<AttendanceRecords> select_Grade(int grade, int classId, int month, int subjectId) {
 		Connection conn = null;
 		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
 
@@ -274,7 +338,7 @@ public class AttendanceRecordsDAO {
 				pStmt.setString(1, "%");
 			}
 
-			if (classId != null) {
+			if (classId > 0) {
 				pStmt.setString(2, "" + classId);
 			} else {
 				pStmt.setString(2, "%");
@@ -328,7 +392,7 @@ public class AttendanceRecordsDAO {
 		return arList;
 	}
 
-	// 年度ごとの検索 fiscalYearに年度を入力
+	// 年度+クラス+科目ごとの検索 fiscalYearに年度を入力
 	public List<AttendanceRecords> select_Fiscal(int fiscalYear, int classId, int month, int subjectId) {
 		Connection conn = null;
 		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
