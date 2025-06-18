@@ -55,7 +55,7 @@
 				<div>${student.extracurricularActivities}</div>
 				<div>${student.enrollmentStatus}</div>
 			</div>
-		</div>
+		</div><br>
 
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
@@ -87,9 +87,9 @@
 			<option value="24" class="subject">その他</option>
 		</select>
 		
-		<select name="year" id="yearSelect" onchange="this.form.submit()">
+		<select name="grade" id="gradeSelect" onchange="this.form.submit()">
 			<c:forEach var="i" begin="1" end="3">
-				<option value="${i}" class="year">${i}年次</option> 
+				<option value="${i}" class="grade">${i}年次</option> 
 			</c:forEach>
 		</select>
 		
@@ -98,7 +98,7 @@
 			<option value="${i}" class="month">${i}月</option>
 			</c:forEach>
 		</select><br>
-		</form>
+		</form><br>
 		
 
 		<div id="display">表示項目選択 <br>
@@ -241,15 +241,15 @@
 		}
 	}
 	
-	let year = '${yearId}';
-	var years = document.getElementsByClassName("year");
-	for (var i = 0; i < years.length; i++) {
-		if (years[i].value === year) {
-			years[i].setAttribute('selected', 'selected');
+	let grade = '${grade}';
+	var selectGrades = document.getElementsByClassName("grade");
+	for (var i = 0; i < selectGrades.length; i++) {
+		if (selectGrades[i].value === grade) {
+			selectGrades[i].setAttribute('selected', 'selected');
 		}
 	}
 	
-	let month = '${monthId}';
+	let month = '${month}';
 	var months = document.getElementsByClassName("month");
 	for (var i = 0; i < months.length; i++) {
 		if (months[i].value === month) {

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="css/info_student.css">
 </head>
 <body>
 	<header>
@@ -13,209 +14,242 @@
 	</header>
 
 	<main>
-	<form method="post" action="?">
-	
-		<!-- 基本情報 -->
-		<div class="baseInfo">
-			<input type="text" name="nameRuby">
-			<div class="field">
-				<input type="text" name="name">
-				<div>2年</div>
-				<div>1組</div>
-				<div>30番</div>
-			</div>
-			<div class="field">
-				<div>出席率</div>
-				<div>98.8%</div>
-				<div>出席日数</div>
-				<div>89</div>
-				<div>出席すべき日数</div>
-				<div>90</div>
-			</div>
-			<div class="field">
-				<div>提出率</div>
-				<div>88.%</div>
-				<div>提出数</div>
-				<div>15</div>
-				<div>提出すべき課題数</div>
-				<div>17</div>
-			</div>
-			<div class="field">
-				<div>授業外活動</div>
-				<div>休学・停学・復学・退学・留年等</div>
-			</div>
-			<div class="field">
-				<input type="text" name="extracurricularActivities">
-				<input type="text" name="enrollmentStatus">
-			</div>
-		</div>
+		<form method="post" action="?">
+			<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
+			<input type="hidden" name="number" value="${student.studentId}">
+			<input type="submit" name="edit" value="編集"
+				formaction='/D1/EditStudentServlet'> <input type="submit"
+				name="back" value="戻る" formaction='/D1/ListStudentServlet'>
 
-		<!-- 科目・月選択プルダウン -->
-		<select name="subject">
-				<option value="modernSentence">現代文</option>
-				<option value="classic">古典</option>
-				<option value="mathematicsIA">数学IA</option>
-				<option value="mathematicsⅡB">数学ⅡB</option>
-				<option value="mathematicsⅢC">数学ⅢC</option>
-				<option value="englishExpression">英語表現</option>
-				<option value="communicationEnglish">コミュニケーション英語</option>
-				<option value="physics">物理</option>
-				<option value="chemistry">化学</option>
-				<option value="biology">生物</option>
-				<option value="geology">地学</option>
-				<option value="japaneseHistory">日本史</option>
-				<option value="worldHistory">世界史</option>
-				<option value="geography">地理</option>
-				<option value="citizens">公民</option>
-				<option value="information">情報</option>
-				<option value="technology">技術</option>
-				<option value="homeEconomics">家庭科</option>
-				<option value="art">美術</option>
-				<option value="calligraphy">書道</option>
-				<option value="physicalEducation">保健体育</option>
-				<option value="music">音楽</option>
-				<option value="academicActivities">学活</option>
-				<option value="others">その他</option>
-		</select>
-		
-		<select name="month">
-			<option value="1">1月</option>
-			<option value="2">2月</option>
-			<option value="3">3月</option>
-			<option value="4">4月</option>
-			<option value="5">5月</option>
-			<option value="6">6月</option>
-			<option value="7">7月</option>
-			<option value="8">8月</option>
-			<option value="9">9月</option>
-			<option value="10">10月</option>
-			<option value="11">11月</option>
-			<option value="12">12月</option>
-		</select>
+			<!-- 基本情報 -->
+			<div class="baseInfo">
+				<div><input type="text" name="nameRuby" value="${student.nameRuby}" placeholder="ふりがな"></div>
+				<div class="field">
+					<div><input type="text" name="name" value="${student.name}" placeholder="氏名"></div>
+					<div>${student.grade}年</div>
+					<div>${className}</div>
+					<div>${student.studentNum}番</div>
+				</div>
+				<div class="field">
+					<div>出席率</div>
+					<div>${attendedRate}</div>
+					<div>出席日数</div>
+					<div>${attendedNum}</div>
+					<div>出席すべき日数</div>
+					<div>${shouldAttendNum}</div>
+				</div>
+				<div class="field">
+					<div>提出率</div>
+					<div>${submittedRate}</div>
+					<div>提出数</div>
+					<div>${submittedNum}</div>
+					<div>提出すべき課題数</div>
+					<div>${shouldSubmitNum}</div>
+				</div>
+				<div class="field">
+					<div>授業外活動</div>
+					<div>休学・停学・復学・退学・留年等</div>
+				</div>
+				<div class="field">
+					<div><input type="text" name="extracurricularActivities" value="${student.extracurricularActivities}" placeholder="授業外活動"></div>
+					<div><input type="text" name="enrollmentStatus" value="${student.enrollmentStatus}" placeholder="在籍状況"></div>
+				</div>
+			</div><br>
 
-		<div id="display">表示項目選択 <br>
+			<span><c:choose>
+				<c:when test="${subjectId} == 1">現代文</c:when>
+				<c:when test="${subjectId} == 2">古典</c:when>
+				<c:when test="${subjectId} == 3">数学IA</c:when>
+				<c:when test="${subjectId} == 4">数学ⅡB</c:when>
+				<c:when test="${subjectId} == 5">数学ⅢC</c:when>
+				<c:when test="${subjectId} == 6">英語表現</c:when>
+				<c:when test="${subjectId} == 7">コミュニケーション英語</c:when>
+				<c:when test="${subjectId} == 8">物理</c:when>
+				<c:when test="${subjectId} == 9">化学</c:when>
+				<c:when test="${subjectId} == 10">生物</c:when>
+				<c:when test="${subjectId} == 11">地学</c:when>
+				<c:when test="${subjectId} == 12">日本史</c:when>
+				<c:when test="${subjectId} == 13">世界史</c:when>
+				<c:when test="${subjectId} == 14">地理</c:when>
+				<c:when test="${subjectId} == 15">公民</c:when>
+				<c:when test="${subjectId} == 16">情報</c:when>
+				<c:when test="${subjectId} == 17">技術</c:when>
+				<c:when test="${subjectId} == 18">家庭科</c:when>
+				<c:when test="${subjectId} == 19">美術</c:when>
+				<c:when test="${subjectId} == 20">書道</c:when>
+				<c:when test="${subjectId} == 21">保健体育</c:when>
+				<c:when test="${subjectId} == 22">音楽</c:when>
+				<c:when test="${subjectId} == 23">学活</c:when>
+				<c:when test="${subjectId} == 24">その他</c:when>
+				<c:otherwise>その他</c:otherwise>
+			</c:choose></span>
+			<span>${grade}年次</span>
+			<span>${month}月</span><br><br>
+
+			<div id="display">表示項目選択 <br> 
 			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked>出席状況</label>
-			<label><input type="checkbox" name="display" value="提出物状況" id="submissionCheck" checked>提出物状況</label>
-			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked>成績状況</label>
+			<label><input type="checkbox" name="display" value="提出物状況" id="submissionCheck" checked>提出物状況</label> 
+			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked>成績状況</label> 
 			<label><input type="checkbox" name="display" value="授業態度" id="attitudeCheck" checked>授業態度</label>
 			<label><input type="checkbox" name="display" value="面談記録" id="interviewCheck" checked>面談記録</label>
-		</div>
-		
-		<div id="attendance">出席状況
-			<span>出席率</span>
-			<span>90.0％</span>
-			<table>
-				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>時限</td>
-					<td>出席</td>
-					<td>備考</td>
-				</tr>
-				
-				<!-- 繰り返し処理 -->
-				<tr>
-					<td><input type="hidden" name="recordId"><input type="text" name="date"></td>
-					<td><input type="text" name="week"></td>
-					<td><input type="text" name="period"></td>
-					<td><input type="text" name="status"></td>
-					<td><input type="text" name="remarks"></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="submission">提出物状況
-			<span>提出率</span>
-			<span>50.0％</span>
-			<table>
-				<tr>
-					<td>課題内容</td>
-					<td>提出状況</td>
-					<td>提出日</td>
-				</tr>
-				
-				<!-- 繰り返し処理 -->
-				<tr>
-					<td><input type="hidden" name="assignmentId"><input type="text" name="content"></td>
-					<td><input type="text" name="submissionStatus"></td>
-					<td><input type="text" name="submissionDate"></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="grades">成績状況 <br>
-			<table>
-				<tr>
-					<td>種別</td>
-					<td>点数</td>
-					<td>平均点</td>
-				</tr>
-				
-				<!-- 繰り返し処理 -->
-				<tr>
-					<td><input type="text" name="testType"></td>
-					<td><input type="text" name="score"></td>
-					<td><input type="text" name="average"></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="attitude">授業態度 <br>
-			<table>
-				<tr>
-					<td>授業態度</td>
-					<td>前年度授業態度</td>
-				</tr>
-				<tr>
-					<td><input type="text" name="attitude"></td>
-					<td><input type="text" name="lastAttitude"></td>
-				</tr>
-			</table>
-		</div>
-		
-		<div id="interview">
-			面談記録 <br>
-			<table>
-				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>内容</td>
-					<td>備考</td>
-				</tr>
-				
-				<!-- 繰り返し処理 -->
-				<tr>
-					<td><input type="hidden" name="interviewId"><input type="text" name="date"></td>
-					<td></td>
-					<td><input type="text" name="contents"></td>
-					<td><input type="text" name="remarks"></td>
-				</tr>
-			</table>
-			
-			前年度面談記録 <br>
-			<table>
-				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>内容</td>
-					<td>備考</td>
-				</tr>
-				
-				<!-- 繰り返し処理 -->
-				<tr>
-					<td>05/15</td>
-					<td>木</td>
-					<td>進路面談</td>
-					<td>ABC大学希望</td>
-				</tr>
-			</table>
-		</div>
+			</div>
+			<br>
+
+			<div id="attendance">
+				出席状況 <span>出席率</span> <span>${subjectAttendedRate}</span>
+				<table>
+					<tr>
+						<td>日付</td>
+						<td>時限</td>
+						<td>出席</td>
+						<td>備考</td>
+					</tr>
+
+					<c:forEach var="att" items="${attendanceRecords}">
+						<input type="hidden" name="recordId" value="${att.recordId}">
+						<tr>
+							<td><input type="date" name="attendanceDate" value="${att.date}"></td>
+							<td><input type="text" name="attendancePeriod" value="${att.period}"></td>
+							<td>
+								<select name="attededStatus">
+									<option value="○" class="attendedStatus" selected>○</option>
+									<option value="×" class="attendedStatus">×</option>
+									<option value="早" class="attendedStatus">早</option>
+									<option value="遅" class="attendedStatus">遅</option>
+									<option value="公" class="attendedStatus">公</option>
+								</select>
+							</td>
+							<td><input type="text" name="attendanceRemarks" value="${att.remarks}"></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<br>
+			</div>
+
+			<div id="submission">
+				提出物状況 <span>提出率</span> <span>${subjectSubmittedRate}</span>
+				<table>
+					<tr>
+						<td>課題内容</td>
+						<td>提出状況</td>
+						<td>提出日</td>
+					</tr>
+
+					<c:forEach var="sub" items="${assignmentsList}">
+						<input type="hidden" name="assignmentId" value="${sub.assignmentId}">
+						<tr>
+							<td><input type="text" name="assignmentContent" value="${sub.content}"></td>
+							<td>
+								<select name="submittionStatus">
+									<option value="○" class="submittedStatus">○</option>
+									<option value="×" class="submittedStatus">×</option>
+								</select>
+							</td>
+							<td><input type="date" name="submittionDate" value="${sub.submissionDate}"></td>
+						</tr>
+					</c:forEach>
+					
+					<!-- 空白欄 -->
+					<tr id="addSubmission">
+						<td><input type="text" name="assignmentContent" value="${sub.content}"></td>
+						<td>
+							<select name="submittionStatus">
+								<option value="○" class="submittedStatus">○</option>
+								<option value="×" class="submittedStatus">×</option>
+							</select>
+						</td>
+						<td><input type="date" name="submittionDate" value="${sub.submissionDate}"></td>
+					</tr>
+
+				</table>
+				<!-- 欄追加ボタン -->
+				<button></button>
+				<br>
+			</div>
+
+			<div id="grades">
+				成績状況 <br>
+				<table>
+					<tr>
+						<td>種別</td>
+						<td>点数</td>
+					</tr>
+
+					<c:forEach var="gra" items="${gradesList}">
+					<input type="hidden" name="gradeId" value="${gra.gradeId}">
+						<tr>
+							<td><input type="text" name="gradeTestType" value="${gra.testType}"></td>
+							<td><input type="number" name="gradeScore" value="${gra.score}"></td>
+						</tr>
+					</c:forEach>
+					
+					<!-- 空白欄 -->
+				</table>
+				<!-- 欄追加ボタン -->
+				<br>
+			</div>
+
+			<div id="attitude">
+				授業態度 <br>
+				<table>
+					<tr>
+						<td>授業態度</td>
+						<td>前年度授業態度</td>
+					</tr>
+					<tr>
+						<td><input type="text" name="attitude" value="${student.attitude}"></td>
+						<td><input type="text" name="attitude" value="${student.attitude}"></td>
+					</tr>
+				</table>
+				<br>
+			</div>
+
+			<div id="interview">
+				面談記録 <br>
+				<table>
+					<tr>
+						<td>日付</td>
+						<td>内容</td>
+						<td>備考</td>
+					</tr>
+
+					<c:forEach var="itv" items="${interviewList}">
+						<input type="hidden" name="interviewId" value="${itv.interviewId}">
+						<tr>
+							<td><input type="date" name="interviewDate" value="${itv.date}"></td>
+							<td><input type="text" name="interviweContents" value="${itv.contents}"></td>
+							<td><input type="text" name="interviweRemarks" value="${itv.remarks}"></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<br> 前年度面談記録 <br>
+				<table>
+					<tr>
+						<td>日付</td>
+						<td>内容</td>
+						<td>備考</td>
+					</tr>
+
+					<c:forEach var="itv" items="${lastInterviewList}">
+						<input type="hidden" name="lastInterviewId" value="${itv.interviewId}">
+						<tr>
+							<td><input type="date" name="lastInterviewDate" value="${itv.date}"></td>
+							<td><input type="text" name="lastInterviweContents" value="${itv.contents}"></td>
+							<td><input type="text" name="lastInterviweRemarks" value="${itv.remarks}"></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<br>
+			</div>
+
 		</form>
 	</main>
-	
-	<footer>
-	</footer>
-	
+
+	<footer> </footer>
+
 	<script src="js/info_student.js"></script>
+	<script>
+	'use strict';
+	</script>
 </body>
 </html>
