@@ -27,7 +27,7 @@ public class StudentsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Students "     //変更箇所//
 					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
-					+ "classId = ? AND studentNum = ?;";
+					+ "classId like ? AND studentNum like ?;";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 
@@ -46,10 +46,18 @@ public class StudentsDAO {
             } else {
         		pStmt.setString(3, "%");
             }
-            
+            if (st.getClassId() >0) {
+        		pStmt.setString(4, ""+ st.getClassId());
+            } else {
+        		pStmt.setString(4, "%");
+            }            
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(5, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(5, "%");
+            }
 
-			pStmt.setInt(4, st.getClassId());
-			pStmt.setInt(5, st.getStudentNum());
+
 			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();  
@@ -114,12 +122,13 @@ public class StudentsDAO {
 			pStmt.setInt(2, st.getYear());
 			pStmt.setInt(3, st.getGrade());
 			pStmt.setInt(4, st.getClassId());
-            pStmt.setInt(5, st.getStudentNum());
-			//pStmt.setString(5, st.getName());
-			//pStmt.setString(6, st.getNameRuby());
-			//pStmt.setString(7, st.getEnrollmentStatus());
-			//pStmt.setString(8, st.getExtracurricularActivities());
-			//pStmt.setString(9, st.getAttitude());
+
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(5, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(5, "%");
+            }            
+
 
 			if (st.getName() != null) {
 				pStmt.setString(6, st.getName());
@@ -199,7 +208,12 @@ public class StudentsDAO {
 			pStmt.setInt(1, st.getYear());
 			pStmt.setInt(2, st.getGrade());
 			pStmt.setInt(3, st.getClassId());
-			pStmt.setInt(4, st.getStudentNum());
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(4, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(4, "%");
+            }			
+
 
 			
 			if (st.getName() != null) {
@@ -310,6 +324,42 @@ public class StudentsDAO {
 		// 結果を返す
 		return result;
 	}
+	
+	
+	
+	
+	//重複チェック用の exists() メソッド
+	public boolean exists(int classId, int studentNum) {
+	    Connection conn = null;
+	    boolean exists = false;
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+	                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+	                "root", "password");
+
+	        String sql = "SELECT COUNT(*) FROM Students WHERE classId = ? AND studentNum = ?";
+	        PreparedStatement pStmt = conn.prepareStatement(sql);
+	        pStmt.setInt(1, classId);
+	        pStmt.setInt(2, studentNum);
+
+	        ResultSet rs = pStmt.executeQuery();
+	        if (rs.next() && rs.getInt(1) > 0) {
+	            exists = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (conn != null) conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return exists;
+	}	
 }
 			
 

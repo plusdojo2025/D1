@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class Grades implements Serializable{
 	private int gradesId; 	    // 成績ID
@@ -10,6 +11,8 @@ public class Grades implements Serializable{
 	private String testType;     //　テスト種別
 	private int year;     //　日付
 	private int month;     //　日付
+	
+	Calendar calendar = Calendar.getInstance();
 	
 	public Grades(int gradesId,int studentId,int subjectId, 
 			int score,String testType,int year,int month) {
@@ -21,6 +24,19 @@ public class Grades implements Serializable{
 		this.testType = testType;
 		this.year = year;
 		this.month = month;
+
+	}
+	
+	public Grades(int gradesId,int studentId,int subjectId, 
+			int score,String testType) {
+		
+		this.gradesId = gradesId;
+		this.studentId = studentId;
+		this.subjectId = subjectId;
+		this.score = score;
+		this.testType = testType;
+		this.year = calendar.get(Calendar.YEAR);;
+		this.month = calendar.get(Calendar.MONTH);;
 
 	}
 

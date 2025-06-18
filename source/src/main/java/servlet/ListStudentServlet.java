@@ -57,7 +57,7 @@ public class ListStudentServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		
+		Date date=null; ;
 		Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -65,6 +65,7 @@ public class ListStudentServlet extends HttpServlet {
 		int grade = 1;
 		String className = "1組";
 		String subjectName = "現代文";
+		int studentId = 0;
 		
 		// 検索処理を行う
 		//classIDを取得
@@ -78,38 +79,48 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("subjectList", subjectList);
 		
 		int classId = classList.get(0).getClassId();      //クラス
-		System.out.println(classId);
+		System.out.println("classId "+classId);
 		
 		int subjectId = subjectList.get(0).getSubjectId();      //教科Id
-		System.out.println(subjectId);
+		System.out.println("subjectId "+subjectId);
 		
 		//生徒情報を取得
 		StudentsDAO studentDao = new StudentsDAO();
-		List<Students> studentList = studentDao.select(new Students(-1,classId));
+		List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
 		request.setAttribute("studentList", studentList);
+		
+		System.out.println("studentList "+studentList);
 		
 		
 		List<Integer> studentIdList = new ArrayList<>();
-		for(int i=1;studentList.size()>i;i++) {
+		for(int i=0;studentList.size()>i;i++) {
 			studentIdList.add(studentList.get(i).getStudentId());
 		}
+		System.out.println("studentIdList "+studentIdList);
 
-		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
-		List<AttendanceRecords> attendanceList = (List<AttendanceRecords>) new AttendanceRecords();
+		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
+		List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
 		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-		List<Assignments> assignmentsList = (List<Assignments>) new Assignments();
+		List<Assignments> assignmentsList = new ArrayList<Assignments>();
 		GradesDAO gradesDao = new GradesDAO();
-		List<Grades> gradesList = (List<Grades>) new Grades();
+		List<Grades> gradesList = new ArrayList<Grades>();
 		
-		for(int i=0;studentList.size()>i;i++) {
+		for(int i=0;studentIdList.size()>i;i++) {
 			//studentId.add(studentList.get(i).getStudentId());
+			studentId = studentIdList.get(i);
+			System.out.println("date "+date);
+			attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+					(0,studentId, classId, year, month,0,"",0,"","")));
 			
-			attendanceList.add((AttendanceRecords) aDao.select(studentId, classId));
+			assignmentsList.addAll(assignmentsDao.select(new Assignments
+					(0,studentId,subjectId,"","",year,month,date)));
 			
-			assignmentsList.add((Assignments) assignmentsDao.select(new Assignments(studentId,subjectId)));
-			
-			gradesList.add((Grades) gradesDao.select(new Grades(studentId,subjectId)));
+			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}
+		
+		System.out.println("attendanceList "+attendanceList);
+		System.out.println("assignmentsList "+assignmentsList);
+		System.out.println("gradesList "+gradesList);
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -137,12 +148,16 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("year", year);
 		request.setAttribute("month", month);
 		request.setAttribute("subjectName", subjectName);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				

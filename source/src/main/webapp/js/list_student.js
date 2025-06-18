@@ -40,3 +40,11 @@ function changeDisplay(event) {
 		element.style.display = 'none';
 	}
 };
+
+
+function navigate() {
+	const selectedValue = document.getElementById("dropdown").value;
+    if (selectedValue) {
+        window.location.href = selectedValue; // 選択されたURLに遷移
+    }
+}
