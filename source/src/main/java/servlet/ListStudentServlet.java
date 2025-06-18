@@ -65,6 +65,7 @@ public class ListStudentServlet extends HttpServlet {
 		int grade = 1;
 		String className = "1組";
 		String subjectName = "現代文";
+		int studentId = 0;
 		
 		// 検索処理を行う
 		//classIDを取得
@@ -85,26 +86,30 @@ public class ListStudentServlet extends HttpServlet {
 		
 		//生徒情報を取得
 		StudentsDAO studentDao = new StudentsDAO();
-		List<Students> studentList = studentDao.select(new Students(-1,classId));
+		List<Students> studentList = studentDao.select(new Students(0,0,0,classId, 0, "", "", "", "", ""));
 		request.setAttribute("studentList", studentList);
+		
+		System.out.println(studentList);
 		
 		
 		List<Integer> studentIdList = new ArrayList<>();
-		for(int i=1;studentList.size()>i;i++) {
+		for(int i=0;studentList.size()>i;i++) {
 			studentIdList.add(studentList.get(i).getStudentId());
 		}
+		System.out.println(studentIdList);
 
-		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
-		List<AttendanceRecords> attendanceList = (List<AttendanceRecords>) new AttendanceRecords();
+		AttendanceRecordsDAO AttendanceRecordsDao = new AttendanceRecordsDAO();
+		List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
 		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-		List<Assignments> assignmentsList = (List<Assignments>) new Assignments();
+		List<Assignments> assignmentsList = new ArrayList<Assignments>();
 		GradesDAO gradesDao = new GradesDAO();
-		List<Grades> gradesList = (List<Grades>) new Grades();
+		List<Grades> gradesList = new ArrayList<Grades>();
 		
-		for(int i=0;studentList.size()>i;i++) {
+		for(int i=0;studentIdList.size()>i;i++) {
 			//studentId.add(studentList.get(i).getStudentId());
+			studentId = studentIdList.get(i);
 			
-			attendanceList.add((AttendanceRecords) aDao.select(studentId, classId));
+			attendanceList.add((AttendanceRecords) AttendanceRecordsDao.select(studentId, classId));
 			
 			assignmentsList.add((Assignments) assignmentsDao.select(new Assignments(studentId,subjectId)));
 			
