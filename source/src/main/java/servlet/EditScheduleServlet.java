@@ -62,6 +62,10 @@ public class EditScheduleServlet extends HttpServlet {
 	    request.setAttribute("scheduleList", scheduleList);
 	    request.setAttribute("year", year);
 	    request.setAttribute("semester", semester);
+	    
+	    request.setAttribute("paramYear", year);
+	    request.setAttribute("paramSemester", semester);
+
 
 	    // 編集画面にフォワード
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_schedule.jsp");

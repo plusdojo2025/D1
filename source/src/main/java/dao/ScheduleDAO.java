@@ -222,4 +222,32 @@ public class ScheduleDAO {
         }
         return result;
     }
+    
+    public void deleteByDayAndPeriod(int year, String semester, String day, String period) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        String sql = "DELETE FROM Schedule WHERE year = ? AND semester = ? AND day_of_week = ? AND period = ?";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2?"
+                    + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+                    "root", "password");
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, year);
+            pstmt.setString(2, semester);
+            pstmt.setString(3, day);
+            pstmt.setString(4, period);
+            pstmt.executeUpdate();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
+
 }

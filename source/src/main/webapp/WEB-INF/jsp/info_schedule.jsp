@@ -86,10 +86,11 @@
 
 <!-- 編集・戻るボタン -->
 <form action="EditScheduleServlet" method="post" style="display: inline;">
-  <input type="hidden" name="year" value="${param.year}">
-  <input type="hidden" name="semester" value="${param.semester}">
+  <input type="hidden" name="year" value="${paramYear}">
+  <input type="hidden" name="semester" value="${paramSemester}">
   <button type="submit" class="btn">編集</button>
 </form>
+
 
 </body>
 </html>
