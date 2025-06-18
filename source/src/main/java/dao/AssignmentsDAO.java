@@ -52,14 +52,14 @@ public class AssignmentsDAO {
 				pStmt.setString(3, "%");
 			}
 			if (as.getCreatedYear() > 0) {
-				pStmt.setString(6, "" + as.getCreatedYear());
+				pStmt.setString(4, "" + as.getCreatedYear());
 			} else {
-				pStmt.setString(6, "%");
+				pStmt.setString(4, "%");
 			}
 			if (as.getCreatedMonth() > 0) {
-				pStmt.setString(7, "" + as.getCreatedMonth());
+				pStmt.setString(5, "" + as.getCreatedMonth());
 			} else {
-				pStmt.setString(7, "%");
+				pStmt.setString(5, "%");
 			}
 
 			// SQLの実行
