@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>生徒登録</title>
 <!-- CSSファイルをリンク -->
-<link rel="stylesheet"  href="<c:url value='/css/common.css'/>">
+<!--  link rel="stylesheet"  href="<c:url value='/css/common.css'/>"> --> 
 <link rel="stylesheet"  href="<c:url value='/css/regist_student.css'/>">
 </head>
 <body>
@@ -26,79 +26,73 @@
 
 
 <!-- メイン（ここから） -->
-<h2>新規登録</h2>
+<div class="main-content">
+  <h2 class="form-title">新規登録</h2>
 <form id="regist_form" method="POST" action="<c:url value='/RegistStudentServlet'/>">
-  <table>
-	  <tr>
+  <table class="form-table">
+	    <tr>
+		 <td><label for="grade-select">学年</label></td>
 		 <td>
-		    <label for="grade-select">学年
-		     <select name="grade" id="grade-select">
+		     <select name="grade" id="grade-select" class="form-input">
                       <option value="">-- 学年を選択 --</option>
                       <option value="1">1年</option>
                       <option value="2">2年</option>
                       <option value="3">3年</option>
-             </select>         
-		    </label>
-
-		 </td>
-          </tr>   
-	  	 
-	  <tr>
-		 <td>	
-		    <label for="classId-select">クラス</label>
-		     <select name="classNum" id="classId-select">
+             </select>         		    
+		   </td>
+         </tr>   
+	  	 <tr>
+		  <td><label for="classId-select">クラス</label></td>
+		  <td>
+		     <select name="classNum" id="classId-select" class="form-input">
                       <option value="">-- クラスを選択 --</option>
 
              </select>
             <!--classIdを送信用に保持-->
             <input type="hidden" id="classId" name="classId" value="">          
 		    
-		 </td>  
-	  </tr>
-
-	  <tr> 
-		 <td>
-		    <label>出席番号（数字は半角のみ）
-		    <input type="number" name="studentNum" placeholder="例) 23" min="1"> 番
-		    </label>
-		 </td>
-      </tr>
-      <tr>
-		 <td>
-		    <label>氏名
-		    <input type="text" name="name" placeholder="例) 山田　太郎">
-		    </label>
-		 </td> 
-	  </tr>
-	  <tr>	  
-		 <td>
-		    <label>ふりがな
-		    <input type="text" name="nameRuby" placeholder="例) やまだ　たろう">
-		    </label>
-		 </td>	    			    
-	  </tr>
-	  <tr>
-	     <td>
+		  </td>  
+	     </tr>
+	     <tr> 
+		  <td><label>出席番号（半角数字のみ）</label></td>
+		  <td>  
+		    <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short">
+		    <span class="suffix-text">番</span>
+		  </td>
+         </tr>
+         <tr>
+		  <td><label for="name">氏名</label></td>
+		  <td><input type="text" name="name" id="name" placeholder="例) 山田　太郎" class="form-input">
+		  </td> 
+	     </tr>
+	     <tr>	  
+		  <td><label for="nameRuby">ふりがな</label></td>
+		  <td><input type="text" name="nameRuby" id="nameRuby" placeholder="例) やまだ　たろう" class="form-input">
+		  </td>
+		 </tr>
+	     <tr>
+	      <td colspan="2">
 	        <p><span class="zenkaku">※【氏名・ふりがな】は姓名の間に全角1文字空けてください</span></p>
-	     </td>
-	  </tr>
-	  <tr>
-		 <td colspan="2">
+	      </td>
+	     </tr>
+	     <tr>
+		  <td colspan="2">
             <span id="error_message">
                <c:if test="${not empty error}">
-                <span style="color:red;">${error}</span>   
+               <!--  <span style="color:red;">${error}</span> -->  
                </c:if>
             </span>  
-         </td>
-      </tr>
-      <tr>
-         <td>
-            <input type="submit" name="cancel" value="キャンセル" onclick="window.location.href='/D1/InfoScheduleServlet';">
-            <input type="submit" name="regist" value="登録">
-         </td>
+          </td>
+         </tr>
+         <tr>
+           <td colspan="2" style="text-align:center;">
+             <input type="submit" name="cancel" value="キャンセル" onclick="window.location.href='/D1/InfoScheduleServlet';">
+             <input type="submit" name="regist" value="登録">
+           </td>
       </tr>
   </table>
-</form>     
+</form>
+</div>     
 <!-- メイン（ここまで）syussek -->
 
 <!-- フッター（ここから） -->
@@ -175,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }  
     if (!name.includes(fullWidthSpace)) {
-      errorMessageObj.textContent = '※姓と名の間に全角スペースを入力してください';
+      errorMessageObj.textContent = '※ 姓 と 名 の間に全角スペースを入力してください';
       return false;
     }
     if (!formObj.nameRuby.value) {
@@ -183,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
     if (!nameRuby.includes(fullWidthSpace)) {
-      errorMessageObj.textContent = '※せいとめいの間に全角スペースを入力してください';
+      errorMessageObj.textContent = '※ せい と めい の間に全角スペースを入力してください';
       return false;
     }
     errorMessageObj.textContent = null;
