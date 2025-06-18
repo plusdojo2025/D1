@@ -52,7 +52,7 @@ public class AssignmentsDAO {
 				pStmt.setString(3, "%");
 			}
 			if (as.getCreatedYear() > 0) {
-				pStmt.setString(6, "%" + as.getCreatedYear() + "%");
+				pStmt.setString(6, "" + as.getCreatedYear());
 			} else {
 				pStmt.setString(6, "%");
 			}
