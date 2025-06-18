@@ -39,30 +39,37 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		String teacherIdStr = request.getParameter("teacherId");
+		
+		String idStr = request.getParameter("teacherId");
 		String password = request.getParameter("password");
 		
-		int teacherId = Integer.parseInt(teacherIdStr);
-
-		// ログイン処理を行う
-		TeachersDAO iDao = new TeachersDAO();
-		if (iDao.isLoginOK(new Teacher(teacherId, null, password))) { // ログイン成功
-			// セッションスコープにIDを格納する
+		int teacherId = 0;
+		try {
+			teacherId = Integer.parseInt(idStr);
+		} catch (NumberFormatException e) {
+			// 数字変換エラー → ログイン失敗扱いで戻す
+			response.sendRedirect("LoginServlet");
+			return;
+		}
+		
+		// DTOに格納
+		Teacher input = new Teacher(teacherId, null, password);
+		
+		// DAOで照合
+		TeachersDAO dao = new TeachersDAO();
+		Teacher loginTeacher = dao.findByIdAndPassword(input);
+		
+		if (loginTeacher != null) { 
+			// ログイン成功→セッションスコープにIDを格納する
 			HttpSession session = request.getSession();
-			session.setAttribute("teacherId", teacherId);
+			session.setAttribute("loginTeacher", loginTeacher);
 			
 		//スケジュール管理閲覧画面に遷移
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
 		dispatcher.forward(request, response);
-	
-
-		} else { // ログイン失敗
-			// リクエストスコープに、エラーメッセージを格納する
+		} else { 
+		// ログイン失敗→リクエストスコープに、エラーメッセージを格納する
 			request.setAttribute("errorMessage", "教員IDまたはパスワードに間違いがあります。");
-
-			//　ログインページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
-			dispatcher.forward(request, response);
 		}
 	}
 }

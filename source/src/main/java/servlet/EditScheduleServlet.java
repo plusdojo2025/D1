@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.ScheduleDAO;
+import dto.Schedule;
 
 /**
  * Servlet implementation class EditScheduleServlet
@@ -36,8 +40,33 @@ public class EditScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_schedule.jsp");
-		dispatcher.forward(request, response);
+	    request.setCharacterEncoding("UTF-8");
+
+	    String yearStr = request.getParameter("year");
+	    String semester = request.getParameter("semester");
+
+	    int year = -1;
+	    if (yearStr != null && !yearStr.isEmpty()) {
+	        try {
+	            year = Integer.parseInt(yearStr);
+	        } catch (NumberFormatException e) {
+	            // ログやデフォルト処理
+	        }
+	    }
+
+	    // スケジュール検索
+	    ScheduleDAO sDao = new ScheduleDAO();
+	    List<Schedule> scheduleList = sDao.select(new Schedule(-1, -1, -1, null, "", "", "", year, semester, "", ""));
+
+	    // リクエストにデータを保存
+	    request.setAttribute("scheduleList", scheduleList);
+	    request.setAttribute("year", year);
+	    request.setAttribute("semester", semester);
+
+	    // 編集画面にフォワード
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_schedule.jsp");
+	    dispatcher.forward(request, response);
 	}
+
 
 }

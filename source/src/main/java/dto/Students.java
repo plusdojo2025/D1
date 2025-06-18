@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Students implements Serializable {
 	private int studentId;                     /*学生ID*/
+	private int year;                          /*入学年*/
 	private int grade;                         /*学年*/       
 	private int classId;                       /*クラスID*/
 	private int studentNum;                    /*出席番号*/
@@ -21,9 +22,10 @@ public class Students implements Serializable {
 	
 	
 	
-	public Students(int studentId, int grade, int classId, int studentNum, 
+	public Students(int studentId, int year, int grade, int classId, int studentNum, 
 			String name, String nameRuby, String enrollmentStatus, String extracurricularActivities, String attitude) {
 		this.studentId = studentId;
+		this.year = year;
 		this.grade = grade;
 		this.classId = classId;
 		this.studentNum = studentNum;
@@ -36,6 +38,7 @@ public class Students implements Serializable {
 	
 	public Students(int studentId, int classId) {
 		this.studentId = studentId;
+		this.year = -1;
 		this.grade = -1;
 		this.classId = classId;
 		this.studentNum = -1;
@@ -50,6 +53,7 @@ public class Students implements Serializable {
 	
 	public Students() {
 		this.studentId = -1;
+		this.year = -1;
 		this.grade = -1;
 		this.classId = -1;
 		this.studentNum = -1;
@@ -68,6 +72,14 @@ public class Students implements Serializable {
 		this.studentId = studentId;
 	}
 
+    public int getYear() {
+		return year;
+	}
+    
+	public void setYear(int year) {
+		this.year = year;
+	}	
+	
 	public int getGrade() {
 		return grade;
 	}

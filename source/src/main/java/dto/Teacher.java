@@ -7,13 +7,22 @@ public class Teacher implements Serializable {
 	private String name;		//教員氏名
 	private String password;	//パスワード 
 	
-	public Teacher() {}
-	
 	public Teacher(int teacherId, String name, String password) {
-	
 		this.teacherId = teacherId;
 		this.name = name;
 		this.password = password;
+	}
+	
+	public Teacher(int teacherId, String password) {
+		this.teacherId = teacherId;
+		this.name = "";
+		this.password = password;
+	}
+	
+	public Teacher() {
+		this.teacherId = -1;
+		this.name = "";
+		this.password = "";
 	}
 
 	public int getTeacherId() {

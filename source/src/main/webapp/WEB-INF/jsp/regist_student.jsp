@@ -26,7 +26,7 @@
 
 <!-- メイン（ここから） -->
 <h2>新規登録</h2>
-<form id="regist_form" method="POST" action="/D1/RegistStudentServlet">
+<form id="regist_form" method="POST" action="/webapp/RegistStudentServlet">
   <table>
 	  <tr>
 		 <td>
@@ -113,8 +113,6 @@
 let formObj = document.getElementById('regist_form');
 let errorMessageObj = document.getElementById('error_message');
 
-const nameInput = document.getElementById('name');
-const nameRubyInput = document.getElementById('nameRuby');
 
 
 /* [登録]ボタンをクリックしたときの処理 */
@@ -146,6 +144,7 @@ formObj.onsubmit = function() {
     return false;
   }
   
+
   errorMessageObj.textContent = null;
 };
 

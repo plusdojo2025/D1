@@ -4,51 +4,63 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import dto.Teacher;
 
 public class TeachersDAO {
-	public boolean isLoginOK(Teacher teacher) {
-		boolean isOK = false;
-		
+	// 引数で指定されたteacherIdとpasswordに一致する教員を取得し、存在すればTeacherオブジェクトを返す
+	public Teacher findByIdAndPassword(Teacher t) {
 		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
+		Teacher teacher = null;
+	
 		try {
-			// JDBCドライバ読み込み
+			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webapp?"
-                    + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
                     "root", "password");
 			
 			// SQL文の準備する
             String sql = "SELECT * FROM Teachers WHERE teacherId = ? AND password = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, teacher.getTeacherId());
-            stmt.setString(2, teacher.getPassword());
+            PreparedStatement pStmt = conn.prepareStatement(sql);
             
-            // SELECT文を実行し、結果表を取得する
-            rs = stmt.executeQuery();
+            // SQL文を完成させる
+            pStmt.setInt(1, t.getTeacherId());
+			pStmt.setString(2, t.getPassword());
             
-            // ユーザーIDとパスワードが一致するユーザーがいれば結果をtrueにする
-         	if(rs.next()) {
-         		isOK = true;
-         	}
-		} catch (Exception e) {
+			// SQL文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			
+			// 該当する教員が存在した場合、その情報をteacherに格納
+			if (rs.next()) {
+				teacher = new Teacher(
+					rs.getInt("teacherId"),
+					rs.getString("name"),
+					rs.getString("password"));
+			}		
+		} catch (SQLException e) {
 			e.printStackTrace();
+			teacher = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			teacher = null;
 		} finally {
-			try { if (rs != null) rs.close(); } catch(Exception e) {}
-			try { if (stmt != null) stmt.close(); } catch(Exception e) {}
-			try { if (conn != null) conn.close(); } catch(Exception e) {}
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					teacher = null;
+				}
+			}
 		}
 		
-		return isOK;
+		// 結果を返す（nullならログイン失敗、Teacherが返れば成功）
+		return teacher;
 	}
 }
-            
-            
-            
-            
+          

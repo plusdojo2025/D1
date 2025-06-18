@@ -22,7 +22,7 @@ public class ScheduleDAO {
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2?"
 	                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 	                "root", "password");
 
@@ -35,7 +35,7 @@ public class ScheduleDAO {
 	                   + "AND period LIKE ? "
 	                   + "AND content LIKE ? "
 	                   + "AND type LIKE ? "
-	                   + "AND (year = ? OR ? IS NULL) "
+	                   + "AND (year = ? OR ? = -1) "
 	                   + "AND semester LIKE ? "
 	                   + "AND day_of_week LIKE ? "
 	                   + "ORDER BY scheduleId";
@@ -44,7 +44,7 @@ public class ScheduleDAO {
 
 	        // ここでパラメータを順番に設定する（計14個）
 
-	        // scheduleId（1,2）
+	     // scheduleId（1,2）
 	        pStmt.setInt(1, schedule.getScheduleId());
 	        pStmt.setInt(2, schedule.getScheduleId());
 
@@ -76,20 +76,15 @@ public class ScheduleDAO {
 	        pStmt.setString(11, schedule.getType() != null && !schedule.getType().isEmpty() ? "%" + schedule.getType() + "%" : "%");
 
 	        // year（12,13）
-	        if (schedule.getYear() != null) {
-	            Timestamp tsYear = Timestamp.valueOf(schedule.getYear());
-	            pStmt.setTimestamp(12, tsYear);
-	            pStmt.setTimestamp(13, tsYear);
-	        } else {
-	            pStmt.setNull(12, Types.TIMESTAMP);
-	            pStmt.setNull(13, Types.TIMESTAMP);
-	        }
+	        pStmt.setInt(12, schedule.getYear());
+	        pStmt.setInt(13, schedule.getYear());
 
 	        // semester（14）
 	        pStmt.setString(14, schedule.getSemester() != null && !schedule.getSemester().isEmpty() ? "%" + schedule.getSemester() + "%" : "%");
 
 	        // day_of_week（15）
 	        pStmt.setString(15, schedule.getDay_of_week() != null && !schedule.getDay_of_week().isEmpty() ? "%" + schedule.getDay_of_week() + "%" : "%");
+
 
 	        ResultSet rs = pStmt.executeQuery();
 
@@ -102,7 +97,7 @@ public class ScheduleDAO {
 	                rs.getString("period"),
 	                rs.getString("content"),
 	                rs.getString("type"),
-	                rs.getTimestamp("year") != null ? rs.getTimestamp("year").toLocalDateTime() : null,
+	                rs.getInt("year"),
 	                rs.getString("semester"),
 	                rs.getString("memo"),
 	                rs.getString("day_of_week")
@@ -128,7 +123,7 @@ public class ScheduleDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2?"
                     + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
                     "root", "password");
 
@@ -142,7 +137,7 @@ public class ScheduleDAO {
             pStmt.setString(4, schedule.getPeriod() != null ? schedule.getPeriod() : "");
             pStmt.setString(5, schedule.getContent() != null ? schedule.getContent() : "");
             pStmt.setString(6, schedule.getType() != null ? schedule.getType() : "");
-            pStmt.setTimestamp(7, schedule.getYear() != null ? Timestamp.valueOf(schedule.getYear()) : null);
+            pStmt.setInt(7, schedule.getYear());
             pStmt.setString(8, schedule.getSemester() != null ? schedule.getSemester() : "");
             pStmt.setString(9, schedule.getMemo() != null ? schedule.getMemo() : "");
             pStmt.setString(10, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : "");
@@ -167,7 +162,7 @@ public class ScheduleDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2?"
                     + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
                     "root", "password");
 
@@ -181,7 +176,7 @@ public class ScheduleDAO {
             pStmt.setString(4, schedule.getPeriod() != null ? schedule.getPeriod() : "");
             pStmt.setString(5, schedule.getContent() != null ? schedule.getContent() : "");
             pStmt.setString(6, schedule.getType() != null ? schedule.getType() : "");
-            pStmt.setTimestamp(7, schedule.getYear() != null ? Timestamp.valueOf(schedule.getYear()) : null);
+            pStmt.setInt(7, schedule.getYear());
             pStmt.setString(8, schedule.getSemester() != null ? schedule.getSemester() : "");
             pStmt.setString(9, schedule.getMemo() != null ? schedule.getMemo() : "");
             pStmt.setString(10, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : "");
@@ -207,7 +202,7 @@ public class ScheduleDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?"
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2?"
                     + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
                     "root", "password");
 

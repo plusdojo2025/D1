@@ -18,6 +18,7 @@ public class StudentsDAOTest {
 		
 		for (Students st : stList) {
 			System.out.println("学生ID：" + st.getStudentId());
+			System.out.println("入学年：" + st.getYear());
 			System.out.println("学年：" + st.getGrade());
 			System.out.println("クラスID：" + st.getClassId());
             System.out.println("出席番号：" + st.getStudentNum());
@@ -35,7 +36,7 @@ public class StudentsDAOTest {
 
 		// select()のテスト1
 		System.out.println("---------- select()のテスト1 ----------");
-		List<Students> stListSel1 = dao.select(new Students(-1, -1, -1, -1, "栃木", "", "", "", ""));
+		List<Students> stListSel1 = dao.select(new Students(1, 2023, 3, 1, 1, "石田　悠馬", "いしだ　ゆうま", "", "", ""));
 		StudentsDAOTest.showAllData(stListSel1);
 
 		// select()のテスト2
@@ -55,10 +56,10 @@ public class StudentsDAOTest {
 		
 		// insert()のテスト
 		System.out.println("---------- insert()のテスト ----------");
-		Students insRec = new Students(70, 1, 6, 5, "栃木　三郎", "とちき　さぶろう", "", "", "");
+		Students insRec = new Students(90, 2025, 6, 5, 1, "栃木　三郎", "とちき　さぶろう", "", "", "");
 		if (dao.insert(insRec)) {
 			System.out.println("登録成功！");
-			List<Students> stListIns = dao.select(new Students(70, 1, 6, 5, "栃木　三郎", "とちき　さぶろう", "", "", ""));
+			List<Students> stListIns = dao.select(new Students(70, 2025, 6, 5, 1,  "栃木　三郎", "とちき　さぶろう", "", "", ""));
 			StudentsDAOTest.showAllData(stListIns);
 		} else {
 			System.out.println("登録失敗！");
@@ -67,7 +68,7 @@ public class StudentsDAOTest {
 
 		// update()のテスト
 		System.out.println("---------- update()のテスト ----------");
-		List<Students> stListUp = dao.select(new Students(70, 1, 6, 4, "栃木　三郎", "とちき　さぶろう", "", "", ""));
+		List<Students> stListUp = dao.select(new Students(90, 2025, 6, 5, 1, "栃木　三郎", "とちき　さぶろう", "", "", ""));
 		//変更箇所消すかもしれない
 		if (stListUp != null && !stListUp.isEmpty()) {
 		Students upRec = stListUp.get(0);
@@ -75,7 +76,7 @@ public class StudentsDAOTest {
 		
 		if (dao.update(upRec)) {
 			System.out.println("更新成功！");
-			stListUp = dao.select(new Students(70, 1, 6, 4, "日光　五郎", "にっこう　ごろう", "", "", ""));
+			stListUp = dao.select(new Students(90, 2025, 6, 5, 1, "日光　五郎", "にっこう　ごろう", "", "", ""));
 			StudentsDAOTest.showAllData(stListUp);
 		} else {
 			System.out.println("更新失敗！");
@@ -87,11 +88,11 @@ public class StudentsDAOTest {
 
 		// delete()のテスト
 		System.out.println("---------- delete()のテスト ----------");
-		List<Students> stListDel = dao.select(new Students(55, 0, 0, 0, "", "", "", "", ""));
+		List<Students> stListDel = dao.select(new Students(90, 2025, 6, 5, 1, "日光　五郎", "とちき　さぶろう", "", "", ""));
 		Students delRec = stListDel.get(0);
 		if (dao.delete(delRec)) {
 			System.out.println("削除成功！");
-			stListDel = dao.select(new Students(55, 0, 0, 0, "", "", "", "", ""));
+			stListDel = dao.select(new Students(70, 2025, 6, 5, 1, "日光　五郎", "にっこう　ごろう", "", "", ""));
 			StudentsDAOTest.showAllData(stListDel);
 		} else {
 			System.out.println("削除失敗！");

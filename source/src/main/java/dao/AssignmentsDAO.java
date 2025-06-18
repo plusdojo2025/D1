@@ -37,17 +37,17 @@ public class AssignmentsDAO {
 
 
 			if (as.getAssignmentId() > 0) {
-				pStmt.setString(1, "%" + as.getAssignmentId() + "%");
+				pStmt.setString(1, "" + as.getAssignmentId());
 			} else {
 				pStmt.setString(1, "%");
 			}
 			if (as.getStudentId() > 0) {
-				pStmt.setString(2, "%" + as.getStudentId() + "%");
+				pStmt.setString(2, "" + as.getStudentId());
 			} else {
 				pStmt.setString(2, "%");
 			}
 			if (as.getSubjectId() > 0) {
-				pStmt.setString(3, "%" + as.getSubjectId() + "%");
+				pStmt.setString(3, "" + as.getSubjectId());
 			} else {
 				pStmt.setString(3, "%");
 			}
@@ -57,7 +57,7 @@ public class AssignmentsDAO {
 				pStmt.setString(6, "%");
 			}
 			if (as.getCreatedMonth() > 0) {
-				pStmt.setString(7, "%" + as.getCreatedMonth() + "%");
+				pStmt.setString(7, "" + as.getCreatedMonth());
 			} else {
 				pStmt.setString(7, "%");
 			}
@@ -129,19 +129,19 @@ public class AssignmentsDAO {
 			calendar.setTime(as.getSubmissionDate());
 
 			if (as.getAssignmentId() != -1) {
-				pStmt.setString(1, "%" + as.getAssignmentId() + "%");
+				pStmt.setString(1, "" + as.getAssignmentId());
 			} else {
-				pStmt.setString(1, "%");
+				pStmt.setString(1, "");
 			}
 			if (as.getStudentId() != -1) {
-				pStmt.setString(2, "%" + as.getStudentId() + "%");
+				pStmt.setString(2, "" + as.getStudentId());
 			} else {
-				pStmt.setString(2, "%");
+				pStmt.setString(2, "");
 			}
 			if (as.getSubjectId() != -1) {
-				pStmt.setString(3, "%" + as.getSubjectId() + "%");
+				pStmt.setString(3, "" + as.getSubjectId());
 			} else {
-				pStmt.setString(3, "%");
+				pStmt.setString(3, "");
 			}
 			
 			if (as.getSubmissionStatus() != null) {
@@ -222,17 +222,17 @@ public class AssignmentsDAO {
 
 						
 			if (as.getAssignmentId() > 0) {
-				pStmt.setString(4, "%" + as.getAssignmentId() + "%");
+				pStmt.setString(4, "" + as.getAssignmentId());
 			} else {
 				pStmt.setString(4, "%");
 			}
 			if (as.getStudentId() > 0) {
-				pStmt.setString(5, "%" + as.getStudentId() + "%");
+				pStmt.setString(5, "" + as.getStudentId());
 			} else {
 				pStmt.setString(5, "%");
 			}
 			if (as.getSubjectId() > 0) {
-				pStmt.setString(6, "%" + as.getSubjectId() + "%");
+				pStmt.setString(6, "" + as.getSubjectId());
 			} else {
 				pStmt.setString(6, "%");
 			}

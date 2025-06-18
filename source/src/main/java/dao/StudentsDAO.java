@@ -26,10 +26,8 @@ public class StudentsDAO {
 					"root", "password");
 			// SQL文を準備する
 			String sql = "SELECT * FROM Students "     //変更箇所//
-					+ "WHERE studentId like ? AND grade like ? AND "
-					+ "classId = ? AND studentNum = ? AND "
-					+ "name = ? AND nameRuby = ? AND enrollmentStatus = ? AND "
-					+ "extracurricularActivities = ? AND attitude = ? ";
+					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
+					+ "classId = ? AND studentNum = ?;";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 
@@ -38,45 +36,20 @@ public class StudentsDAO {
             } else {
         		pStmt.setString(1, "%");
             }
-            if (st.getGrade() >0) {
-        		pStmt.setString(2, ""+ st.getGrade());
+            if (st.getYear() >0) {
+        		pStmt.setString(2, ""+ st.getYear());
             } else {
         		pStmt.setString(2, "%");
+            }            
+            if (st.getGrade() >0) {
+        		pStmt.setString(3, ""+ st.getGrade());
+            } else {
+        		pStmt.setString(3, "%");
             }
             
 
-			pStmt.setInt(3, st.getClassId());
-			pStmt.setInt(4, st.getStudentNum());
-			
-            if (st.getName() != null) {
-            		pStmt.setString(5, "%" + st.getName() + "%");
-            } else {
-            		pStmt.setString(5, "%");
-            }
-
-            if (st.getNameRuby() != null) {
-            		pStmt.setString(6, "%" + st.getNameRuby() + "%");
-            } else {
-            		pStmt.setString(6, "%");
-            }
-
-            if (st.getEnrollmentStatus() != null) {
-            		pStmt.setString(7, "%" + st.getEnrollmentStatus() + "%");
-            } else {
-            		pStmt.setString(7, "%");
-            }
-
-            if (st.getExtracurricularActivities() != null) {
-            		pStmt.setString(8, "%" + st.getExtracurricularActivities() + "%");
-            } else {
-            		pStmt.setString(8, "%");
-            }
-
-            if (st.getAttitude() != null) {
-            		pStmt.setString(9, "%" + st.getAttitude() + "%");
-            } else {
-            		pStmt.setString(9, "%");
-            }	
+			pStmt.setInt(4, st.getClassId());
+			pStmt.setInt(5, st.getStudentNum());
 			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();  
@@ -84,6 +57,7 @@ public class StudentsDAO {
 			// 結果表をコレクションにコピーする
 			while (rs.next()) { 
 				Students students = new Students(rs.getInt("studentId"),
+						                         rs.getInt("year"),
                                                  rs.getInt("grade"),
                                                  rs.getInt("classId"),
                                                  rs.getInt("studentNum"),
@@ -132,14 +106,15 @@ public class StudentsDAO {
 
 
 			// SQL文を準備する      変更箇所
-			String sql = "INSERT INTO Students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
 			
 			// SQL文を完成させる			
 			pStmt.setInt(1, st.getStudentId());
-			pStmt.setInt(2, st.getGrade());
-			pStmt.setInt(3, st.getClassId());
-            pStmt.setInt(4, st.getStudentNum());
+			pStmt.setInt(2, st.getYear());
+			pStmt.setInt(3, st.getGrade());
+			pStmt.setInt(4, st.getClassId());
+            pStmt.setInt(5, st.getStudentNum());
 			//pStmt.setString(5, st.getName());
 			//pStmt.setString(6, st.getNameRuby());
 			//pStmt.setString(7, st.getEnrollmentStatus());
@@ -147,33 +122,36 @@ public class StudentsDAO {
 			//pStmt.setString(9, st.getAttitude());
 
 			if (st.getName() != null) {
-				pStmt.setString(5, st.getName());
-			} else {
-				pStmt.setString(5, "");
-			}
-			if (st.getNameRuby() != null) {
-				pStmt.setString(6, st.getNameRuby());
+				pStmt.setString(6, st.getName());
 			} else {
 				pStmt.setString(6, "");
 			}
-			if (st.getEnrollmentStatus() != null) {
-				pStmt.setString(7, st.getEnrollmentStatus());
+			if (st.getNameRuby() != null) {
+				pStmt.setString(7, st.getNameRuby());
 			} else {
 				pStmt.setString(7, "");
 			}
-            if (st.getExtracurricularActivities() != null) {
-				pStmt.setString(8, st.getExtracurricularActivities());
+			if (st.getEnrollmentStatus() != null) {
+				pStmt.setString(8, st.getEnrollmentStatus());
 			} else {
 				pStmt.setString(8, "");
 			}
-            if (st.getAttitude() != null) {
-				pStmt.setString(9, st.getAttitude());
+            if (st.getExtracurricularActivities() != null) {
+				pStmt.setString(9, st.getExtracurricularActivities());
 			} else {
 				pStmt.setString(9, "");
 			}
+            if (st.getAttitude() != null) {
+				pStmt.setString(10, st.getAttitude());
+			} else {
+				pStmt.setString(10, "");
+			}
             // SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
-				result = true;
+				result = true;			  
+			}
+			else {
+				result = false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -209,7 +187,7 @@ public class StudentsDAO {
 					"root", "password");
 			
 			// SQL文を準備する  変更箇所
-			String sql = "UPDATE Students SET grade=?, classId=?, "
+			String sql = "UPDATE Students SET year=?, grade=?, classId=?, "
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
 					+ "extracurricularActivities=?, attitude=? WHERE studentId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
@@ -218,53 +196,50 @@ public class StudentsDAO {
 			
 			
 			// SQL文を完成させる
-			pStmt.setInt(1, st.getGrade());
-			pStmt.setInt(2, st.getClassId());
-			pStmt.setInt(3, st.getStudentNum());
-			//pStmt.setString(4, st.getName());
-			//pStmt.setString(5, st.getNameRuby());
-			//pStmt.setString(6, st.getEnrollmentStatus());
-			//pStmt.setString(7, st.getExtracurricularActivities());
-			//pStmt.setString(8, st.getAttitude());
+			pStmt.setInt(1, st.getYear());
+			pStmt.setInt(2, st.getGrade());
+			pStmt.setInt(3, st.getClassId());
+			pStmt.setInt(4, st.getStudentNum());
+
 			
 			if (st.getName() != null) {
-				pStmt.setString(4, st.getName());
-			} else {
-				pStmt.setString(4, "");
-			}
-
-
-			if (st.getNameRuby() != null) {
-				pStmt.setString(5, st.getNameRuby());
+				pStmt.setString(5, st.getName());
 			} else {
 				pStmt.setString(5, "");
 			}
 
 
-			if (st.getEnrollmentStatus() != null) {
-				pStmt.setString(6, st.getEnrollmentStatus());
+			if (st.getNameRuby() != null) {
+				pStmt.setString(6, st.getNameRuby());
 			} else {
 				pStmt.setString(6, "");
 			}
 
 
-			if (st.getExtracurricularActivities() != null) {
-				pStmt.setString(7, st.getExtracurricularActivities());
+			if (st.getEnrollmentStatus() != null) {
+				pStmt.setString(7, st.getEnrollmentStatus());
 			} else {
 				pStmt.setString(7, "");
 			}
 
-			if (st.getAttitude() != null) {
-				pStmt.setString(8, st.getAttitude());
+
+			if (st.getExtracurricularActivities() != null) {
+				pStmt.setString(8, st.getExtracurricularActivities());
 			} else {
 				pStmt.setString(8, "");
+			}
+
+			if (st.getAttitude() != null) {
+				pStmt.setString(9, st.getAttitude());
+			} else {
+				pStmt.setString(9, "");
 			}
 						
 			
             if (st.getStudentId() >0) {
-        		pStmt.setString(9, ""+ st.getStudentId());
+        		pStmt.setString(10, ""+ st.getStudentId());
             } else {
-        		pStmt.setString(9, "%");
+        		pStmt.setString(10, "%");
             }			
 			
 			

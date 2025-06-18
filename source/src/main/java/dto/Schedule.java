@@ -11,13 +11,13 @@ public class Schedule implements Serializable {
     private String period;      // 時限
     private String content;     // 各コマの予定
     private String type;        // 対象種別
-    private LocalDateTime year; // 年度
+    private int year; // 年度
     private String semester;    // 学期
     private String memo;        // メモ欄
     private String day_of_week; // 曜日
 
     public Schedule(int scheduleId, int teacherId, int classId, LocalDateTime date, String period, String content, String type,
-                    LocalDateTime year, String semester, String memo, String day_of_week) {
+                    int year, String semester, String memo, String day_of_week) {
         this.scheduleId = scheduleId;
         this.teacherId = teacherId;
         this.classId = classId;
@@ -39,7 +39,7 @@ public class Schedule implements Serializable {
         this.period = "";
         this.content = "";
         this.type = "";
-        this.year = LocalDateTime.now();
+        this.year = -1;
         this.semester = "";
         this.memo = "";
         this.day_of_week = "";
@@ -87,10 +87,10 @@ public class Schedule implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    public LocalDateTime getYear() {
+    public int getYear() {
         return year;
     }
-    public void setYear(LocalDateTime year) {
+    public void setYear(int year) {
         this.year = year;
     }
     public String getSemester() {

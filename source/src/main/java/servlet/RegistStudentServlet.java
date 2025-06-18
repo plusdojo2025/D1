@@ -95,12 +95,13 @@ public class RegistStudentServlet extends HttpServlet {
 
 		// 登録処理を行う
 		StudentsDAO sDao = new StudentsDAO();
-		if (sDao.insert(new Students(-1, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
+		if (sDao.insert(new Students(-1, -1, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/InfoStudentServlet");
             dispatcher.forward(request, response);
 		} else {
-            //登録失敗時は"InfoScheduleServlet"にフォワード                                                                         "/webapp/LoginServlet"のwebappをD1に変更
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/InfoScheduleServlet");
+            request.setAttribute("error", "登録済みの出席番号です");
+            //登録失敗時は"Servlet"にフォワード                                                                         "/webapp/LoginServlet"のwebappをD1に変更
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/RegistStudentServlet");
             dispatcher.forward(request, response);
 		}
 
