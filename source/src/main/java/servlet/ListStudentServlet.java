@@ -86,7 +86,7 @@ public class ListStudentServlet extends HttpServlet {
 		
 		//生徒情報を取得
 		StudentsDAO studentDao = new StudentsDAO();
-		List<Students> studentList = studentDao.select(new Students(0,0,0,classId,1, "", "", "", "", ""));
+		List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
 		request.setAttribute("studentList", studentList);
 		
 		System.out.println("studentList "+studentList);
@@ -109,12 +109,18 @@ public class ListStudentServlet extends HttpServlet {
 			//studentId.add(studentList.get(i).getStudentId());
 			studentId = studentIdList.get(i);
 			
-			//attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords(0,studentId, classId, year, month,0,"",0,"","")));
+			attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+					(0,studentId, classId, year, month,0,"",0,"","")));
 			
-			assignmentsList.addAll(assignmentsDao.select(new Assignments(0,studentId,subjectId,"","",year,month,date)));
+			assignmentsList.addAll(assignmentsDao.select(new Assignments
+					(0,studentId,subjectId,"","",year,month,date)));
 			
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}
+		
+		System.out.println("attendanceList "+attendanceList);
+		System.out.println("assignmentsList "+assignmentsList);
+		System.out.println("gradesList "+gradesList);
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -150,7 +156,8 @@ public class ListStudentServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				

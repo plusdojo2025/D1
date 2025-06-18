@@ -27,12 +27,12 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
             </select>
 
             <select name="className">
-                <option value="1"><input type="submit" name="change" placeholder="1組"></option>
-                <option value="2"><input type="submit" name="change" placeholder="2組"></option>
-                <option value="3"><input type="submit" name="change" placeholder="3組"></option>
-                <option value="4"><input type="submit" name="change" placeholder="4組"></option>
-                <option value="5"><input type="submit" name="change" placeholder="5組"></option>
-                <option value="6"><input type="submit" name="change" placeholder="6組"></option>
+                <option value="1組"><input type="submit" name="change" placeholder="1組"></option>
+                <option value="2組"><input type="submit" name="change" placeholder="2組"></option>
+                <option value="3組"><input type="submit" name="change" placeholder="3組"></option>
+                <option value="4組"><input type="submit" name="change" placeholder="4組"></option>
+                <option value="5組"><input type="submit" name="change" placeholder="5組"></option>
+                <option value="6組"><input type="submit" name="change" placeholder="6組"></option>
             </select>
             
             <select name="year">

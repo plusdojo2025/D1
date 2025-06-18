@@ -28,7 +28,7 @@ public class GradesDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Grades "
 					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? AND score like ? "
-					+ "AND testType like ? year(date) like ? AND month(date) like ? ";
+					+ "AND testType like ? AND year(date) like ? AND month(date) like ? ";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -78,9 +78,7 @@ public class GradesDAO {
 						rs.getInt("studentId"), 
 						rs.getInt("subjectId"), 
 						rs.getInt("score"), 
-						rs.getString("testType"), 
-						rs.getInt("year"), 
-						rs.getInt("month")
+						rs.getString("testType")
 						);
 				arList.add(ar);
 			}

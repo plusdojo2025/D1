@@ -30,7 +30,7 @@ public class AssignmentsDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM Assignments "
-					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? "
+					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? AND "
 					+ "year(createdDate) like ? AND month(createdDate) like ? ";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class AssignmentsDAO {
 
 			while (rs.next()) {
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = sdFormat.parse(rs.getString("date"));
+				Date date = sdFormat.parse(rs.getString("createdDate"));
 
 				Assignments ar = new Assignments(
 						rs.getInt("assignmentId"), 
@@ -75,8 +75,6 @@ public class AssignmentsDAO {
 						rs.getInt("subjectId"), 
 						rs.getString("submissionStatus"), 
 						rs.getString("content"),
-						rs.getInt("createdYear"), 
-						rs.getInt("createdMonth"), 
 						date
 						);
 				arList.add(ar);

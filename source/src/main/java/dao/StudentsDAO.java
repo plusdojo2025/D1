@@ -52,8 +52,10 @@ public class StudentsDAO {
         		pStmt.setString(4, "%");
             }            
             if (st.getStudentNum() >0) {
+            	System.out.println("if "+st.getStudentNum());
         		pStmt.setString(5, ""+ st.getStudentNum());
             } else {
+            	System.out.println("else "+st.getStudentNum());
         		pStmt.setString(5, "%");
             }
 
