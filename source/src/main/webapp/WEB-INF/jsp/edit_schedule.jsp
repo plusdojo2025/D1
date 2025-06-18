@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,24 +36,55 @@
   </div>
 </form>
 
-<!-- 時間割テーブル（仮表示） -->
-<c:if test="${not empty scheduleList}">
-  <table>
-    <tr>
-      <th>曜日</th>
-      <th>時限</th>
-      <th>内容</th>
-      <th>対象クラス</th>
-    </tr>
-    <c:forEach var="item" items="${scheduleList}">
+<c:set var="paramYear" value="${year}" />
+<c:set var="paramSemester" value="${semester}" />
+<!-- スケジュール表示 -->
+<form action="InfoScheduleServlet" method="post">
+  <input type="hidden" name="action" value="save"> <!-- 保存フラグ -->
+  <input type="hidden" name="year" value="${year}">
+  <input type="hidden" name="semester" value="${semester}">
+
+  <table border="1">
+    <thead>
       <tr>
-        <td>${item.day_of_week}</td>
-        <td>${item.period}</td>
-        <td>${item.content}</td>
-        <td>${item.classId}</td>
+        <th>時限/曜日</th>
+        <c:forEach var="day" items="${fn:split(days, ',')}">
+          <th>${day}</th>
+        </c:forEach>
       </tr>
-    </c:forEach>
+    </thead>
+    <tbody>
+      <c:forEach var="period" items="${fn:split(periods, ',')}">
+        <tr>
+          <th>${period}</th>
+          <c:forEach var="day" items="${fn:split(days, ',')}">
+            <td>
+              <c:set var="found" value="false"/>
+              <c:forEach var="item" items="${scheduleList}">
+                <c:if test="${item.year == year && item.semester == semester && item.day_of_week == day && item.period == period}">
+                  <input type="hidden" name="scheduleId" value="${item.scheduleId}" />
+                  <input type="text" name="content_${day}_${period}" value="${item.content}" />
+                  <input type="text" name="classId_${day}_${period}" value="${item.classId}" />
+                  <c:set var="found" value="true"/>
+                </c:if>
+              </c:forEach>
+              <c:if test="${!found}">
+                <input type="text" name="content_${day}_${period}" value="" />
+                <input type="text" name="classId_${day}_${period}" value="" />
+              </c:if>
+            </td>
+          </c:forEach>
+        </tr>
+      </c:forEach>
+    </tbody>
   </table>
+
+  <button type="submit" class="btn">保存</button>
+</form>
+
+
+<c:if test="${empty scheduleList}">
+  <p>該当するスケジュールはありません。</p>
 </c:if>
 
 <!-- メモ欄 -->
@@ -64,9 +96,6 @@
 </div>
 
 <!-- 編集・戻るボタン -->
-<form action="EditScheduleServlet" method="get" style="display: inline;">
-  <button type="submit" class="btn">保存</button>
-</form>
 
 <form action="InfoScheduleServlet" method="post" style="display: inline;">
   <input type="hidden" name="year" value="${year}">
