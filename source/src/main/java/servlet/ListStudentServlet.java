@@ -108,7 +108,7 @@ public class ListStudentServlet extends HttpServlet {
 		for(int i=0;studentIdList.size()>i;i++) {
 			//studentId.add(studentList.get(i).getStudentId());
 			studentId = studentIdList.get(i);
-			
+			System.out.println("date "+date);
 			attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
 					(0,studentId, classId, year, month,0,"",0,"","")));
 			

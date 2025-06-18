@@ -27,7 +27,7 @@ public class StudentsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Students "     //変更箇所//
 					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
-					+ "classId = ? AND studentNum = ?;";
+					+ "classId like ? AND studentNum like ?;";
 					
 			PreparedStatement pStmt = conn.prepareStatement(sql);	
 
@@ -52,10 +52,8 @@ public class StudentsDAO {
         		pStmt.setString(4, "%");
             }            
             if (st.getStudentNum() >0) {
-            	System.out.println("if "+st.getStudentNum());
         		pStmt.setString(5, ""+ st.getStudentNum());
             } else {
-            	System.out.println("else "+st.getStudentNum());
         		pStmt.setString(5, "%");
             }
 

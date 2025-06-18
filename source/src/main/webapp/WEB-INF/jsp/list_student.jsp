@@ -21,12 +21,14 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
         <form action="ListStudentServlet.java" method ="POST" id="list_student_form">
 
             <select name="grede">
+            	<option>"${grede}"</option>
                 <option value="1"><input type="submit" name="change" placeholder="1年"></option>
                 <option value="2"><input type="submit" name="change" placeholder="2年"></option>
                 <option value="3"><input type="submit" name="change" placeholder="3年"></option>
             </select>
 
             <select name="className">
+            	<option>"${className}"</option>
                 <option value="1組"><input type="submit" name="change" placeholder="1組"></option>
                 <option value="2組"><input type="submit" name="change" placeholder="2組"></option>
                 <option value="3組"><input type="submit" name="change" placeholder="3組"></option>
@@ -71,20 +73,20 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
 				</c:forEach>
             </select>
 
-            <select name="subjectName">
-                <option value="現代文"><input type="submit" name="change" placeholder="現代文"></option>
-                <option value="古典"><input type="submit" name="change" placeholder="古典"></option>
-                <option value="数学IA"><input type="submit" name="change" placeholder="数学IA"></option>
-                <option value="数学ⅡB"><input type="submit" name="change" placeholder="数学ⅡB"></option>
-                <option value="数学ⅢC"><input type="submit" name="change" placeholder="数学ⅢC"></option>
-                <option value="英語表現"><input type="submit" name="change" placeholder="英語表現"></option>
-                <option value="コミュニケーション英語"><input type="submit" name="change" placeholder="コミュニケーション英語"></option>
-                <option value="物理"><input type="submit" name="change" placeholder="物理"></option>
-                <option value="化学"><input type="submit" name="change" placeholder="化学"></option>
-                <option value="生物"><input type="submit" name="change" placeholder="生物"></option>
-                <option value="地学"><input type="submit" name="change" placeholder="地学"></option>
-                <option value="日本史"><input type="submit" name="change" placeholder="日本史"></option>
-                <option value="世界史"><input type="submit" name="change" placeholder="世界史"></option>
+            <select name="subjectName" id="dropSubject" onchange="navigate()">
+                <option value="ListStudentServlet.java">現代文</option>
+                <option value="古典">古典</option>
+                <option value="数学IA">数学IA</option>
+                <option value="数学ⅡB">数学ⅡB</option>
+                <option value="数学ⅢC">数学ⅢC</option>
+                <option value="英語表現">英語表現</option>
+                <option value="コミュニケーション英語">コミュニケーション英語</option>
+                <option value="物理">物理</option>
+                <option value="化学">化学</option>
+                <option value="生物">生物</option>
+                <option value="地学">地学</option>
+                <option value="日本史">日本史</option>
+                <option value="世界史">世界史"></option>
                 <option value="地理"><input type="submit" name="change" placeholder="地理"></option>
                 <option value="公民"><input type="submit" name="change" placeholder="公民"></option>
                 <option value="情報"><input type="submit" name="change" placeholder="情報"></option>
