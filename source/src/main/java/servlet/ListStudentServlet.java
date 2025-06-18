@@ -142,6 +142,9 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("year", year);
 		request.setAttribute("month", month);
 		request.setAttribute("subjectName", subjectName);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
