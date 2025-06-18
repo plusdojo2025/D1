@@ -55,20 +55,10 @@ function changeDisplay(event) {
 };
 
 // 教科プルダウンを押した際の動作
-function subjectChange() {
-	var element = document.getElementById('subjectSelect');
-	console.log(element.value);
-	window.location.href = "/D1/InfoStudentServlet?subjectId=" + element.value;
-}
-
-function yearChange() {
-	var element = document.getElementById('yearSelect');
-	console.log(element.value);
-	window.location.href = "/D1/InfoStudentServlet?yearId=" + element.value;
-}
-
-function monthChange() {
-	var element = document.getElementById('monthSelect');
-	console.log(element.value);
-	window.location.href = "/D1/InfoStudentServlet?monthId=" + element.value;
+function pulldownChange() {
+	var s = document.getElementById('subjectSelect');
+	var y = document.getElementById('yearSelect');
+	var m = document.getElementById('monthSelect');
+	//window.location.href = "/D1/InfoStudentServlet?subjectId=" + subject.value + 
+	//"&yearId=" + year.value + "&monthId=" + month.value;
 }

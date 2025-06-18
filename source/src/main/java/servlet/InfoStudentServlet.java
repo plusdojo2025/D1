@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,12 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.el.parser.ParseException;
 
+import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
 import dao.ClassRoomDAO;
+import dao.GradesDAO;
 import dao.InterviewDAO;
 import dao.StudentsDAO;
+import dto.Assignments;
 import dto.AttendanceRecords;
 import dto.ClassRoom;
+import dto.Grades;
 import dto.Interview;
 import dto.Students;
 
@@ -33,6 +39,13 @@ public class InfoStudentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
 		try {
@@ -65,8 +78,9 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("student", student);
 
 			AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
-			List<AttendanceRecords> arList = arDAO.select_Fiscal(-10, student.getClassId(), month, subjectId);
-			
+			//List<AttendanceRecords> arList = arDAO.select_Fiscal(2025 - year, student.getClassId(), month, subjectId);
+			List<AttendanceRecords> arList = arDAO.select(student.getClassId(), subjectId);
+
 			ClassRoomDAO crDAO = new ClassRoomDAO();
 			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(),""));
 			ClassRoom classRoom = new ClassRoom();
@@ -74,111 +88,141 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("className", classRoom.getClassName());
 
 			// 全体の出席
-			request.setAttribute("attendedRate", arDAO.GetAttendedRate(studentId));
-			request.setAttribute("attendedNum", arDAO.GetAttendedNum(studentId));
-			request.setAttribute("shouldAttendNum", arDAO.GetShouldAttendedNum(studentId));
+			int attendedNum = arDAO.GetAttendedNum(arList);
+			int shouldAttendedNum = arDAO.GetShouldAttendedNum(arList);
+			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
+			request.setAttribute("attendedNum", attendedNum);
+			request.setAttribute("shouldAttendNum", shouldAttendedNum);
 
 			// 全体の提出物
-			request.setAttribute("submittedRate", null);
-			request.setAttribute("submittedNum", null);
-			request.setAttribute("shouldSubmitNum", null);
+			AssignmentsDAO asDAO = new AssignmentsDAO();
+			List<Assignments> allAsList = asDAO.select(new Assignments(-1, studentId, -1, "", "", -1, -1, null));
+			int submittedNum = GetSubmittedNum(allAsList);
+			int shouldSubmittedNum = GetShouldSubmittedNum(allAsList);
+			request.setAttribute("submittedRate", GetSubmittedRate(submittedNum, shouldSubmittedNum));
+			request.setAttribute("submittedNum", submittedNum);
+			request.setAttribute("shouldSubmitNum", shouldSubmittedNum);
 
+			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", -1, month, null));
+			int subjectSubmittedNum = GetSubmittedNum(asList);
+			int subjectShouldSubmittedNum = GetShouldSubmittedNum(asList);
+			
 			// 指定した教科の出席・提出物
 			request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(studentId, subjectId));
 			request.setAttribute("attendanceRecords", arList);
-			request.setAttribute("subjectSubmittedRate", null);
-			request.setAttribute("assignmentsList", null);
+			request.setAttribute("subjectSubmittedRate", GetSubmittedRate(subjectSubmittedNum, subjectShouldSubmittedNum));
+			request.setAttribute("assignmentsList", asList);
 
 			// 成績
-			request.setAttribute("gradesList", null);
-			request.setAttribute("average", null);
+			GradesDAO grdDAO = new GradesDAO();
+			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", -1, month));
+			request.setAttribute("gradesList", grdList);
+			float[] average = new float[grdList.size()];
+			for (int i = 0; i < grdList.size(); i++) {
+				average[i] = GetAverage(grdList.get(i).getGradesId());
+			}
+			request.setAttribute("average", average);
 
-			// 面談
+			//面談
 			InterviewDAO itvDAO = new InterviewDAO();
 			List<Interview> itvList = itvDAO.select_thisYear(studentId);
 			List<Interview> lastItvList = itvDAO.select_lastYear(studentId);
 			request.setAttribute("interviewList", itvList);
 			request.setAttribute("lastInterviewList", lastItvList);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_student.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
+			request.setAttribute("result", "データがありません。");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_student.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+	
+	// 引数で指定した生徒の課題提出数を返す
+	public int GetSubmittedNum(List<Assignments> as) {
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH);
+		int day = now.get(Calendar.DAY_OF_WEEK);
+
+		for (int i = 0; i < as.size(); i++) {
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				if (as.get(i).getSubmissionDate().after(new Date(year, 3, 31)) && as.get(i).getSubmissionDate().before(new Date(year, 10, 15)) && as.get(i).getSubmissionStatus().equals("○")) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					if (as.get(i).getSubmissionDate().after(new Date(year-1, 10, 15)) && as.get(i).getSubmissionDate().before(new Date(year, 3, 31)) && as.get(i).getSubmissionStatus().equals("○")) {
+						count++;
+					}
+				} else {
+					if (as.get(i).getSubmissionDate().after(new Date(year, 10, 15)) && as.get(i).getSubmissionDate().before(new Date(year+1, 3, 31)) && as.get(i).getSubmissionStatus().equals("○")) {
+						count++;
+					}
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 引数で指定した生徒の提出すべき課題数を返す
+	public int GetShouldSubmittedNum(List<Assignments> as) {
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH);
+		int day = now.get(Calendar.DAY_OF_WEEK);
+		for (int i = 0; i < as.size(); i++) {
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				if (as.get(i).getSubmissionDate().after(new Date(year, 3, 31)) && as.get(i).getSubmissionDate().before(new Date(year, 10, 15)) && !as.get(i).getSubmissionStatus().equals("公欠")) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					if (as.get(i).getSubmissionDate().after(new Date(year-1, 10, 15)) && as.get(i).getSubmissionDate().before(new Date(year, 3, 31)) && !as.get(i).getSubmissionStatus().equals("公欠")) {
+						count++;
+					}
+				} else {
+					if (as.get(i).getSubmissionDate().after(new Date(year, 10, 15)) && as.get(i).getSubmissionDate().before(new Date(year+1, 3, 31)) && !as.get(i).getSubmissionStatus().equals("公欠")) {
+						count++;
+					}
+				}
+			}
+		}
+		return count;
+	}
+
+	// 提出率を百分率/小数点第二位までのString型で返す
+	public String GetSubmittedRate(int SubmittedNum, int shouldSubmittedNum) {
+		String rate = String.format("%.1f", (SubmittedNum / shouldSubmittedNum * 100.0f));
+		return rate;
+	}
+
+	// 入力した月日が前期かどうか判定する
+	public boolean isFirstSemester(int month, int day) {
+		if (month + 1 >= 4 && day >= 1 && month + 1 <= 10 && day <= 14) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-
-		int subjectId = -1, year = -1, month = -1;
-		// プルダウンの情報
-		if (request.getParameter("subjectId") != null) {
-			subjectId = Integer.parseInt(request.getParameter("subjectId"));
-			request.setAttribute("subjectId", subjectId);
-		} else {
-			request.setAttribute("subjectId", 1);
+	public float GetAverage(int gradesId) {
+		float sum = 0;
+		GradesDAO grdDAO = new GradesDAO();
+		List<Grades> grdList = grdDAO.select(new Grades(gradesId, -1, -1, -1, "", -1, -1));
+		for (int i = 0; i < grdList.size(); i++) {
+			sum += grdList.get(i).getScore();
 		}
-
-		if (request.getParameter("yearId") != null) {
-			year = Integer.parseInt(request.getParameter("yearId"));
-			request.setAttribute("yearId", year);
-		} else {
-			request.setAttribute("yearId", 1);
-		}
-
-		if (request.getParameter("monthId") != null) {
-			month = Integer.parseInt(request.getParameter("monthId"));
-			request.setAttribute("monthId", month);
-		} else {
-			request.setAttribute("monthId", 1);
-		}
-
-		StudentsDAO stuDAO = new StudentsDAO();
-
-		int studentId = Integer.parseInt(request.getParameter("studentId"));
-		List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, "", "", "", "", ""));
-		Students student = studentsList.get(0);
-
-		AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
-		List<AttendanceRecords> arList = arDAO.select_Fiscal(-10, student.getClassId(), month, subjectId);
-
-		request.setAttribute("student", studentsList.get(0));
-
-		ClassRoomDAO crDAO = new ClassRoomDAO();
-		List<ClassRoom> classList = crDAO.select(new ClassRoom(1,1,""));
-		request.setAttribute("className", classList.get(0).getClassName());
-
-		// 全体の出席
-		request.setAttribute("attendedRate", arDAO.GetAttendedRate(studentId));
-		request.setAttribute("attendedNum", arDAO.GetAttendedNum(studentId));
-		request.setAttribute("shouldAttendNum", arDAO.GetShouldAttendedNum(studentId));
-
-		// 全体の提出物
-		request.setAttribute("submittedRate", null);
-		request.setAttribute("submittedNum", null);
-		request.setAttribute("shouldSubmitNum", null);
-
-		// 指定した教科の出席・提出物
-		request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(studentId, subjectId));
-		request.setAttribute("attendanceRecords", arList);
-		request.setAttribute("subjectSubmittedRate", null);
-		request.setAttribute("assignmentsList", null);
-
-		// 成績
-		request.setAttribute("gradesList", null);
-		request.setAttribute("average", null);
-
-		// 面談
-		InterviewDAO itvDAO = new InterviewDAO();
-		List<Interview> itvList = itvDAO.select_thisYear(studentId);
-		List<Interview> lastItvList = itvDAO.select_lastYear(studentId);
-		request.setAttribute("interviewList", itvList);
-		request.setAttribute("lastInterviewList", lastItvList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_student.jsp");
-		dispatcher.forward(request, response);
+		
+		return sum / gradesId;
 	}
-
 }

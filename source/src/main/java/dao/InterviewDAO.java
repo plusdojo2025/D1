@@ -111,7 +111,7 @@ public class InterviewDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM Interview "
 					+ "WHERE studentId LIKE ? AND "
-					+ "date >= '?-4-1' AND date < '?-3-31';";
+					+ "date >= ? AND date < ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -123,11 +123,11 @@ public class InterviewDAO {
 			
 			Calendar cal = Calendar.getInstance();
 			if (cal.get(Calendar.MONTH) >= 4) {
-				pStmt.setInt(2, cal.get(Calendar.YEAR));
-				pStmt.setInt(3, cal.get(Calendar.YEAR) + 1);
+				pStmt.setString(2, cal.get(Calendar.YEAR) + "-4-1");
+				pStmt.setString(3, (cal.get(Calendar.YEAR) + 1) + "-3-31");
 			} else {
-				pStmt.setInt(2, cal.get(Calendar.YEAR) - 1);
-				pStmt.setInt(3, cal.get(Calendar.YEAR));
+				pStmt.setString(2, (cal.get(Calendar.YEAR) - 1) + "-4-1");
+				pStmt.setString(3, (cal.get(Calendar.YEAR)) + "-3-31");
 			}
 
 			// SQLの実行
@@ -194,11 +194,11 @@ public class InterviewDAO {
 			
 			Calendar cal = Calendar.getInstance();
 			if (cal.get(Calendar.MONTH) >= 4) {
-				pStmt.setInt(2, cal.get(Calendar.YEAR) - 1);
+				pStmt.setInt(2, (cal.get(Calendar.YEAR) - 1));
 				pStmt.setInt(3, cal.get(Calendar.YEAR));
 			} else {
-				pStmt.setInt(2, cal.get(Calendar.YEAR) - 2);
-				pStmt.setInt(3, cal.get(Calendar.YEAR) - 1);
+				pStmt.setInt(2, (cal.get(Calendar.YEAR) - 2));
+				pStmt.setInt(3, (cal.get(Calendar.YEAR) - 1));
 			}
 
 			// SQLの実行

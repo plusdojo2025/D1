@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -441,7 +443,6 @@ public class AttendanceRecordsDAO {
 				pStmt.setString(4, "%");
 			}
 
-
 			// SQLの実行
 			ResultSet rs = pStmt.executeQuery();
 
@@ -703,234 +704,78 @@ public class AttendanceRecordsDAO {
 	}
 
 	// 引数で指定した生徒の出席日数を返す
-	public int GetAttendedNum(int studentId) {
-		Connection conn = null;
-		int count = -1;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
-					+ "WHERE studentId LIKE ? AND status = '%';";
-
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			if (studentId > 0) {
-				pStmt.setString(1, "" + studentId);
+	public int GetAttendedNum(List<AttendanceRecords> ar) {
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH);
+		int day = now.get(Calendar.DAY_OF_WEEK);
+		
+		for (int i = 0; i < ar.size(); i++) {
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				if (ar.get(i).getDate().after(new Date(year, 3, 31)) && ar.get(i).getDate().before(new Date(year, 10, 15)) && ar.get(i).getStatus().equals("○")) {
+					count++;
+				}
 			} else {
-				pStmt.setString(1, "%");
-			}
-
-			// SQLの実行
-			ResultSet rs = pStmt.executeQuery();
-
-			while (rs.next()) {
-				count = rs.getInt("AttendedNum");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					if (ar.get(i).getDate().after(new Date(year-1, 10, 15)) && ar.get(i).getDate().before(new Date(year, 3, 31)) && ar.get(i).getStatus().equals("○")) {
+						count++;
+					}
+				} else {
+					if (ar.get(i).getDate().after(new Date(year, 10, 15)) && ar.get(i).getDate().before(new Date(year+1, 3, 31)) && ar.get(i).getStatus().equals("○")) {
+						count++;
+					}
 				}
 			}
 		}
-
+		
 		// 結果を返す
 		return count;
 	}
 
 	// 引数で指定した生徒の出席すべき日数を返す
-	public int GetShouldAttendedNum(int studentId) {
-		Connection conn = null;
-		int count = -1;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
-					+ "WHERE studentId LIKE ?;";
-
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			if (studentId > 0) {
-				pStmt.setString(1, "" + studentId);
+	public int GetShouldAttendedNum(List<AttendanceRecords> ar) {
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH);
+		int day = now.get(Calendar.DAY_OF_WEEK);
+		for (int i = 0; i < ar.size(); i++) {
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				if (ar.get(i).getDate().after(new Date(year, 3, 31)) && ar.get(i).getDate().before(new Date(year, 10, 15)) && !ar.get(i).getStatus().equals("公欠")) {
+					count++;
+				}
 			} else {
-				pStmt.setString(1, "%");
-			}
-
-			// SQLの実行
-			ResultSet rs = pStmt.executeQuery();
-
-			while (rs.next()) {
-				count = rs.getInt("AttendedNum");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					if (ar.get(i).getDate().after(new Date(year-1, 10, 15)) && ar.get(i).getDate().before(new Date(year, 3, 31)) && !ar.get(i).getStatus().equals("公欠")) {
+						count++;
+					}
+				} else {
+					if (ar.get(i).getDate().after(new Date(year, 10, 15)) && ar.get(i).getDate().before(new Date(year+1, 3, 31)) && !ar.get(i).getStatus().equals("公欠")) {
+						count++;
+					}
 				}
 			}
 		}
-
-		// 結果を返す
 		return count;
 	}
 
 	// 出席率を百分率/小数点第二位までのString型で返す
-	public String GetAttendedRate(int studentId) {
-		float attendedNum = GetAttendedNum(studentId);
-		float shouldAttendedNum = GetShouldAttendedNum(studentId);
-
+	public String GetAttendedRate(int attendedNum, int shouldAttendedNum) {
 		String rate = String.format("%.1f", (attendedNum / shouldAttendedNum * 100.0f));
 		return rate;
 	}
 
-	// 引数で指定した生徒/科目の出席日数を返す
-	public int GetAttendedNum(int studentId, int subjectId) {
-		Connection conn = null;
-		int count = -1;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
-					+ "WHERE studentId LIKE ? AND subjectId LIKE ? AND status = '%';";
-
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			if (studentId > 0) {
-				pStmt.setString(1, "" + studentId);
-			} else {
-				pStmt.setString(1, "%");
-			}
-			if (subjectId > 0) {
-				pStmt.setString(2, "" + subjectId);
-			} else {
-				pStmt.setString(2, "%");
-			}
-
-			// SQLの実行
-			ResultSet rs = pStmt.executeQuery();
-
-			while (rs.next()) {
-				count = rs.getInt("AttendedNum");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+	// 入力した月日が前期かどうか判定する
+	public boolean isFirstSemester(int month, int day) {
+		if (month + 1 >= 4 && day >= 1 && month + 1 <= 10 && day <= 14) {
+			return true;
+		} else {
+			return false;
 		}
-
-		// 結果を返す
-		return count;
-	}
-
-	// 引数で指定した生徒/科目の出席すべき日数を返す
-	public int GetShouldAttendedNum(int studentId, int subjectId) {
-		Connection conn = null;
-		int count = -1;
-
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
-
-			// SQL文を準備する
-			String sql = "SELECT COUNT(*) AS AttendedNum FROM AttendanceRecords "
-					+ "WHERE studentId LIKE ? AND subjectId LIKE ?;";
-
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			if (studentId > 0) {
-				pStmt.setString(1, "" + studentId);
-			} else {
-				pStmt.setString(1, "%");
-			}
-			if (subjectId > 0) {
-				pStmt.setString(2, "" + subjectId);
-			} else {
-				pStmt.setString(2, "%");
-			}
-
-			// SQLの実行
-			ResultSet rs = pStmt.executeQuery();
-
-			while (rs.next()) {
-				count = rs.getInt("AttendedNum");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			// データベースを切断
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		// 結果を返す
-		return count;
-	}
-
-	// 出席率を百分率/小数点第二位までのString型で返す
-	public String GetAttendedRate(int studentId, int subjectId) {
-		float attendedNum = GetAttendedNum(studentId, subjectId);
-		float shouldAttendedNum = GetShouldAttendedNum(studentId, subjectId);
-
-		String rate = String.format("%.1f", (attendedNum / shouldAttendedNum * 100.0f));
-		return rate;
 	}
 }
