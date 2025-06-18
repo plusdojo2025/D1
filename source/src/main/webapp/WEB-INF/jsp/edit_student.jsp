@@ -17,9 +17,8 @@
 		<form method="post" action="?">
 			<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
 			<input type="hidden" name="number" value="${student.studentId}">
-			<input type="submit" name="edit" value="編集"
-				formaction='/D1/EditStudentServlet'> <input type="submit"
-				name="back" value="戻る" formaction='/D1/ListStudentServlet'>
+			<input type="submit" name="edit" value="編集完了" formaction='/D1/EditStudentServlet'> 
+			<input type="submit" name="back" value="キャンセル" formaction='/D1/InfoStudentServlet'>
 
 			<!-- 基本情報 -->
 			<div class="baseInfo">
@@ -135,30 +134,30 @@
 						<td>提出日</td>
 					</tr>
 
-					<c:forEach var="sub" items="${assignmentsList}">
-						<input type="hidden" name="assignmentId" value="${sub.assignmentId}">
+					<c:forEach var="sub" items="${assignmentsList}" varStatus="status">
+						<input type="hidden" name="assignmentId${status.index}" value="${sub.assignmentId}">
 						<tr>
-							<td><input type="text" name="assignmentContent" value="${sub.content}"></td>
+							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
 							<td>
-								<select name="submittionStatus">
+								<select name="submittionStatus${status.index}">
 									<option value="○" class="submittedStatus">○</option>
 									<option value="×" class="submittedStatus">×</option>
 								</select>
 							</td>
-							<td><input type="date" name="submittionDate" value="${sub.submissionDate}"></td>
+							<td><input type="date" name="submittionDate${status.index}" value="${sub.submissionDate}"></td>
 						</tr>
 					</c:forEach>
 					
 					<!-- 空白欄 -->
 					<tr id="addSubmission">
-						<td><input type="text" name="assignmentContent" value="${sub.content}"></td>
+						<td><input type="text" name="addAssignmentContent"></td>
 						<td>
-							<select name="submittionStatus">
+							<select name="addSubmittionStatus">
 								<option value="○" class="submittedStatus">○</option>
-								<option value="×" class="submittedStatus">×</option>
+								<option value="×" class="submittedStatus" selected>×</option>
 							</select>
 						</td>
-						<td><input type="date" name="submittionDate" value="${sub.submissionDate}"></td>
+						<td><input type="date" name="addSubmittionDate"></td>
 					</tr>
 
 				</table>

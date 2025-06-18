@@ -410,7 +410,7 @@ public class AttendanceRecordsDAO {
 
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join Students "
-					+ "On AttendanceRecords.studentId = Students.studentId"
+					+ "On AttendanceRecords.studentId = Students.studentId "
 					+ "WHERE year(date) LIKE ? AND classId LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
