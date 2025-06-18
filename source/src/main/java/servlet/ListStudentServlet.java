@@ -57,7 +57,7 @@ public class ListStudentServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		
+		Date date=null; ;
 		Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -79,26 +79,26 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("subjectList", subjectList);
 		
 		int classId = classList.get(0).getClassId();      //クラス
-		System.out.println(classId);
+		System.out.println("classId "+classId);
 		
 		int subjectId = subjectList.get(0).getSubjectId();      //教科Id
-		System.out.println(subjectId);
+		System.out.println("subjectId "+subjectId);
 		
 		//生徒情報を取得
 		StudentsDAO studentDao = new StudentsDAO();
-		List<Students> studentList = studentDao.select(new Students(0,0,0,classId, 0, "", "", "", "", ""));
+		List<Students> studentList = studentDao.select(new Students(0,0,0,classId,1, "", "", "", "", ""));
 		request.setAttribute("studentList", studentList);
 		
-		System.out.println(studentList);
+		System.out.println("studentList "+studentList);
 		
 		
 		List<Integer> studentIdList = new ArrayList<>();
 		for(int i=0;studentList.size()>i;i++) {
 			studentIdList.add(studentList.get(i).getStudentId());
 		}
-		System.out.println(studentIdList);
+		System.out.println("studentIdList "+studentIdList);
 
-		AttendanceRecordsDAO AttendanceRecordsDao = new AttendanceRecordsDAO();
+		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
 		List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
 		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
 		List<Assignments> assignmentsList = new ArrayList<Assignments>();
@@ -109,11 +109,11 @@ public class ListStudentServlet extends HttpServlet {
 			//studentId.add(studentList.get(i).getStudentId());
 			studentId = studentIdList.get(i);
 			
-			attendanceList.add((AttendanceRecords) AttendanceRecordsDao.select(studentId, classId));
+			//attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords(0,studentId, classId, year, month,0,"",0,"","")));
 			
-			assignmentsList.add((Assignments) assignmentsDao.select(new Assignments(studentId,subjectId)));
+			assignmentsList.addAll(assignmentsDao.select(new Assignments(0,studentId,subjectId,"","",year,month,date)));
 			
-			gradesList.add((Grades) gradesDao.select(new Grades(studentId,subjectId)));
+			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}
 		
 		request.setAttribute("attendanceList", attendanceList);
