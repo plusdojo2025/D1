@@ -29,7 +29,7 @@ public class Assignments implements Serializable{
 	
 	public Assignments(int studentId,int subjectId,int createdYear,int createdMonth) {
 		
-		this.assignmentId = -1;
+		this.assignmentId = 0;
 		this.studentId = studentId;
 		this.subjectId = subjectId;
 		this.submissionStatus = "";
@@ -42,7 +42,7 @@ public class Assignments implements Serializable{
 	
 	public Assignments(int studentId,int subjectId) {
 		
-		this.assignmentId = -1;
+		this.assignmentId = 0;
 		this.studentId = studentId;
 		this.subjectId = subjectId;
 		this.submissionStatus = "";
@@ -55,7 +55,7 @@ public class Assignments implements Serializable{
 
 	public Assignments() {
 		
-		this.assignmentId = -1;
+		this.assignmentId = 0;
 		this.studentId = -1;
 		this.subjectId = -1;
 		this.submissionStatus = "";

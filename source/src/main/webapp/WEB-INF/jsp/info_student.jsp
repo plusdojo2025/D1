@@ -28,7 +28,7 @@
 			<div class="field">
 				<div>${student.name}</div>
 				<div>${student.grade}年</div>
-				<div>${className}組</div>
+				<div>${className}</div>
 				<div>${student.studentNum}番</div>
 			</div>
 			<div class="field">
@@ -59,7 +59,8 @@
 
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
-		<select name="subjectId" id="subjectSelect" onchange="subjectChange()">
+		<form action="/D1/InfoStudentServlet" method="post">
+		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()">
 			<option value="1" class="subject">現代文</option>
 			<option value="2" class="subject">古典</option>
 			<option value="3" class="subject">数学IA</option>
@@ -86,19 +87,19 @@
 			<option value="24" class="subject">その他</option>
 		</select>
 		
-		<select name="year" id="yearSelect" onchange="yearChange()">
+		<select name="year" id="yearSelect" onchange="this.form.submit()">
 			<c:forEach var="i" begin="1" end="3">
-				<c:if test="${i} <= ${student.grade}">
 				<option value="${i}" class="year">${i}年次</option> 
-				</c:if>
 			</c:forEach>
 		</select>
 		
-		<select name="month" id="monthSelect" onchange="monthChange()">
+		<select name="month" id="monthSelect" onchange="this.form.submit()">
 			<c:forEach var="i" begin="1" end="12">
 			<option value="${i}" class="month">${i}月</option>
 			</c:forEach>
 		</select><br>
+		</form>
+		
 
 		<div id="display">表示項目選択 <br>
 			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked>出席状況</label>
