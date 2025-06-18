@@ -49,37 +49,41 @@ public class InfoStudentServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		try {
-			int subjectId = 1, year = 1, month = 1, studentId = 1;
+			int subjectId = 1, fiscalYear = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
 			}
-
-			if (request.getParameter("yearId") != null) {
-				year = Integer.parseInt(request.getParameter("yearId"));
+			
+			if (request.getParameter("year") != null) {
+				fiscalYear = Integer.parseInt(request.getParameter("year"));
 			}
 
-			if (request.getParameter("monthId") != null) {
-				month = Integer.parseInt(request.getParameter("monthId"));
+			if (request.getParameter("grade") != null) {
+				grade = Integer.parseInt(request.getParameter("grade"));
+			}
+
+			if (request.getParameter("month") != null) {
+				month = Integer.parseInt(request.getParameter("month"));
 			}
 
 			request.setAttribute("subjectId", subjectId);
-			request.setAttribute("yearId", year);
-			request.setAttribute("monthId", month);
+			request.setAttribute("year", fiscalYear);
+			request.setAttribute("grade", grade);
+			request.setAttribute("month", month);
 
 			StudentsDAO stuDAO = new StudentsDAO();
 
 			if (request.getParameter("studentId") != null) {
 				studentId = Integer.parseInt(request.getParameter("studentId"));
 			}
-			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, "", "", "", "", ""));
+			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, -1, "", "", "", "", ""));
 			Students student = new Students();
 			if (studentsList.size() > 0) student = studentsList.get(0);
 			request.setAttribute("student", student);
 
 			AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
-			//List<AttendanceRecords> arList = arDAO.select_Fiscal(2025 - year, student.getClassId(), month, subjectId);
-			List<AttendanceRecords> arList = arDAO.select(student.getClassId(), subjectId);
+			List<AttendanceRecords> arList = arDAO.select_Fiscal(student.getYear() + grade, student.getClassId(), month, subjectId);
 
 			ClassRoomDAO crDAO = new ClassRoomDAO();
 			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(),""));

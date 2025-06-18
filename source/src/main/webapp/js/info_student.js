@@ -53,12 +53,3 @@ function changeDisplay(event) {
 		element.style.display = 'none';
 	}
 };
-
-// 教科プルダウンを押した際の動作
-function pulldownChange() {
-	var s = document.getElementById('subjectSelect');
-	var y = document.getElementById('yearSelect');
-	var m = document.getElementById('monthSelect');
-	//window.location.href = "/D1/InfoStudentServlet?subjectId=" + subject.value + 
-	//"&yearId=" + year.value + "&monthId=" + month.value;
-}
