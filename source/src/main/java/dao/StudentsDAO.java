@@ -324,6 +324,42 @@ public class StudentsDAO {
 		// 結果を返す
 		return result;
 	}
+	
+	
+	
+	
+	//重複チェック用の exists() メソッド
+	public boolean exists(int classId, int studentNum) {
+	    Connection conn = null;
+	    boolean exists = false;
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+	                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+	                "root", "password");
+
+	        String sql = "SELECT COUNT(*) FROM Students WHERE classId = ? AND studentNum = ?";
+	        PreparedStatement pStmt = conn.prepareStatement(sql);
+	        pStmt.setInt(1, classId);
+	        pStmt.setInt(2, studentNum);
+
+	        ResultSet rs = pStmt.executeQuery();
+	        if (rs.next() && rs.getInt(1) > 0) {
+	            exists = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (conn != null) conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return exists;
+	}	
 }
 			
 
