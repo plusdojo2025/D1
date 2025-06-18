@@ -32,7 +32,7 @@
 		 <td>
 		    <label for="grade-select">学年
 		     <select name="grade" id="grade-select">
-                      <option value="">学年</option>
+                      <option value="">-- 学年を選択 --</option>
                       <option value="1">1年</option>
                       <option value="2">2年</option>
                       <option value="3">3年</option>
@@ -44,17 +44,14 @@
 	  	 
 	  <tr>
 		 <td>	
-		    <label for="classId-select">クラス
-		     <select name="classId" id="classId-select">
-                      <option value="">クラス</option>
-                      <option value="1">1組</option>
-                      <option value="2">2組</option>
-                      <option value="3">3組</option>
-                      <option value="4">4組</option>
-                      <option value="5">5組</option>
-                      <option value="6">6組</option>
-             </select>         
-		    </label>
+		    <label for="classId-select">クラス</label>
+		     <select name="classNum" id="classId-select">
+                      <option value="">-- クラスを選択 --</option>
+
+             </select>
+            <!--classIdを送信用に保持-->
+            <input type="hidden" id="classId" name="classId" value="">          
+		    
 		 </td>  
 	  </tr>
 
@@ -107,53 +104,75 @@
 <!-- JavaScript（ここから） -->
 <script>
 
+document.addEventListener("DOMContentLoaded", function () {
+  const classMap = {
+    "1": { "1": 13, "2": 14, "3": 15, "4": 16, "5": 17, "6": 18 },
+    "2": { "1": 7,  "2": 8,  "3": 9,  "4": 10, "5": 11, "6": 12 },
+    "3": { "1": 1,  "2": 2,  "3": 3,  "4": 4,  "5": 5,  "6": 6  }
+  };
 
-/* HTML要素をオブジェクトとして取得する */
-	
-let formObj = document.getElementById('regist_form');
-let errorMessageObj = document.getElementById('error_message');
+  const gradeSelect = document.getElementById('grade-select');
+  const classSelect = document.getElementById('classId-select');
+  const classIdInput = document.getElementById('classId');
+  const formObj = document.getElementById('regist_form');
+  const errorMessageObj = document.getElementById('error_message');
 
+  gradeSelect.addEventListener('change', function () {
+    const selectedGrade = this.value;
+    classSelect.innerHTML = '<option value="">-- 組を選択 --</option>';
 
+    if (classMap[selectedGrade]) {
+      for (let i = 1; i <= 6; i++) {
+        const strI = i.toString();
+        const classId = classMap[selectedGrade][strI];
+        if (classId !== undefined) {
+          const option = document.createElement('option');
+          option.value = strI;
+          option.text = `${strI}組`;
+          classSelect.appendChild(option);
+        }
+      }
+    }
 
-/* [登録]ボタンをクリックしたときの処理 */
-formObj.onsubmit = function() {
-  /* 学年を必須選択項目とします */
-  if (!formObj.grade.value) {
-	errorMessageObj.textContent = '※学年を選択してください';
-	return false;
-	  }	
-  /* クラスを必須選択項目とします */
-  if (!formObj.classId.value) {
-    errorMessageObj.textContent = '※クラスを選択してください';
-    return false;
-  }
-  /* 出席番号を必須入力項目とします */
-  if (!formObj.studentNum.value) {
-    errorMessageObj.textContent = '※出席番号を入力してください';
-    return false;
-  }
-  /* 氏名を必須入力項目とします */
-  if (!formObj.name.value) {
-    errorMessageObj.textContent = '※氏名を入力してください';
-    return false;
-  }
+    classIdInput.value = "";
+  });
 
-  /* ふりがなを必須入力項目とします */
-  if (!formObj.nameRuby.value) {
-    errorMessageObj.textContent = '※ふりがなを入力してください';
-    return false;
-  }
-  
+  classSelect.addEventListener('change', function () {
+    const selectedGrade = gradeSelect.value;
+    const selectedClass = this.value;
 
-  errorMessageObj.textContent = null;
-};
+    if (selectedGrade && selectedClass && classMap[selectedGrade][selectedClass]) {
+      classIdInput.value = classMap[selectedGrade][selectedClass];
+    } else {
+      classIdInput.value = "";
+    }
+  });
 
-/* [キャンセル]ボタンをクリックしたときの処理 */
-formObj.oncancel = function() {
-  errorMessageObj.textContent = null;
-};
+  formObj.onsubmit = function () {
+    if (!formObj.grade.value) {
+      errorMessageObj.textContent = '※学年を選択してください';
+      return false;
+    }
+    if (!formObj.classId.value) {
+      errorMessageObj.textContent = '※クラスを選択してください';
+      return false;
+    }
+    if (!formObj.studentNum.value) {
+      errorMessageObj.textContent = '※出席番号を入力してください';
+      return false;
+    }
+    if (!formObj.name.value) {
+      errorMessageObj.textContent = '※氏名を入力してください';
+      return false;
+    }
+    if (!formObj.nameRuby.value) {
+      errorMessageObj.textContent = '※ふりがなを入力してください';
+      return false;
+    }
+    errorMessageObj.textContent = null;
+  };
 
-
+});
 
 </script>
 <!-- JavaScript（ここまで） -->  

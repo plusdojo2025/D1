@@ -46,10 +46,18 @@ public class StudentsDAO {
             } else {
         		pStmt.setString(3, "%");
             }
-            
+            if (st.getClassId() >0) {
+        		pStmt.setString(4, ""+ st.getClassId());
+            } else {
+        		pStmt.setString(4, "%");
+            }            
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(5, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(5, "%");
+            }
 
-			pStmt.setInt(4, st.getClassId());
-			pStmt.setInt(5, st.getStudentNum());
+
 			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();  
