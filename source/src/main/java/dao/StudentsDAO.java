@@ -122,12 +122,13 @@ public class StudentsDAO {
 			pStmt.setInt(2, st.getYear());
 			pStmt.setInt(3, st.getGrade());
 			pStmt.setInt(4, st.getClassId());
-            pStmt.setInt(5, st.getStudentNum());
-			//pStmt.setString(5, st.getName());
-			//pStmt.setString(6, st.getNameRuby());
-			//pStmt.setString(7, st.getEnrollmentStatus());
-			//pStmt.setString(8, st.getExtracurricularActivities());
-			//pStmt.setString(9, st.getAttitude());
+
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(5, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(5, "%");
+            }            
+
 
 			if (st.getName() != null) {
 				pStmt.setString(6, st.getName());
@@ -207,7 +208,12 @@ public class StudentsDAO {
 			pStmt.setInt(1, st.getYear());
 			pStmt.setInt(2, st.getGrade());
 			pStmt.setInt(3, st.getClassId());
-			pStmt.setInt(4, st.getStudentNum());
+            if (st.getStudentNum() >0) {
+        		pStmt.setString(4, ""+ st.getStudentNum());
+            } else {
+        		pStmt.setString(4, "%");
+            }			
+
 
 			
 			if (st.getName() != null) {
