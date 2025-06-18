@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (classId !== undefined) {
           const option = document.createElement('option');
           option.value = strI;
-          option.text = `${strI}組`;
+          option.text = strI + "組";
           classSelect.appendChild(option);
         }
       }
