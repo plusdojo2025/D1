@@ -68,8 +68,8 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
 		dispatcher.forward(request, response);
 		} else { 
-		// ログイン失敗→リクエストスコープに、エラーメッセージを格納する
-			request.setAttribute("errorMessage", "教員IDまたはパスワードに間違いがあります。");
+			// 認証失敗時にリダイレクト（JS が ?error=1 を検知して表示）
+			response.sendRedirect("LoginServlet?error=1");
 		}
 	}
 }
