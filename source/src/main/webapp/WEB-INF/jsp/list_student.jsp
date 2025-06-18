@@ -4,7 +4,9 @@
 <%@ page import="java.util.Calendar" %>
 <% Calendar cal = Calendar.getInstance(); 
 int yearNow = cal.get(Calendar.YEAR);
-int monthNow = cal.get(Calendar.MONTH) + 1;%>
+System.out.println("yearNow "+yearNow);
+int monthNow = cal.get(Calendar.MONTH) + 1;
+System.out.println("monthNow "+monthNow);%>
 
 <html>
 <head>
@@ -20,36 +22,39 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
     <main>
         <form action="ListStudentServlet.java" method ="POST" id="list_student_form">
 
-            <select name="grede">
-            	<option>"${grede}"</option>
-                <option value="1"><input type="submit" name="change" placeholder="1年"></option>
-                <option value="2"><input type="submit" name="change" placeholder="2年"></option>
-                <option value="3"><input type="submit" name="change" placeholder="3年"></option>
+            <select name="grade">
+            	<option>${grade}</option>
+                <option value="ListStudentServlet.java">1</option>
+                <option value="ListStudentServlet.java">2</option>
+                <option value="ListStudentServlet.java">3</option>
             </select>
+            <spsan>年</span>
 
             <select name="className">
-            	<option>"${className}"</option>
-                <option value="1組"><input type="submit" name="change" placeholder="1組"></option>
-                <option value="2組"><input type="submit" name="change" placeholder="2組"></option>
-                <option value="3組"><input type="submit" name="change" placeholder="3組"></option>
-                <option value="4組"><input type="submit" name="change" placeholder="4組"></option>
-                <option value="5組"><input type="submit" name="change" placeholder="5組"></option>
-                <option value="6組"><input type="submit" name="change" placeholder="6組"></option>
+            	<option>${className}</option>
+                <option value="ListStudentServlet.java">1組</option>
+                <option value="ListStudentServlet.java">2組</option>
+                <option value="ListStudentServlet.java">3組</option>
+                <option value="ListStudentServlet.java">4組</option>
+                <option value="ListStudentServlet.java">5組</option>
+                <option value="ListStudentServlet.java">6組</option>
             </select>
             
             <select name="year">
             	<c:forEach var="e" begin="-5" end="1">
 					<c:choose>
 						<c:when test="${yearNow + e == year}">
-							<option value="${yearNow + e}" selected>
-							<input type="submit" name="change" placeholder="${yearNow + e}年">
+							<option value="ListStudentServlet.java" selected>
+								${yearNow + e}
 							</option>
+							<span>年</span>
 						</c:when>
 
 						<c:otherwise>
-							<option value="${yearNow + e}">
-							<input type="submit" name="change" placeholder="${yearNow + e}年">
+							<option value="ListStudentServlet.java">
+							${yearNow + e}
 							</option>
+							<span>年</span>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -59,45 +64,42 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
             	<c:forEach var="e" begin="1" end="12">
 					<c:choose>
 						<c:when test="${e == month}">
-							<option value="${e}" selected>
-							<input type="submit" name="change" placeholder="${e}月">
-							</option>
+							<option value="${e}" selected>${e}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="${e}">
-							<input type="submit" name="change" placeholder="${e}月">
-							</option>
+							<option value="${e}">${e}</option>
 						</c:otherwise>
 					</c:choose>
+					<span>月</span>
 				</c:forEach>
             </select>
 
             <select name="subjectName" id="dropSubject" onchange="navigate()">
                 <option value="ListStudentServlet.java">現代文</option>
-                <option value="古典">古典</option>
-                <option value="数学IA">数学IA</option>
-                <option value="数学ⅡB">数学ⅡB</option>
-                <option value="数学ⅢC">数学ⅢC</option>
-                <option value="英語表現">英語表現</option>
-                <option value="コミュニケーション英語">コミュニケーション英語</option>
-                <option value="物理">物理</option>
-                <option value="化学">化学</option>
-                <option value="生物">生物</option>
-                <option value="地学">地学</option>
-                <option value="日本史">日本史</option>
-                <option value="世界史">世界史"></option>
-                <option value="地理"><input type="submit" name="change" placeholder="地理"></option>
-                <option value="公民"><input type="submit" name="change" placeholder="公民"></option>
-                <option value="情報"><input type="submit" name="change" placeholder="情報"></option>
-                <option value="技術"><input type="submit" name="change" placeholder="技術"></option>
-                <option value="家庭科"><input type="submit" name="change" placeholder="家庭科"></option>
-                <option value="美術"><input type="submit" name="change" placeholder="美術"></option>
-                <option value="書道"><input type="submit" name="change" placeholder="書道"></option>
-                <option value="保健体育"><input type="submit" name="change" placeholder="保健体育"></option>
-                <option value="音楽"><input type="submit" name="change" placeholder="音楽"></option>
-                <option value="学活"><input type="submit" name="change" placeholder="学活"></option>
-                <option value="その他"><input type="submit" name="change" placeholder="その他"></option>
+                <option value="ListStudentServlet.java">古典</option>
+                <option value="ListStudentServlet.java">数学IA</option>
+                <option value="ListStudentServlet.java">数学ⅡB</option>
+                <option value="ListStudentServlet.java">数学ⅢC</option>
+                <option value="ListStudentServlet.java">英語表現</option>
+                <option value="ListStudentServlet.java">コミュニケーション英語</option>
+                <option value="ListStudentServlet.java">物理</option>
+                <option value="ListStudentServlet.java">化学</option>
+                <option value="ListStudentServlet.java">生物</option>
+                <option value="ListStudentServlet.java">地学</option>
+                <option value="ListStudentServlet.java">日本史</option>
+                <option value="ListStudentServlet.java">世界史</option>
+                <option value="ListStudentServlet.java">地理</option>
+                <option value="ListStudentServlet.java">公民</option>
+                <option value="ListStudentServlet.java">情報</option>
+                <option value="ListStudentServlet.java">技術</option>
+                <option value="ListStudentServlet.java">家庭科</option>
+                <option value="ListStudentServlet.java">美術</option>
+                <option value="ListStudentServlet.java">書道</option>
+                <option value="ListStudentServlet.java">保健体育</option>
+                <option value="ListStudentServlet.java">音楽</option>
+                <option value="ListStudentServlet.java">学活</option>
+                <option value="ListStudentServlet.java">その他</option>
             </select>
 
             <input type="submit" name="edit" placeholder="編集" id="edit" value="編集">
@@ -322,6 +324,12 @@ int monthNow = cal.get(Calendar.MONTH) + 1;%>
             </div>
 
         </form>
+        
+        <ul>
+  <c:forEach begin="1" end="5" step="2" var="i">
+    <li><c:out value="${i}" /></li>
+  </c:forEach>
+</ul>
     </main>
 
     <script>
