@@ -78,10 +78,10 @@ public class ListStudentServlet extends HttpServlet {
 		List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
 		request.setAttribute("subjectList", subjectList);
 		
-		int classId = classList.get(0).getClassId();      //クラス
+		int classId = classList.get(0).getClassId();        //クラス
 		System.out.println("classId "+classId);
 		
-		int subjectId = subjectList.get(0).getSubjectId();      //教科Id
+		int subjectId = subjectList.get(0).getSubjectId();  //教科Id
 		System.out.println("subjectId "+subjectId);
 		
 		//生徒情報を取得
@@ -125,24 +125,6 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
 		request.setAttribute("gradesList", gradesList);
-		
-		/*
-		//出欠情報を取得
-		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
-		List<AttendanceRecords> attendanceList = aDao.select(studentId, classId);
-		request.setAttribute("attendanceList", attendanceList);
-		
-		//提出物状況を取得
-		AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-		List<Assignments> assignmentsList = assignmentsDao.select(new Assignments(studentId,subjectId));
-		request.setAttribute("assignmentsList", assignmentsList);
-		
-		//成績情報を取得
-		GradesDAO gradesDao = new GradesDAO();
-		List<Grades> gradesList = gradesDao.select(new Grades(studentId,subjectId));
-		request.setAttribute("gradesList", gradesList);
-		*/
-		
 		request.setAttribute("grade", grade);
 		request.setAttribute("className", className);
 		request.setAttribute("year", year);
@@ -277,22 +259,6 @@ public class ListStudentServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 				}
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 	}
 
