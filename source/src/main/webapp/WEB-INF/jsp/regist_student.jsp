@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>生徒登録</title>
 <!-- CSSファイルをリンク -->
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/regist_student.css' />">
+<link rel="stylesheet"  href="<c:url value='/css/common.css'/>">
+<link rel="stylesheet"  href="<c:url value='/css/regist_student.css'/>">
 </head>
 <body>
 <div class="wrapper">
@@ -17,16 +18,16 @@
 
 
     <ul id="nav">
-    <li><a href="/D1/Servlet">生徒管理</a></li>
-    <li><a href="/D1/InfoScheduleServlet">スケジュール</a></li>
-    <li><a href="/D1//LoginServlet">ログアウト</a></li>
+      <li><a href="<c:url value='/ListStudentServlet'/>">生徒管理</a></li>
+      <li><a href="<c:url value='/InfoScheduleServlet'/>">スケジュール</a></li>
+      <li><a href="<c:url value='/LoginServlet'/>">ログアウト</a></li>
     </ul>
   <!-- ヘッダー（ここまで） -->
 
 
 <!-- メイン（ここから） -->
 <h2>新規登録</h2>
-<form id="regist_form" method="POST" action="/webapp/RegistStudentServlet">
+<form id="regist_form" method="POST" action="<c:url value='/RegistStudentServlet'/>">
   <table>
 	  <tr>
 		 <td>
@@ -58,7 +59,7 @@
 	  <tr> 
 		 <td>
 		    <label>出席番号（数字は半角のみ）
-		    <input type="text" name="studentNum" placeholder="例) 23"> 番
+		    <input type="number" name="studentNum" placeholder="例) 23" min="1"> 番
 		    </label>
 		 </td>
       </tr>
@@ -83,7 +84,11 @@
 	  </tr>
 	  <tr>
 		 <td colspan="2">
-            <span id="error_message"></span>
+            <span id="error_message">
+               <c:if test="${not empty error}">
+                <span style="color:red;">${error}</span>   
+               </c:if>
+            </span>  
          </td>
       </tr>
       <tr>
@@ -119,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   gradeSelect.addEventListener('change', function () {
     const selectedGrade = this.value;
-    classSelect.innerHTML = '<option value="">-- 組を選択 --</option>';
+    classSelect.innerHTML = '<option value="">-- クラスを選択 --</option>';
 
     if (classMap[selectedGrade]) {
       for (let i = 1; i <= 6; i++) {
@@ -170,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }  
     if (!name.includes(fullWidthSpace)) {
-      errorMessageObj.textContent = '※姓と名の間に全角スペースを入れてください';
+      errorMessageObj.textContent = '※姓と名の間に全角スペースを入力してください';
       return false;
     }
     if (!formObj.nameRuby.value) {
@@ -178,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return false;
     }
     if (!nameRuby.includes(fullWidthSpace)) {
-      errorMessageObj.textContent = '※せいとめいの間に全角スペースを入れてください';
+      errorMessageObj.textContent = '※せいとめいの間に全角スペースを入力してください';
       return false;
     }
     errorMessageObj.textContent = null;

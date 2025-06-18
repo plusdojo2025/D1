@@ -1,6 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, dto.Memo" %>
+<%! 
+// クラスIDを「〇年〇組」に変換
+public String formatClassId(String classId) {
+    try {
+        int id = Integer.parseInt(classId);
+        int grade = id / 10;
+        int group = id % 10;
+        return grade + "年" + group + "組";
+    } catch (Exception e) {
+        return "不明";
+    }
+}
+
+//日付文字列を曜日に変換（yyyy-MM-dd → 曜日）
+public String getWeekday(String dateStr) {
+ try {
+     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+     java.util.Date date = sdf.parse(dateStr);
+     String[] week = { "日", "月", "火", "水", "木", "金", "土" };
+     java.util.Calendar cal = java.util.Calendar.getInstance();
+     cal.setTime(date);
+     return week[cal.get(java.util.Calendar.DAY_OF_WEEK) - 1] + "曜";
+ } catch (Exception e) {
+     return "不明";
+ }
+}
+%>
+
 <%  
 	List<Memo> memoList = (List<Memo>) request.getAttribute("memoList");	
 	String classId = (String) request.getAttribute("classId");
@@ -20,7 +48,12 @@
 <body>
 <!-- メイン -->
  <h2>授業のメモ欄</h2>
- <p>クラスID:<%= classId %> 時限:<%= period %> 日付:<%= date %></p>
+ <!-- クラス、時限、曜日表示 -->
+ <p>
+ 	クラス:<%= formatClassId(classId) %> 
+ 	時限:<%=  period != null ? period + "限" : "不明" %>
+ 	曜日:<%= getWeekday(date) %>
+ </p>
  
  <!-- メモ一覧表示 -->
  <h3>メモ一覧</h3>
@@ -82,6 +115,7 @@
     <input type="hidden" name="semester" value="前期">
     <input type="submit" value="戻る">
 </form>
-
+<!-- JavaScript -->
+<script src="js/memo.js"></script>
 </body>
 </html>

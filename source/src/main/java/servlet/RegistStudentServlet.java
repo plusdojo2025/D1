@@ -93,8 +93,28 @@ public class RegistStudentServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String nameRuby = request.getParameter("nameRuby");
 
-		// 登録処理を行う
 		StudentsDAO sDao = new StudentsDAO();
+		
+
+		//重複チェックを追加
+		if (sDao.exists(classId, studentNum)) {
+		    request.setAttribute("error", "登録済みの出席番号です");
+
+		    // 入力値を保持（オプション）
+		    request.setAttribute("grade", grade);
+		    request.setAttribute("classId", classId);
+		    request.setAttribute("studentNum", studentNum);
+		    request.setAttribute("name", name);
+		    request.setAttribute("nameRuby", nameRuby);
+
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
+		    dispatcher.forward(request, response);
+		    return;
+		}
+		
+		
+		
+		// 登録処理を行う
 		if (sDao.insert(new Students(-1, -1, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/InfoStudentServlet");
             dispatcher.forward(request, response);

@@ -14,18 +14,21 @@
 	<table>
 		<tr>
 			<td>教員ID：</td>
-			<td><input type="text" name="teacherId" required></td>
+			<td><input type="text" name="teacherId"></td>
 		</tr>
 		<tr>
 			<td>パスワード：</td>
-			<td><input type="password" name="password" required></td>
+			<td><input type="password" name="password"></td>
 		</tr>
 	</table>
 	<br>
 	<input type="submit" value="ログイン">
+	
+	<!-- エラー表示用の場所 -->
+	<p id="errorBox"></p>
 </form>
 <!-- フッター -->
 <!-- JavaScript -->
-
+<script src="<%= request.getContextPath() %>/js/login.js"></script>
 </body>
 </html>
