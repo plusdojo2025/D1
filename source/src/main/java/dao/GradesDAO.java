@@ -34,22 +34,22 @@ public class GradesDAO {
 
 
 			if (gs.getGradesId() > 0) {
-				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+				pStmt.setString(1, "" + gs.getGradesId());
 			} else {
 				pStmt.setString(1, "%");
 			}
 			if (gs.getStudentId() > 0) {
-				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+				pStmt.setString(2, "" + gs.getStudentId());
 			} else {
 				pStmt.setString(2, "%");
 			}
 			if (gs.getSubjectId() > 0) {
-				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+				pStmt.setString(3, "" + gs.getSubjectId());
 			} else {
 				pStmt.setString(3, "%");
 			}
 			if (gs.getScore() > 0) {
-				pStmt.setString(4, "%" + gs.getScore() + "%");
+				pStmt.setString(4, "" + gs.getScore());
 			} else {
 				pStmt.setString(4, "%");
 			}
@@ -59,12 +59,12 @@ public class GradesDAO {
 				pStmt.setString(5, "%");
 			}
 			if (gs.getYear() > 0) {
-				pStmt.setString(6, "%" + gs.getYear() + "%");
+				pStmt.setString(6, "" + gs.getYear());
 			} else {
 				pStmt.setString(6, "%");
 			}
 			if (gs.getMonth() > 0) {
-				pStmt.setString(7, "%" + gs.getMonth() + "%");
+				pStmt.setString(7, "" + gs.getMonth());
 			} else {
 				pStmt.setString(7, "%");
 			}
@@ -128,22 +128,22 @@ public class GradesDAO {
 			Calendar calendar = Calendar.getInstance();
 
 			if (gs.getGradesId() != -1) {
-				pStmt.setString(1, "%" + gs.getGradesId() + "%");
+				pStmt.setString(1, "" + gs.getGradesId());
 			} else {
 				pStmt.setString(1, "%");
 			}
 			if (gs.getStudentId() != -1) {
-				pStmt.setString(2, "%" + gs.getStudentId() + "%");
+				pStmt.setString(2, "" + gs.getStudentId());
 			} else {
 				pStmt.setString(2, "%");
 			}
 			if (gs.getSubjectId() != -1) {
-				pStmt.setString(3, "%" + gs.getSubjectId() + "%");
+				pStmt.setString(3, "" + gs.getSubjectId());
 			} else {
 				pStmt.setString(3, "%");
 			}
 			if (gs.getScore() != -1) {
-				pStmt.setString(4, "%" + gs.getScore() + "%");
+				pStmt.setString(4, "" + gs.getScore());
 			} else {
 				pStmt.setString(4, "%");
 			}
@@ -200,7 +200,7 @@ public class GradesDAO {
 			// SQL文を完成させる
 
 			if (gs.getScore() != -1) {
-				pStmt.setString(1, "%" + gs.getScore() + "%");
+				pStmt.setString(1, "" + gs.getScore());
 			} else {
 				pStmt.setString(1, "%");
 			}
@@ -211,17 +211,17 @@ public class GradesDAO {
 			}
 			
 			if (gs.getGradesId() != -1) {
-				pStmt.setString(3, "%" + gs.getGradesId() + "%");
+				pStmt.setString(3, "" + gs.getGradesId());
 			} else {
 				pStmt.setString(3, "%");
 			}
 			if (gs.getStudentId() != -1) {
-				pStmt.setString(4, "%" + gs.getStudentId() + "%");
+				pStmt.setString(4, "" + gs.getStudentId());
 			} else {
 				pStmt.setString(4, "%");
 			}
 			if (gs.getSubjectId() != -1) {
-				pStmt.setString(5, "%" + gs.getSubjectId() + "%");
+				pStmt.setString(5, "" + gs.getSubjectId());
 			} else {
 				pStmt.setString(5, "%");
 			}

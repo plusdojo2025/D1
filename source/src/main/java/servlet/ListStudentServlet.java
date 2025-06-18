@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -87,8 +88,11 @@ public class ListStudentServlet extends HttpServlet {
 		List<Students> studentList = studentDao.select(new Students(-1,classId));
 		request.setAttribute("studentList", studentList);
 		
-		int studentId = 0;    //出席番号
-		//List<Integer> studentId = new ArrayList();
+		
+		List<Integer> studentIdList = new ArrayList<>();
+		for(int i=1;studentList.size()>i;i++) {
+			studentIdList.add(studentList.get(i).getStudentId());
+		}
 
 		AttendanceRecordsDAO aDao = new AttendanceRecordsDAO();
 		List<AttendanceRecords> attendanceList = (List<AttendanceRecords>) new AttendanceRecords();
@@ -99,8 +103,6 @@ public class ListStudentServlet extends HttpServlet {
 		
 		for(int i=0;studentList.size()>i;i++) {
 			//studentId.add(studentList.get(i).getStudentId());
-			
-			studentId = studentList.get(i).getStudentId();
 			
 			attendanceList.add((AttendanceRecords) aDao.select(studentId, classId));
 			
