@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (classId !== undefined) {
           const option = document.createElement('option');
           option.value = strI;
-          option.text = `${strI}組`;
+          option.text = strI + "組";
           classSelect.appendChild(option);
         }
       }
@@ -149,6 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   formObj.onsubmit = function () {
+    const fullWidthSpace = '　'; // 全角スペース
+	const name = formObj.name.value.trim();
+    const nameRuby = formObj.nameRuby.value.trim();	  
+	  
     if (!formObj.grade.value) {
       errorMessageObj.textContent = '※学年を選択してください';
       return false;
@@ -164,9 +168,17 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!formObj.name.value) {
       errorMessageObj.textContent = '※氏名を入力してください';
       return false;
+    }  
+    if (!name.includes(fullWidthSpace)) {
+      errorMessageObj.textContent = '※姓と名の間に全角スペースを入れてください';
+      return false;
     }
     if (!formObj.nameRuby.value) {
       errorMessageObj.textContent = '※ふりがなを入力してください';
+      return false;
+    }
+    if (!nameRuby.includes(fullWidthSpace)) {
+      errorMessageObj.textContent = '※せいとめいの間に全角スペースを入れてください';
       return false;
     }
     errorMessageObj.textContent = null;
