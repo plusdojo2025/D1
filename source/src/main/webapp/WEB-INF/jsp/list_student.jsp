@@ -6,31 +6,33 @@
 <%@ page import="java.util.Calendar" %>
 <% Calendar cal = Calendar.getInstance(); %>
 <% int yearNow = cal.get(Calendar.YEAR); %>
+<% System.out.println("yearNow "+ yearNow); %>
 
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/list_student.css">
-    <title>項目ごとに閲覧</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/list_student.css">
+<title>項目ごとに閲覧</title>
 </head>
 
 <body>
 	<header></header>
 
 	<main>
+	<p>${yearNow}</p>
 		<form action="/D1/ListStudentServlet" method="POST"
 			id="list_student_form">
 			<input type="hidden" name="number" value="${studentIdList}}">
-			<input type="hidden" name="number" value="${subjectId}}">
-
-			<select name="grade" onchange="this.form.submit()">
+			<input type="hidden" name="number" value="${subjectId}}"> <select
+				name="grade" onchange="this.form.submit()">
 				<option>${grade}</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 			</select>
-			<spsan>年</span> <select name="className" onchange="this.form.submit()">
+			<spsan>年</span> <select name="className"
+				onchange="this.form.submit()">
 				<option>${className}</option>
 				<option value="1組">1組</option>
 				<option value="2組">2組</option>
@@ -41,12 +43,12 @@
 			</select> <select name="year" onchange="this.form.submit()">
 				<c:forEach var="e" begin="0" end="6">
 					<c:choose>
-						<c:when test="${yearNow + e - 5== year}">
+						<c:when test="${yearNow + e - 5 == year}">
 							<option value="${yearNow + e - 5}" selected>${yearNow + e - 5}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="${yearNow + e - 5}">${yearNow + e -5}</option>
+							<option value="${yearNow + e - 5}">${yearNow + e - 5}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -113,7 +115,8 @@
 						<td></td>
 						<td></td>
 						<c:forEach var="e" items="${attendanceDateList}">
-							<td><fmt:formatDate value="${e.date}" type="DATE" pattern="dd日"/></td>
+							<td><fmt:formatDate value="${e.date}" type="DATE"
+									pattern="dd日" /></td>
 						</c:forEach>
 					</tr>
 
@@ -238,9 +241,7 @@
 						<td></td>
 						<td></td>
 						<c:forEach var="e" items="${testTypeList}">
-							
-								<td>${e.testType}</td>
-							
+							<td>${e.testType}</td>
 						</c:forEach>
 					</tr>
 
@@ -279,7 +280,6 @@
 				</table>
 			</div>
 		</form>
-	
 	</main>
 
 	<script src="js/list_student.js"></script>
