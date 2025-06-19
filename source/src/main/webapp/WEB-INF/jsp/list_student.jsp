@@ -90,8 +90,8 @@
 				<option value="学活">学活</option>
 				<option value="その他">その他</option>
 			</select> 
-			<input type="submit" name="編集" placeholder="編集" id="edit" value="編集"> 
-			<input type="submit" name="ダウンロード" placeholder="ダウンロード" id="download" value="ダウンロード">
+			<input type="submit" name="edit" placeholder="編集" id="edit" value="編集"> 
+			<input type="submit" name="download" placeholder="ダウンロード" id="download" value="ダウンロード">
 
 
 			<p>表示項目選択</p>
@@ -139,7 +139,7 @@
 						<tr>
 							<td>${e.studentNum}</td>
 							<!-- <td><a href="InfoStudentServlet">${e.name}</a></td>  -->
-							<td><input type="submit" name="edit" placeholder="${e.name}" id="edit" value="${e.name}"></td>
+							<td><input type="submit" name="name" placeholder="${e.name}" id="edit" value="${e.name}"></td>
 							
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">

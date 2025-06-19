@@ -164,8 +164,25 @@ public class ListStudentServlet extends HttpServlet {
 			return;
 		}
 		 */
-		System.out.println(request.getParameter("submit"));
-		if(request.getParameter("submit") ==null){
+		System.out.println(request.getParameter("edit")); //nameで指定しvalueを参照
+		if(request.getParameter("edit").equals("編集")){
+				
+				int year = Integer.parseInt(request.getParameter("year"));          //年
+				int month = Integer.parseInt(request.getParameter("month"));        //月
+				int grade = Integer.parseInt(request.getParameter("grade"));        //学年
+				String className =request.getParameter("className");                //クラス
+				String subjectName = request.getParameter("subjectName");           //教科
+				
+				request.setAttribute("grade", grade);
+				request.setAttribute("className", className);
+				request.setAttribute("year", year);
+				request.setAttribute("month", month);
+				request.setAttribute("subjectName", subjectName);
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/EditAllStudentServlet");
+				dispatcher.forward(request, response);
+
+		}else if(request.getParameter("submit") ==null){
 			// リクエストパラメータを取得する
 			Date date=new Date(); 
 			
@@ -292,15 +309,11 @@ public class ListStudentServlet extends HttpServlet {
 			request.setAttribute("classId", classId);
 			request.setAttribute("subjectId", subjectId);
 
-			if(request.getParameter("submit") !=null && request.getParameter("submit").equals("編集")) {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_allStudent.jsp");
-				dispatcher.forward(request, response);
-			}else {
-				// 結果ページにフォワードする
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
-				dispatcher.forward(request, response);
-			}
-		}else if(request.getParameter("submit").equals("編集")){
+			// 結果ページにフォワードする
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
+			dispatcher.forward(request, response);
+
+		}else if(request.getParameter("edit").equals("編集")){
 			
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
