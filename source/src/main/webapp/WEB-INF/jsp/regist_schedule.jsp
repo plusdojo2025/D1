@@ -3,10 +3,6 @@
   String error = (String) request.getAttribute("error");
   boolean hasError = (error != null && !error.isEmpty());
 %>
-<%
-    // テスト用：ここで強制的に例外を発生させる
-    throw new RuntimeException("テスト用エラー");
-%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -30,7 +26,7 @@
 <%
   String errorStyle = "color: red; font-weight: bold; margin-bottom: 10px;" + (hasError ? "" : " display:none;");
 %>
-<p id="jsErrorMessage" style="<%= errorStyle %>">
+<p id="jsErrorMessage" class="message-error" style="<%= errorStyle %>">
   <%= hasError ? error : "" %>
 </p>
 
@@ -180,14 +176,15 @@ for(String grade : grades) {
 <!--登録・クリアボタン-->
 <div style="margin-bottom: 10px;">
 <input type="submit" value="登録">
-<input type="reset" value="クリア">
+<input type="reset" value="リセット">
 </div>
 </div>
 
 
 <!-- 戻るボタンを登録・クリアの下、左寄せ -->
-<div style="text-align: left;">
-<button type="button" onclick="history.back();">戻る</button>
+<div>
+  <div style="text-align: left; padding-left: 30px; margin-top: 10px;">
+<button type="button" class="back-button" onclick="history.back();">戻る</button>
 </div>
 
 <script src="<%= request.getContextPath() %>/js/regist_student.js"></script>
