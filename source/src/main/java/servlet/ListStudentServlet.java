@@ -60,6 +60,11 @@ public class ListStudentServlet extends HttpServlet {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         
+        
+		int yearNow = calendar.get(Calendar.YEAR); 
+		request.setAttribute("yearNow", yearNow);
+        
+        
 		int grade = 1;
 		String className = "1組";
 		String subjectName = "現代文";

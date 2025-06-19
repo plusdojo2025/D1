@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<%@ page import="java.util.Calendar" %>
-<% Calendar cal = Calendar.getInstance(); %>
 
 
 <html>
@@ -19,7 +17,6 @@
 	<header></header>
 
 	<main>
-	<p><c:out value="${yearNow}" /></p>
 	
 		<form action="/D1/ListStudentServlet" method="POST"
 			id="list_student_form">
