@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <%@ page import="java.util.Calendar" %>
-
+<% Calendar cal = Calendar.getInstance(); %>
+<% int yearNow = cal.get(Calendar.YEAR); %>
 
 <html>
 <head>
@@ -25,27 +26,27 @@
 
 			<select name="grade" onchange="this.form.submit()">
 				<option>${grade}</option>
-				<option value="gradeChange1">1</option>
-				<option value="gradeChange2">2</option>
-				<option value="gradeChange3">3</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
 			</select>
 			<spsan>年</span> <select name="className" onchange="this.form.submit()">
 				<option>${className}</option>
-				<option value="classNameChange1">1組</option>
-				<option value="classNameChange2">2組</option>
-				<option value="classNameChange3">3組</option>
-				<option value="classNameChange4">4組</option>
-				<option value="classNameChange5">5組</option>
-				<option value="classNameChange6">6組</option>
+				<option value="1組">1組</option>
+				<option value="2組">2組</option>
+				<option value="3組">3組</option>
+				<option value="4組">4組</option>
+				<option value="5組">5組</option>
+				<option value="6組">6組</option>
 			</select> <select name="year" onchange="this.form.submit()">
 				<c:forEach var="e" begin="0" end="6">
 					<c:choose>
-						<c:when test="${year + e - 5== year}">
-							<option value="yearChange${year + e - 5}" selected>${year + e - 5}</option>
+						<c:when test="${yearNow + e - 5== year}">
+							<option value="${yearNow + e - 5}" selected>${yearNow + e - 5}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="yearChange${year + e - 5}">${year + e -5}</option>
+							<option value="${yearNow + e - 5}">${yearNow + e -5}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -53,41 +54,41 @@
 				<c:forEach var="e" begin="1" end="12">
 					<c:choose>
 						<c:when test="${e == month}">
-							<option value="monthChange${e}" selected>${e}</option>
+							<option value="${e}" selected>${e}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="monthChange${e}">${e}</option>
+							<option value="${e}">${e}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 			</select> <span>月</span> <select name="subjectName" id="dropSubject"
 				onchange="this.form.submit()">
 				<option>${subjectName}</option>
-				<option value="subjectNameChange現代文">現代文</option>
-				<option value="subjectNameChange古典">古典</option>
-				<option value="subjectNameChange数学IA">数学IA</option>
-				<option value="subjectNameChange数学ⅡB">数学ⅡB</option>
-				<option value="subjectNameChange数学ⅢC">数学ⅢC</option>
-				<option value="subjectNameChange英語表現">英語表現</option>
-				<option value="subjectNameChangeコミュニケーション英語">コミュニケーション英語</option>
-				<option value="subjectNameChange物理">物理</option>
-				<option value="subjectNameChange化学">化学</option>
-				<option value="subjectNameChange生物">生物</option>
-				<option value="subjectNameChange地学">地学</option>
-				<option value="subjectNameChange日本史">日本史</option>
-				<option value="subjectNameChange世界史">世界史</option>
-				<option value="subjectNameChange地理">地理</option>
-				<option value="subjectNameChange公民">公民</option>
-				<option value="subjectNameChange情報">情報</option>
-				<option value="subjectNameChange技術">技術</option>
-				<option value="subjectNameChange家庭科">家庭科</option>
-				<option value="subjectNameChange美術">美術</option>
-				<option value="subjectNameChange書道">書道</option>
-				<option value="subjectNameChange保健体育">保健体育</option>
-				<option value="subjectNameChange音楽">音楽</option>
-				<option value="subjectNameChange学活">学活</option>
-				<option value="subjectNameChangeその他">その他</option>
+				<option value="現代文">現代文</option>
+				<option value="古典">古典</option>
+				<option value="数学IA">数学IA</option>
+				<option value="数学ⅡB">数学ⅡB</option>
+				<option value="数学ⅢC">数学ⅢC</option>
+				<option value="英語表現">英語表現</option>
+				<option value="コミュニケーション英語">コミュニケーション英語</option>
+				<option value="物理">物理</option>
+				<option value="化学">化学</option>
+				<option value="生物">生物</option>
+				<option value="地学">地学</option>
+				<option value="日本史">日本史</option>
+				<option value="世界史">世界史</option>
+				<option value="地理">地理</option>
+				<option value="公民">公民</option>
+				<option value="情報">情報</option>
+				<option value="技術">技術</option>
+				<option value="家庭科">家庭科</option>
+				<option value="美術">美術</option>
+				<option value="書道">書道</option>
+				<option value="保健体育">保健体育</option>
+				<option value="音楽">音楽</option>
+				<option value="学活">学活</option>
+				<option value="その他">その他</option>
 			</select> <input type="submit" name="edit" placeholder="編集" id="edit"
 				value="編集"> <input type="submit" name="download"
 				placeholder="ダウンロード" id="download" value="ダウンロード">
@@ -278,6 +279,7 @@
 				</table>
 			</div>
 		</form>
+	
 	</main>
 
 	<script src="js/list_student.js"></script>
