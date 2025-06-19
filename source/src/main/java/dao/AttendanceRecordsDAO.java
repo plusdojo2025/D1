@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -395,7 +393,7 @@ public class AttendanceRecordsDAO {
 	}
 
 	// 年度+クラス+科目ごとの検索 fiscalYearに年度を入力
-	public List<AttendanceRecords> select_Fiscal(int fiscalYear, int classId, int month, int subjectId) {
+	public List<AttendanceRecords> select_Fiscal(int fiscalYear, int studentId, int month, int subjectId) {
 		Connection conn = null;
 		List<AttendanceRecords> arList = new ArrayList<AttendanceRecords>();
 
@@ -411,7 +409,7 @@ public class AttendanceRecordsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join Students "
 					+ "On AttendanceRecords.studentId = Students.studentId "
-					+ "WHERE year(date) LIKE ? AND classId LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
+					+ "WHERE AttendanceRecords.studentId LIKE ? AND year(date) LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -419,14 +417,14 @@ public class AttendanceRecordsDAO {
 			if (month <= 3) year = fiscalYear + 1; // 年度から年に修正
 			else year = fiscalYear;
 
-			if (year > 0) {
-				pStmt.setString(1, "" + year);
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
 			} else {
 				pStmt.setString(1, "%");
 			}
-
-			if (classId > 0) {
-				pStmt.setString(2, "" + classId);
+			
+			if (year > 0) {
+				pStmt.setString(2, "" + year);
 			} else {
 				pStmt.setString(2, "%");
 			}
@@ -702,77 +700,199 @@ public class AttendanceRecordsDAO {
 		// 結果を返す
 		return result;
 	}
+	
+	public int count(int studentId, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, String status) {
+		Connection conn = null;
+		int count = 0;
 
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS count FROM AttendanceRecords WHERE studentId LIKE ? AND date >= ? AND date <= ? AND status LIKE ? GROUP BY date";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			
+			pStmt.setString(2, beginYear + "-" + beginMonth + "-" + beginDay);
+			pStmt.setString(3, endYear + "-" + endMonth + "-" + endDay);
+			
+			if (status != null) {
+				pStmt.setString(4, "%" + status + "%");
+			} else {
+				pStmt.setString(4, "%");
+			}
+			
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			count = 0;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			count = 0;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					count = 0;
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+	
+	public int count(int studentId, int subjectId, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, String status) {
+		Connection conn = null;
+		int count = 0;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+					"root", "password");
+
+			// SQL文を準備する
+			String sql = "SELECT COUNT(*) AS count FROM AttendanceRecords WHERE studentId LIKE ? AND subjectId LIKE ? AND date >= ? AND date < ? AND status LIKE ?;";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			if (studentId > 0) {
+				pStmt.setString(1, "" + studentId);
+			} else {
+				pStmt.setString(1, "%");
+			}
+			
+			if (subjectId > 0) {
+				pStmt.setString(2, "" + subjectId);
+			} else {
+				pStmt.setString(2, "%");
+			}
+			
+			pStmt.setString(3, beginYear + "-" + beginMonth + "-" + beginDay);
+			pStmt.setString(4, endYear + "-" + endMonth + "-" + endDay);
+			
+			if (status != null) {
+				pStmt.setString(5, "%" + status + "%");
+			} else {
+				pStmt.setString(5, "%");
+			}
+			
+			// SQLの実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			count = 0;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			count = 0;
+		} finally {
+			// データベースを切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					count = 0;
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+	
 	// 引数で指定した生徒の出席日数を返す
-	public int GetAttendedNum(List<AttendanceRecords> ar) {
+	public int GetAttendedNum(int studentId, int subjectId) {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH);
 		int day = now.get(Calendar.DAY_OF_WEEK);
-		
-		for (int i = 0; i < ar.size(); i++) {
-			if (isFirstSemester(month, day) ) {
-				// 前期
-				if (ar.get(i).getDate().after(new Date(year, 3, 31)) && ar.get(i).getDate().before(new Date(year, 10, 15)) && ar.get(i).getStatus().equals("○")) {
-					count++;
-				}
+
+		if (isFirstSemester(month, day)) {
+			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, "○");
+			else count = count(studentId, year, 4, 1, year, 10, 14, "○");
+		} else {
+			// 年明け後
+			if (month + 1 >= 1 && day >= 1) {
+				if (subjectId > 0) count = count(studentId, subjectId, year - 1, 10, 15, year, 4, 1, "○");
+				else  count = count(studentId, year - 1, 10, 15, year, 3, 31, "○");
 			} else {
-				// 年明け後
-				if (month + 1 >= 1 && day >= 1) {
-					if (ar.get(i).getDate().after(new Date(year-1, 10, 15)) && ar.get(i).getDate().before(new Date(year, 3, 31)) && ar.get(i).getStatus().equals("○")) {
-						count++;
-					}
-				} else {
-					if (ar.get(i).getDate().after(new Date(year, 10, 15)) && ar.get(i).getDate().before(new Date(year+1, 3, 31)) && ar.get(i).getStatus().equals("○")) {
-						count++;
-					}
-				}
+				if (subjectId > 0) count = count(studentId, subjectId, year, 10, 15, year + 1, 4, 1, "○");
+				else count = count(studentId, year, 10, 15, year + 1, 3, 31, "○");
 			}
 		}
-		
+
 		// 結果を返す
 		return count;
 	}
 
+	
 	// 引数で指定した生徒の出席すべき日数を返す
-	public int GetShouldAttendedNum(List<AttendanceRecords> ar) {
+	public int GetShouldAttendedNum(int studentId, int subjectId) {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH);
 		int day = now.get(Calendar.DAY_OF_WEEK);
-		for (int i = 0; i < ar.size(); i++) {
-			if (isFirstSemester(month, day) ) {
-				// 前期
-				if (ar.get(i).getDate().after(new Date(year, 3, 31)) && ar.get(i).getDate().before(new Date(year, 10, 15)) && !ar.get(i).getStatus().equals("公欠")) {
-					count++;
-				}
+
+		if (isFirstSemester(month, day)) {
+			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, null) - count(studentId, subjectId, year, 4, 1, year, 10, 15, "公");
+			else count = count(studentId, year, 4, 1, year, 10, 14, null) - count(studentId, year, 4, 1, year, 10, 14, "公");
+		} else {
+			// 年明け後
+			if (month + 1 >= 1 && day >= 1) {
+				if (subjectId > 0) count = count(studentId, subjectId, year - 1, 10, 15, year, 4, 1, null) - count(studentId, subjectId, year - 1, 10, 15, year, 4, 1, "公");
+				else count = count(studentId, year - 1, 10, 15, year, 3, 31, null) - count(studentId, year - 1, 10, 15, year, 3, 31, "公");
 			} else {
-				// 年明け後
-				if (month + 1 >= 1 && day >= 1) {
-					if (ar.get(i).getDate().after(new Date(year-1, 10, 15)) && ar.get(i).getDate().before(new Date(year, 3, 31)) && !ar.get(i).getStatus().equals("公欠")) {
-						count++;
-					}
-				} else {
-					if (ar.get(i).getDate().after(new Date(year, 10, 15)) && ar.get(i).getDate().before(new Date(year+1, 3, 31)) && !ar.get(i).getStatus().equals("公欠")) {
-						count++;
-					}
-				}
+				if (subjectId > 0) count = count(studentId, subjectId, year, 10, 15, year + 1, 4, 1, null) - count(studentId, subjectId, year, 10, 15, year + 1, 4, 1, "公");
+				else count = count(studentId, year, 10, 15, year + 1, 3, 31, null) - count(studentId, year, 10, 15, year + 1, 3, 31, "公");
 			}
 		}
+
 		return count;
 	}
-
+	
 	// 出席率を百分率/小数点第二位までのString型で返す
-	public String GetAttendedRate(int attendedNum, int shouldAttendedNum) {
+	public String GetAttendedRate(float attendedNum, float shouldAttendedNum) {
+		if (attendedNum == 0 || shouldAttendedNum == 0) return "0.0";
+		
 		String rate = String.format("%.1f", (attendedNum / shouldAttendedNum * 100.0f));
 		return rate;
 	}
 
 	// 入力した月日が前期かどうか判定する
 	public boolean isFirstSemester(int month, int day) {
-		if (month + 1 >= 4 && day >= 1 && month + 1 <= 10 && day <= 14) {
+		if ((month >= 4 && day >= 1 && month < 10) || (month == 10 && day <= 14)) {
+			
 			return true;
 		} else {
 			return false;

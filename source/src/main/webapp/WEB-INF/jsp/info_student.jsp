@@ -17,7 +17,11 @@
 	<main>
 	<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
 		<form method="get" action="?">
-			<input type="hidden" name="number" value="${student.studentId}}">
+			<input type="hidden" name="studentId" value="${student.studentId}">
+			<input type="hidden" name="subjectId" value="${subjectId}">
+			<input type="hidden" name="grade" value="${grade}">
+			<input type="hidden" name="year" value="${year}">
+			<input type="hidden" name="month" value="${month}">
 			<input type="submit" name="edit" value="編集" formaction='/D1/EditStudentServlet'>
 			<input type="submit" name="back" value="戻る" formaction='/D1/ListStudentServlet'>
 		</form>
@@ -26,22 +30,22 @@
 		<div class="baseInfo">
 			<div>${student.nameRuby}</div>
 			<div class="field">
-				<div>${student.name}</div>
+				<div>${student.name} </div>
 				<div>${student.grade}年</div>
 				<div>${className}</div>
 				<div>${student.studentNum}番</div>
 			</div>
 			<div class="field">
-				<div>出席率</div>
-				<div>${attendedRate}</div>
+				<div>今学期 出席率</div>
+				<div>${attendedRate}%</div>
 				<div>出席日数</div>
 				<div>${attendedNum}</div>
 				<div>出席すべき日数</div>
 				<div>${shouldAttendNum}</div>
 			</div>
 			<div class="field">
-				<div>提出率</div>
-				<div>${submittedRate}</div>
+				<div>今学期 提出率</div>
+				<div>${submittedRate}%</div>
 				<div>提出数</div>
 				<div>${submittedNum}</div>
 				<div>提出すべき課題数</div>
@@ -60,7 +64,7 @@
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
 		<form action="/D1/InfoStudentServlet" method="post">
-		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()">
+		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()" >
 			<option value="1" class="subject">現代文</option>
 			<option value="2" class="subject">古典</option>
 			<option value="3" class="subject">数学IA</option>
@@ -111,7 +115,7 @@
 		
 		<div id="attendance">出席状況
 			<span>出席率</span>
-			<span>${subjectAttendedRate}</span>
+			<span>${subjectAttendedRate}%</span>
 			<table>
 				<tr>
 					<td>日付</td>
@@ -135,7 +139,7 @@
 		
 		<div id="submission">提出物状況
 			<span>提出率</span>
-			<span>${subjectSubmittedRate}</span>
+			<span>${subjectSubmittedRate}%</span>
 			<table>
 				<tr>
 					<td>課題内容</td>
@@ -147,7 +151,7 @@
 				<tr>
 					<td>${sub.content}</td>
 					<td>${sub.submissionStatus}</td>
-					<td>${sub.submissionDate}</td>
+					<td><fmt:formatDate value="${sub.submissionDate}" pattern="yyyy/MM/dd"></fmt:formatDate></td>
 				</tr>
 				</c:forEach>
 			</table><br>
@@ -161,11 +165,11 @@
 					<td>平均点</td>
 				</tr>
 				
-				<c:forEach var="gra" items="${gradesList}">
+				<c:forEach var="gra" items="${gradesList}" varStatus="status">
 				<tr>
 					<td>${gra.testType}</td>
 					<td>${gra.score}</td>
-					<td>${average}</td>
+					<td>${average[status.index]}</td>
 				</tr>
 				</c:forEach>
 			</table><br>
@@ -196,7 +200,7 @@
 				
 				<c:forEach var="itv" items="${interviewList}">
 				<tr>
-					<td>${itv.date}</td>
+					<td><fmt:formatDate value="${itv.date}" pattern="yyyy/MM/dd"></fmt:formatDate></td>
 					<td>${itv.week}</td>
 					<td>${itv.contents}</td>
 					<td>${itv.remarks}</td>
@@ -215,7 +219,7 @@
 				
 				<c:forEach var="itv" items="${lastInterviewList}">
 				<tr>
-					<td>${itv.date}</td>
+					<td><fmt:formatDate value="${itv.date}" pattern="yyyy/MM/dd"></fmt:formatDate></td>
 					<td>${itv.week}</td>
 					<td>${itv.contents}</td>
 					<td>${itv.remarks}</td>

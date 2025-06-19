@@ -10,19 +10,27 @@ public class AttendanceRecordsDAOTest {
 	public static void main(String[] args) {
 		AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
 
-		System.out.println("--SELECT1--");
-		Date date = new Date();
-		AttendanceRecords ar = new AttendanceRecords(-1, 1, -1, 2025, 6, 01, "", -1, "", "");
-		List<AttendanceRecords> arList = arDAO.select(ar);
-		Show(arList);
-
-		System.out.println("--SELECT2--");
-		List<AttendanceRecords> arList2 = arDAO.select(1);
-		Show(arList2);
+//		System.out.println("--SELECT1--");
+//		Date date = new Date();
+//		AttendanceRecords ar = new AttendanceRecords(-1, 1, -1, -1, -1, -1, "", -1, "", "");
+//		List<AttendanceRecords> arList = arDAO.select(ar);
+//		Show(arList);
+//
+//		System.out.println("--SELECT2--");
+//		List<AttendanceRecords> arList2 = arDAO.select(1);
+//		Show(arList2);
+//		
+//		System.out.println("--SELECT3--");
+//		List<AttendanceRecords> arList3 = arDAO.select(1, 1);
+//		Show(arList3);
 		
-		System.out.println("--SELECT3--");
-		List<AttendanceRecords> arList3 = arDAO.select(1, 1);
-		Show(arList3);
+//		System.out.println("--SELECT4--");
+//		List<AttendanceRecords> arList4 = arDAO.select_Fiscal(-1, 1, -1, -1);
+//		Show(arList4);
+		
+		System.out.println("--COUNT--");
+		int count = arDAO.count(1, 2025, 4, 1, 2025, 10, 14, null);
+		System.out.println(count);
 
 //		System.out.println("--INSERT--");
 //		if (arDAO.insert(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test"))) {

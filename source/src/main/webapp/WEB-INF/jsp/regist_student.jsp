@@ -10,7 +10,7 @@
 <body>
 <div class="wrapper">
   <h1 id="logo">
-    <a href="/webapp/InfoScheduleServlet"><img src="/webapp/img/.png" width="200" height="100" alt=""></a>
+    <a href="<c:url value='/InfoScheduleServlet'/>"><img src="/webapp/img/.png" width="200" height="100" alt=""></a>
   </h1>
   <ul id="nav">
     <li><a href="<c:url value='/ListStudentServlet'/>">生徒管理</a></li>
@@ -19,8 +19,9 @@
   </ul>
 
   <div class="main-content">
-    <h2 class="form-title">新規登録</h2>
+    
     <form id="regist_form" method="POST" action="<c:url value='/RegistStudentServlet'/>">
+    <h2 class="form-title">新規登録</h2>
       <!-- 暗黙送信防止ダミーボタン -->
       <button type="submit" disabled style="display:none" aria-hidden="true"></button>
       <table class="form-table">
@@ -85,7 +86,7 @@
         <tr>
           <td colspan="2">
            <div class="button-area">
-            <button type="button" onclick="location.href='/D1/InfoScheduleServlet'">キャンセル</button>
+            <button type="button" onclick="location.href=<'c:url value='/InfoScheduleServlet'/">キャンセル</button>
             <button type="submit" name="regist" id="regist_btn">登録</button>
            </div> 
           </td>
@@ -95,7 +96,7 @@
   </div>
 </div>
 
-	<script src="js/regist_student.js"></script>
+	<script src="<c:url value='/js/regist_student.js'/>"> </script>
 	<script>
 	'use strict';
 	</script>

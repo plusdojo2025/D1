@@ -9,24 +9,25 @@
 
 /*フォントをGoogle Fonts Poppinsに変更*/
 body {
-	font-family: 'Poppins', sans-serif;
-  background-color:linear-gradient(135deg,#e0f7fa, #ffffff);
-  color:#2c3e50;
-  min-height:70vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #2c3e50;
+  min-height: 100vh;
   padding: 40px 20px;
 }
 
-/* ======= Container ======= グラデーション背景*/
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   max-width: 700px;
   margin: 0 auto;
   background: #ffffff;
   padding: 40px 50px;
   border-radius: 16px;
-  box-shadow: 0 10 25px rgba(0,0,0,0.1);
-}
-  .contaner:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 /* 見出し */
@@ -80,10 +81,10 @@ label {
 }
 
 /*ボタン*/
-botton,
+button,
 input[type="submit"],
 input[type="reset"] {
-	back-ground: linear-gradient(45deg, #3498db, #2980b9);
+	background: linear-gradient(45deg, #3498db, #2980b9);
 	color: white;
 	border: none;
 	padding: 14px 28px;
@@ -94,7 +95,21 @@ input[type="reset"] {
 	box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
 	 margin-right: 12px;
 }
-
+.back-button {
+  width: 150px;
+  padding: 10.5px 0;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+  z-index: 9999;
+  text-align: center;
+  border: none;
+  user-select: none; /* 選択防止 */
+  pointer-events: auto; /* ボタンを操作可能に */
+}
 button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
@@ -115,7 +130,7 @@ input[type="radio"]　{
   color: #e74c3c;
   font-weight: 700;
   margin-bottom: 20px;
-  font-size: 1.05rem;
+  font-size: 1.5rem;
 }
 /*　メディアクエリ(スマホ対応) */
 @media(max-width: 600px) {
