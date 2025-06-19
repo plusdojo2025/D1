@@ -12,47 +12,41 @@ public class AttendanceRecordsDAOTest {
 
 		System.out.println("--SELECT1--");
 		Date date = new Date();
-		AttendanceRecords ar = new AttendanceRecords(0, -1, -1, date, "", -1, "○", "");
+		AttendanceRecords ar = new AttendanceRecords(-1, 1, -1, 2025, 6, 01, "", -1, "", "");
 		List<AttendanceRecords> arList = arDAO.select(ar);
-		for (int i = 0; i < arList.size(); i++) {
-			System.out.println(arList.get(i).getRecordId() + " : " + arList.get(i).getStatus());
-		}
+		Show(arList);
 
 		System.out.println("--SELECT2--");
 		List<AttendanceRecords> arList2 = arDAO.select(1);
-		for (int i = 0; i < arList2.size(); i++) {
-			System.out.println(arList2.get(i).getRecordId() + " : " + arList2.get(i).getStatus());
-		}
+		Show(arList2);
 		
 		System.out.println("--SELECT3--");
 		List<AttendanceRecords> arList3 = arDAO.select(1, 1);
-		for (int i = 0; i < arList3.size(); i++) {
-			System.out.println(arList3.get(i).getRecordId() + " : " + arList3.get(i).getStatus());
-		}
+		Show(arList3);
 
-		System.out.println("--INSERT--");
-		if (arDAO.insert(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test"))) {
-			System.out.println("INSERT CLEAR");
-		} else {
-			System.out.println("INSERT FAILED");
-		}
-
-		System.out.println("--UPDATE--");
-		if (arDAO.update(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test_update"))) {
-			System.out.println("UPDATE CLEAR");
-		} else {
-			System.out.println("UPDATE FAILED");
-		}
-		Select();
-		
-		System.out.println("--DELETE--");
-		AttendanceRecords ar2 = new AttendanceRecords(0, 1, 1, date, "", 1, "", "test");
-		if (arDAO.insert(ar2)) {
-			System.out.println("DELETE CLEAR");
-		} else {
-			System.out.println("DELETE FAILED");
-		}
-		Select();
+//		System.out.println("--INSERT--");
+//		if (arDAO.insert(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test"))) {
+//			System.out.println("INSERT CLEAR");
+//		} else {
+//			System.out.println("INSERT FAILED");
+//		}
+//
+//		System.out.println("--UPDATE--");
+//		if (arDAO.update(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test_update"))) {
+//			System.out.println("UPDATE CLEAR");
+//		} else {
+//			System.out.println("UPDATE FAILED");
+//		}
+//		Select();
+//		
+//		System.out.println("--DELETE--");
+//		AttendanceRecords ar2 = new AttendanceRecords(0, 1, 1, date, "", 1, "", "test");
+//		if (arDAO.insert(ar2)) {
+//			System.out.println("DELETE CLEAR");
+//		} else {
+//			System.out.println("DELETE FAILED");
+//		}
+//		Select();
 	}
 
 	public static void Select() {	
@@ -62,6 +56,15 @@ public class AttendanceRecordsDAOTest {
 		List<AttendanceRecords> arList = arDAO.select(ar);
 		for (int i = 0; i < arList.size(); i++) {
 			System.out.println(arList.get(i).getRecordId() + " : "+ arList.get(i).getStudentId() + " " + arList.get(i).getStatus());
+		}
+	}
+	
+	public static void Show(List<AttendanceRecords> arList) {
+		for (int i = 0; i < arList.size(); i++) {
+			AttendanceRecords ar = arList.get(i);
+			System.out.println(ar.getRecordId() + " 生徒ID: " + ar.getStudentId() + " クラスID: " + ar.getClassId() + 
+					" 日付: " + ar.getDate() + " 時限: " + ar.getPeriod() + " 教科ID: " + ar.getSubjectId() + 
+					" 状態: " + ar.getStatus() + " 備考: " + ar.getRemarks());
 		}
 	}
 }

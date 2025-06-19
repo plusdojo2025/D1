@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <%@ page import="java.util.Calendar" %>
 <% Calendar cal = Calendar.getInstance(); 
@@ -17,51 +19,41 @@ System.out.println("monthNow "+monthNow);%>
 </head>
 
 <body>
-    <header></header>
+	<header></header>
 
-    <main>
-        <form action="ListStudentServlet.java" method ="POST" id="list_student_form">
+	<main>
+		<form action="ListStudentServlet.java" method="POST"
+			id="list_student_form">
 
-            <select name="grade">
-            	<option>${grade}</option>
-                <option value="ListStudentServlet.java">1</option>
-                <option value="ListStudentServlet.java">2</option>
-                <option value="ListStudentServlet.java">3</option>
-            </select>
-            <spsan>年</span>
-
-            <select name="className">
-            	<option>${className}</option>
-                <option value="ListStudentServlet.java">1組</option>
-                <option value="ListStudentServlet.java">2組</option>
-                <option value="ListStudentServlet.java">3組</option>
-                <option value="ListStudentServlet.java">4組</option>
-                <option value="ListStudentServlet.java">5組</option>
-                <option value="ListStudentServlet.java">6組</option>
-            </select>
-            
-            <select name="year">
-            	<c:forEach var="e" begin="-5" end="1">
+			<select name="grade">
+				<option>${grade}</option>
+				<option value="ListStudentServlet.java">1</option>
+				<option value="ListStudentServlet.java">2</option>
+				<option value="ListStudentServlet.java">3</option>
+			</select>
+			<spsan>年</span> <select name="className">
+				<option>${className}</option>
+				<option value="ListStudentServlet.java">1組</option>
+				<option value="ListStudentServlet.java">2組</option>
+				<option value="ListStudentServlet.java">3組</option>
+				<option value="ListStudentServlet.java">4組</option>
+				<option value="ListStudentServlet.java">5組</option>
+				<option value="ListStudentServlet.java">6組</option>
+			</select> <select name="year">
+				<c:forEach var="e" begin="0" end="6">
 					<c:choose>
-						<c:when test="${yearNow + e == year}">
+						<c:when test="${yearNow + e - 5== year}">
 							<option value="ListStudentServlet.java" selected>
-								${yearNow + e}
-							</option>
-							<span>年</span>
+								${yearNow + e - 5}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="ListStudentServlet.java">
-							${yearNow + e}
-							</option>
-							<span>年</span>
+							<option value="ListStudentServlet.java">${yearNow + e}</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-            </select>
-            
-            <select name="month">
-            	<c:forEach var="e" begin="1" end="12">
+			</select> <span>年</span> <select name="month">
+				<c:forEach var="e" begin="1" end="12">
 					<c:choose>
 						<c:when test="${e == month}">
 							<option value="${e}" selected>${e}</option>
@@ -71,75 +63,58 @@ System.out.println("monthNow "+monthNow);%>
 							<option value="${e}">${e}</option>
 						</c:otherwise>
 					</c:choose>
-					<span>月</span>
 				</c:forEach>
-            </select>
-
-            <select name="subjectName" id="dropSubject" onchange="navigate()">
-                <option value="ListStudentServlet.java">現代文</option>
-                <option value="ListStudentServlet.java">古典</option>
-                <option value="ListStudentServlet.java">数学IA</option>
-                <option value="ListStudentServlet.java">数学ⅡB</option>
-                <option value="ListStudentServlet.java">数学ⅢC</option>
-                <option value="ListStudentServlet.java">英語表現</option>
-                <option value="ListStudentServlet.java">コミュニケーション英語</option>
-                <option value="ListStudentServlet.java">物理</option>
-                <option value="ListStudentServlet.java">化学</option>
-                <option value="ListStudentServlet.java">生物</option>
-                <option value="ListStudentServlet.java">地学</option>
-                <option value="ListStudentServlet.java">日本史</option>
-                <option value="ListStudentServlet.java">世界史</option>
-                <option value="ListStudentServlet.java">地理</option>
-                <option value="ListStudentServlet.java">公民</option>
-                <option value="ListStudentServlet.java">情報</option>
-                <option value="ListStudentServlet.java">技術</option>
-                <option value="ListStudentServlet.java">家庭科</option>
-                <option value="ListStudentServlet.java">美術</option>
-                <option value="ListStudentServlet.java">書道</option>
-                <option value="ListStudentServlet.java">保健体育</option>
-                <option value="ListStudentServlet.java">音楽</option>
-                <option value="ListStudentServlet.java">学活</option>
-                <option value="ListStudentServlet.java">その他</option>
-            </select>
-
-            <input type="submit" name="edit" placeholder="編集" id="edit" value="編集">
-
-            <input type="submit" name="download" placeholder="ダウンロード" id="download" value="ダウンロード">
+			</select> <span>月</span> <select name="subjectName" id="dropSubject"
+				onchange="navigate()">
+				<option value="ListStudentServlet.java">現代文</option>
+				<option value="ListStudentServlet.java">古典</option>
+				<option value="ListStudentServlet.java">数学IA</option>
+				<option value="ListStudentServlet.java">数学ⅡB</option>
+				<option value="ListStudentServlet.java">数学ⅢC</option>
+				<option value="ListStudentServlet.java">英語表現</option>
+				<option value="ListStudentServlet.java">コミュニケーション英語</option>
+				<option value="ListStudentServlet.java">物理</option>
+				<option value="ListStudentServlet.java">化学</option>
+				<option value="ListStudentServlet.java">生物</option>
+				<option value="ListStudentServlet.java">地学</option>
+				<option value="ListStudentServlet.java">日本史</option>
+				<option value="ListStudentServlet.java">世界史</option>
+				<option value="ListStudentServlet.java">地理</option>
+				<option value="ListStudentServlet.java">公民</option>
+				<option value="ListStudentServlet.java">情報</option>
+				<option value="ListStudentServlet.java">技術</option>
+				<option value="ListStudentServlet.java">家庭科</option>
+				<option value="ListStudentServlet.java">美術</option>
+				<option value="ListStudentServlet.java">書道</option>
+				<option value="ListStudentServlet.java">保健体育</option>
+				<option value="ListStudentServlet.java">音楽</option>
+				<option value="ListStudentServlet.java">学活</option>
+				<option value="ListStudentServlet.java">その他</option>
+			</select> <input type="submit" name="edit" placeholder="編集" id="edit"
+				value="編集"> <input type="submit" name="download"
+				placeholder="ダウンロード" id="download" value="ダウンロード">
 
 
-            <p>表示項目選択</p>
+			<p>表示項目選択</p>
 
-            <span>
-                <input type="checkbox" checked value="attendance" id="attendanceCheck">
-            </span>
-            <span>
-                出席状況
-            </span>
-
-            <span>
-                <input type="checkbox" checked value="submission" id="submissionCheck">
-            </span>
-            <span>
-                提出物状況
-            </span>
-
-            <span>
-                <input type="checkbox" checked value="grades" id="gradesCheck">
-            </span>
-            <span>
-                成績状況
-            </span>
+			<span> <input type="checkbox" checked value="attendance"
+				id="attendanceCheck">
+			</span> <span> 出席状況 </span> <span> <input type="checkbox" checked
+				value="submission" id="submissionCheck">
+			</span> <span> 提出物状況 </span> <span> <input type="checkbox" checked
+				value="grades" id="gradesCheck">
+			</span> <span> 成績状況 </span>
 
 
-            <div id="attendance">
-                <p>出席状況</p>
+			<div id="attendance">
+				<p>出席状況</p>
 				<table border="1">
 					<tr>
 						<td></td>
 						<td></td>
 						<td></td>
 						<c:forEach var="e" items="${attendanceList}">
-							<td>${e.date}</td>
+							<td><fmt:formatDate value="${e.date}" type="DATE" pattern="dd日"/></td>
 						</c:forEach>
 					</tr>
 
@@ -165,9 +140,7 @@ System.out.println("monthNow "+monthNow);%>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td>
-								<input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent">
-							</td>
+							<td><a href="InfoStudentServlet">${e.name}</a></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -180,13 +153,10 @@ System.out.println("monthNow "+monthNow);%>
 				</table>
 			</div>
 
-            <div id="submission">
-                <span>
-                    提出物状況
-                </span>
-                <span>
-                    <button id="submissionButton" type="button">課題追加</button>
-                    <div id="submissionModal" class="modal">
+			<div id="submission">
+				<span> 提出物状況 </span> <span>
+					<button id="submissionButton" type="button">課題追加</button>
+					<div id="submissionModal" class="modal">
 						<div class="modal-content">
 							<span class="close">&times;</span> <select name="subject">
 								<option value="現代文">現代文</option>
@@ -223,12 +193,12 @@ System.out.println("monthNow "+monthNow);%>
 					</div>
 				</span>
 
-                <table border="1">
+				<table border="1">
 
-                    <tr>
-                        <td>
-                            <p>出席番号</p>
-                        </td>
+					<tr>
+						<td>
+							<p>出席番号</p>
+						</td>
 
 						<td>
 							<p>氏名</p>
@@ -241,12 +211,12 @@ System.out.println("monthNow "+monthNow);%>
 						<c:forEach var="e" items="${assignmentsList}">
 							<td>${e.content}</td>
 						</c:forEach>
-                    </tr>
+					</tr>
 
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent"></td>
+							<td><a href="InfoStudentServlet">${e.name}</a></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -255,84 +225,76 @@ System.out.println("monthNow "+monthNow);%>
 							</c:forEach>
 						</tr>
 					</c:forEach>
-                </table>
-            </div>
+				</table>
+			</div>
 
-            <div id="grades">
-                <span>
-                    成績状況
-                </span>
-                <span>
-                    <button id="gradesButton">テスト追加</button>
-                </span>
+			<div id="grades">
+				<span> 成績状況 </span> <span>
+					<button id="gradesButton">テスト追加</button>
+				</span>
 
-                <table border="1">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <c:forEach var="e" items="${gradesList}">
-							<td>${e.testType}</td>
+				<table border="1">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<c:forEach var="e" items="${gradesList}">
+							
+								<td>${e.testType}</td>
+							
 						</c:forEach>
-                    </tr>
+					</tr>
 
-                    <tr>
-                        <td>
-                            <p>出席番号</p>
-                        </td>
+					<tr>
+						<td>
+							<p>出席番号</p>
+						</td>
 
-                        <td>
-                            <p>氏名</p>
-                        </td>
+						<td>
+							<p>氏名</p>
+						</td>
 
-                        <td>
-                            <p>ふりがな</p>
-                        </td>
+						<td>
+							<p>ふりがな</p>
+						</td>
 
-                        <td>
-                            <p>点数</p>
-                        </td>
+						<td>
+							<p>点数</p>
+						</td>
 
-                        <td>
-                            <p>点数</p>
-                        </td>
+						<td>
+							<p>点数</p>
+						</td>
 
-                        <td>
-                            <p>点数</p>
-                        </td>
-                        <td>
-                            <p>点数</p>
-                        </td>
-                        <td>
-                            <p>点数</p>
-                        </td>
-                    </tr>
+						<td>
+							<p>点数</p>
+						</td>
+						<td>
+							<p>点数</p>
+						</td>
+						<td>
+							<p>点数</p>
+						</td>
+					</tr>
 
-                    <c:forEach var="e" items="${studentList}">
+					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><input type="submit" name="infoStudent" placeholder="${e.name}" value="infoStudent"></td>
+							<td><a href="InfoStudentServlet">${e.name}</a></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${gradesList}">
-								<c:if test="${e.studentId == a.gradesList}">
+								<c:if test="${e.studentId == a.studentId}">
 									<td>${a.score}</td>
 								</c:if>
 							</c:forEach>
 						</tr>
 					</c:forEach>
-                </table>
-            </div>
+				</table>
+			</div>
+		</form>
+	</main>
 
-        </form>
-        
-        <ul>
-  <c:forEach begin="1" end="5" step="2" var="i">
-    <li><c:out value="${i}" /></li>
-  </c:forEach>
-</ul>
-    </main>
-
-    <script>
+	<script>
         
         /*モーダル*/
         const submissionbutton = document.getElementById("submissionButton");
