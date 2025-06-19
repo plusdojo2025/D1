@@ -26,3 +26,7 @@ insert into grades values( 0, 39, 1, '80', '一学期中間テスト', '2025-5-1
 insert into grades values( 0, 37, 1, '50', '一学期期末テスト', '2025-6-1 0:00' );
 insert into grades values( 0, 38, 1, '70', '一学期期末テスト', '2025-6-1 0:00' );
 insert into grades values( 0, 39, 1, '90', '一学期期末テスト', '2025-6-1 0:00' );
+
+insert into grades values( 0, 37, 1, '80', '単元テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 38, 1, '100', '単元テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 39, 1, '90', '単元テスト', '2025-6-1 0:00' );

@@ -28,63 +28,58 @@ public class ScheduleDAO {
 
 	        String sql = "SELECT scheduleId, teacherId, classId, date, period, content, type, year, semester, memo, day_of_week "
 	                   + "FROM Schedule "
-	                   + "WHERE (scheduleId = ? OR ? = -1) "
-	                   + "AND (teacherId = ? OR ? = -1) "
-	                   + "AND (classId = ? OR ? = -1) "
-	                   + "AND (date = ? OR ? IS NULL) "
-	                   + "AND period LIKE ? "
-	                   + "AND content LIKE ? "
-	                   + "AND type LIKE ? "
-	                   + "AND (year = ? OR ? = -1) "
-	                   + "AND semester LIKE ? "
-	                   + "AND day_of_week LIKE ? "
+	                   + "WHERE (? = -1 OR scheduleId = ?) "
+	                   + "AND (? = -1 OR teacherId = ?) "
+	                   + "AND (? = -1 OR classId = ?) "
+	                   + "AND (? IS NULL OR date = ?) "
+	                   + "AND (? = '' OR period = ?) "
+	                   + "AND (? = '' OR content LIKE ?) "
+	                   + "AND (? = '' OR type = ?) "
+	                   + "AND (? = -1 OR year = ?) "
+	                   + "AND (? = '' OR semester = ?) "
+	                   + "AND (? = '' OR day_of_week = ?) "
 	                   + "ORDER BY scheduleId";
 
 	        PreparedStatement pStmt = conn.prepareStatement(sql);
 
-	        // ここでパラメータを順番に設定する（計14個）
+	        // 各項目を2回ずつバインド（順に注意）
+	        int i = 1;
 
-	     // scheduleId（1,2）
-	        pStmt.setInt(1, schedule.getScheduleId());
-	        pStmt.setInt(2, schedule.getScheduleId());
+	        pStmt.setInt(i++, schedule.getScheduleId()); // 1
+	        pStmt.setInt(i++, schedule.getScheduleId()); // 2
 
-	        // teacherId（3,4）
-	        pStmt.setInt(3, schedule.getTeacherId());
-	        pStmt.setInt(4, schedule.getTeacherId());
+	        pStmt.setInt(i++, schedule.getTeacherId());  // 3
+	        pStmt.setInt(i++, schedule.getTeacherId());  // 4
 
-	        // classId（5,6）
-	        pStmt.setInt(5, schedule.getClassId());
-	        pStmt.setInt(6, schedule.getClassId());
+	        pStmt.setInt(i++, schedule.getClassId());    // 5
+	        pStmt.setInt(i++, schedule.getClassId());    // 6
 
-	        // date（7,8）
 	        if (schedule.getDate() != null) {
-	            Timestamp tsDate = Timestamp.valueOf(schedule.getDate());
-	            pStmt.setTimestamp(7, tsDate);
-	            pStmt.setTimestamp(8, tsDate);
+	            Timestamp ts = Timestamp.valueOf(schedule.getDate());
+	            pStmt.setTimestamp(i++, ts);             // 7
+	            pStmt.setTimestamp(i++, ts);             // 8
 	        } else {
-	            pStmt.setNull(7, Types.TIMESTAMP);
-	            pStmt.setNull(8, Types.TIMESTAMP);
+	            pStmt.setNull(i++, Types.TIMESTAMP);     // 7
+	            pStmt.setNull(i++, Types.TIMESTAMP);     // 8
 	        }
 
-	        // period（9）
-	        pStmt.setString(9, schedule.getPeriod() != null && !schedule.getPeriod().isEmpty() ? "%" + schedule.getPeriod() + "%" : "%");
+	        pStmt.setString(i++, schedule.getPeriod() != null ? schedule.getPeriod() : ""); // 9
+	        pStmt.setString(i++, schedule.getPeriod() != null ? schedule.getPeriod() : ""); // 10
 
-	        // content（10）
-	        pStmt.setString(10, schedule.getContent() != null && !schedule.getContent().isEmpty() ? "%" + schedule.getContent() + "%" : "%");
+	        pStmt.setString(i++, schedule.getContent() != null ? "%" + schedule.getContent() + "%" : ""); // 11
+	        pStmt.setString(i++, schedule.getContent() != null ? "%" + schedule.getContent() + "%" : ""); // 12
 
-	        // type（11）
-	        pStmt.setString(11, schedule.getType() != null && !schedule.getType().isEmpty() ? "%" + schedule.getType() + "%" : "%");
+	        pStmt.setString(i++, schedule.getType() != null ? schedule.getType() : ""); // 13
+	        pStmt.setString(i++, schedule.getType() != null ? schedule.getType() : ""); // 14
 
-	        // year（12,13）
-	        pStmt.setInt(12, schedule.getYear());
-	        pStmt.setInt(13, schedule.getYear());
+	        pStmt.setInt(i++, schedule.getYear());       // 15
+	        pStmt.setInt(i++, schedule.getYear());       // 16
 
-	        // semester（14）
-	        pStmt.setString(14, schedule.getSemester() != null && !schedule.getSemester().isEmpty() ? "%" + schedule.getSemester() + "%" : "%");
+	        pStmt.setString(i++, schedule.getSemester() != null ? schedule.getSemester() : ""); // 17
+	        pStmt.setString(i++, schedule.getSemester() != null ? schedule.getSemester() : ""); // 18
 
-	        // day_of_week（15）
-	        pStmt.setString(15, schedule.getDay_of_week() != null && !schedule.getDay_of_week().isEmpty() ? "%" + schedule.getDay_of_week() + "%" : "%");
-
+	        pStmt.setString(i++, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : ""); // 19
+	        pStmt.setString(i++, schedule.getDay_of_week() != null ? schedule.getDay_of_week() : ""); // 20
 
 	        ResultSet rs = pStmt.executeQuery();
 
@@ -113,6 +108,7 @@ public class ScheduleDAO {
 	    }
 	    return scheduleList;
 	}
+
 
 
     // 新規登録

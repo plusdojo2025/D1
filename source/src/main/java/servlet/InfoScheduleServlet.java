@@ -32,22 +32,41 @@ public class InfoScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int defaultYear = 2025;
-    	String defaultSemester = "前期";
+        request.setCharacterEncoding("UTF-8");
 
-    	// スケジュール取得
-    	ScheduleDAO sDao = new ScheduleDAO();
-    	List<Schedule> scheduleList = sDao.select(new Schedule(-1, -1, -1, null, "", "", "", defaultYear, defaultSemester, "", ""));
+        String yearStr = request.getParameter("year");
+        String semester = request.getParameter("semester");
 
-    	// スケジュールとパラメータをセット
-    	request.setAttribute("scheduleList", scheduleList);
-    	request.setAttribute("paramYear", defaultYear);
-    	request.setAttribute("paramSemester", defaultSemester);
-    	
-    	// JSPへフォワード
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
-    	dispatcher.forward(request, response);
+        int year = 2025;
+        if (yearStr != null && !yearStr.isEmpty()) {
+            try {
+                year = Integer.parseInt(yearStr);
+            } catch (NumberFormatException e) {
+                year = 2025;
+            }
+        }
+
+        if (semester == null || semester.isEmpty()) {
+            semester = "前期";
+        }
+
+        // データ取得
+        ScheduleDAO sDao = new ScheduleDAO();
+        List<Schedule> scheduleList = sDao.select(new Schedule(-1, -1, -1, null, "", "", "", year, semester, "", ""));
+
+        // パラメータセット
+        
+        request.setAttribute("scheduleList", scheduleList);
+        request.setAttribute("paramYear", year);
+        request.setAttribute("paramSemester", semester); // ←これが抜けていると表示されない
+
+        
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
+        dispatcher.forward(request, response);
     }
+
+
 
 
 	/**
@@ -55,19 +74,70 @@ public class InfoScheduleServlet extends HttpServlet {
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
-        int year = -1;
-        String semester = request.getParameter("semester");
-        String yearParam = request.getParameter("year");
 
-        if (yearParam != null && !yearParam.isEmpty()) {
+        String action = request.getParameter("action");
+        int year = -1;
+        String yearStr = request.getParameter("year");
+        String semester = request.getParameter("semester");
+
+        if (yearStr != null && !yearStr.isEmpty()) {
             try {
-                year = Integer.parseInt(yearParam);
+                year = Integer.parseInt(yearStr);
             } catch (NumberFormatException e) {
                 year = -1;
             }
         }
-        
+
+        if ("save".equals(action)) {
+            // 保存処理
+            ScheduleDAO sDao = new ScheduleDAO();
+            String[] days = {"月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"};
+            String[] periods = {"1限", "2限", "3限", "4限", "5限", "6限", "7限"};
+
+            for (String day : days) {
+                for (String period : periods) {
+                    String content = request.getParameter("content_" + day + "_" + period);
+                    String classIdStr = request.getParameter("classId_" + day + "_" + period);
+                    String scheduleIdStr = request.getParameter("scheduleId_" + day + "_" + period);
+
+                    boolean hasContent = content != null && !content.trim().isEmpty();
+                    boolean hasClassId = classIdStr != null && !classIdStr.trim().isEmpty();
+                    int classId = hasClassId ? Integer.parseInt(classIdStr) : -1;
+
+                    if (scheduleIdStr != null && !scheduleIdStr.trim().isEmpty()) {
+                        // 既存データがある場合
+                        int scheduleId = Integer.parseInt(scheduleIdStr);
+
+                        if (hasContent || hasClassId) {
+                            // 更新
+                            Schedule s = new Schedule(scheduleId, -1, classId, null, period, content, "", year, semester, "", day);
+                            sDao.update(s);
+                        } else {
+                            // 削除
+                            sDao.delete(new Schedule(scheduleId, -1, -1, null, "", "", "", year, semester, "", day));
+                        }
+                    } else {
+                        // 新規追加（内容またはクラスIDがあるときのみ）
+                        if (hasContent || hasClassId) {
+                            Schedule s = new Schedule(0, -1, classId, null, period, content, "", year, semester, "", day);
+                            sDao.insert(s);
+                        }
+                    }
+                }
+            }
+
+            // 保存後に再表示
+            List<Schedule> scheduleList = new ScheduleDAO().select(new Schedule(-1, -1, -1, null, "", "", "", year, semester, "", ""));
+            request.setAttribute("scheduleList", scheduleList);
+            request.setAttribute("paramYear", year);
+            request.setAttribute("paramSemester", semester);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        // 通常の検索処理
         ScheduleDAO sDao = new ScheduleDAO();
         Schedule searchCond = new Schedule(-1, -1, -1, null, "", "", "", year, semester != null ? semester : "", "", "");
         List<Schedule> scheduleList = sDao.select(searchCond);
@@ -79,5 +149,6 @@ public class InfoScheduleServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
         dispatcher.forward(request, response);
     }
+
 
 }

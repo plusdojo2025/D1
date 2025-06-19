@@ -31,7 +31,7 @@ public class RegistStudentServlet extends HttpServlet {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
 		/*HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
-			response.sendRedirect("/D1/LoginServlet");
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
 		} */
 
@@ -50,12 +50,23 @@ public class RegistStudentServlet extends HttpServlet {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
 		/*HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
-			response.sendRedirect("/D1/LoginServlet");
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
 		}*/
 
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
+		//入学年
+        int year = -1;        
+        String yearStr = request.getParameter("year");
+        if (yearStr != null && !yearStr.isEmpty()) {
+            try {
+                year = Integer.parseInt(yearStr);
+            } catch (NumberFormatException e) {
+                // 数値に変換できない場合の処理（エラーメッセージの設定）
+                request.setAttribute("error", "入学年は整数で入力してください。");
+            }
+        }		
 		//学年
         int grade = -1;        
         String gradeStr = request.getParameter("grade");
@@ -101,6 +112,7 @@ public class RegistStudentServlet extends HttpServlet {
 		    request.setAttribute("error", "登録済みの出席番号です");
 
 		    // 入力値を保持（オプション）
+		    request.setAttribute("year", year);
 		    request.setAttribute("grade", grade);
 		    request.setAttribute("classId", classId);
 		    request.setAttribute("studentNum", studentNum);
@@ -115,14 +127,15 @@ public class RegistStudentServlet extends HttpServlet {
 		
 		
 		// 登録処理を行う
-		if (sDao.insert(new Students(-1, -1, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
+		if (sDao.insert(new Students(0, year, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/InfoStudentServlet");
             dispatcher.forward(request, response);
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
-            //登録失敗時は"Servlet"にフォワード                                                                         "/webapp/LoginServlet"のwebappをD1に変更
+            //登録失敗時は"Servlet"にフォワード                                "/D1/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
 		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/RegistStudentServlet");
             dispatcher.forward(request, response);
+            return;
 		}
 
 	}

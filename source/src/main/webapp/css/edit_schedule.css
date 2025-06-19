@@ -63,3 +63,7 @@ body {
     padding: 8px;
     text-align: center;
   }
+  th:first-child {
+  width: 80px;      /* お好みで調整 */
+  white-space: nowrap; /* 改行させない */
+}

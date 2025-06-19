@@ -77,8 +77,3 @@ INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 6, 6, '×', '');
 
 
 
-
-
-
-
-
