@@ -144,14 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const ruby = formObj.nameRuby.value.trim();
     let msg = '';
 
-    if (!formObj.year.value) msg = '※入学年を入力してください';
-    else if (!formObj.grade.value) msg = '※学年を選択してください';
-    else if (!formObj.classId.value) msg = '※クラスを選択してください';
-    else if (!formObj.studentNum.value) msg = '※出席番号を入力してください';
-    else if (!formObj.name.value) msg = '※氏名を入力してください';
-    else if (!name.includes(fullWidth)) msg = '※姓と名の間に全角スペースを入力してください';
-    else if (!formObj.nameRuby.value) msg = '※ふりがなを入力してください';
-    else if (!ruby.includes(fullWidth)) msg = '※せいとめいの間に全角スペースを入力してください';
+    if (!formObj.year.value) msg = '入学年を入力してください';
+    else if (!formObj.grade.value) msg = '学年を選択してください';
+    else if (!formObj.classId.value) msg = 'クラスを選択してください';
+    else if (!formObj.studentNum.value) msg = '出席番号を入力してください';
+    else if (!formObj.name.value) msg = '氏名を入力してください';
+    else if (!name.includes(fullWidth)) msg = ' 姓 と 名 の間に全角スペースを入力してください';
+    else if (!formObj.nameRuby.value) msg = 'ふりがなを入力してください';
+    else if (!ruby.includes(fullWidth)) msg = ' せい と めい の間に全角スペースを入力してください';
 
     if (msg) {
       errorMessageObj.textContent = msg;
