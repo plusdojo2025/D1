@@ -119,7 +119,7 @@ public class RegistStudentServlet extends HttpServlet {
 		    request.setAttribute("name", name);
 		    request.setAttribute("nameRuby", nameRuby);
 
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/RegistStudentServlet");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
 		    dispatcher.forward(request, response);
 		    return;
 		}
@@ -133,7 +133,7 @@ public class RegistStudentServlet extends HttpServlet {
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
             //登録失敗時は"Servlet"にフォワード                                "/D1/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/RegistStudentServlet");
             dispatcher.forward(request, response);
             return;
 		}

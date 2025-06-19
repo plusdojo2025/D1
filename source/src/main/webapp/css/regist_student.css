@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* フォント */
 body {
   font-family: 'Poppins', sans-serif;
@@ -33,27 +31,23 @@ form {
   max-width: 600px;
 }
 
-/* テーブル中央揃えと幅調整 */
+/* テーブル中央揃えと間隔調整 */
 .form-table {
   width: 100%;
   margin: 0 auto;
-  border-spacing: 10px 20px;
+  border-spacing: 10px 10px; /* 縦の間隔を狭くした */
 }
 
 .form-table td {
   vertical-align: middle;
-  padding: 8px;
+  padding: 6px 8px; /* 上下のパディングを少し詰める */
 }
 
-/* ラベル列を右寄せ、入力列を左揃え */
+/* ラベル列右寄せ */
 .form-table td:first-child {
   text-align: right;
   width: 160px;
   white-space: nowrap;
-}
-
-.form-table td:nth-child(2) {
-  width: auto;
 }
 
 /* テキスト＋サフィックスを横並びにするためのWrapper */
@@ -63,18 +57,17 @@ form {
   gap: 6px;
 }
 
-/* テキストボックスの幅調整 */
 .with-suffix input {
   width: auto;
   flex: 1 0 80px;
 }
 
-/* 「番」「年」などのラベル */
 .with-suffix .suffix-text {
   white-space: nowrap;
+  margin-left: 4px;
 }
 
-/* 入力欄の統一 */
+/* 入力欄スタイル統一 */
 .form-input,
 .form-input-short,
 .form-table select,
@@ -86,14 +79,7 @@ form {
   box-sizing: border-box;
 }
 
-/* 「番」テキスト */
-.suffix-text {
-  display: inline-block;
-  margin-left: 6px;
-  vertical-align: middle;
-}
-
-/* ボタン */
+/* ボタンスタイル */
 button {
   padding: 10px 30px;
   font-size: 14px;
@@ -111,15 +97,14 @@ button:hover {
 
 /* ボタンエリア中央揃え＋間隔調整 */
 .button-area {
-  display: flex;               /* Flexbox の親要素に */
-  justify-content: center;     /* 横方向に中央寄せ */
-  gap: 20px;                  /* ボタン間の余白を一括指定 */
-  margin-top: 10px 0;           /* フォームとの余白 */
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 12px 0 0; /* ボタン上の余白を詰め、下はデフォルト */
 }
 
-/* 子要素側のmarginは不要になるので削除 */
 .button-area button {
-  margin: 0;                   /* 古い margin をリセット */
+  margin: 0;
 }
 
 /* ロゴ */
@@ -132,9 +117,10 @@ button:hover {
 #error_message {
   color: red;
   font-weight: bold;
-  margin: 4px 0;
-  display: block;
+  margin: 6px 0;
   text-align: center;
+  display: block;
+  width: 100%;
 }
 
 /* 注意文 */
@@ -143,7 +129,7 @@ button:hover {
   color: #555;
   text-align: center;
   display: block;
-  margin: 4px auto 10px;
+  margin: 4px auto 8px;
 }
 
 /* スマホ対応 */
@@ -162,13 +148,11 @@ button:hover {
   }
 
   .button-area {
-    display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
   .button-area button {
     width: 100%;
-    margin: 0;
   }
 }
