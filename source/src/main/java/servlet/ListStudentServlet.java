@@ -60,6 +60,11 @@ public class ListStudentServlet extends HttpServlet {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         
+        
+		int yearNow = calendar.get(Calendar.YEAR); 
+		request.setAttribute("yearNow", yearNow);
+        
+        
 		int grade = 1;
 		String className = "1組";
 		String subjectName = "現代文";
@@ -149,155 +154,209 @@ public class ListStudentServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
-				
-		request.setCharacterEncoding("utf-8");
-		
-				/*
-				HttpSession session = request.getSession();
-				if (session.getAttribute("id") == null) {
-					response.sendRedirect("LoginServlet");
-					return;
-				}
-				*/
-		
-				if (request.getParameter("submit") !=null && request.getParameter("submit").equals("infoStudent")) {
-					
-					//studentID subjectID year month
-					
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/InfoStudentServlet");
-			        dispatcher.forward(request, response);
-				}else {
-				// リクエストパラメータを取得する
-				Date date=new Date(); 
-				
-				int year = Integer.parseInt(request.getParameter("year"));          //年
-				if(year < 0) {
-					year = Calendar.getInstance().get(Calendar.YEAR);
-				}
-				
-				int month = Integer.parseInt(request.getParameter("month"));          //月
-				if(month < 0) {
-					month = Calendar.getInstance().get(Calendar.MONTH);;
-				}
-				
-				int grade = Integer.parseInt(request.getParameter("grade"));          //学年
-				if(grade < 0) {
-					grade = 1;
-				}
-				
-				String className =request.getParameter("className");                   //クラス
-				if(className == null || className.isEmpty()) {
-					className = "1";
-				}
-				
-				String subjectName = request.getParameter("subjectName");              //教科
-				if(subjectName == null || subjectName.isEmpty()) {
-					subjectName = "現代文";
-				}
-				
-				// 検索処理を行う
-				//classIDを取得
-				ClassRoomDAO classDao = new ClassRoomDAO();
-				List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
-				request.setAttribute("classList", classList);
-				
-				System.out.println("grade "+grade);
-				System.out.println("className "+className);
-				System.out.println("classList "+classList);
-				
-				int classId = classList.get(0).getClassId();        //クラス
-				request.setAttribute("classId", classId);
-				
-				//subjectIDを取得
-				SubjectDAO subjectDao = new SubjectDAO();
-				List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
-				request.setAttribute("subjectList", subjectList);
-				
-				int subjectId = subjectList.get(0).getSubjectId();  //教科Id
-				request.setAttribute("subjectId", subjectId);
-				
-				
-				//生徒情報を取得
-				StudentsDAO studentDao = new StudentsDAO();
-				List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
-				request.setAttribute("studentList", studentList);
-				
-				System.out.println("studentList "+studentList);
-				
-				
-				List<Integer> studentIdList = new ArrayList<>();
-				for(int i=0;studentList.size()>i;i++) {
-					studentIdList.add(studentList.get(i).getStudentId());
-				}
-				System.out.println("studentIdList "+studentIdList);
-				int studentOne = studentIdList.get(1);
-				System.out.println("studentOne "+studentOne);
 
-				AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-				List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
-				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-				List<Assignments> assignmentsList = new ArrayList<Assignments>();
-				GradesDAO gradesDao = new GradesDAO();
-				List<Grades> gradesList = new ArrayList<Grades>();
-				
-				
-				List<AttendanceRecords> attendanceDateList = attendanceRecordsDao.select(new AttendanceRecords
-						(0,studentOne, classId, year, month,0,"",0,"",""));
-				List<Assignments> contentList = assignmentsDao.select(new Assignments
-						(0,studentOne,subjectId,"","",year,month,date));
-				List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
-				int testTypeListSize = testTypeList.size();
-				
-				
-				for(int i=0;studentIdList.size()>i;i++) {
-					//studentId.add(studentList.get(i).getStudentId());
-					int studentId = studentIdList.get(i);
-				
-					attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
-							(0,studentId, classId, year, month,0,"",0,"","")));
-					
-					assignmentsList.addAll(assignmentsDao.select(new Assignments
-							(0,studentId,subjectId,"","",year,month,date)));
-					
-					gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
-				}
-				
-				System.out.println("attendanceList "+attendanceList);
-				System.out.println("assignmentsList "+assignmentsList);
-				System.out.println("gradesList "+gradesList);
-				System.out.println("attendanceDateList "+attendanceDateList);
-				System.out.println("gradesList "+gradesList);
-				System.out.println("testTypeList "+testTypeList);
-				
-				
-				
-				request.setAttribute("attendanceList", attendanceList);
-				request.setAttribute("assignmentsList", assignmentsList);
-				request.setAttribute("gradesList", gradesList);
-				
-				request.setAttribute("attendanceDateList", attendanceDateList);
-				request.setAttribute("contentList", contentList);
-				request.setAttribute("testTypeList", testTypeList);
-				request.setAttribute("testTypeListSize", testTypeListSize);
-				
-				request.setAttribute("grade", grade);
-				request.setAttribute("className", className);
-				request.setAttribute("year", year);
-				request.setAttribute("month", month);
-				request.setAttribute("subjectName", subjectName);
-				request.setAttribute("classId", classId);
-				request.setAttribute("subjectId", subjectId);
-				
-				if(request.getParameter("submit") !=null && request.getParameter("submit").equals("編集")) {
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_allstudent.jsp");
-					dispatcher.forward(request, response);
-				}else {
+		request.setCharacterEncoding("utf-8");
+
+		/*
+		HttpSession session = request.getSession();
+		if (session.getAttribute("id") == null) {
+			response.sendRedirect("LoginServlet");
+			return;
+		}
+		 */
+		System.out.println(request.getParameter("submit"));
+		if(request.getParameter("submit") ==null){
+			// リクエストパラメータを取得する
+			Date date=new Date(); 
+			
+			Calendar cal = Calendar.getInstance();
+			int yearNow = cal.get(Calendar.YEAR); 
+			request.setAttribute("yearNow", yearNow);
+			
+
+			int year = Integer.parseInt(request.getParameter("year"));          //年
+			if(year < 0) {
+				year = Calendar.getInstance().get(Calendar.YEAR);
+			}
+
+			int month = Integer.parseInt(request.getParameter("month"));          //月
+			if(month < 0) {
+				month = Calendar.getInstance().get(Calendar.MONTH);;
+			}
+
+			int grade = Integer.parseInt(request.getParameter("grade"));          //学年
+			if(grade < 0) {
+				grade = 1;
+			}
+
+			String className =request.getParameter("className");                   //クラス
+			if(className == null || className.isEmpty()) {
+				className = "1";
+			}
+
+			String subjectName = request.getParameter("subjectName");              //教科
+			if(subjectName == null || subjectName.isEmpty()) {
+				subjectName = "現代文";
+			}
+
+			// 検索処理を行う
+			//classIDを取得
+			ClassRoomDAO classDao = new ClassRoomDAO();
+			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+			request.setAttribute("classList", classList);
+
+			System.out.println("grade "+grade);
+			System.out.println("className "+className);
+			System.out.println("classList "+classList);
+
+			int classId = classList.get(0).getClassId();        //クラス
+			request.setAttribute("classId", classId);
+
+			//subjectIDを取得
+			SubjectDAO subjectDao = new SubjectDAO();
+			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+			request.setAttribute("subjectList", subjectList);
+
+			int subjectId = subjectList.get(0).getSubjectId();  //教科Id
+			request.setAttribute("subjectId", subjectId);
+
+
+			//生徒情報を取得
+			StudentsDAO studentDao = new StudentsDAO();
+			List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
+			request.setAttribute("studentList", studentList);
+
+			System.out.println("studentList "+studentList);
+
+
+			List<Integer> studentIdList = new ArrayList<>();
+			for(int i=0;studentList.size()>i;i++) {
+				studentIdList.add(studentList.get(i).getStudentId());
+			}
+			System.out.println("studentIdList "+studentIdList);
+			int studentOne = studentIdList.get(1);
+			System.out.println("studentOne "+studentOne);
+
+			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
+			List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
+			AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+			List<Assignments> assignmentsList = new ArrayList<Assignments>();
+			GradesDAO gradesDao = new GradesDAO();
+			List<Grades> gradesList = new ArrayList<Grades>();
+
+
+			List<AttendanceRecords> attendanceDateList = attendanceRecordsDao.select(new AttendanceRecords
+					(0,studentOne, classId, year, month,0,"",0,"",""));
+			List<Assignments> contentList = assignmentsDao.select(new Assignments
+					(0,studentOne,subjectId,"","",year,month,date));
+			List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
+			int testTypeListSize = testTypeList.size();
+
+
+			for(int i=0;studentIdList.size()>i;i++) {
+				//studentId.add(studentList.get(i).getStudentId());
+				int studentId = studentIdList.get(i);
+
+				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+						(0,studentId, classId, year, month,0,"",0,"","")));
+
+				assignmentsList.addAll(assignmentsDao.select(new Assignments
+						(0,studentId,subjectId,"","",year,month,date)));
+
+				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
+			}
+
+			System.out.println("attendanceList "+attendanceList);
+			System.out.println("assignmentsList "+assignmentsList);
+			System.out.println("gradesList "+gradesList);
+			System.out.println("attendanceDateList "+attendanceDateList);
+			System.out.println("gradesList "+gradesList);
+			System.out.println("testTypeList "+testTypeList);
+
+
+
+			request.setAttribute("attendanceList", attendanceList);
+			request.setAttribute("assignmentsList", assignmentsList);
+			request.setAttribute("gradesList", gradesList);
+
+			request.setAttribute("attendanceDateList", attendanceDateList);
+			request.setAttribute("contentList", contentList);
+			request.setAttribute("testTypeList", testTypeList);
+			request.setAttribute("testTypeListSize", testTypeListSize);
+
+			request.setAttribute("grade", grade);
+			request.setAttribute("className", className);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("subjectName", subjectName);
+			request.setAttribute("classId", classId);
+			request.setAttribute("subjectId", subjectId);
+
+			if(request.getParameter("submit") !=null && request.getParameter("submit").equals("編集")) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_allStudent.jsp");
+				dispatcher.forward(request, response);
+			}else {
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 				dispatcher.forward(request, response);
-				}
-				}
-				
+			}
+		}else if(request.getParameter("submit").equals("編集")){
+			
+			int year = Integer.parseInt(request.getParameter("year"));          //年
+			int month = Integer.parseInt(request.getParameter("month"));        //月
+			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
+			String className =request.getParameter("className");                //クラス
+			String subjectName = request.getParameter("subjectName");           //教科
+			
+			request.setAttribute("grade", grade);
+			request.setAttribute("className", className);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("subjectName", subjectName);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/EditAllStudentServlet");
+			dispatcher.forward(request, response);
+
+		}else {
+			//個別閲覧へ
+
+			//studentID subjectID year month
+			int grade = Integer.parseInt(request.getParameter("grade")); 
+			String className =request.getParameter("className");
+			String name =request.getParameter("name");
+
+			//classIDを取得
+			ClassRoomDAO classDao = new ClassRoomDAO();
+			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+			request.setAttribute("classList", classList);
+
+			int classId = classList.get(0).getClassId();        //クラス
+			request.setAttribute("classId", classId);
+
+			//生徒情報を取得
+			StudentsDAO studentDao = new StudentsDAO();
+			List<Students> studentList = studentDao.select(new Students(0,0,grade,classId,0, name, "", "", "", ""));
+
+			int studentId = studentList.get(0).getStudentId();
+			request.setAttribute("studentId", studentId);
+
+
+			String subjectName = request.getParameter("subjectName");
+			SubjectDAO subjectDao = new SubjectDAO();
+			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+			request.setAttribute("subjectList", subjectList);
+
+			int year = Integer.parseInt(request.getParameter("year"));
+			int month = Integer.parseInt(request.getParameter("month"));
+
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/InfoStudentServlet");
+			dispatcher.forward(request, response);
+		}
+
 	}
 
 }

@@ -1,9 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -46,62 +43,34 @@ public class EditAllStudentServlet extends HttpServlet {
 		*/
 		
 		request.setCharacterEncoding("UTF-8");
-		Date date=new Date(); ;
-		try {
-			date = DateFormat.getDateInstance().parse(request.getParameter("date"));
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		Date submissionDate=new Date(); ;
-		try {
-			submissionDate = DateFormat.getDateInstance().parse(request.getParameter("submissionDate"));
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		int year = Integer.parseInt(request.getParameter("year"));;                //年
-		int month = Integer.parseInt(request.getParameter("month"));;                //月
 		
-		int grade = Integer.parseInt(request.getParameter("grade"));;                //学年
-		int studentId = Integer.parseInt(request.getParameter("studentNum"));        //出席番号
-		int classId = Integer.parseInt(request.getParameter("classId"));             //クラスId
-		String className =request.getParameter("className");                       //クラス
-		int subjectId = Integer.parseInt(request.getParameter("subjectId"));         //教科Id
-		String subjectName = request.getParameter("subjectName");                  //教科
-		String period = request.getParameter("period");                              //時限
-		//String studentNum = request.getParameter("studentNum");                    //出席番号
-		//String name = request.getParameter("name");                                //氏名
-		//String nameRuby = request.getParameter("nameRuby");                        //ふりがな
-		int recordId = Integer.parseInt(request.getParameter("recordId"));           //出欠情報ID
-		String status = request.getParameter("status");                              //出欠
-		int assignmentId = Integer.parseInt(request.getParameter("assignmentId"));   //提出物状況ID
-		String content = request.getParameter("content");                            //提出内容
-		String submissionStatus = request.getParameter("submissionStatus");          //提出状況
-		int gradesId = Integer.parseInt(request.getParameter("gradesId"));           //成績ID
-		String testType = request.getParameter("testType");                          //テスト種別
-		int score = Integer.parseInt(request.getParameter("score"));                 //点数
-		String remarks = request.getParameter("remarks");                            //テスト種別
+		int year = Integer.parseInt(request.getParameter("year"));          //年
+		int month = Integer.parseInt(request.getParameter("month"));        //月
+		int grade = Integer.parseInt(request.getParameter("grade"));        //学年
+		String className =request.getParameter("className");                //クラス
+		String subjectName = request.getParameter("subjectName");           //教科
 
 
 		//classIDを取得
 		ClassRoomDAO classDao = new ClassRoomDAO();
 		List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
 		request.setAttribute("classList", classList);
+		int classId = classList.get(0).getClassId();        //クラス
+		request.setAttribute("classId", classId);
 
+		
 		//subjectIDを取得
 		SubjectDAO subjectDao = new SubjectDAO();
 		List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
 		request.setAttribute("subjectList", subjectList);
-
-		classId = Integer.parseInt(request.getParameter("classId"));      //クラス
-		subjectId = Integer.parseInt(request.getParameter("subjectId"));  //教科Id
+		int subjectId = subjectList.get(0).getSubjectId();  //教科Id
+		request.setAttribute("subjectId", subjectId);
 
 
 		//出欠情報を取得
 		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-		if (attendanceRecordsDao.update(new AttendanceRecords(recordId, studentId, classId, date, period, 
-				subjectId, status, remarks))) { // 更新成功
+		if (attendanceRecordsDao.update(new AttendanceRecords(0, studentId, classId, date, period, 
+				subjectId, status, ""))) { // 更新成功
 			System.out.println("更新成功");
 		} else { // 更新失敗
 			System.out.println("出席更新失敗");

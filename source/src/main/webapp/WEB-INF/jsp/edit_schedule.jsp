@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
@@ -7,42 +6,57 @@
 <head>
 <meta charset="UTF-8">
 <title>スケジュールの編集</title>
-
 <link rel="stylesheet" href="<c:url value='/css/edit_schedule.css' />">
-
+<style>
+  .button-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .memo-section {
+    margin-top: 30px;
+  }
+  .memo-box {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+  }
+</style>
 </head>
 <body>
 
 <h1>スケジュールの編集</h1>
-<form action="InfoScheduleServlet" method="post">
+
+<!-- 年度・学期の検索フォーム -->
+<form action="EditScheduleServlet" method="post">
   <div class="form-row">
     <label>① 年度：</label>
     <select name="year">
-	  	<option value="">選択してください</option>
-	  	<option value="2025" <c:if test="${year == 2025}">selected</c:if>>2025</option>
-  		<option value="2024" <c:if test="${year == 2024}">selected</c:if>>2024</option>
-  		<option value="2023" <c:if test="${year == 2023}">selected</c:if>>2023</option>
-	</select>
+      <option value="2025" <c:if test="${year == 2025}">selected</c:if>>2025</option>
+      <option value="2024" <c:if test="${year == 2024}">selected</c:if>>2024</option>
+      <option value="2023" <c:if test="${year == 2023}">selected</c:if>>2023</option>
+    </select>
 
     <label>① 学期：</label>
-	  <select name="semester">
-	  <option value="">選択してください</option>
-	  <option value="前期" <c:if test="${semester == '前期'}">selected</c:if>>前期</option>
-	  <option value="後期" <c:if test="${semester == '後期'}">selected</c:if>>後期</option>
-	</select>
-
+    <select name="semester">
+      <option value="前期" <c:if test="${semester == '前期'}">selected</c:if>>前期</option>
+      <option value="後期" <c:if test="${semester == '後期'}">selected</c:if>>後期</option>
+    </select>
 
     <button type="submit" class="btn">検索</button>
   </div>
 </form>
 
-<c:set var="paramYear" value="${year}" />
-<c:set var="paramSemester" value="${semester}" />
-<!-- スケジュール表示 -->
-<form action="InfoScheduleServlet" method="post">
-  <input type="hidden" name="action" value="save"> <!-- 保存フラグ -->
-  <input type="hidden" name="year" value="${year}">
-  <input type="hidden" name="semester" value="${semester}">
+<!-- 表示設定 -->
+<c:set var="days" value="月曜日,火曜日,水曜日,木曜日,金曜日,土曜日,日曜日" />
+<c:set var="periods" value="1限,2限,3限,4限,5限,6限,7限" />
+
+<!-- 編集フォーム -->
+<form action="EditScheduleServlet" id="editForm" method="post">
+  <input type="hidden" name="action" value="save">
+  <input type="hidden" name="year" value="${year}" />
+  <input type="hidden" name="semester" value="${semester}" />
 
   <table border="1">
     <thead>
@@ -59,18 +73,22 @@
           <th>${period}</th>
           <c:forEach var="day" items="${fn:split(days, ',')}">
             <td>
-              <c:set var="found" value="false"/>
+              <c:set var="found" value="false" />
               <c:forEach var="item" items="${scheduleList}">
-                <c:if test="${item.year == year && item.semester == semester && item.day_of_week == day && item.period == period}">
-                  <input type="hidden" name="scheduleId" value="${item.scheduleId}" />
-                  <input type="text" name="content_${day}_${period}" value="${item.content}" />
-                  <input type="text" name="classId_${day}_${period}" value="${item.classId}" />
-                  <c:set var="found" value="true"/>
+                <c:if test="${item.year == year 
+                            and item.semester == semester 
+                            and item.day_of_week == day 
+                            and item.period == period}">
+                  
+                  <input type="hidden" name="scheduleId_${day}_${period}" value="${item.scheduleId}" />
+                  <input type="text" name="content_${day}_${period}" value="${item.content}" placeholder="内容" /><br>
+                  <input type="text" name="classId_${day}_${period}" value="${item.classId}" placeholder="クラスID" />
+                  <c:set var="found" value="true" />
                 </c:if>
               </c:forEach>
               <c:if test="${!found}">
-                <input type="text" name="content_${day}_${period}" value="" />
-                <input type="text" name="classId_${day}_${period}" value="" />
+                <input type="text" name="content_${day}_${period}" value="" placeholder="内容" /><br>
+                <input type="text" name="classId_${day}_${period}" value="" placeholder="クラスID" />
               </c:if>
             </td>
           </c:forEach>
@@ -79,30 +97,46 @@
     </tbody>
   </table>
 
-  <button type="submit" class="btn">保存</button>
+  <!-- メモ欄 -->
+  <div class="memo-section">
+    <label class="memo-label">② メモ欄：</label><br>
+    <textarea id="memoBox" name="memo" class="memo-box" placeholder="ここにメモを入力してください"></textarea>
+  </div>
+
+  <div class="button-row">
+    <button type="submit" class="btn">保存</button>
+  </div>
 </form>
 
-
-<c:if test="${empty scheduleList}">
-  <p>該当するスケジュールはありません。</p>
-</c:if>
-
-<!-- メモ欄 -->
-<div class="memo-section">
-  <label class="memo-label">② メモ欄：</label><br>
-  <div class="memo-box">
-    ・金曜は放課後に保護者面談あり。
-  </div>
-</div>
-
-<!-- 編集・戻るボタン -->
-
+<!-- キャンセルは別フォームで外に出す -->
 <form action="InfoScheduleServlet" method="post" style="display: inline;">
-  <input type="hidden" name="year" value="${year}">
-  <input type="hidden" name="semester" value="${semester}">
+  <input type="hidden" name="year" value="${year}" />
+  <input type="hidden" name="semester" value="${semester}" />
+  <input type="hidden" name="action" value="search" />
   <button type="submit" class="btn">キャンセル</button>
 </form>
 
+<script>
+  // メモ読み込み
+  window.addEventListener('load', () => {
+    const savedMemo = localStorage.getItem('scheduleMemo');
+    if (savedMemo) {
+      document.getElementById('memoBox').value = savedMemo;
+    }
+  });
+
+  // フォーム送信前に確実にローカルストレージに保存してから送信
+  document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 送信を一旦止める
+    const memoContent = document.getElementById('memoBox').value;
+    localStorage.setItem('scheduleMemo', memoContent);
+
+    // 少しだけ遅延を入れてから送信（確実に保存されるように）
+    setTimeout(() => {
+      this.submit();
+    }, 100);
+  });
+</script>
 
 </body>
 </html>
