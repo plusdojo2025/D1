@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,111 +18,26 @@
     <main>
         <form action="EditAllStudentServlet.java" method ="POST" id="edit_allstudent_form">
 
-            <select name="grede">
-                <option value="1"><input type="submit" name="change" placeholder="1年"></option>
-                <option value="2"><input type="submit" name="change" placeholder="2年"></option>
-                <option value="3"><input type="submit" name="change" placeholder="3年"></option>
-            </select>
-
-            <select name="className">
-                <option value="1"><input type="submit" name="change" placeholder="1組"></option>
-                <option value="2"><input type="submit" name="change" placeholder="2組"></option>
-                <option value="3"><input type="submit" name="change" placeholder="3組"></option>
-                <option value="4"><input type="submit" name="change" placeholder="4組"></option>
-                <option value="5"><input type="submit" name="change" placeholder="5組"></option>
-                <option value="6"><input type="submit" name="change" placeholder="6組"></option>
-            </select>
-            
-            <select name="year">
-            	<c:forEach var="e" begin="-5" end="1">
-					<c:choose>
-						<c:when test="${yearNow + e == year}">
-							<option value="${yearNow + e}" selected>
-							<input type="submit" name="change" placeholder="${yearNow + e}年">
-							</option>
-						</c:when>
-
-						<c:otherwise>
-							<option value="${yearNow + e}">
-							<input type="submit" name="change" placeholder="${yearNow + e}年">
-							</option>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-            </select>
-            
-            <select name="month">
-            	<c:forEach var="e" begin="1" end="12">
-					<c:choose>
-						<c:when test="${e == month}">
-							<option value="${e}" selected>
-							<input type="submit" name="change" placeholder="${e}月">
-							</option>
-						</c:when>
-
-						<c:otherwise>
-							<option value="${e}">
-							<input type="submit" name="change" placeholder="${e}月">
-							</option>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-            </select>
-
-            <select name="subjectName">
-                <option value="現代文"><input type="submit" name="change" placeholder="現代文"></option>
-                <option value="古典"><input type="submit" name="change" placeholder="古典"></option>
-                <option value="数学IA"><input type="submit" name="change" placeholder="数学IA"></option>
-                <option value="数学ⅡB"><input type="submit" name="change" placeholder="数学ⅡB"></option>
-                <option value="数学ⅢC"><input type="submit" name="change" placeholder="数学ⅢC"></option>
-                <option value="英語表現"><input type="submit" name="change" placeholder="英語表現"></option>
-                <option value="コミュニケーション英語"><input type="submit" name="change" placeholder="コミュニケーション英語"></option>
-                <option value="物理"><input type="submit" name="change" placeholder="物理"></option>
-                <option value="化学"><input type="submit" name="change" placeholder="化学"></option>
-                <option value="生物"><input type="submit" name="change" placeholder="生物"></option>
-                <option value="地学"><input type="submit" name="change" placeholder="地学"></option>
-                <option value="日本史"><input type="submit" name="change" placeholder="日本史"></option>
-                <option value="世界史"><input type="submit" name="change" placeholder="世界史"></option>
-                <option value="地理"><input type="submit" name="change" placeholder="地理"></option>
-                <option value="公民"><input type="submit" name="change" placeholder="公民"></option>
-                <option value="情報"><input type="submit" name="change" placeholder="情報"></option>
-                <option value="技術"><input type="submit" name="change" placeholder="技術"></option>
-                <option value="家庭科"><input type="submit" name="change" placeholder="家庭科"></option>
-                <option value="美術"><input type="submit" name="change" placeholder="美術"></option>
-                <option value="書道"><input type="submit" name="change" placeholder="書道"></option>
-                <option value="保健体育"><input type="submit" name="change" placeholder="保健体育"></option>
-                <option value="音楽"><input type="submit" name="change" placeholder="音楽"></option>
-                <option value="学活"><input type="submit" name="change" placeholder="学活"></option>
-                <option value="その他"><input type="submit" name="change" placeholder="その他"></option>
-            </select>
-
+			<c:out value="${grede}" />
+			<c:out value="${className}" />
+			<c:out value="${year}" />
+			<c:out value="${month}" />
+			<c:out value="${subjectName}" />
+			
             <input type="submit" name="editCompleted" placeholder="編集完了" id="editCompleted" value="編集完了">
-
             <input type="submit" name="cancel" placeholder="キャンセル" id="cancel" value="キャンセル">
 
 
             <p>表示項目選択</p>
 
-            <span>
-                <input type="checkbox" checked value="attendance" id="attendanceCheck">
-            </span>
-            <span>
-                出席状況
-            </span>
+            <span><input type="checkbox" checked value="attendance" id="attendanceCheck"></span>
+            <span>出席状況</span>
 
-            <span>
-                <input type="checkbox" checked value="submission" id="submissionCheck">
-            </span>
-            <span>
-                提出物状況
-            </span>
+            <span><input type="checkbox" checked value="submission" id="submissionCheck"></span>
+            <span>提出物状況</span>
 
-            <span>
-                <input type="checkbox" checked value="grades" id="gradesCheck">
-            </span>
-            <span>
-                成績状況
-            </span>
+            <span><input type="checkbox" checked value="grades" id="gradesCheck"></span>
+            <span>成績状況</span>
 
 
             <div id="attendance">
@@ -130,8 +47,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <c:forEach var="e" items="${attendanceList}">
-							<td>${e.date}</td>
+                        <c:forEach var="e" items="${attendanceDateList}">
+							<td><fmt:formatDate value="${e.date}" type="DATE"
+									pattern="dd日" /></td>
 						</c:forEach>
                     </tr>
 
@@ -148,7 +66,7 @@
 							<p>ふりがな</p>
 						</td>
 
-						<c:forEach var="e" items="${attendanceList}">
+						<c:forEach var="e" items="${attendanceDateList}">
 							<td>${e.period}限</td>
 						</c:forEach>
 					</tr>
@@ -160,13 +78,13 @@
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
-									<td><select name="attendanceDropdown"
-										id="attendanceDropdown" value="${a.status}">
-											<option value="attendance">◯</option>
-											<option value="attendance">✕</option>
-											<option value="attendance">公</option>
-											<option value="attendance">早</option>
-											<option value="attendance">遅</option>
+									<td><select name="attendanceDropdown" id="attendanceDropdown">
+											<option>${a.status}</option>
+											<option value="◯">◯</option>
+											<option value="✕">✕</option>
+											<option value="公">公</option>
+											<option value="早">早</option>
+											<option value="遅">遅</option>
 									</select></td>
 								</c:if>
 							</c:forEach>
@@ -192,7 +110,7 @@
 							<p>ふりがな</p>
 						</td>
 
-						<c:forEach var="e" items="${assignmentsList}">
+						<c:forEach var="e" items="${contentList}">
 							<td>${e.content}</td>
 						</c:forEach>
 					</tr>
@@ -206,8 +124,9 @@
 								<c:if test="${e.studentId == a.studentId}">
 									<td><select name="submissionDropdown"
 										id="submissionDropdown" value="${a.submissionStatus}">
-											<option value="attendance">◯</option>
-											<option value="attendance">✕</option>
+											<option>${a.submissionStatus}</option>
+											<option value="◯">◯</option>
+											<option value="✕">✕</option>
 									</select></td>
 								</c:if>
 							</c:forEach>
@@ -223,7 +142,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <c:forEach var="e" items="${gradesList}">
+                        <c:forEach var="e" items="${testTypeList}">
 							<td>${e.testType}</td>
 						</c:forEach>
                     </tr>
@@ -241,21 +160,11 @@
                             <p>ふりがな</p>
                         </td>
 
-                        <td>
-                            <p>点数</p>
-                        </td>
-
-                        <td>
-                            <p>点数</p>
-                        </td>
-
-                        <td>
-                            <p>点数</p>
-                        </td>
-                        
-                        <td>
-                            <p>点数</p>
-                        </td>
+                        <c:forEach var="e" begin="1" end="${testTypeListSize}">
+							<td>
+								<p>点数</p>
+							</td>
+						</c:forEach>
                     </tr>
 
 					<c:forEach var="e" items="${studentList}">
@@ -266,7 +175,7 @@
 							<c:forEach var="a" items="${gradesList}">
 								<c:if test="${e.studentId == a.gradesList}">
 									<td>
-									<input type="text" name="score" class="score" value="${a.score}">
+										<input type="text" name="score" class="score" value="${a.score}">
 									</td>
 								</c:if>
 							</c:forEach>

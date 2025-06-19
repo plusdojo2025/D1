@@ -5,8 +5,7 @@
 <!DOCTYPE html>
 <%@ page import="java.util.Calendar" %>
 <% Calendar cal = Calendar.getInstance(); %>
-<% int yearNow = cal.get(Calendar.YEAR); %>
-<% System.out.println("yearNow "+ yearNow); %>
+
 
 <html>
 <head>
@@ -20,10 +19,12 @@
 	<header></header>
 
 	<main>
-	<p>${yearNow}</p>
+	<p><c:out value="${yearNow}" /></p>
+	
 		<form action="/D1/ListStudentServlet" method="POST"
 			id="list_student_form">
-			<input type="hidden" name="number" value="${studentIdList}}">
+
+			
 			<input type="hidden" name="number" value="${subjectId}}"> <select
 				name="grade" onchange="this.form.submit()">
 				<option>${grade}</option>
@@ -91,9 +92,9 @@
 				<option value="音楽">音楽</option>
 				<option value="学活">学活</option>
 				<option value="その他">その他</option>
-			</select> <input type="submit" name="edit" placeholder="編集" id="edit"
-				value="編集"> <input type="submit" name="download"
-				placeholder="ダウンロード" id="download" value="ダウンロード">
+			</select> 
+			<input type="submit" name="編集" placeholder="編集" id="edit" value="編集"> 
+			<input type="submit" name="ダウンロード" placeholder="ダウンロード" id="download" value="ダウンロード">
 
 
 			<p>表示項目選択</p>
@@ -124,11 +125,9 @@
 						<td>
 							<p>出席番号</p>
 						</td>
-
 						<td>
 							<p>氏名</p>
 						</td>
-
 						<td>
 							<p>ふりがな</p>
 						</td>
@@ -142,7 +141,9 @@
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><a href="InfoStudentServlet">${e.name}</a></td>
+							<!-- <td><a href="InfoStudentServlet">${e.name}</a></td>  -->
+							<td><input type="submit" name="edit" placeholder="${e.name}" id="edit" value="${e.name}"></td>
+							
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
