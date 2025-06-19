@@ -16,7 +16,7 @@
 	<main>
 		<form method="post" action="?">
 			<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
-			<input type="hidden" name="number" value="${student.studentId}">
+			<input type="hidden" name="studentId" value="${student.studentId}">
 			<input type="submit" name="edit" value="編集完了" formaction='/D1/EditStudentServlet'> 
 			<input type="submit" name="back" value="キャンセル" formaction='/D1/InfoStudentServlet'>
 
@@ -24,22 +24,22 @@
 			<div class="baseInfo">
 				<div><input type="text" name="nameRuby" value="${student.nameRuby}" placeholder="ふりがな"></div>
 				<div class="field">
-					<div><input type="text" name="name" value="${student.name}" placeholder="氏名"></div>
+					<div><input type="text" name="name" value="${student.name}" placeholder="氏名"> </div>
 					<div>${student.grade}年</div>
 					<div>${className}</div>
 					<div>${student.studentNum}番</div>
 				</div>
 				<div class="field">
-					<div>出席率</div>
-					<div>${attendedRate}</div>
+					<div>今学期 出席率</div>
+					<div>${attendedRate}%</div>
 					<div>出席日数</div>
 					<div>${attendedNum}</div>
 					<div>出席すべき日数</div>
 					<div>${shouldAttendNum}</div>
 				</div>
 				<div class="field">
-					<div>提出率</div>
-					<div>${submittedRate}</div>
+					<div>今学期 提出率</div>
+					<div>${submittedRate}%</div>
 					<div>提出数</div>
 					<div>${submittedNum}</div>
 					<div>提出すべき課題数</div>
@@ -95,7 +95,7 @@
 			<br>
 
 			<div id="attendance">
-				出席状況 <span>出席率</span> <span>${subjectAttendedRate}</span>
+				出席状況 <span>出席率</span> <span>${subjectAttendedRate}%</span>
 				<table>
 					<tr>
 						<td>日付</td>
@@ -104,13 +104,14 @@
 						<td>備考</td>
 					</tr>
 
-					<c:forEach var="att" items="${attendanceRecords}">
+					<c:forEach var="att" items="${attendanceRecords}" varStatus="status">
+						<input type="hidden" name="recordAmount" value="${attendanceRecords.size()}">
 						<input type="hidden" name="recordId" value="${att.recordId}">
 						<tr>
-							<td><input type="date" name="attendanceDate" value="${att.date}"></td>
-							<td><input type="text" name="attendancePeriod" value="${att.period}"></td>
+							<td><input type="date" name="attendanceDate${status.index}" value="<fmt:formatDate value="${att.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+							<td><input type="text" name="attendancePeriod${status.index}" value="${att.period}"></td>
 							<td>
-								<select name="attededStatus">
+								<select name="attededStatus${status.index}">
 									<option value="○" class="attendedStatus" selected>○</option>
 									<option value="×" class="attendedStatus">×</option>
 									<option value="早" class="attendedStatus">早</option>
@@ -118,7 +119,7 @@
 									<option value="公" class="attendedStatus">公</option>
 								</select>
 							</td>
-							<td><input type="text" name="attendanceRemarks" value="${att.remarks}"></td>
+							<td><input type="text" name="attendanceRemarks${status.index}" value="${att.remarks}"></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -126,7 +127,7 @@
 			</div>
 
 			<div id="submission">
-				提出物状況 <span>提出率</span> <span>${subjectSubmittedRate}</span>
+				提出物状況 <span>提出率</span> <span>${subjectSubmittedRate}%</span>
 				<table>
 					<tr>
 						<td>課題内容</td>
@@ -144,7 +145,7 @@
 									<option value="×" class="submittedStatus">×</option>
 								</select>
 							</td>
-							<td><input type="date" name="submittionDate${status.index}" value="${sub.submissionDate}"></td>
+							<td><input type="date" name="submittionDate${status.index}" value="<fmt:formatDate value="${sub.submissionDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 						</tr>
 					</c:forEach>
 					
@@ -215,7 +216,7 @@
 					<c:forEach var="itv" items="${interviewList}">
 						<input type="hidden" name="interviewId" value="${itv.interviewId}">
 						<tr>
-							<td><input type="date" name="interviewDate" value="${itv.date}"></td>
+							<td><input type="date" name="interviewDate" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 							<td><input type="text" name="interviweContents" value="${itv.contents}"></td>
 							<td><input type="text" name="interviweRemarks" value="${itv.remarks}"></td>
 						</tr>
@@ -232,7 +233,7 @@
 					<c:forEach var="itv" items="${lastInterviewList}">
 						<input type="hidden" name="lastInterviewId" value="${itv.interviewId}">
 						<tr>
-							<td><input type="date" name="lastInterviewDate" value="${itv.date}"></td>
+							<td><input type="date" name="lastInterviewDate" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 							<td><input type="text" name="lastInterviweContents" value="${itv.contents}"></td>
 							<td><input type="text" name="lastInterviweRemarks" value="${itv.remarks}"></td>
 						</tr>
@@ -249,6 +250,13 @@
 	<script src="js/info_student.js"></script>
 	<script>
 	'use strict';
+	let subject = '${subjectId}';
+	var subjects = document.getElementsByClassName("subject");
+	for (var i = 0; i < subjects.length; i++) {
+		if (subjects[i].value === subject) {
+			subjects[i].setAttribute('selected', 'selected');
+		}
+	}
 	</script>
 </body>
 </html>
