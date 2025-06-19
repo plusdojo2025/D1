@@ -25,6 +25,15 @@
       <button type="submit" disabled style="display:none" aria-hidden="true"></button>
       <table class="form-table">
         <tr>
+          <td><label  for="year">入学年</label></td>
+          <td>
+          <div class="with-suffix">
+           <input type="text" name="year" id="year" placeholder="例) 2023" class="form-input">
+            <span class="suffix-text">年</span>
+           
+          </div>
+        </tr>
+        <tr>
           <td><label for="grade-select">学年</label></td>
           <td>
             <select name="grade" id="grade-select" class="form-input">
@@ -47,8 +56,10 @@
         <tr>
           <td><label>出席番号（半角数字のみ）</label></td>
           <td>
+           <div class="with-suffix">
             <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short">
             <span class="suffix-text">番</span>
+            </div>
           </td>
         </tr>
         <tr>
@@ -72,9 +83,11 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2" style="text-align:center">
+          <td colspan="2">
+           <div class="button-area">
             <button type="button" onclick="location.href='/D1/InfoScheduleServlet'">キャンセル</button>
             <button type="submit" name="regist" id="regist_btn">登録</button>
+           </div> 
           </td>
         </tr>
       </table>
@@ -131,7 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const ruby = formObj.nameRuby.value.trim();
     let msg = '';
 
-    if (!formObj.grade.value) msg = '※学年を選択してください';
+    if (!formObj.year.value) msg = '※入学年を入力してください';
+    else if (!formObj.grade.value) msg = '※学年を選択してください';
     else if (!formObj.classId.value) msg = '※クラスを選択してください';
     else if (!formObj.studentNum.value) msg = '※出席番号を入力してください';
     else if (!formObj.name.value) msg = '※氏名を入力してください';
