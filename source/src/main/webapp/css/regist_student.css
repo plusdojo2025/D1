@@ -1,6 +1,15 @@
 @charset "UTF-8";
 
-/* 中央寄せレイアウト */
+/* フォント */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #2c3e50;
+  min-height: 70vh;
+  padding: 40px 20px;
+}
+
+/* メインコンテンツ中央寄せ */
 .main-content {
   display: flex;
   flex-direction: column;
@@ -8,7 +17,7 @@
   padding: 30px;
 }
 
-/* タイトル中央 */
+/* タイトル */
 .form-title {
   text-align: center;
   margin-bottom: 30px;
@@ -24,16 +33,48 @@ form {
   max-width: 600px;
 }
 
-/* -------- ラベルと入力欄の縦位置を揃える調整 -------- */
+/* テーブル中央揃えと幅調整 */
 .form-table {
-  margin-left: 80px; /* ← 右寄せの度合い */
+  width: 100%;
+  margin: 0 auto;
+  border-spacing: 10px 20px;
 }
 
 .form-table td {
   vertical-align: middle;
+  padding: 8px;
 }
 
-/* 入力欄の高さを統一 */
+/* ラベル列を右寄せ、入力列を左揃え */
+.form-table td:first-child {
+  text-align: right;
+  width: 160px;
+  white-space: nowrap;
+}
+
+.form-table td:nth-child(2) {
+  width: auto;
+}
+
+/* テキスト＋サフィックスを横並びにするためのWrapper */
+.with-suffix {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* テキストボックスの幅調整 */
+.with-suffix input {
+  width: auto;
+  flex: 1 0 80px;
+}
+
+/* 「番」「年」などのラベル */
+.with-suffix .suffix-text {
+  white-space: nowrap;
+}
+
+/* 入力欄の統一 */
 .form-input,
 .form-input-short,
 .form-table select,
@@ -41,12 +82,11 @@ form {
 .form-table input[type="number"] {
   padding: 8px 12px;
   font-size: 1rem;
-  height: auto;
-  vertical-align: middle;
-  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* 「番」テキストの位置合わせ */
+/* 「番」テキスト */
 .suffix-text {
   display: inline-block;
   margin-left: 6px;
@@ -54,63 +94,81 @@ form {
 }
 
 /* ボタン */
-input[type="submit"],
-input[type="button"],
 button {
-  padding: 10px 20px;
+  padding: 10px 30px;
   font-size: 14px;
   background-color: #3498db;
   border: none;
   border-radius: 6px;
   color: white;
   cursor: pointer;
-  margin-right: 20px; /* 間隔を広げた */
   transition: 0.3s ease;
 }
 
-input[type="submit"]:hover {
+button:hover {
   background-color: #2980b9;
 }
 
-/* ロゴ中央寄せ */
+/* ボタンエリア中央揃え＋間隔調整 */
+.button-area {
+  display: flex;               /* Flexbox の親要素に */
+  justify-content: center;     /* 横方向に中央寄せ */
+  gap: 20px;                  /* ボタン間の余白を一括指定 */
+  margin-top: 10px 0;           /* フォームとの余白 */
+}
+
+/* 子要素側のmarginは不要になるので削除 */
+.button-area button {
+  margin: 0;                   /* 古い margin をリセット */
+}
+
+/* ロゴ */
 #logo {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* エラーメッセージ全体に赤色を指定 */
+/* エラーメッセージ */
 #error_message {
   color: red;
   font-weight: bold;
-  margin-top: 8px;
-  margin-left: 50px;
+  margin: 4px 0;
   display: block;
-}
-
-/* ボタン間隔調整 */
-input[type="submit"][name="cancel"] {
-  margin-right: 70px;
-}
-
-input[type="submit"][name="regist"] {
-  margin-right: 0;
+  text-align: center;
 }
 
 /* 注意文 */
 .zenkaku {
   font-size: 12px;
   color: #555;
+  text-align: center;
+  display: block;
+  margin: 4px auto 10px;
 }
 
 /* スマホ対応 */
 @media (max-width: 600px) {
-  .form-input,
-  .form-input-short {
+  .form-table td:first-child {
+    text-align: left;
     width: 100%;
   }
 
-  input[type="submit"] {
+  .form-input,
+  .form-input-short,
+  .form-table select,
+  .form-table input[type="text"],
+  .form-table input[type="number"] {
     width: 100%;
-    margin-bottom: 10px;
+  }
+
+  .button-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-area button {
+    width: 100%;
+    margin: 0;
   }
 }
