@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     classIdInput.value = (classMap[g] && classMap[g][c]) ? classMap[g][c] : "";
   });
 
-  // Enterキーでも送信トリガー but 暗黙投稿防止
+  // Enterキーでも送信トリガー  + 暗黙投稿防止
   formObj.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       e.preventDefault();
