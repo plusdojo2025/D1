@@ -124,10 +124,12 @@ public class EditAllStudentServlet extends HttpServlet {
 			}
 
 			List<Integer> assignmentsIdList = new ArrayList<>();
-			for(int i=0;attendanceList.size()>i;i++) {
+			for(int i=0;assignmentsList.size()>i;i++) {
 				assignmentsIdList.add(assignmentsList.get(i).getAssignmentId());
 			}
 			
+			System.out.println("aaa");
+			System.out.println("attendanceList.size()"+attendanceList.size());
 			System.out.println("assignmentsIdList"+assignmentsIdList);
 			
 			int assignmentId = 0;
@@ -137,7 +139,7 @@ public class EditAllStudentServlet extends HttpServlet {
 				System.out.println("assignmentId"+assignmentId);
 				String searchassignment =Integer.toString(assignmentId).concat("assign");
 				System.out.println("searchassignment"+searchassignment);
-				submissionStatus = request.getParameter(searchassignment);         //出欠ID
+				submissionStatus = request.getParameter(searchassignment);         
 
 				//出欠情報を取得
 				if (assignmentsDao.update(new Assignments(assignmentId, 0, 0, submissionStatus, "", date))) { // 更新成功
