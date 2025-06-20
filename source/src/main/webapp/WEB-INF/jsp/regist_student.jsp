@@ -1,23 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>生徒登録</title>
   <link rel="stylesheet" href="<c:url value='/css/regist_student.css'/>">
+  <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
+
 </head>
 <body>
 <div class="wrapper">
-  <h1 id="logo">
-    <a href="<c:url value='/InfoScheduleServlet'/>"><img src="/webapp/img/.png" width="200" height="100" alt=""></a>
-  </h1>
-  <ul id="nav">
-    <li><a href="<c:url value='/ListStudentServlet'/>">生徒管理</a></li>
-    <li><a href="<c:url value='/InfoScheduleServlet'/>">スケジュール</a></li>
-    <li><a href="<c:url value='/LoginServlet'/>">ログアウト</a></li>
-  </ul>
-
+  
   <div class="main-content">
     
     <form id="regist_form" method="POST" action="<c:url value='/RegistStudentServlet'/>">
@@ -87,7 +82,7 @@
         <tr>
           <td colspan="2">
            <div class="button-area">
-            <button type="button" onclick="location.href=<'c:url value='/InfoScheduleServlet'/">キャンセル</button>
+            <button type="button" onclick="location.href="<c:url value='/InfoScheduleServlet'/>">キャンセル</button>
             <button type="submit" name="regist" id="regist_btn">登録</button>
            </div> 
           </td>
@@ -96,6 +91,14 @@
     </form>
   </div>
 </div>
+<!-- メイン（ここまで） -->
+
+  <!-- フッター（ここから） -->
+  <div id="footer">
+    <p>&copy; MATINY</p> 
+    
+  </div>
+  <!-- フッター（ここまで） -->
 
 	<script src="<c:url value='/js/regist_student.js'/>"> </script>
 	<script>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -62,6 +63,9 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
+			
+			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
+			else year = fiscalYear;
 
 			StudentsDAO stuDAO = new StudentsDAO();
 
@@ -88,7 +92,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
 			request.setAttribute("attendedNum", attendedNum);
 			request.setAttribute("shouldAttendNum", shouldAttendedNum);
-			
+
 			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
@@ -154,6 +158,8 @@ public class EditStudentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
@@ -176,7 +182,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
-			
+
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
 
@@ -190,10 +196,19 @@ public class EditStudentServlet extends HttpServlet {
 			String attitude = request.getParameter("attitude");
 			stuDAO.update(new Students(studentId, student.getYear(), student.getGrade(), student.getClassId(), student.getStudentNum(), name, nameRuby, enrollmentStatus, extraActivities, attitude));
 
+			// 出欠記録の更新
 			AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
 			int recordAmount = Integer.parseInt(request.getParameter("recordAmount"));
 			for (int i = 0; i < recordAmount; i++) {
 				int id = Integer.parseInt(request.getParameter("recordId" + i));
+				String status = request.getParameter("attendedStatus" + i);
+				String remarks = request.getParameter("attendanceRemarks" + i);
+				
+				if (arDAO.update(new AttendanceRecords(id, -1, -1, "", -1, status, remarks))) {
+					System.out.println("更新成功 " + id + " / " + status + " / " + remarks);
+				} else {
+					System.out.println("更新失敗 " + id + " / " + status + " / " + remarks);
+				}
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
@@ -205,7 +220,7 @@ public class EditStudentServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-
+	
 	// 引数で指定した生徒の課題提出数を返す
 	public int GetSubmittedNum(List<Assignments> as) {
 		if (as.size() == 0) return 0;
@@ -228,7 +243,6 @@ public class EditStudentServlet extends HttpServlet {
 				LocalDate end = LocalDate.of(year, 10, 15);
 				if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 					count++;
-					System.out.println("前期");
 				}
 			} else {
 				// 年明け後
@@ -237,14 +251,12 @@ public class EditStudentServlet extends HttpServlet {
 					LocalDate end = LocalDate.of(year, 3, 31);
 					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
-						System.out.println("後期　年明け");
 					}
 				} else {
 					LocalDate begin = LocalDate.of(year, 10, 15);
 					LocalDate end = LocalDate.of(year+1, 3, 31);
 					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
-						System.out.println("後期");
 					}
 				}
 			}

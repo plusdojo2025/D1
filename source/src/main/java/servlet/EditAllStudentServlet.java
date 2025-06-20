@@ -48,32 +48,104 @@ public class EditAllStudentServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		if(request.getParameter("editCompleted").equals("編集完了")){
-
-			Date date= new Date(); 
+		if(request.getParameter("editCompleted") !=null && request.getParameter("editCompleted").equals("編集完了")){
+ 
+			Date date= new Date();
 			int year = Integer.parseInt(request.getParameter("year"));                 //年
 			int month = Integer.parseInt(request.getParameter("month"));               //月
 			int grade = Integer.parseInt(request.getParameter("grade"));               //学年
-			int classId = Integer.parseInt(request.getParameter("classId"));           //クラスID
 			String className =request.getParameter("className");                       //クラス
 			String subjectName = request.getParameter("subjectName");                  //教科
-			int subjectId = Integer.parseInt(request.getParameter("subjectId"));       //教科ID
+			//int assignmentId = Integer.parseInt(request.getParameter("assignmentId")); //課題ID
+			//String submissionStatus = request.getParameter("submissionStatus");        //課題情報
+			//int gradesId = Integer.parseInt(request.getParameter("gradesId"));         //成績ID
+			//int score = Integer.parseInt(request.getParameter("score"));               //点数
 			
-			int recordId = Integer.parseInt(request.getParameter("recordId"));         //出欠ID
-			String status = request.getParameter("status");             //出欠情報
-			int assignmentId = Integer.parseInt(request.getParameter("assignmentId")); //課題ID
-			String submissionStatus = request.getParameter("submissionStatus");             //課題情報
-			int gradesId = Integer.parseInt(request.getParameter("gradesId"));         //成績ID
-			int score = Integer.parseInt(request.getParameter("score"));         //点数
 			
-			//出欠情報を取得
+			//classIDを取得
+			ClassRoomDAO classDao = new ClassRoomDAO();
+			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
+			int classId = classList.get(0).getClassId();        //クラス
+			
+			//subjectIDを取得
+			SubjectDAO subjectDao = new SubjectDAO();
+			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
+			int subjectId = subjectList.get(0).getSubjectId();  //教科Id
+			
+			//生徒IDを取得
+			StudentsDAO studentDao = new StudentsDAO();
+			List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
+			List<Integer> studentIdList = new ArrayList<>();
+			for(int i=0;studentList.size()>i;i++) {
+				studentIdList.add(studentList.get(i).getStudentId());
+			}
+			
+			
+			//recordIdのリストを取得
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-			if (attendanceRecordsDao.update(new AttendanceRecords(recordId, 0, 0, null, "", 0, status, ""))) {
-				System.out.println("更新成功");
-			} else { // 更新失敗
-				System.out.println("出席更新失敗");
+			List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
+			for(int i=0;studentIdList.size()>i;i++) {
+				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+						(0,studentIdList.get(i), classId, year, month,0,"",subjectId,"","")));
 			}
 
+			List<Integer> attendanceIdList = new ArrayList<>();
+			for(int i=0;attendanceList.size()>i;i++) {
+				attendanceIdList.add(attendanceList.get(i).getRecordId());
+			}
+			
+			System.out.println("attendanceIdList"+attendanceIdList);
+			
+			int recordId = 0;
+			String status = null;             //出欠情報
+			for(int i=0;attendanceIdList.size()>i;i++) {
+				recordId = attendanceIdList.get(i);
+				System.out.println("recordId"+recordId);
+				String searchattendance =Integer.toString(recordId).concat("record");
+				status = request.getParameter(searchattendance);         //出欠ID
+
+				//出欠情報を取得
+				if (attendanceRecordsDao.update(new AttendanceRecords(recordId, 0, 0, null, "", 0, status, ""))) {
+					System.out.println("更新成功");
+				} else { // 更新失敗
+					System.out.println("出席更新失敗");
+				}
+
+			}
+			
+			
+			
+			//Assignmentのリストを取得
+			AssignmentsDAO assignmentsDao = new AssignmentsDAO();
+			List<Assignments> assignmentsList = new ArrayList<Assignments>();
+			for(int i=0;studentIdList.size()>i;i++) {
+				assignmentsList.addAll(assignmentsDao.select(new Assignments
+						(0,studentIdList.get(i),subjectId,"","",year,month,date)));
+			}
+
+			List<Integer> assignmentsIdList = new ArrayList<>();
+			for(int i=0;attendanceList.size()>i;i++) {
+				assignmentsIdList.add(assignmentsList.get(i).getAssignmentId());
+			}
+			
+			System.out.println("assignmentsIdList"+assignmentsIdList);
+			
+			int assignmentId = 0;
+			String submissionStatus = null;             //課題情報
+			for(int i=0;assignmentsIdList.size()>i;i++) {
+				assignmentId = assignmentsIdList.get(i);
+				String searchassignment =Integer.toString(assignmentId).concat("assign");
+				submissionStatus = request.getParameter(searchassignment);         //出欠ID
+
+				//出欠情報を取得
+				if (assignmentsDao.update(new Assignments(assignmentId, 0, 0, submissionStatus, "", date))) { // 更新成功
+					System.out.println("更新成功");
+				} else { // 更新失敗
+					System.out.println("提出物更新失敗");
+				}
+
+			}
+			/*
 			//提出物状況を取得
 			AssignmentsDAO assignmentsDao = new AssignmentsDAO();
 			if (assignmentsDao.update(new Assignments(assignmentId, 0, 0, submissionStatus, "", date))) { // 更新成功
@@ -89,7 +161,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			} else { // 更新失敗
 				System.out.println("テスト更新失敗");
 			}
-
+			 */
 			request.setAttribute("grade", grade);
 			request.setAttribute("className", className);
 			request.setAttribute("year", year);
@@ -99,7 +171,24 @@ public class EditAllStudentServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/ListStudentServlet");
 			dispatcher.forward(request, response);
 
-		}else {
+		}else if(request.getParameter("cancel") !=null && request.getParameter("cancel").equals("キャンセル")){
+			//キャンセルボタン押したときの処理
+			int year = Integer.parseInt(request.getParameter("year"));          //年
+			int month = Integer.parseInt(request.getParameter("month"));        //月
+			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
+			String className =request.getParameter("className");                //クラス
+			String subjectName = request.getParameter("subjectName");           //教科
+			
+			request.setAttribute("grade", grade);
+			request.setAttribute("className", className);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("subjectName", subjectName);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/ListStudentServlet");
+			dispatcher.forward(request, response);
+			
+		}else{ //画面遷移後の初期表示用
 
 			Date date= null;
 			int year = Integer.parseInt(request.getParameter("year"));          //年

@@ -205,7 +205,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET submissionStatus=?, content=?, submissionDate=? "
+			String sql = "UPDATE Assignments SET submissionStatus=?, submissionDate=? "
 					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -218,30 +218,23 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(1, "");
 			}
-			
-			if (as.getContent() != null) {
-				pStmt.setString(2, as.getContent());
-			} else {
-				pStmt.setString(2, "");
-			}
-			
-			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(2, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 						
 			if (as.getAssignmentId() > 0) {
-				pStmt.setString(4, "" + as.getAssignmentId());
+				pStmt.setString(3, "" + as.getAssignmentId());
+			} else {
+				pStmt.setString(3, "%");
+			}
+			if (as.getStudentId() > 0) {
+				pStmt.setString(4, "" + as.getStudentId());
 			} else {
 				pStmt.setString(4, "%");
 			}
-			if (as.getStudentId() > 0) {
-				pStmt.setString(5, "" + as.getStudentId());
+			if (as.getSubjectId() > 0) {
+				pStmt.setString(5, "" + as.getSubjectId());
 			} else {
 				pStmt.setString(5, "%");
-			}
-			if (as.getSubjectId() > 0) {
-				pStmt.setString(6, "" + as.getSubjectId());
-			} else {
-				pStmt.setString(6, "%");
 			}
 			
 			

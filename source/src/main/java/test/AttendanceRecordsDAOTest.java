@@ -9,9 +9,9 @@ public class AttendanceRecordsDAOTest {
 
 	public static void main(String[] args) {
 		AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
+		Date date = new Date();
 
 //		System.out.println("--SELECT1--");
-//		Date date = new Date();
 //		AttendanceRecords ar = new AttendanceRecords(-1, 1, -1, -1, -1, -1, "", -1, "", "");
 //		List<AttendanceRecords> arList = arDAO.select(ar);
 //		Show(arList);
@@ -28,9 +28,9 @@ public class AttendanceRecordsDAOTest {
 //		List<AttendanceRecords> arList4 = arDAO.select_Fiscal(-1, 1, -1, -1);
 //		Show(arList4);
 		
-		System.out.println("--COUNT--");
-		int count = arDAO.count(1, 2025, 4, 1, 2025, 10, 14, null);
-		System.out.println(count);
+//		System.out.println("--COUNT--");
+//		int count = arDAO.count(1, 2025, 4, 1, 2025, 10, 14, null);
+//		System.out.println(count);
 
 //		System.out.println("--INSERT--");
 //		if (arDAO.insert(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test"))) {
@@ -39,13 +39,13 @@ public class AttendanceRecordsDAOTest {
 //			System.out.println("INSERT FAILED");
 //		}
 //
-//		System.out.println("--UPDATE--");
-//		if (arDAO.update(new AttendanceRecords(0, 1, 1, date, "", 1, "○", "test_update"))) {
-//			System.out.println("UPDATE CLEAR");
-//		} else {
-//			System.out.println("UPDATE FAILED");
-//		}
-//		Select();
+		System.out.println("--UPDATE--");
+		if (arDAO.update(new AttendanceRecords(25, -1, -1, null, "", -1, "◯", ""))) {
+			System.out.println("UPDATE CLEAR");
+		} else {
+			System.out.println("UPDATE FAILED");
+		}
+		Select();
 //		
 //		System.out.println("--DELETE--");
 //		AttendanceRecords ar2 = new AttendanceRecords(0, 1, 1, date, "", 1, "", "test");
