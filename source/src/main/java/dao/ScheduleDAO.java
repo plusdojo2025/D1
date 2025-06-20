@@ -219,11 +219,11 @@ public class ScheduleDAO {
         return result;
     }
     
-    public void deleteByDayAndPeriod(int year, String semester, String day, String period) {
+    public void deleteByDayAndPeriod(int teacherId, int year, String semester, String day, String period) {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        String sql = "DELETE FROM Schedule WHERE teacherId = ? AND year = ? AND semester = ? AND day_of_week = ? AND period = ?";
         
-        String sql = "DELETE FROM Schedule WHERE year = ? AND semester = ? AND day_of_week = ? AND period = ?";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -232,10 +232,11 @@ public class ScheduleDAO {
                     "root", "password");
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, year);
-            pstmt.setString(2, semester);
-            pstmt.setString(3, day);
-            pstmt.setString(4, period);
+            pstmt.setInt(1, teacherId);
+            pstmt.setInt(2, year);
+            pstmt.setString(3, semester);
+            pstmt.setString(4, day);
+            pstmt.setString(5, period);
             pstmt.executeUpdate();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -245,5 +246,6 @@ public class ScheduleDAO {
             if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
     }
+
 
 }
