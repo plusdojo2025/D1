@@ -115,7 +115,7 @@ button:hover {
 
 /* エラーメッセージ */
 #error_message {
-  color: red;
+  color: #e74c3c;
   font-weight: bold;
   margin: 6px 0;
   text-align: center;

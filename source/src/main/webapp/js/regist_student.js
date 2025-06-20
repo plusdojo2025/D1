@@ -62,4 +62,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     formObj.submit(); // バリデーションOKなら送信
   });
+ 
 });
