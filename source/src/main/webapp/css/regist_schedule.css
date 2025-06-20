@@ -1,7 +1,40 @@
 
+/* 種別のラベル（授業、授業以外）を大きく */
+.cute-radio-label {
+  font-size: 1.5rem; /* フォントサイズ大きく */
+  font-weight: 700;
+  vertical-align: middle;
+  cursor: pointer;
+}
+/* 種別のラジオボタン全体を横並びで中央寄せ */
+.type-radio-group {
+  display: flex;
+  justify-content: center;  /* 横方向中央寄せ */
+  gap: 40px;                /* ボタン間の間隔 */
+  margin-bottom: 20px;
+}
+
+.type-radio-group span {
+  display: flex;
+  align-items: center;      /* 縦方向中央揃え */
+}.type-radio-group {
+  margin-bottom: 5px; /* もともと大きければ縮める */
+}
+
 #jsErrorMessage {
   display: none;
   color: red;
   font-weight: bold;
   margin-bottom: 10px;
+}
+/* 例: ボタンを中央揃え */
+.container {
+  position: relative; /* 親の基準 */
+  /* 他のスタイル */
+}
+
+.back-button {
+  position: absolute; /* もしくは fixed や relative */
+  bottom: -40px;
+  left: -250px;
 }
