@@ -19,6 +19,27 @@ CREATE TABLE Schedule (
     CONSTRAINT fk_class FOREIGN KEY (classId) REFERENCES Class(classId)
 );
 
+create table Teachers (
+teacherId int PRIMARY KEY AUTO_INCREMENT,
+name varchar (50),
+password varchar(255)
+)
+
+create table Class (
+classId int PRIMARY KEY AUTO_INCREMENT,
+grade int ,
+className varchar (20)
+)
+
+create table Memo (
+memoId int PRIMARY KEY AUTO_INCREMENT,
+teacherId int ,
+classId int ,
+content varchar (255),
+date datetime ,
+period varchar(30)
+)
+
 INSERT INTO Teachers (name, password) 
 VALUES ('山田太郎', 'password123');
 
@@ -41,6 +62,15 @@ VALUES (1, 'B');
 INSERT INTO Class (grade, className) 
 VALUES (1, 'C');
 
+INSERT INTO Class (grade, className) 
+VALUES (1, 'D');
+
+INSERT INTO Class (grade, className) 
+VALUES (1, 'E');
+
+INSERT INTO Class (grade, className) 
+VALUES (1, 'F');
+
 
 
 INSERT INTO Class (grade, className) 
@@ -52,6 +82,16 @@ VALUES (2, 'B');
 INSERT INTO Class (grade, className) 
 VALUES (2, 'C');
 
+INSERT INTO Class (grade, className) 
+VALUES (2, 'D');
+
+INSERT INTO Class (grade, className) 
+VALUES (2, 'E');
+
+INSERT INTO Class (grade, className) 
+VALUES (2, 'F');
+
+
 
 INSERT INTO Class (grade, className) 
 VALUES (3, 'A');
@@ -61,6 +101,15 @@ VALUES (3, 'B');
 
 INSERT INTO Class (grade, className) 
 VALUES (3, 'C');
+
+INSERT INTO Class (grade, className) 
+VALUES (3, 'D');
+
+INSERT INTO Class (grade, className) 
+VALUES (3, 'E');
+
+INSERT INTO Class (grade, className) 
+VALUES (3, 'F');
 
 
 
