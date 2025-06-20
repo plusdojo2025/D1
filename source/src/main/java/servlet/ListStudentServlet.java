@@ -164,7 +164,7 @@ public class ListStudentServlet extends HttpServlet {
 			return;
 		}
 		 */
-		System.out.println(request.getParameter("edit")); //nameで指定しvalueを参照
+		 //nameで指定しvalueを参照
 		if(request.getParameter("edit") !=null && request.getParameter("edit").equals("編集")){
 				
 				int year = Integer.parseInt(request.getParameter("year"));          //年
