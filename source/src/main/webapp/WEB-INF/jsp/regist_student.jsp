@@ -26,10 +26,10 @@
       <button type="submit" disabled style="display:none" aria-hidden="true"></button>
       <table class="form-table">
         <tr>
-          <td><label  for="year">入学年</label></td>
+          <td><label  for="year">入学年（半角数字のみ）</label></td>
           <td>
           <div class="with-suffix">
-           <input type="text" name="year" id="year" placeholder="例) 2023" class="form-input">
+           <input type="number" name="year" id="year" placeholder="例) 2023" class="form-input">
             <span class="suffix-text">年</span>
            
           </div>
@@ -74,6 +74,7 @@
         <tr>
           <td colspan="2">
             <p><span class="zenkaku">※【氏名・ふりがな】は姓名の間に全角1文字空けてください</span></p>
+            <p><span class="hankaku">※【入学年・出席番号】は半角数字で入力してください</span></p>
           </td>
         </tr>
         <tr>
