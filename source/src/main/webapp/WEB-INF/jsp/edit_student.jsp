@@ -145,6 +145,7 @@
 					</tr>
 
 					<c:forEach var="sub" items="${assignmentsList}" varStatus="status">
+					<input type="hidden" name="assignmentsAmount" value="${assignmentsList.size()}">
 						<input type="hidden" name="assignmentId${status.index}" value="${sub.assignmentId}">
 						<tr>
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
@@ -158,20 +159,20 @@
 						</tr>
 					</c:forEach>
 					
-					<!-- 空白欄 -->
 					<tr id="addSubmission">
-						<td><input type="text" name="addAssignmentContent0"></td>
+						<td><input type="text" name="addAssignmentContent0" class="submittionContent"></td>
 						<td>
-							<select name="addSubmittionStatus0">
-								<option value="◯" class="submittedStatus0">◯</option>
-								<option value="✕" class="submittedStatus0" selected>✕</option>
+							<select name="addSubmittionStatus0" class="submittionStatus">
+								<option value="◯" class="submittedStatus">◯</option>
+								<option value="✕" class="submittedStatus" selected>✕</option>
 							</select>
 						</td>
-						<td><input type="date" name="addSubmittionDate0" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+						<td><input type="date" name="addSubmittionDate0" class="addSubmittionDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 					</tr>
 
 				</table>
 				<input type="button" value="＋" onclick="addSubmission()">
+				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount" value="0">
 				<br>
 			</div>
 

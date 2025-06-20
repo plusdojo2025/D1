@@ -205,11 +205,21 @@ public class EditStudentServlet extends HttpServlet {
 				String remarks = request.getParameter("attendanceRemarks" + i);
 				
 				if (arDAO.update(new AttendanceRecords(id, -1, -1, "", -1, status, remarks))) {
-					System.out.println("更新成功 " + id + " / " + status + " / " + remarks);
+					System.out.println("出欠記録 更新成功 " + id + " / " + status + " / " + remarks);
 				} else {
-					System.out.println("更新失敗 " + id + " / " + status + " / " + remarks);
+					System.out.println("出欠記録 更新失敗 " + id + " / " + status + " / " + remarks);
 				}
 			}
+			
+			// 提出記録の更新
+			AssignmentsDAO asDAO = new AssignmentsDAO();
+			int assignmentsAmount = Integer.parseInt(request.getParameter("assignmentsAmount"));
+			for (int i = 0; i < assignmentsAmount; i++) {
+				int id = Integer.parseInt(request.getParameter("assignmentId" + i));
+			}
+			
+			// 課題の追加
+			
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
