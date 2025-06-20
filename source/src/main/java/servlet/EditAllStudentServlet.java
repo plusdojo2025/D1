@@ -71,22 +71,35 @@ public class EditAllStudentServlet extends HttpServlet {
 			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
 			int subjectId = subjectList.get(0).getSubjectId();  //教科Id
 			
+			//生徒IDを取得
+			StudentsDAO studentDao = new StudentsDAO();
+			List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
+			List<Integer> studentIdList = new ArrayList<>();
+			for(int i=0;studentList.size()>i;i++) {
+				studentIdList.add(studentList.get(i).getStudentId());
+			}
 			
 			
-			//attendanceIdのリストを取得
+			//recordIdのリストを取得
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
-			List<AttendanceRecords> attendanceList = attendanceRecordsDao.select(new AttendanceRecords
-					(0,0, classId, year, month,0,"",subjectId,"",""));
-			
+			List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
+			for(int i=0;studentIdList.size()>i;i++) {
+				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+						(0,studentIdList.get(i), classId, year, month,0,"",subjectId,"","")));
+			}
+
 			List<Integer> attendanceIdList = new ArrayList<>();
 			for(int i=0;attendanceList.size()>i;i++) {
-				attendanceIdList.add(attendanceList.get(i).getStudentId());
+				attendanceIdList.add(attendanceList.get(i).getRecordId());
 			}
+			
+			System.out.println("attendanceIdList"+attendanceIdList);
 			
 			int recordId = 0;
 			String status = null;             //出欠情報
 			for(int i=0;attendanceIdList.size()>i;i++) {
 				recordId = attendanceIdList.get(i);
+				System.out.println("recordId"+recordId);
 				String searchattendance =Integer.toString(recordId).concat("record");
 				status = request.getParameter(searchattendance);         //出欠ID
 
