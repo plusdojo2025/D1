@@ -68,6 +68,13 @@ public class AssignmentsDAO {
 			while (rs.next()) {
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
 				Date date = sdFormat.parse(rs.getString("submissionDate"));
+				
+				// year
+				SimpleDateFormat ysdf = new SimpleDateFormat("yyyy");
+				int createdYear = Integer.parseInt(ysdf.format(rs.getDate("createdDate")));
+				// month
+				SimpleDateFormat msdf = new SimpleDateFormat("MM");
+				int createdMonth = Integer.parseInt(msdf.format(rs.getDate("createdDate")));
 
 				Assignments ar = new Assignments(
 						rs.getInt("assignmentId"), 
@@ -75,8 +82,8 @@ public class AssignmentsDAO {
 						rs.getInt("subjectId"), 
 						rs.getString("submissionStatus"), 
 						rs.getString("content"),
-						rs.getInt("createdYear"),
-						rs.getInt("createdMonth"),
+						createdYear,
+						createdMonth,
 						date
 						);
 				arList.add(ar);
