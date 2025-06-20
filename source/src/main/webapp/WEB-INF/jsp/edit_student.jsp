@@ -106,7 +106,7 @@
 
 					<c:forEach var="att" items="${attendanceRecords}" varStatus="status">
 						<input type="hidden" name="recordAmount" value="${attendanceRecords.size()}">
-						<input type="hidden" name="recordId" value="${att.recordId}">
+						<input type="hidden" name="recordId${status.index}" value="${att.recordId}">
 						<tr>
 							<td><input type="date" name="attendanceDate${status.index}" value="<fmt:formatDate value="${att.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 							<td><input type="text" name="attendancePeriod${status.index}" value="${att.period}"></td>

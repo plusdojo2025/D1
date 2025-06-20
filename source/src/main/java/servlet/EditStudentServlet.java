@@ -38,9 +38,9 @@ public class EditStudentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+
 		try {
-			int subjectId = 1, fiscalYear = 1, grade = 1, month = 1, studentId = 1;
+			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -82,23 +82,14 @@ public class EditStudentServlet extends HttpServlet {
 			if (classList.size() > 0) classRoom = classList.get(0);
 			request.setAttribute("className", classRoom.getClassName());
 
-			// 全体の出席
+			// 全体の今学期の出席
 			int attendedNum = arDAO.GetAttendedNum(studentId, -1);
 			int shouldAttendedNum = arDAO.GetShouldAttendedNum(studentId, -1);
 			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
 			request.setAttribute("attendedNum", attendedNum);
 			request.setAttribute("shouldAttendNum", shouldAttendedNum);
-
-			// 全体の提出物
-			AssignmentsDAO asDAO = new AssignmentsDAO();
-			List<Assignments> allAsList = asDAO.select(new Assignments(-1, studentId, -1, "", "", -1, -1, null));
-			int submittedNum = GetSubmittedNum(allAsList);
-			int shouldSubmittedNum = GetShouldSubmittedNum(allAsList);
-			request.setAttribute("submittedRate", GetSubmittedRate(submittedNum, shouldSubmittedNum));
-			request.setAttribute("submittedNum", submittedNum);
-			request.setAttribute("shouldSubmitNum", shouldSubmittedNum);
-
-			// 指定した教科の出席・提出物
+			
+			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
 				if (arList.get(i).getStatus().equals("○")) {
@@ -111,15 +102,28 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(subAttendedNum, subShouldAttendedNum));
 			request.setAttribute("attendanceRecords", arList);
 
-			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", -1, month, null));
-			int subjectSubmittedNum = GetSubmittedNum(asList);
-			int subjectShouldSubmittedNum = GetShouldSubmittedNum(asList);
+			// 全教科・今学期の提出物
+			AssignmentsDAO asDAO = new AssignmentsDAO();
+			List<Assignments> allAsList = asDAO.select(new Assignments(-1, studentId, -1, "", "", -1, -1, null));
+			int submittedNum = 0, shouldSubmittedNum = 0;
+			submittedNum = GetSubmittedNum(allAsList);
+			shouldSubmittedNum = GetShouldSubmittedNum(allAsList);
+			request.setAttribute("submittedRate", GetSubmittedRate(submittedNum, shouldSubmittedNum));
+			request.setAttribute("submittedNum", submittedNum);
+			request.setAttribute("shouldSubmitNum", shouldSubmittedNum);
+
+			// 指定した教科の提出物
+			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", year, month, null));
+			List<Assignments> asList2 = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", -1, -1, null));
+			int subjectSubmittedNum = 0, subjectShouldSubmittedNum = 0;
+			subjectSubmittedNum = GetSubmittedNum(asList2, year, month);
+			subjectShouldSubmittedNum = GetShouldSubmittedNum(asList2, year, month);
 			request.setAttribute("subjectSubmittedRate", GetSubmittedRate(subjectSubmittedNum, subjectShouldSubmittedNum));
 			request.setAttribute("assignmentsList", asList);
 
 			// 成績
 			GradesDAO grdDAO = new GradesDAO();
-			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", -1, month));
+			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", year, month));
 			request.setAttribute("gradesList", grdList);
 			String[] average = new String[grdList.size()];
 			for (int i = 0; i < grdList.size(); i++) {
@@ -148,10 +152,10 @@ public class EditStudentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-request.setCharacterEncoding("UTF-8");
-		
+		request.setCharacterEncoding("UTF-8");
+
 		try {
-			int subjectId = 1, fiscalYear = 1, grade = 1, month = 1, studentId = 1;
+			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -172,6 +176,9 @@ request.setCharacterEncoding("UTF-8");
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
+			
+			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
+			else year = fiscalYear;
 
 			StudentsDAO stuDAO = new StudentsDAO();
 			studentId = Integer.parseInt(request.getParameter("studentId"));
@@ -184,8 +191,11 @@ request.setCharacterEncoding("UTF-8");
 			stuDAO.update(new Students(studentId, student.getYear(), student.getGrade(), student.getClassId(), student.getStudentNum(), name, nameRuby, enrollmentStatus, extraActivities, attitude));
 
 			AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
-			
-			
+			int recordAmount = Integer.parseInt(request.getParameter("recordAmount"));
+			for (int i = 0; i < recordAmount; i++) {
+				int id = Integer.parseInt(request.getParameter("recordId" + i));
+			}
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
@@ -195,7 +205,7 @@ request.setCharacterEncoding("UTF-8");
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	// 引数で指定した生徒の課題提出数を返す
 	public int GetSubmittedNum(List<Assignments> as) {
 		if (as.size() == 0) return 0;
@@ -208,28 +218,33 @@ request.setCharacterEncoding("UTF-8");
 
 		for (int i = 0; i < as.size(); i++) {
 			int cYear = as.get(i).getCreatedYear() > 0 ? as.get(i).getCreatedYear() : 2025;
-			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 1;
+			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 6;
+
 			LocalDate created = LocalDate.of(cYear, cMonth, 1);
+
 			if (isFirstSemester(month, day) ) {
 				// 前期
 				LocalDate begin = LocalDate.of(year, 3, 31);
 				LocalDate end = LocalDate.of(year, 10, 15);
-				if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("○")) {
+				if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 					count++;
+					System.out.println("前期");
 				}
 			} else {
 				// 年明け後
 				if (month + 1 >= 1 && day >= 1) {
 					LocalDate begin = LocalDate.of(year-1, 10, 15);
 					LocalDate end = LocalDate.of(year, 3, 31);
-					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("○")) {
+					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
+						System.out.println("後期　年明け");
 					}
 				} else {
 					LocalDate begin = LocalDate.of(year, 10, 15);
 					LocalDate end = LocalDate.of(year+1, 3, 31);
-					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("○")) {
+					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
+						System.out.println("後期");
 					}
 				}
 			}
@@ -244,7 +259,7 @@ request.setCharacterEncoding("UTF-8");
 
 		int count = 0;
 		for (int i = 0; i < as.size(); i++) {
-			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth && as.get(i).getSubmissionStatus().equals("○")) {
+			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth && as.get(i).getSubmissionStatus().equals("◯")) {
 				count++;
 			}
 		}
@@ -265,7 +280,7 @@ request.setCharacterEncoding("UTF-8");
 
 		for (int i = 0; i < as.size(); i++) {
 			int cYear = as.get(i).getCreatedYear() > 0 ? as.get(i).getCreatedYear() : 2025;
-			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 1;
+			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 6;
 			LocalDate created = LocalDate.of(cYear, cMonth, 1);
 			if (isFirstSemester(month, day) ) {
 				// 前期
