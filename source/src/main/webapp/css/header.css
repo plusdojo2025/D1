@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+.main-header {
+  display: flex;
+  flex-direction: row; /* ロゴとメニュー横並び */
+  align-items: center; /* 縦中央揃え */
+  background-color: #ffffff;
+  padding: 10px 20px; /* 全体の上下左右の余白 */
+  gap: 40px; /* ロゴとメニューの間隔 */
+  justify-content: center; /* メニュー含めて横幅中央寄せ */
+  position: relative;
+}
+
+.logo {
+  margin-right: auto; /* ロゴは左に寄せる */
+}
+
+.logo img {
+  margin-bottom: 0;
+  display: block;
+  max-height: 80px; /* 高さ調整 */
+}
+
+.nav-menu {
+  margin-top: 0;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center; /* メニュー横並び中央寄せ */
+}
+
+.header-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+.header-menu > li {
+  position: relative;
+}
+
+.header-menu > li > a {
+  color: #400040;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+.header-menu > li:hover > a {
+  background-color: #ffffff;
+}
+
+/* サブメニュー表示 */
+.sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.header-menu > li:hover .sub-menu {
+  display: block;
+}
+
+.sub-menu li a {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+}
+
+.sub-menu li a:hover {
+  background-color: #eee;
+}
+
+/* サブメニューの横並び */
+.header-menu .sub-menu {
+  white-space: nowrap; /* 折り返し禁止 */
+}
+
+.header-menu .sub-menu li a {
+  padding: 10px 20px; /* 少し余裕を持たせる */
+}

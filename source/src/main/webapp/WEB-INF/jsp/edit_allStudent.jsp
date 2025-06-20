@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="edit_allstudent.css">
+    <link rel="stylesheet" href="css/edit_allstudent.css">
     <title>項目ごとに編集</title>
 </head>
 
@@ -16,15 +16,15 @@
     <header></header>
 
     <main>
-        <form action="EditAllStudentServlet.java" method ="POST" id="edit_allstudent_form">
+        <form action="/D1/EditAllStudentServlet" method ="POST" id="edit_allstudent_form">
 
-			<c:out value="${grede}" />
+			<c:out value="${grade}" />年
 			<c:out value="${className}" />
-			<c:out value="${year}" />
-			<c:out value="${month}" />
+			<c:out value="${year}" />年
+			<c:out value="${month}" />月
 			<c:out value="${subjectName}" />
 			
-			<input type="hidden" name="grede" id="editCompleted" value="${grede}">
+			<input type="hidden" name="grade" id="editCompleted" value="${grade}">
 			<input type="hidden" name="className" id="editCompleted" value="${className}">
 			<input type="hidden" name="year" id="editCompleted" value="${year}">
 			<input type="hidden" name="month" id="editCompleted" value="${month}">
@@ -84,7 +84,7 @@
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
-									<td><select name="record${a.recordId}" id="attendanceDropdown">
+									<td><select name="${a.recordId}record" id="attendanceDropdown">
 											<option>${a.status}</option>
 											<option value="◯">◯</option>
 											<option value="✕">✕</option>
@@ -128,7 +128,7 @@
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
-									<td><select name="assign${a.assignmentId}" id="submissionDropdown">
+									<td><select name="${a.assignmentId}assign" id="submissionDropdown">
 											<option>${a.submissionStatus}</option>
 											<option value="◯">◯</option>
 											<option value="✕">✕</option>
@@ -178,9 +178,9 @@
 							<td>${e.name}</td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${gradesList}">
-								<c:if test="${e.studentId == a.gradesList}">
+								<c:if test="${e.studentId == a.studentId}">
 									<td>
-										<input type="text" name="grades${a.gradesId}" placeholder="${a.score}" class="score" value="${a.score}">
+										<input type="text" name="${a.gradesId}grades" class="score" value="${a.score}">
 									</td>
 								</c:if>
 							</c:forEach>
@@ -195,7 +195,7 @@
 
         </form>
     </main>
-    <script src="list_student.js"></script>
+    <script src="js/list_student.js"></script>
 
 </body>
 

@@ -40,3 +40,30 @@ function changeDisplay(event) {
 		element.style.display = 'none';
 	}
 };
+
+/*
+function changeGradesValue() {
+  const editCompleted = editCompleted;
+  if(editCompleted == 'ok') {
+    let grades = document.getElementById('grades');
+    const gradesValue = document.getElementById('grades').value;
+	grades.value = "置き換える値";
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
