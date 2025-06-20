@@ -79,7 +79,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			for(int i=0;studentList.size()>i;i++) {
 				studentIdList.add(studentList.get(i).getStudentId());
 			}
-			
+			System.out.println("studentIdList"+studentIdList);
 			
 			//recordIdのリストを取得
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
@@ -94,13 +94,13 @@ public class EditAllStudentServlet extends HttpServlet {
 				attendanceIdList.add(attendanceList.get(i).getRecordId());
 			}
 			
-			System.out.println("attendanceIdList"+attendanceIdList);
+			//System.out.println("attendanceIdList"+attendanceIdList);
 			
 			int recordId = 0;
 			String status = null;             //出欠情報
 			for(int i=0;attendanceIdList.size()>i;i++) {
 				recordId = attendanceIdList.get(i);
-				System.out.println("recordId"+recordId);
+				//System.out.println("recordId"+recordId);
 				String searchattendance =Integer.toString(recordId).concat("record");
 				status = request.getParameter(searchattendance);         //出欠ID
 
@@ -134,7 +134,9 @@ public class EditAllStudentServlet extends HttpServlet {
 			String submissionStatus = null;             //課題情報
 			for(int i=0;assignmentsIdList.size()>i;i++) {
 				assignmentId = assignmentsIdList.get(i);
+				System.out.println("assignmentId"+assignmentId);
 				String searchassignment =Integer.toString(assignmentId).concat("assign");
+				System.out.println("searchassignment"+searchassignment);
 				submissionStatus = request.getParameter(searchassignment);         //出欠ID
 
 				//出欠情報を取得
@@ -235,7 +237,7 @@ public class EditAllStudentServlet extends HttpServlet {
 
 
 			List<AttendanceRecords> attendanceDateList = attendanceRecordsDao.select(new AttendanceRecords
-					(0,studentOne, classId, year, month,0,"",0,"",""));
+					(0,studentOne, classId, year, month,0,"",subjectId,"",""));
 			List<Assignments> contentList = assignmentsDao.select(new Assignments
 					(0,studentOne,subjectId,"","",year,month,date));
 			List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
@@ -247,7 +249,7 @@ public class EditAllStudentServlet extends HttpServlet {
 				int studentId = studentIdList.get(i);
 
 				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
-						(0,studentId, classId, year, month,0,"",0,"","")));
+						(0,studentId, classId, year, month,0,"",subjectId,"","")));
 
 				assignmentsList.addAll(assignmentsDao.select(new Assignments
 						(0,studentId,subjectId,"","",year,month,date)));
