@@ -52,6 +52,16 @@ public class AttendanceRecords {
 		setWeek(this.date);
 	}
 	
+	public AttendanceRecords(int recordId, int studentId, int classId, String period, int subjectId, String status, String remarks) {
+		this.recordId = recordId;
+		this.studentId = studentId;
+		this.classId = classId;
+		this.period = period;
+		this.subjectId = subjectId;
+		this.status = status;
+		this.remarks = remarks;
+	}
+	
 	public AttendanceRecords() {
 		this.recordId = -1;
 		this.studentId = -1;

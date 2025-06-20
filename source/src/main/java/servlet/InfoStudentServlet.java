@@ -101,7 +101,7 @@ public class InfoStudentServlet extends HttpServlet {
 			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
-				if (arList.get(i).getStatus().equals("○")) {
+				if (arList.get(i).getStatus().equals("◯")) {
 					subAttendedNum++;
 				}
 				if (!arList.get(i).getStatus().equals("公")) {
@@ -179,7 +179,6 @@ public class InfoStudentServlet extends HttpServlet {
 				LocalDate end = LocalDate.of(year, 10, 15);
 				if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 					count++;
-					System.out.println("前期");
 				}
 			} else {
 				// 年明け後
@@ -188,14 +187,12 @@ public class InfoStudentServlet extends HttpServlet {
 					LocalDate end = LocalDate.of(year, 3, 31);
 					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
-						System.out.println("後期　年明け");
 					}
 				} else {
 					LocalDate begin = LocalDate.of(year, 10, 15);
 					LocalDate end = LocalDate.of(year+1, 3, 31);
 					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
 						count++;
-						System.out.println("後期");
 					}
 				}
 			}

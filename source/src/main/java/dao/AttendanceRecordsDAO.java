@@ -562,14 +562,14 @@ public class AttendanceRecordsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE AttendanceRecords SET status=?, remarks=? WHERE studentId LIKE ? AND subjectId LIKE ?;";
+			String sql = "UPDATE AttendanceRecords SET status=?, remarks=? WHERE recordId LIKE ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
 			if (_ar.getStatus() != null) {
 				pStmt.setString(1, _ar.getStatus());
 			} else {
-				pStmt.setString(1, "%");
+				pStmt.setString(1, "");
 			}
 
 			if (_ar.getRemarks() != null) {
@@ -578,16 +578,10 @@ public class AttendanceRecordsDAO {
 				pStmt.setString(2, "");
 			}
 
-			if (_ar.getStudentId() > 0) {
-				pStmt.setString(3, "" + _ar.getStudentId());
+			if (_ar.getRecordId() > 0) {
+				pStmt.setString(3, "" + _ar.getRecordId());
 			} else {
-				pStmt.setString(3, "");
-			}
-
-			if (_ar.getSubjectId() > 0) {
-				pStmt.setString(4, "" + _ar.getSubjectId());
-			} else {
-				pStmt.setString(4, "");
+				return false;
 			}
 
 			// SQL文を実行する
@@ -838,16 +832,16 @@ public class AttendanceRecordsDAO {
 		int day = now.get(Calendar.DAY_OF_WEEK);
 
 		if (isFirstSemester(month, day)) {
-			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, "○");
-			else count = count(studentId, year, 4, 1, year, 10, 14, "○");
+			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, "◯");
+			else count = count(studentId, year, 4, 1, year, 10, 14, "◯");
 		} else {
 			// 年明け後
 			if (month + 1 >= 1 && day >= 1) {
-				if (subjectId > 0) count = count(studentId, subjectId, year - 1, 10, 15, year, 4, 1, "○");
-				else  count = count(studentId, year - 1, 10, 15, year, 3, 31, "○");
+				if (subjectId > 0) count = count(studentId, subjectId, year - 1, 10, 15, year, 4, 1, "◯");
+				else  count = count(studentId, year - 1, 10, 15, year, 3, 31, "◯");
 			} else {
-				if (subjectId > 0) count = count(studentId, subjectId, year, 10, 15, year + 1, 4, 1, "○");
-				else count = count(studentId, year, 10, 15, year + 1, 3, 31, "○");
+				if (subjectId > 0) count = count(studentId, subjectId, year, 10, 15, year + 1, 4, 1, "◯");
+				else count = count(studentId, year, 10, 15, year + 1, 3, 31, "◯");
 			}
 		}
 

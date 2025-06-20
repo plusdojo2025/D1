@@ -11,69 +11,69 @@ remarks varchar(255)
 );
 
 // 仮データ登録
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 1, 1, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 2, 2, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 3, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 4, 4, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 5, 5, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 4, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 5, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 6, 6, '◯', ''); 
 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 1, 1, '遅', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 2, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 3, 5, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 4, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 4, 2, '◯', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 5, 4, '公', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 6, 6, '公', ''); 
 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 1, 1, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 2, 2, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 3, 3, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 4, 4, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 5, 5, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 6, 6, '×', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 2, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 3, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 4, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 5, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 6, 6, '✕', ''); 
 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 1, 1, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 2, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 3, 5, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 4, 2, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 5, 4, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 4, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 5, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 6, 6, '◯', ''); 
 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 1, 1, '遅', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 2, 2, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 3, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 4, 4, '◯', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 5, 5, '公', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 6, 6, '公', ''); 
 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 1, 1, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 2, 3, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 3, 5, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 4, 2, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 5, 4, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 6, 6, '×', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 2, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 3, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 4, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 5, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 6, 6, '✕', ''); 
 
 // studentId = 2
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 1, 1, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 2, 2, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 3, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 4, 4, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 5, 5, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 4, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 5, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 6, 6, '◯', ''); 
 
 INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 1, 1, '遅', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 2, 3, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 3, 5, '○', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 4, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 4, 2, '◯', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 5, 4, '公', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 6, 6, '公', ''); 
 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 1, 1, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 2, 2, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 3, 3, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 4, 4, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 5, 5, '×', ''); 
-INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 6, 6, '×', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 2, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 3, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 4, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 5, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 6, 6, '✕', ''); 
 
 
 
