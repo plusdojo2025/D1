@@ -11,10 +11,24 @@
 <title>スケジュール登録</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/common.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/regist_schedule.css">
-</head>
-<body>
 
+</head>
+
+<body>
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="<%= request.getContextPath() %>/img/header_banner.jpg" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<nav>
+  <ul class="cute-menu">
+    <li><a href="http://localhost:8080/D1/ListStudentServlet">🐰 生徒管理</a></li>
+    <li><a href="https://localhost:8080/D1/InfoScheduleServlet">📅 スケジュール</a></li>
+    <li><a href="http://localhost:8080/D1/LoginServlet">🚪 ログアウト</a></li>
+  </ul>
+</nav>
 <div class="container">
+
+
   <form name="scheduleForm" class="schedule-form"
       method="post"
       action="<%=request.getContextPath() %>/RegistScheduleServlet"
@@ -73,17 +87,20 @@
 %>
 
 <label>種別:</label><br>
-<span style="display: inline-block; margin-right: 10px;">
-  <input type="radio" id="type-授業" name="type" value="授業" <%= "授業".equals(selectedType) ? " checked" : "" %>>
-  <label for="type-授業">授業</label>
-</span>
-<span style="display: inline-block; margin-right: 10px;">
-  <input type="radio" id="type-授業以外" name="type" value="授業以外" <%= "授業以外".equals(selectedType) ? " checked" : "" %>>
-  <label for="type-授業以外">授業以外</label>
-</span>
+<div class="type-radio-group">
+  <span>
+    <input type="radio" id="type-授業" name="type" value="授業" <%= "授業".equals(selectedType) ? " checked" : "" %>>
+    <label for="type-授業" class="cute-radio-label">授業</label>
+  </span>
+  <span>
+    <input type="radio" id="type-授業以外" name="type" value="授業以外" <%= "授業以外".equals(selectedType) ? " checked" : "" %>>
+    <label for="type-授業以外" class="cute-radio-label">授業以外</label>
+  </span>
+</div>
 <br><br>
 
 <label for="day_of_week">曜日:
+<br>
 
 <%
 String selectedDay = (String) request.getAttribute("day_of_week");
@@ -93,17 +110,17 @@ if (selectedDay == null) {
 
 String[] days = {"月", "火", "水", "木", "金", "土", "日"};
 %>
-	<select id="day_of_week" name="day_of_week">
-	<option value="">-- 選択してください --</option>
-	<%
-	for (String day : days) {
-		String selected = day.equals(selectedDay) ? "selected" : "";
-	%>
-		<option value="<%= day %>" <%= selected %>><%= day %></option>
-	<%
-		}
-	%>
-	</select>
+<select id="day_of_week" name="day_of_week">
+<option value="">-- 選択してください --</option>
+<%
+for (String day : days) {
+    String selected = day.equals(selectedDay) ? "selected" : "";
+%>
+    <option value="<%= day %>" <%= selected %>><%= day %></option>
+<%
+}
+%>
+</select>
 </label>
 <br><br>
 
@@ -173,19 +190,16 @@ for(String grade : grades) {
   すべての項目を入力してください
 </p>
 
-<!--登録・クリアボタン-->
-<div style="margin-bottom: 10px;">
-<input type="submit" value="登録">
-<input type="reset" value="リセット">
-</div>
+<!-- 登録・クリアボタン -->
+<div style="text-align: center; margin-bottom: 10px;">
+  <input type="submit" value="登録">
+  <input type="reset" value="リセット">
 </div>
 
+  <button class="back-button" type="button" onclick="history.back();">
+  ← 戻る
+</button>
 
-<!-- 戻るボタンを登録・クリアの下、左寄せ -->
-<div>
-  <div style="text-align: left; padding-left: 30px; margin-top: 10px;">
-<button type="button" class="back-button" onclick="history.back();">戻る</button>
-</div>
 
 <script src="<%= request.getContextPath() %>/js/regist_student.js"></script>
 

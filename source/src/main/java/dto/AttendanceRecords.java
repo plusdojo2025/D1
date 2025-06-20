@@ -34,7 +34,6 @@ public class AttendanceRecords {
 			this.setDay(dateToDay(date));
 			setWeek(this.date);
 		}
-		
 	}
 	
 	public AttendanceRecords(int recordId, int studentId, int classId, int year, int month, int day, String period, int subjectId, String status, String remarks) {
@@ -46,10 +45,22 @@ public class AttendanceRecords {
 		this.status = status;
 		this.remarks = remarks;
 		
-		this.setYear(year);
-		this.setMonth(month);
-		this.setDay(day);
-		setWeek(this.date);
+		if (date != null) {
+			this.setYear(year);
+			this.setMonth(month);
+			this.setDay(day);
+			setWeek(this.date);
+		}
+	}
+	
+	public AttendanceRecords(int recordId, int studentId, int classId, String period, int subjectId, String status, String remarks) {
+		this.recordId = recordId;
+		this.studentId = studentId;
+		this.classId = classId;
+		this.period = period;
+		this.subjectId = subjectId;
+		this.status = status;
+		this.remarks = remarks;
 	}
 	
 	public AttendanceRecords() {
@@ -62,10 +73,12 @@ public class AttendanceRecords {
 		this.status = "";
 		this.remarks = "";
 		
-		this.setYear(dateToYear(date));
-		this.setMonth(dateToMonth(date));
-		this.setDay(dateToDay(date));
-		setWeek(this.date);
+		if (date != null) {
+			this.setYear(dateToYear(date));
+			this.setMonth(dateToMonth(date));
+			this.setDay(dateToDay(date));
+			setWeek(this.date);
+		}
 	}
 
 	public int getRecordId() {

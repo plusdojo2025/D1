@@ -108,7 +108,7 @@ public class ListStudentServlet extends HttpServlet {
 		
 		
 		List<AttendanceRecords> attendanceDateList = attendanceRecordsDao.select(new AttendanceRecords
-				(0,studentOne, classId, year, month,0,"",0,"",""));
+				(0,studentOne, classId, year, month,0,"",subjectId,"",""));
 		List<Assignments> contentList = assignmentsDao.select(new Assignments
 				(0,studentOne,subjectId,"","",year,month,date));
 		List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
@@ -120,7 +120,7 @@ public class ListStudentServlet extends HttpServlet {
 			studentId = studentIdList.get(i);
 		
 			attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
-					(0,studentId, classId, year, month,0,"",0,"","")));
+					(0,studentId, classId, year, month,0,"",subjectId,"","")));
 			
 			assignmentsList.addAll(assignmentsDao.select(new Assignments
 					(0,studentId,subjectId,"","",year,month,date)));
@@ -255,7 +255,7 @@ public class ListStudentServlet extends HttpServlet {
 
 
 			List<AttendanceRecords> attendanceDateList = attendanceRecordsDao.select(new AttendanceRecords
-					(0,studentOne, classId, year, month,0,"",0,"",""));
+					(0,studentOne, classId, year, month,0,"",subjectId,"",""));
 			List<Assignments> contentList = assignmentsDao.select(new Assignments
 					(0,studentOne,subjectId,"","",year,month,date));
 			List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
@@ -267,7 +267,7 @@ public class ListStudentServlet extends HttpServlet {
 				int studentId = studentIdList.get(i);
 
 				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
-						(0,studentId, classId, year, month,0,"",0,"","")));
+						(0,studentId, classId, year, month,0,"",subjectId,"","")));
 
 				assignmentsList.addAll(assignmentsDao.select(new Assignments
 						(0,studentId,subjectId,"","",year,month,date)));

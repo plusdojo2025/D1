@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!-- Javaから受け取ったDate型の変数を指定した形式に変換するためのライブラリ -->
+<%@ page import="java.util.Date" %>
+<%
+	Date today = new Date();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +22,10 @@
 		<form method="post" action="?">
 			<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
 			<input type="hidden" name="studentId" value="${student.studentId}">
+			<input type="hidden" name="subjectId" value="${subjectId}">
+			<input type="hidden" name="grade" value="${grade}">
+			<input type="hidden" name="year" value="${year}">
+			<input type="hidden" name="month" value="${month}">
 			<input type="submit" name="edit" value="編集完了" formaction='/D1/EditStudentServlet'> 
 			<input type="submit" name="back" value="キャンセル" formaction='/D1/InfoStudentServlet'>
 
@@ -56,30 +65,30 @@
 			</div><br>
 
 			<span><c:choose>
-				<c:when test="${subjectId} == 1">現代文</c:when>
-				<c:when test="${subjectId} == 2">古典</c:when>
-				<c:when test="${subjectId} == 3">数学IA</c:when>
-				<c:when test="${subjectId} == 4">数学ⅡB</c:when>
-				<c:when test="${subjectId} == 5">数学ⅢC</c:when>
-				<c:when test="${subjectId} == 6">英語表現</c:when>
-				<c:when test="${subjectId} == 7">コミュニケーション英語</c:when>
-				<c:when test="${subjectId} == 8">物理</c:when>
-				<c:when test="${subjectId} == 9">化学</c:when>
-				<c:when test="${subjectId} == 10">生物</c:when>
-				<c:when test="${subjectId} == 11">地学</c:when>
-				<c:when test="${subjectId} == 12">日本史</c:when>
-				<c:when test="${subjectId} == 13">世界史</c:when>
-				<c:when test="${subjectId} == 14">地理</c:when>
-				<c:when test="${subjectId} == 15">公民</c:when>
-				<c:when test="${subjectId} == 16">情報</c:when>
-				<c:when test="${subjectId} == 17">技術</c:when>
-				<c:when test="${subjectId} == 18">家庭科</c:when>
-				<c:when test="${subjectId} == 19">美術</c:when>
-				<c:when test="${subjectId} == 20">書道</c:when>
-				<c:when test="${subjectId} == 21">保健体育</c:when>
-				<c:when test="${subjectId} == 22">音楽</c:when>
-				<c:when test="${subjectId} == 23">学活</c:when>
-				<c:when test="${subjectId} == 24">その他</c:when>
+				<c:when test="${subjectId == 1}">現代文</c:when>
+				<c:when test="${subjectId == 2}">古典</c:when>
+				<c:when test="${subjectId == 3}">数学IA</c:when>
+				<c:when test="${subjectId == 4}">数学ⅡB</c:when>
+				<c:when test="${subjectId == 5}">数学ⅢC</c:when>
+				<c:when test="${subjectId == 6}">英語表現</c:when>
+				<c:when test="${subjectId == 7}">コミュニケーション英語</c:when>
+				<c:when test="${subjectId == 8}">物理</c:when>
+				<c:when test="${subjectId == 9}">化学</c:when>
+				<c:when test="${subjectId == 10}">生物</c:when>
+				<c:when test="${subjectId == 11}">地学</c:when>
+				<c:when test="${subjectId == 12}">日本史</c:when>
+				<c:when test="${subjectId == 13}">世界史</c:when>
+				<c:when test="${subjectId == 14}">地理</c:when>
+				<c:when test="${subjectId == 15}">公民</c:when>
+				<c:when test="${subjectId == 16}">情報</c:when>
+				<c:when test="${subjectId == 17}">技術</c:when>
+				<c:when test="${subjectId == 18}">家庭科</c:when>
+				<c:when test="${subjectId == 19}">美術</c:when>
+				<c:when test="${subjectId == 20}">書道</c:when>
+				<c:when test="${subjectId == 21}">保健体育</c:when>
+				<c:when test="${subjectId == 22}">音楽</c:when>
+				<c:when test="${subjectId == 23}">学活</c:when>
+				<c:when test="${subjectId == 24}">その他</c:when>
 				<c:otherwise>その他</c:otherwise>
 			</c:choose></span>
 			<span>${grade}年次</span>
@@ -108,12 +117,12 @@
 						<input type="hidden" name="recordAmount" value="${attendanceRecords.size()}">
 						<input type="hidden" name="recordId${status.index}" value="${att.recordId}">
 						<tr>
-							<td><input type="date" name="attendanceDate${status.index}" value="<fmt:formatDate value="${att.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
-							<td><input type="text" name="attendancePeriod${status.index}" value="${att.period}"></td>
+							<td><fmt:formatDate value="${att.date}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+							<td>${att.period}</td>
 							<td>
-								<select name="attededStatus${status.index}">
-									<option value="○" class="attendedStatus" selected>○</option>
-									<option value="×" class="attendedStatus">×</option>
+								<select name="attendedStatus${status.index}">
+									<option value="◯" class="attendedStatus" selected>◯</option>
+									<option value="✕" class="attendedStatus">✕</option>
 									<option value="早" class="attendedStatus">早</option>
 									<option value="遅" class="attendedStatus">遅</option>
 									<option value="公" class="attendedStatus">公</option>
@@ -136,34 +145,34 @@
 					</tr>
 
 					<c:forEach var="sub" items="${assignmentsList}" varStatus="status">
+					<input type="hidden" name="assignmentsAmount" value="${assignmentsList.size()}">
 						<input type="hidden" name="assignmentId${status.index}" value="${sub.assignmentId}">
 						<tr>
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
 							<td>
 								<select name="submittionStatus${status.index}">
-									<option value="○" class="submittedStatus">○</option>
-									<option value="×" class="submittedStatus">×</option>
+									<option value="◯" class="submittedStatus">◯</option>
+									<option value="✕" class="submittedStatus">✕</option>
 								</select>
 							</td>
 							<td><input type="date" name="submittionDate${status.index}" value="<fmt:formatDate value="${sub.submissionDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 						</tr>
 					</c:forEach>
 					
-					<!-- 空白欄 -->
 					<tr id="addSubmission">
-						<td><input type="text" name="addAssignmentContent"></td>
+						<td><input type="text" name="addAssignmentContent0" class="submittionContent"></td>
 						<td>
-							<select name="addSubmittionStatus">
-								<option value="○" class="submittedStatus">○</option>
-								<option value="×" class="submittedStatus" selected>×</option>
+							<select name="addSubmittionStatus0" class="submittionStatus">
+								<option value="◯" class="submittedStatus">◯</option>
+								<option value="✕" class="submittedStatus" selected>✕</option>
 							</select>
 						</td>
-						<td><input type="date" name="addSubmittionDate"></td>
+						<td><input type="date" name="addSubmittionDate0" class="addSubmittionDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 					</tr>
 
 				</table>
-				<!-- 欄追加ボタン -->
-				<button></button>
+				<input type="button" value="＋" onclick="addSubmission()">
+				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount" value="0">
 				<br>
 			</div>
 
@@ -188,6 +197,7 @@
 				<!-- 欄追加ボタン -->
 				<br>
 			</div>
+
 
 			<div id="attitude">
 				授業態度 <br>
@@ -248,15 +258,6 @@
 	<footer> </footer>
 
 	<script src="js/info_student.js"></script>
-	<script>
-	'use strict';
-	let subject = '${subjectId}';
-	var subjects = document.getElementsByClassName("subject");
-	for (var i = 0; i < subjects.length; i++) {
-		if (subjects[i].value === subject) {
-			subjects[i].setAttribute('selected', 'selected');
-		}
-	}
-	</script>
+	<script src="js/edit_student.js"></script>
 </body>
 </html>
