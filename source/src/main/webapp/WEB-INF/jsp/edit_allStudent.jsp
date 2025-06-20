@@ -24,8 +24,14 @@
 			<c:out value="${month}" />
 			<c:out value="${subjectName}" />
 			
-            <input type="submit" name="editCompleted" placeholder="編集完了" id="editCompleted" value="編集完了">
-            <input type="submit" name="cancel" placeholder="キャンセル" id="cancel" value="キャンセル">
+			<input type="hidden" name="grede" id="editCompleted" value="${grede}">
+			<input type="hidden" name="className" id="editCompleted" value="${className}">
+			<input type="hidden" name="year" id="editCompleted" value="${year}">
+			<input type="hidden" name="month" id="editCompleted" value="${month}">
+			<input type="hidden" name="subjectName" id="editCompleted" value="${subjectName}">
+			
+            <input type="submit" name="editCompleted" id="editCompleted" value="編集完了">
+            <input type="submit" name="cancel" id="cancel" value="キャンセル">
 
 
             <p>表示項目選択</p>
@@ -78,7 +84,7 @@
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
-									<td><select name="attendanceDropdown" id="attendanceDropdown">
+									<td><select name="record${a.recordId}" id="attendanceDropdown">
 											<option>${a.status}</option>
 											<option value="◯">◯</option>
 											<option value="✕">✕</option>
@@ -122,8 +128,7 @@
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
-									<td><select name="submissionDropdown"
-										id="submissionDropdown" value="${a.submissionStatus}">
+									<td><select name="assign${a.assignmentId}" id="submissionDropdown">
 											<option>${a.submissionStatus}</option>
 											<option value="◯">◯</option>
 											<option value="✕">✕</option>
@@ -175,7 +180,7 @@
 							<c:forEach var="a" items="${gradesList}">
 								<c:if test="${e.studentId == a.gradesList}">
 									<td>
-										<input type="text" name="score" class="score" value="${a.score}">
+										<input type="text" name="grades${a.gradesId}" placeholder="${a.score}" class="score" value="${a.score}">
 									</td>
 								</c:if>
 							</c:forEach>

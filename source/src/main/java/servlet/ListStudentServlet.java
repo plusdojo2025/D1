@@ -165,7 +165,7 @@ public class ListStudentServlet extends HttpServlet {
 		}
 		 */
 		System.out.println(request.getParameter("edit")); //nameで指定しvalueを参照
-		if(request.getParameter("edit").equals("編集")){
+		if(request.getParameter("edit") !=null && request.getParameter("edit").equals("編集")){
 				
 				int year = Integer.parseInt(request.getParameter("year"));          //年
 				int month = Integer.parseInt(request.getParameter("month"));        //月
@@ -182,7 +182,7 @@ public class ListStudentServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
-		}else if(request.getParameter("submit") ==null){
+		}else if(request.getParameter("studentNum") ==null){
 			// リクエストパラメータを取得する
 			Date date=new Date(); 
 			
@@ -222,10 +222,6 @@ public class ListStudentServlet extends HttpServlet {
 			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
 			request.setAttribute("classList", classList);
 
-			System.out.println("grade "+grade);
-			System.out.println("className "+className);
-			System.out.println("classList "+classList);
-
 			int classId = classList.get(0).getClassId();        //クラス
 			request.setAttribute("classId", classId);
 
@@ -243,16 +239,12 @@ public class ListStudentServlet extends HttpServlet {
 			List<Students> studentList = studentDao.select(new Students(0,0,0,classId,0, "", "", "", "", ""));
 			request.setAttribute("studentList", studentList);
 
-			System.out.println("studentList "+studentList);
-
 
 			List<Integer> studentIdList = new ArrayList<>();
 			for(int i=0;studentList.size()>i;i++) {
 				studentIdList.add(studentList.get(i).getStudentId());
 			}
-			System.out.println("studentIdList "+studentIdList);
 			int studentOne = studentIdList.get(1);
-			System.out.println("studentOne "+studentOne);
 
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
 			List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
@@ -283,15 +275,6 @@ public class ListStudentServlet extends HttpServlet {
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 			}
 
-			System.out.println("attendanceList "+attendanceList);
-			System.out.println("assignmentsList "+assignmentsList);
-			System.out.println("gradesList "+gradesList);
-			System.out.println("attendanceDateList "+attendanceDateList);
-			System.out.println("gradesList "+gradesList);
-			System.out.println("testTypeList "+testTypeList);
-
-
-
 			request.setAttribute("attendanceList", attendanceList);
 			request.setAttribute("assignmentsList", assignmentsList);
 			request.setAttribute("gradesList", gradesList);
@@ -313,24 +296,9 @@ public class ListStudentServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
 
-		}else if(request.getParameter("edit").equals("編集")){
+		}else if(request.getParameter("studentNum") != null){
 			
-			int year = Integer.parseInt(request.getParameter("year"));          //年
-			int month = Integer.parseInt(request.getParameter("month"));        //月
-			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
-			String className =request.getParameter("className");                //クラス
-			String subjectName = request.getParameter("subjectName");           //教科
 			
-			request.setAttribute("grade", grade);
-			request.setAttribute("className", className);
-			request.setAttribute("year", year);
-			request.setAttribute("month", month);
-			request.setAttribute("subjectName", subjectName);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/EditAllStudentServlet");
-			dispatcher.forward(request, response);
-
-		}else {
 			//個別閲覧へ
 
 			//studentID subjectID year month

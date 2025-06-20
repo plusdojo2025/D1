@@ -139,7 +139,7 @@
 						<tr>
 							<td>${e.studentNum}</td>
 							<!-- <td><a href="InfoStudentServlet">${e.name}</a></td>  -->
-							<td><input type="submit" name="name" placeholder="${e.name}" id="edit" value="${e.name}"></td>
+							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 							
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
@@ -216,7 +216,7 @@
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><a href="InfoStudentServlet">${e.name}</a></td>
+							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -266,7 +266,7 @@
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><a href="InfoStudentServlet">${e.name}</a></td>
+							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${gradesList}">
 								<c:if test="${e.studentId == a.studentId}">
