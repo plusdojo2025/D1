@@ -1,17 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/jsp/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>生徒登録</title>
   <link rel="stylesheet" href="<c:url value='/css/regist_student.css'/>">
-  <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
+  
 
 </head>
 <body>
 <div class="wrapper">
+	<div style="text-align: center; margin-bottom: 20px;">
+  <img src="<%= request.getContextPath() %>/img/header_banner.jpg" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<nav>
+  <ul class="cute-menu">
+    <li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
+    <li><a href="<c:url value='/InfoScheduleServlet'/>">📅 スケジュール</a></li>
+    <li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
+  </ul>
+</nav>
+	
   
   <div class="main-content">
     
