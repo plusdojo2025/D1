@@ -241,13 +241,50 @@ public class EditStudentServlet extends HttpServlet {
 				Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
 				
 				if (!content.equals("") && content != null) {
-					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, today_Year, today_Month, date))) {
+					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, year, month, date))) {
 						System.out.println("提出物記録 追加成功 / " + status + " / " + content);
 					} else {
 						System.out.println("提出物記録 追加失敗 / " + status + " / " + content);
 					}
 				} else {
 					System.out.println("提出物記録 追加失敗 / 内容未入力");
+				}
+			}
+			System.out.println("課題追加完了");
+			
+			// 成績の変更
+			GradesDAO grdDAO = new GradesDAO();
+			int gradesAmount = Integer.parseInt(request.getParameter("gradesAmount"));
+			System.out.println("数　" + gradesAmount);
+			for (int i = 0; i < gradesAmount; i++) {
+				int id = Integer.parseInt(request.getParameter("gradeId" + i));
+				String testType = request.getParameter("gradeTestType" + i);
+				int score = Integer.parseInt(request.getParameter("gradeScore" + i));
+				System.out.println(id + " / " + testType + " / " + score);
+				
+				if (grdDAO.update(new Grades(id, -1, -1, score, testType))) {
+					System.out.println("成績記録 更新成功 / " + testType + " / " + score);
+				} else {
+					System.out.println("成績記録 更新失敗 / " + testType + " / " + score);
+				}
+			}
+			
+			// 成績の追加
+			int addGradesAmount = Integer.parseInt(request.getParameter("addGradesAmount"));
+			System.out.println("追加数　" + addGradesAmount);
+			for (int i = 0; i < addGradesAmount; i++) {
+				String testType = request.getParameter("addGradeTestType" + i);
+				int score = Integer.parseInt(request.getParameter("addGradeScore" + i));
+				System.out.println("追加 / " + testType + " / " + score);
+				
+				if (!testType.equals("") && testType != null) {
+					if (grdDAO.insert(new Grades(-1, studentId, subjectId, score, testType, year, month))) {
+						System.out.println("成績記録 追加成功 / " + testType + " / " + score);
+					} else {
+						System.out.println("成績記録 追加失敗 / " + testType + " / " + score);
+					}
+				} else {
+					System.out.println("成績記録 追加失敗 / 内容未入力");
 				}
 			}
 
