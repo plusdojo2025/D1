@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ScheduleDAO;
+import dto.Schedule;
+
 /**
  * スケジュール登録処理用サーブレット
  */
@@ -22,7 +25,6 @@ public class RegistScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // 初期表示は赤文字メッセージなし
         request.setAttribute("error", null);
         request.getRequestDispatcher("/WEB-INF/jsp/regist_schedule.jsp").forward(request, response);
     }
@@ -33,45 +35,57 @@ public class RegistScheduleServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        // 入力値の取得
-        String year = request.getParameter("year");
+        String yearStr = request.getParameter("year");
         String semester = request.getParameter("semester");
         String type = request.getParameter("type");
         String day_of_week = request.getParameter("day_of_week");
         String period = request.getParameter("period");
-        String classId = request.getParameter("classId");
+        String classIdStr = request.getParameter("classId");
         String content = request.getParameter("content");
 
-        // 必須チェック（空ならエラー）
-        if (isEmpty(year) || isEmpty(semester) || isEmpty(type)
-                || isEmpty(day_of_week) || isEmpty(period) || isEmpty(classId) || isEmpty(content)) {
+        if (isEmpty(yearStr) || isEmpty(semester) || isEmpty(type)
+                || isEmpty(day_of_week) || isEmpty(period) || isEmpty(classIdStr) || isEmpty(content)) {
 
-        	request.setAttribute("error", "必須項目を入力してください");
+            request.setAttribute("error", "必須項目を入力してください");
 
-            // 入力値の再設定（フォーム再表示用）
-            request.setAttribute("year", year);
+            request.setAttribute("year", yearStr);
             request.setAttribute("semester", semester);
             request.setAttribute("type", type);
             request.setAttribute("day_of_week", day_of_week);
             request.setAttribute("period", period);
-            request.setAttribute("classId", classId);
+            request.setAttribute("classId", classIdStr);
             request.setAttribute("content", content);
 
             request.getRequestDispatcher("/WEB-INF/jsp/regist_schedule.jsp").forward(request, response);
             return;
         }
 
-        // --- DB登録処理等 ---
+        int year = Integer.parseInt(yearStr);
+        int classId = Integer.parseInt(classIdStr);
 
-        // 登録完了メッセージを設定
-        request.setAttribute("message", "スケジュールを登録しました");
-        request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp").forward(request, response);
+        Schedule schedule = new Schedule();
+        schedule.setYear(year);
+        schedule.setSemester(semester);
+        schedule.setType(type);
+        schedule.setDay_of_week(day_of_week);
+        schedule.setPeriod(period);
+        schedule.setClassId(classId);
+        schedule.setContent(content);
+        
+        ScheduleDAO dao = new ScheduleDAO();
+        boolean success = dao.insert(schedule);
+
+        if (success) {
+            request.setAttribute("message", "スケジュールを登録しました");
+            request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", "スケジュールの登録に失敗しました");
+            request.getRequestDispatcher("/WEB-INF/jsp/regist_schedule.jsp").forward(request, response);
+        }
     }
 
-    /**
-     * null または 空文字かどうかのチェック用メソッド
-     */
-    private boolean isEmpty(String s) {
-        return s == null || s.trim().isEmpty();
+    // ここがメソッドの外、クラスの中
+    private boolean isEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

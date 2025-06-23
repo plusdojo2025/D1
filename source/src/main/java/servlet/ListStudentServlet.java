@@ -183,24 +183,37 @@ public class ListStudentServlet extends HttpServlet {
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
-		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && request.getParameter("add").equals("提出物追加")){
+		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && (request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加"))){
 			
-
+			String content =null;                    //内容
+			String testType =null;                    //内容
+			int day = 0;
+			String period = null;
+			
+			if(request.getParameter("add").equals("出席日追加")) {
+				day =Integer.parseInt(request.getParameter("day"));            //出席日
+				period =request.getParameter("period");                    //内容
+				request.setAttribute("day", day);
+				request.setAttribute("period", period);
+			}else if(request.getParameter("add").equals("提出物追加")) {
+				content =request.getParameter("content");                    //内容
+				request.setAttribute("content", content);
+			}else{
+				testType =request.getParameter("testType");                    //テスト種別
+				request.setAttribute("testType", testType);
+			}
+			
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
 			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
 			String className =request.getParameter("className");                //クラス
 			String subjectName = request.getParameter("subjectName");           //教科
-			String content =request.getParameter("content");                    //内容
-
-			System.out.println(request.getParameter("add"));
 
 			request.setAttribute("grade", grade);
 			request.setAttribute("className", className);
 			request.setAttribute("year", year);
 			request.setAttribute("month", month);
 			request.setAttribute("subjectName", subjectName);
-			request.setAttribute("content", content);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");

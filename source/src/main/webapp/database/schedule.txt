@@ -22,6 +22,7 @@ CREATE TABLE Schedule (
 create table Teachers (
 teacherId int PRIMARY KEY AUTO_INCREMENT,
 name varchar (50),
+userId varchar(255),
 password varchar(255)
 )
 
@@ -40,17 +41,20 @@ date datetime ,
 period varchar(30)
 )
 
-INSERT INTO Teachers (name, password) 
-VALUES ('山田太郎', 'password123');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('山田太郎', 'user1' ,'password1');
 
-INSERT INTO Teachers (name, password) 
-VALUES ('田中花子', 'password4');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('田中花子', 'user2' ,'password2');
 
-INSERT INTO Teachers (name, password) 
-VALUES ('梅田梅雄', 'password5');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('梅田梅雄', 'user3' ,'password3');
 
-INSERT INTO Teachers (name, password) 
-VALUES ('伊藤加奈子', 'password6');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('伊藤加奈子', 'user4' ,'password4');
+
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('佐藤雄太', 'user5' ,'password5');
 
 
 INSERT INTO Class (grade, className) 

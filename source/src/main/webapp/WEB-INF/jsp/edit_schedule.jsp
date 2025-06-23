@@ -106,12 +106,13 @@
   </div>
 
   <div class="button-row">
+  <input type="hidden" name="semester" value="${semester}" />
     <button type="submit" class="btn">保存</button>
   </div>
 </form>
 
 <!-- キャンセルボタン -->
-<form action="InfoScheduleServlet" method="post" style="display: inline;">
+<form action="InfoScheduleServlet" method="get" style="display: inline;">
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
   <input type="hidden" name="action" value="search" />
@@ -120,26 +121,34 @@
 
 <!-- JavaScript：教師IDごとにメモを保存・読み込み -->
 <script>
-document.getElementById('editForm').addEventListener('submit', function(event) {
-	  event.preventDefault();
-	  const teacherId = "${loginTeacher.teacherId}";
-	  const memoKey = `scheduleMemo_${teacherId}`;
-	  const memoContent = document.getElementById('memoBox').value;
+  document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const teacherId = "${loginTeacher.teacherId}";
+    const memoKey = `scheduleMemo_${teacherId}`;
+    const memoContent = document.getElementById('memoBox').value;
 
-	  try {
+    try {
+      localStorage.setItem(memoKey, memoContent);
+      this.submit();  // すぐsubmitする
+    } catch (e) {
+      console.error("メモ保存エラー", e);
+      this.submit();
+    }
+  });
+
+  window.addEventListener('load', () => {
+    const teacherId = "${loginTeacher.teacherId}";
+    const memoKey = `scheduleMemo_${teacherId}`;
+    const savedMemo = localStorage.getItem(memoKey);
+    document.getElementById('memoBox').value = savedMemo || "";
+  });
+  
+  document.querySelector('form[action="InfoScheduleServlet"]').addEventListener("submit", function(event) {
+	    const teacherId = "${loginTeacher.teacherId}";
+	    const memoKey = `scheduleMemo_${teacherId}`;
+	    const memoContent = document.getElementById('memoBox').value;
 	    localStorage.setItem(memoKey, memoContent);
-	    this.submit();
-	  } catch (e) {
-	    console.error("メモ保存エラー", e);
-	  }
-	});
-
-	window.addEventListener('load', () => {
-		  const teacherId = "${loginTeacher.teacherId}";
-		  const memoKey = `scheduleMemo_${teacherId}`;
-		  const savedMemo = localStorage.getItem(memoKey);
-		  document.getElementById('memoBox').value = savedMemo || "";
-		});
+	  });
 </script>
 
 </body>
