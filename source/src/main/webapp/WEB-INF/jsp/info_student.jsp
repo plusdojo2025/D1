@@ -151,7 +151,11 @@
 				<tr>
 					<td>${sub.content}</td>
 					<td>${sub.submissionStatus}</td>
-					<td><fmt:formatDate value="${sub.submissionDate}" pattern="yyyy/MM/dd"></fmt:formatDate></td>
+					<td>
+						<c:if test="${sub.submissionStatus == '◯'}">
+							<fmt:formatDate value="${sub.submissionDate}" pattern="yyyy/MM/dd"></fmt:formatDate>
+						</c:if>
+					</td>
 				</tr>
 				</c:forEach>
 			</table><br>

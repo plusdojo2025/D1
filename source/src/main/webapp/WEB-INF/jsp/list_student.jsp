@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/list_student.css">
+<link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
 <title>項目ごとに閲覧</title>
 </head>
 
@@ -18,7 +18,7 @@
 
 	<main>
 	
-		<form action="/D1/ListStudentServlet" method="POST"
+		<form action="<c:url value='/ListStudentServlet'/>" method="POST"
 			id="list_student_form">
 
 			
@@ -91,8 +91,7 @@
 				<option value="その他">その他</option>
 			</select> 
 			<input type="submit" name="edit" placeholder="編集" id="edit" value="編集"> 
-			<input type="submit" name="download" placeholder="ダウンロード" id="download" value="ダウンロード">
-
+			<button id="downloadBtn">ダウンロード</button>
 
 			<p>表示項目選択</p>
 
@@ -279,8 +278,8 @@
 			</div>
 		</form>
 	</main>
-
-	<script src="js/list_student.js"></script>
+	<script src="<c:url value='/js/list_student.js' />"></script>
+	
 
 </body>
 

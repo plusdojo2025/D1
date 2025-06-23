@@ -179,7 +179,8 @@ public class ListStudentServlet extends HttpServlet {
 				request.setAttribute("month", month);
 				request.setAttribute("subjectName", subjectName);
 				
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/EditAllStudentServlet");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
+				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
 		}else if(request.getParameter("studentNum") ==null){
@@ -334,7 +335,8 @@ public class ListStudentServlet extends HttpServlet {
 			request.setAttribute("month", month);
 
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/InfoStudentServlet");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("InfoStudentServlet");
+			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/InfoStudentServlet");
 			dispatcher.forward(request, response);
 		}
 

@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン画面</title>
+<link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
 <!-- メイン -->
+<div class = "login-wrapper">
 	<h2>ログイン</h2>
 	
 <form action="LoginServlet" method="post">
@@ -26,7 +28,8 @@
 	
 	<!-- エラー表示用の場所 -->
 	<p id="errorBox"></p>
-</form>
+ </form>
+</div>
 <!-- フッター -->
 <!-- JavaScript -->
 <script src="<%= request.getContextPath() %>/js/login.js"></script>

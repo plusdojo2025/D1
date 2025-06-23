@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/edit_allstudent.css">
+    <link rel="stylesheet" href="<c:url value='/css/edit_allstudent.css' />">
     <title>項目ごとに編集</title>
 </head>
 
@@ -16,7 +16,7 @@
     <header></header>
 
     <main>
-        <form action="/D1/EditAllStudentServlet" method ="POST" id="edit_allstudent_form">
+        <form action="<c:url value='/EditAllStudentServlet' />" method ="POST" id="edit_allstudent_form">
 
 			<c:out value="${grade}" />年
 			<c:out value="${className}" />
@@ -195,7 +195,7 @@
 
         </form>
     </main>
-    <script src="js/list_student.js"></script>
+    <script src="<c:url value='/js/edit_student.js' />"></script>
 
 </body>
 
