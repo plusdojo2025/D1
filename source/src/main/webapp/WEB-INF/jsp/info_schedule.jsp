@@ -14,11 +14,12 @@
 <p>教師ID：<c:out value="${loginTeacher.teacherId}" /></p>
 
 <!-- リクエスト属性を変数にセット -->
-<c:set var="selectedYear" value="${requestScope.paramYear}" />
-<c:set var="selectedSemester" value="${requestScope.paramSemester}" />
+<!-- 年度・学期選択用変数：リクエスト属性があれば使い、なければURLパラメータを使う -->
+<c:set var="selectedYear" value="${not empty paramYear ? paramYear : (not empty param.year ? param.year : '2025')}" />
+<c:set var="selectedSemester" value="${not empty paramSemester ? paramSemester : (not empty param.semester ? param.semester : '前期')}" />
 
 <!-- 年度・学期の検索フォーム -->
-<form action="InfoScheduleServlet" method="post">
+<form action="InfoScheduleServlet" method="get" id="searchForm">
   <div class="form-row">
     <label>① 年度：</label>
     <select name="year">

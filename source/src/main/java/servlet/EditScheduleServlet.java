@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -59,6 +61,7 @@ public class EditScheduleServlet extends HttpServlet {
                     int classId = hasClassId ? Integer.parseInt(classIdStr) : -1;
 
                     if (scheduleIdStr != null && !scheduleIdStr.trim().isEmpty()) {
+                        // update or delete
                         int scheduleId = Integer.parseInt(scheduleIdStr);
                         if (hasContent || hasClassId) {
                             Schedule s = new Schedule(scheduleId, teacherId, classId, null, period, content, "class", year, semester, "", day);
@@ -68,6 +71,8 @@ public class EditScheduleServlet extends HttpServlet {
                         }
                     } else {
                         if (hasContent || hasClassId) {
+                            // 既存データがない場合でも念のため該当行を削除してからinsert
+                            sDao.deleteByDayAndPeriod(teacherId, year, semester, day, period);
                             Schedule s = new Schedule(0, teacherId, classId, null, period, content, "class", year, semester, "", day);
                             sDao.insert(s);
                         }
@@ -75,10 +80,19 @@ public class EditScheduleServlet extends HttpServlet {
                 }
             }
 
+            Teacher teacher = (Teacher) session.getAttribute("loginTeacher");
+            request.setAttribute("loginTeacher", teacher);
+
+            if (semester == null || semester.isEmpty()) {
+                semester = "前期"; // デフォルト値を明示的にセット
+            }
+            
             request.setAttribute("year", year);
             request.setAttribute("semester", semester);
             request.setAttribute("action", "search");
-            request.getRequestDispatcher("InfoScheduleServlet").forward(request, response);
+            
+            String encodedSemester = URLEncoder.encode(semester, StandardCharsets.UTF_8.name());
+            response.sendRedirect("InfoScheduleServlet?year=" + year + "&semester=" + encodedSemester + "&action=search");
             return;
         }
 
@@ -89,6 +103,7 @@ public class EditScheduleServlet extends HttpServlet {
         request.setAttribute("semester", semester);
         request.setAttribute("paramYear", year);
         request.setAttribute("paramSemester", semester);
+        request.setAttribute("teacherId", teacherId);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_schedule.jsp");
         dispatcher.forward(request, response);

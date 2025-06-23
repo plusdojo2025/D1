@@ -1,11 +1,4 @@
 /* ======= Reset & Basic ======= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-}
 
 /*フォントをGoogle Fonts Poppinsに変更*/
 body {
@@ -148,12 +141,6 @@ input[type="reset"]:hover {
 
 /* ラジオボタン */
 input[type="radio"] {
-	accent-color: #3498db;
-	cursor: ponter;
-	margin-right:8px;
-}
-/* ラジオボタンのサイズを大きく */
-input[type="radio"] {
   width: 20px;
   height: 20px;
   vertical-align: middle;
@@ -161,6 +148,7 @@ input[type="radio"] {
   cursor: pointer;
   margin-right: 8px;
 }
+
 
 /* エラーメッセージ */
 .message-error {
