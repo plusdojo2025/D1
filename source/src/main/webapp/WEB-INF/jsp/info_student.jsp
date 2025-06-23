@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css/info_student.css">
+<link rel="stylesheet" href="<c:url value='css/info_student.css'/>">
 </head>
 <body>
 	<header>
@@ -22,8 +22,8 @@
 			<input type="hidden" name="grade" value="${grade}">
 			<input type="hidden" name="year" value="${year}">
 			<input type="hidden" name="month" value="${month}">
-			<input type="submit" name="edit" value="編集" formaction='/D1/EditStudentServlet'>
-			<input type="submit" name="back" value="戻る" formaction='/D1/ListStudentServlet'>
+			<input type="submit" name="edit" value="編集" formaction="<c:url value='/EditStudentServlet' />">
+			<input type="submit" name="back" value="戻る" formaction="<c:url value='/ListStudentServlet' />">
 		</form>
 		
 		<!-- 基本情報 -->
@@ -63,7 +63,7 @@
 
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
-		<form action="/D1/InfoStudentServlet" method="post">
+		<form action="<c:url value='/InfoStudentServlet'/>" method="post">
 		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()" >
 			<option value="1" class="subject">現代文</option>
 			<option value="2" class="subject">古典</option>
@@ -237,7 +237,7 @@
 	<footer>
 	</footer>
 	
-	<script src="js/info_student.js"></script>
+	<script src="<c:url value='/js/info_student.js' />"></script>
 	<script>
 	'use strict';
 	// 前画面で設定した学年・月・科目を持ち越す

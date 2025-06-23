@@ -109,6 +109,26 @@ public class RegistStudentServlet extends HttpServlet {
                 request.setAttribute("error", "クラスは整数で入力してください。");
         	}
         }
+        
+        
+        
+        
+        //追加
+        if (classIdStr != null && !classIdStr.trim().isBlank()) {
+            try {
+                classId = Integer.parseInt(classIdStr.trim());
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "クラスは整数で入力してください。");
+            }
+        } else {
+            request.setAttribute("error", "クラスを選択してください。");
+        }
+        
+        
+        
+        
+        
+        
         //出席番号 
         int studentNum = -1;
         String studentNumStr = request.getParameter("studentNum");
@@ -139,6 +159,10 @@ public class RegistStudentServlet extends HttpServlet {
 		    request.setAttribute("name", name);
 		    request.setAttribute("nameRuby", nameRuby);
 
+		    
+		    
+		    
+		    
 		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
 		    dispatcher.forward(request, response);
 		    return;
@@ -148,8 +172,8 @@ public class RegistStudentServlet extends HttpServlet {
 		
 		// 登録処理を行う
 		if (sDao.insert(new Students(0, year, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/ListStudentServlet");
-            dispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/ListStudentServlet");
+		    return;
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
             //登録失敗時は"Servlet"にフォワード                                "/D1/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
