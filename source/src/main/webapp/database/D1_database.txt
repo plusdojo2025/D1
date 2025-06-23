@@ -238,6 +238,7 @@ INSERT INTO Interview VALUES (0, 1, '2025-06-01', 1, '進路希望', '東京大�
 create table Teachers (
 teacherId int PRIMARY KEY AUTO_INCREMENT,
 name varchar (50),
+userId varchar (255),
 password varchar(255)
 );
 INSERT INTO Teachers (name, password) 
