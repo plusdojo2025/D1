@@ -90,12 +90,11 @@
 <script>
 window.addEventListener('load', () => {
   const teacherId = "${loginTeacher.teacherId}";
-  const memoKey = `scheduleMemo_${teacherId}`; // 教師IDだけをキーにする
+  const memoKey = `scheduleMemo_${teacherId}`;
   const display = document.getElementById('memoDisplay');
   const savedMemo = localStorage.getItem(memoKey);
   display.textContent = savedMemo || 'メモは保存されていません。';
-  
-
+});
 </script>
 
 <!-- 編集ボタン -->
@@ -103,6 +102,11 @@ window.addEventListener('load', () => {
   <input type="hidden" name="year" value="${selectedYear}">
   <input type="hidden" name="semester" value="${selectedSemester}">
   <button type="submit" class="btn">編集</button>
+</form>
+
+<!-- 登録ボタン -->
+<form action="RegistScheduleServlet" method="get" style="display: inline;">
+  <button type="submit" class="btn">登録</button>
 </form>
 
 </body>

@@ -120,24 +120,26 @@
 
 <!-- JavaScript：教師IDごとにメモを保存・読み込み -->
 <script>
-	document.getElementById('editForm').addEventListener('submit', function(event) {
+document.getElementById('editForm').addEventListener('submit', function(event) {
 	  event.preventDefault();
 	  const teacherId = "${loginTeacher.teacherId}";
-	  const memoKey = `scheduleMemo_${teacherId}`; // ✅ 教師IDだけをキーに
+	  const memoKey = `scheduleMemo_${teacherId}`;
 	  const memoContent = document.getElementById('memoBox').value;
 
 	  try {
 	    localStorage.setItem(memoKey, memoContent);
+	    this.submit();
 	  } catch (e) {
 	    console.error("メモ保存エラー", e);
 	  }
-
-	  setTimeout(() => {
-	    this.submit(); // 保存してから送信
-	  }, 100);
 	});
 
-
+	window.addEventListener('load', () => {
+		  const teacherId = "${loginTeacher.teacherId}";
+		  const memoKey = `scheduleMemo_${teacherId}`;
+		  const savedMemo = localStorage.getItem(memoKey);
+		  document.getElementById('memoBox').value = savedMemo || "";
+		});
 </script>
 
 </body>
