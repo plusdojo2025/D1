@@ -179,7 +179,7 @@
 
 				</table>
 				<input type="button" value="＋" onclick="addSubmission()">
-				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount">
+				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount" value="1">
 				<br>
 			</div>
 

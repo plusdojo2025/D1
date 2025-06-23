@@ -226,7 +226,7 @@ public class EditStudentServlet extends HttpServlet {
 				String status = request.getParameter("submittionStatus" + i);
 				Date date = sdf.parse(request.getParameter("submittedDate" + i));
 				
-				if (asDAO.update(new Assignments(id, studentId, subjectId, status, content, date))) {
+				if (asDAO.update(new Assignments(id, -1, -1, status, content, date))) {
 					System.out.println("提出物記録 更新成功 " + id + " / " + status + " / " + content);
 				} else {
 					System.out.println("提出物記録 更新失敗 " + id + " / " + status + " / " + content);
@@ -235,22 +235,19 @@ public class EditStudentServlet extends HttpServlet {
 			
 			// 課題の追加
 			int addSubmissionAmount = Integer.parseInt(request.getParameter("addSubmittionAmount"));
-			System.out.println("数 " + addSubmissionAmount);
 			for (int i = 0; i < addSubmissionAmount; i++) {
-				System.out.println("for文");
 				String content = request.getParameter("addAssignmentContent" + i);
 				String status = request.getParameter("addSubmittionStatus" + i);
 				Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
 				
 				if (!content.equals("") && content != null) {
-					System.out.println("入力あり");
 					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, today_Year, today_Month, date))) {
 						System.out.println("提出物記録 追加成功 / " + status + " / " + content);
 					} else {
 						System.out.println("提出物記録 追加失敗 / " + status + " / " + content);
 					}
 				} else {
-					System.out.println("提出物記録 追加失敗 / " + status + " / " + content);
+					System.out.println("提出物記録 追加失敗 / 内容未入力");
 				}
 			}
 
