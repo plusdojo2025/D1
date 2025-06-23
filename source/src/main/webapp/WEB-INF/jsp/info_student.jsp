@@ -7,11 +7,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<c:url value='css/common.css'/>">
 <link rel="stylesheet" href="<c:url value='css/info_student.css'/>">
 </head>
 <body>
 	<header>
-		<!-- ヘッダー挿入箇所 -->
+		<div class="wrapper">
+			<div style="text-align: center; margin-bottom: 20px;">
+				<img src="<%=request.getContextPath()%>/img/header_banner.jpg"
+					alt="バナー画像"
+					style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+			</div>
+			<nav>
+				<ul class="cute-menu">
+					<li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
+					<li><a href="<c:url value='/InfoScheduleServlet'/>">📅 スケジュール</a></li>
+					<li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 
 	<main>
@@ -28,28 +42,28 @@
 		
 		<!-- 基本情報 -->
 		<div class="baseInfo">
-			<div>${student.nameRuby}</div>
+			<div style="font-size: 15px; padding: 5px 7px;">${student.nameRuby}</div>
 			<div class="field">
-				<div>${student.name} </div>
-				<div>${student.grade}年</div>
-				<div>${className}</div>
-				<div>${student.studentNum}番</div>
+				<div style="width: 150px">${student.name} </div>
+				<div style="width: 70px">${student.grade}年</div>
+				<div style="width: 70px">${className}</div>
+				<div style="width: 70px">${student.studentNum}番</div>
 			</div>
 			<div class="field">
-				<div>今学期 出席率</div>
-				<div>${attendedRate}%</div>
-				<div>出席日数</div>
-				<div>${attendedNum}</div>
-				<div>出席すべき日数</div>
-				<div>${shouldAttendNum}</div>
+				<div class="rateExplain">今学期 出席率</div>
+				<div class="rate">${attendedRate}%</div>
+				<div class="amountExplain">出席日数</div>
+				<div class="amount">${attendedNum}</div>
+				<div class="shouldAmountExplain">出席すべき日数</div>
+				<div class="shouldAmount">${shouldAttendNum}</div>
 			</div>
 			<div class="field">
-				<div>今学期 提出率</div>
-				<div>${submittedRate}%</div>
-				<div>提出数</div>
-				<div>${submittedNum}</div>
-				<div>提出すべき課題数</div>
-				<div>${shouldSubmitNum}</div>
+				<div class="rateExplain">今学期 提出率</div>
+				<div class="rate">${submittedRate}%</div>
+				<div class="amountExplain">提出数</div>
+				<div class="amount">${submittedNum}</div>
+				<div class="shouldAmountExplain">提出すべき課題数</div>
+				<div class="shouldAmount">${shouldSubmitNum}</div>
 			</div>
 			<div class="field">
 				<div>授業外活動</div>
