@@ -84,14 +84,28 @@
                   
                   <input type="hidden" name="scheduleId_${day}_${period}" value="${item.scheduleId}" />
                   <input type="text" name="content_${day}_${period}" value="${item.content}" placeholder="内容" /><br>
-                  <input type="text" name="classId_${day}_${period}" value="${item.classId}" placeholder="クラスID" />
+                  <select name="classId_${day}_${period}">
+  <option value="">（未選択）</option>
+  <c:forEach var="cls" items="${classList}">
+    <option value="${cls.classId}" <c:if test="${item.classId == cls.classId}">selected</c:if>>
+      ${cls.grade}年${cls.className}組
+    </option>
+  </c:forEach>
+</select>
                   <c:set var="found" value="true" />
                 </c:if>
               </c:forEach>
               <c:if test="${!found}">
-                <input type="text" name="content_${day}_${period}" value="" placeholder="内容" /><br>
-                <input type="text" name="classId_${day}_${period}" value="" placeholder="クラスID" />
-              </c:if>
+  <input type="text" name="content_${day}_${period}" value="" placeholder="内容" /><br>
+  <select name="classId_${day}_${period}">
+    <option value="" selected>（未選択）</option>
+    <c:forEach var="cls" items="${classList}">
+      <option value="${cls.classId}">
+        ${cls.grade}年${cls.className}組
+      </option>
+    </c:forEach>
+  </select>
+</c:if>
             </td>
           </c:forEach>
         </tr>

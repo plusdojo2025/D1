@@ -65,7 +65,7 @@
                             and item.period == period}">
                   <div>
                     ${item.content} <br/>
-                    ${item.classId}
+                    <c:out value="${classIdNameMap[item.classId]}" default="${item.classId}" />
                   </div>
                 </c:if>
               </c:forEach>
@@ -109,6 +109,7 @@ window.addEventListener('load', () => {
 <form action="RegistScheduleServlet" method="get" style="display: inline;">
   <button type="submit" class="btn">登録</button>
 </form>
+
 
 </body>
 </html>
