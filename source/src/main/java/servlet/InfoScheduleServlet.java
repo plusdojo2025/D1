@@ -32,22 +32,17 @@ public class InfoScheduleServlet extends HttpServlet {
         Teacher teacher = (Teacher) session.getAttribute("loginTeacher");
         int teacherId = teacher.getTeacherId();
 
-        // ★デフォルト値を設定
+        // デフォルトまたはリダイレクト後のパラメータ取得
         String yearStr = request.getParameter("year");
         String semester = request.getParameter("semester");
+        String action = request.getParameter("action");
 
-        int year;
-        if (yearStr == null || yearStr.isEmpty()) {
-            year = 2025;
-        } else {
-            year = Integer.parseInt(yearStr);
-        }
-
+        int year = (yearStr != null && !yearStr.isEmpty()) ? Integer.parseInt(yearStr) : 2025;
         if (semester == null || semester.isEmpty()) {
             semester = "前期";
         }
 
-        // ★スケジュール取得
+        // 検索処理（action=search またはデフォルト）
         ScheduleDAO sDao = new ScheduleDAO();
         Schedule condition = new Schedule(-1, teacherId, -1, null, "", "", "", year, semester, "", "");
         List<Schedule> scheduleList = sDao.select(condition);
@@ -61,10 +56,6 @@ public class InfoScheduleServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
         dispatcher.forward(request, response);
     }
-
-
-
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
