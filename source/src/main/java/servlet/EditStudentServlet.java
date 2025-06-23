@@ -137,8 +137,8 @@ public class EditStudentServlet extends HttpServlet {
 
 			//面談
 			InterviewDAO itvDAO = new InterviewDAO();
-			List<Interview> itvList = itvDAO.select_thisYear(studentId);
-			List<Interview> lastItvList = itvDAO.select_lastYear(studentId);
+			List<Interview> itvList = itvDAO.select_thisYear(studentId, (student.getYear() + grade - 1));
+			List<Interview> lastItvList = itvDAO.select_lastYear(studentId, (student.getYear() + grade - 1));
 			request.setAttribute("interviewList", itvList);
 			request.setAttribute("lastInterviewList", lastItvList);
 
@@ -237,10 +237,11 @@ public class EditStudentServlet extends HttpServlet {
 			int addSubmissionAmount = Integer.parseInt(request.getParameter("addSubmittionAmount"));
 			for (int i = 0; i < addSubmissionAmount; i++) {
 				String content = request.getParameter("addAssignmentContent" + i);
-				String status = request.getParameter("addSubmittionStatus" + i);
-				Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
 				
 				if (!content.equals("") && content != null) {
+					String status = request.getParameter("addSubmittionStatus" + i);
+					Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
+					
 					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, year, month, date))) {
 						System.out.println("提出物記録 追加成功 / " + status + " / " + content);
 					} else {
@@ -250,17 +251,14 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("提出物記録 追加失敗 / 内容未入力");
 				}
 			}
-			System.out.println("課題追加完了");
 			
 			// 成績の変更
 			GradesDAO grdDAO = new GradesDAO();
 			int gradesAmount = Integer.parseInt(request.getParameter("gradesAmount"));
-			System.out.println("数　" + gradesAmount);
 			for (int i = 0; i < gradesAmount; i++) {
 				int id = Integer.parseInt(request.getParameter("gradeId" + i));
 				String testType = request.getParameter("gradeTestType" + i);
 				int score = Integer.parseInt(request.getParameter("gradeScore" + i));
-				System.out.println(id + " / " + testType + " / " + score);
 				
 				if (grdDAO.update(new Grades(id, -1, -1, score, testType))) {
 					System.out.println("成績記録 更新成功 / " + testType + " / " + score);
@@ -271,14 +269,14 @@ public class EditStudentServlet extends HttpServlet {
 			
 			// 成績の追加
 			int addGradesAmount = Integer.parseInt(request.getParameter("addGradesAmount"));
-			System.out.println("追加数　" + addGradesAmount);
+			System.out.println("addGradesAmount  num / " + addGradesAmount );
 			for (int i = 0; i < addGradesAmount; i++) {
 				String testType = request.getParameter("addGradeTestType" + i);
-				int score = Integer.parseInt(request.getParameter("addGradeScore" + i));
-				System.out.println("追加 / " + testType + " / " + score);
 				
 				if (!testType.equals("") && testType != null) {
-					if (grdDAO.insert(new Grades(-1, studentId, subjectId, score, testType, year, month))) {
+					int score = Integer.parseInt(request.getParameter("addGradeScore" + i));
+					
+					if (grdDAO.insert(new Grades(0, studentId, subjectId, score, testType, year, month))) {
 						System.out.println("成績記録 追加成功 / " + testType + " / " + score);
 					} else {
 						System.out.println("成績記録 追加失敗 / " + testType + " / " + score);
@@ -287,7 +285,78 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("成績記録 追加失敗 / 内容未入力");
 				}
 			}
+			
+			// 面談の更新
+			InterviewDAO itvDAO = new InterviewDAO();
+			int interviewAmount = Integer.parseInt(request.getParameter("interviewAmount"));
+			for (int i = 0; i < interviewAmount; i++) {
+				int id = Integer.parseInt(request.getParameter("interviewId" + i));
+				Date date = sdf.parse(request.getParameter("interviewDate" + i));
+				String contents = request.getParameter("interviewContents" + i);
+				String remarks = request.getParameter("interviewRemarks" + i);
+				
+				if (itvDAO.update(new Interview(id, -1, date, studentId, contents, remarks, subjectId))) {
+					System.out.println("面談記録 更新成功 / " + id + " / " + date + " / " + contents + " / " + remarks);
+				} else {
+					System.out.println("面談記録 更新失敗 / " + id + " / " + date + " / " + contents + " / " + remarks);
+				}
+			}
+			
+			// 面談の追加
+			int addInterviewAmount = Integer.parseInt(request.getParameter("addInterviewAmount"));
+			for (int i = 0; i < addInterviewAmount; i++) {
+				String contents = request.getParameter("addInterviewContents" + i);
+				
+				if (!contents.equals("") && contents != null) {
+					String remarks = request.getParameter("addInterviewRemarks" + i);
+					Date date = sdf.parse(request.getParameter("addInterviewDate" + i));
+					
+					if (itvDAO.insert(new Interview(0, -1, date, studentId, contents, remarks, subjectId))) {
+						System.out.println("面談記録 追加成功 / " + date + " / " + contents + " / " + remarks);
+					} else {
+						System.out.println("面談記録 追加失敗 / " + date + " / " + contents + " / " + remarks);
+					}
+				} else {
+					System.out.println("面談記録 追加失敗 / 内容未入力");
+				}
+			}
 
+			// 前年度の面談の更新
+			int lastInterviewAmount = Integer.parseInt(request.getParameter("lastInterviewAmount"));
+			System.out.println("lastInterview num /" + lastInterviewAmount);
+			for (int i = 0; i < lastInterviewAmount; i++) {
+				int id = Integer.parseInt(request.getParameter("lastInterviewId" + i));
+				Date date = sdf.parse(request.getParameter("lastInterviewDate" + i));
+				String contents = request.getParameter("lastInterviewContents" + i);
+				String remarks = request.getParameter("lastInterviewRemarks" + i);
+				
+				if (itvDAO.update(new Interview(id, -1, date, studentId, contents, remarks, subjectId))) {
+					System.out.println("前年度面談記録 更新成功 / " + id + " / " + date + " / " + contents + " / " + remarks);
+				} else {
+					System.out.println("前年度面談記録 更新失敗 / " + id + " / " + date + " / " + contents + " / " + remarks);
+				}
+			}
+			
+			// 前年度の面談の追加
+			int addLastInterviewAmount = Integer.parseInt(request.getParameter("addLastInterviewAmount"));
+			System.out.println("addLastInterview num /" + addLastInterviewAmount);
+			for (int i = 0; i < addLastInterviewAmount; i++) {
+				String contents = request.getParameter("addLastInterviewContents" + i);
+				
+				if (!contents.equals("") && contents != null) {
+					Date date = sdf.parse(request.getParameter("addLastInterviewDate" + i));
+					String remarks = request.getParameter("addLastInterviewRemarks" + i);
+					
+					if (itvDAO.insert(new Interview(0, -1, date, studentId, contents, remarks, subjectId))) {
+						System.out.println("前年度面談記録 追加成功 / " + date + " / " + contents + " / " + remarks);
+					} else {
+						System.out.println("前年度面談記録 追加失敗 / " + date + " / " + contents + " / " + remarks);
+					}
+				} else {
+					System.out.println("前年度面談記録 追加失敗 / 内容未入力");
+				}
+			}
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {

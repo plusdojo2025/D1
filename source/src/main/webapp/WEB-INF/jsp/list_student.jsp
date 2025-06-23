@@ -14,7 +14,25 @@
 </head>
 
 <body>
-	<header></header>
+	<header>
+		<div style="text-align: center; margin-bottom: 20px;">
+  <img src="${headerBannerUrl}" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<!-- ナビ全体を中央に寄せる -->
+<div style="text-align: center;">
+  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+    <!-- ロゴ画像 -->
+     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
+    <!-- メニュー -->
+    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+    </ul>
+  </nav>
+</div>
+	</header>
 
 	<main>
 	
@@ -105,7 +123,19 @@
 
 
 			<div id="attendance">
-				<p>出席状況</p>
+				<span> 出席状況 </span> <span>
+					<button id="attendanceButton" name="add" value="出席日追加">出席日追加</button>
+					<span> <input type="text" name="day" placeholder="出席日"></span>
+					<span><select name="period">
+							<option>時限</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+					</select></span>
+				</span>
 				<table border="1">
 					<tr>
 						<td></td>
@@ -138,8 +168,9 @@
 						<tr>
 							<td>${e.studentNum}</td>
 							<!-- <td><a href="InfoStudentServlet">${e.name}</a></td>  -->
-							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
-							
+							<td><input type="submit" name="studentNum"
+								placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
+
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${attendanceList}">
 								<c:if test="${e.studentId == a.studentId}">
@@ -233,7 +264,7 @@
 			<div id="grades">
 				<span> 成績状況 </span> <span>
 					<button id="gradesButton" name="add" id="edit" value="テスト追加">テスト追加</button>
-					<span> <input type="text" name="content" placeholder="テスト名"></span>
+					<span> <input type="text" name="testType" placeholder="テスト名"></span>
 				</span>
 
 				<table border="1">

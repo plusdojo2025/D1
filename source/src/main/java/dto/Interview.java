@@ -1,5 +1,7 @@
 package dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,7 +45,12 @@ public class Interview {
 		this.year = year;
 		this.month = month;
 		this.day = day;
-		setWeek(this.date);
+		
+		try {
+			setWeek(this.year, this.month, this.day);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Interview() {
@@ -128,6 +135,12 @@ public class Interview {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         String[] weekDays = {"", "日", "月", "火", "水", "木", "金", "土"};
         this.setWeek(weekDays[dayOfWeek]);
+	}
+	
+	public void setWeek(int year, int month, int day) throws ParseException {
+		String inpDateStr = year + "/" + month + "/" + day;
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy/MM/dd");
+		this.date = sdformat.parse(inpDateStr);
 	}
 	
 	public int dateToYear(Date date) {
