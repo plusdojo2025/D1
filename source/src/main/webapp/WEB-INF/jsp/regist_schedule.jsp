@@ -1,4 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<c:url value="/img/header_banner.jpg" var="headerBannerUrl"/>
+<c:url value="/img/IMG_ロゴ2.png" var="logo2Url"/>
+<c:url value="/ListStudentServlet" var="listStudentUrl"/>
+<c:url value="/InfoScheduleServlet" var="infoScheduleUrl"/>
+<c:url value="/LoginServlet" var="logoutUrl"/>
+<c:url value="/RegistScheduleServlet" var="registScheduleUrl"/>
+<c:url value="/js/regist_student.js" var="registJsUrl"/>
 <%
   String error = (String) request.getAttribute("error");
   boolean hasError = (error != null && !error.isEmpty());
@@ -9,31 +17,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>スケジュール登録</title>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/common.css">
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/regist_schedule.css">
+
+ <c:url value="/css/common.css" var="commonCssUrl" />
+<c:url value="/css/regist_schedule.css" var="registScheduleCssUrl" />
+
+<link rel="stylesheet" href="${commonCssUrl}">
+<link rel="stylesheet" href="${registScheduleCssUrl}">
 
 </head>
 
 <body>
 <div style="text-align: center; margin-bottom: 20px;">
-  <img src="<%= request.getContextPath() %>/img/header_banner.jpg" alt="バナー画像"
+  <img src="${headerBannerUrl}" alt="バナー画像"
        style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
 </div>
-<nav>
-  <ul class="cute-menu">
-    <li><a href="http://localhost:8080/D1/ListStudentServlet">🐰 生徒管理</a></li>
-    <li><a href="https://localhost:8080/D1/InfoScheduleServlet">📅 スケジュール</a></li>
-    <li><a href="http://localhost:8080/D1/LoginServlet">🚪 ログアウト</a></li>
-  </ul>
-</nav>
+<!-- ナビ全体を中央に寄せる -->
+<div style="text-align: center;">
+  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+    <!-- ロゴ画像 -->
+     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
+
+    <!-- メニュー -->
+    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+    </ul>
+  </nav>
+</div>
+
 <div class="container">
 
 
-  <form name="scheduleForm" class="schedule-form"
-      method="post"
-      action="<%=request.getContextPath() %>/RegistScheduleServlet"
-      onsubmit="return validateForm();">
-
+   <form method="post" action="${registScheduleUrl}" onsubmit="return validateForm();">
 
     <h1>スケジュール登録フォーム</h1>
     
@@ -200,9 +216,12 @@ for(String grade : grades) {
   ← 戻る
 </button>
 
+ <div id="footer">
+    <p>&copy; MATINY</p> 
+    
+  </div>
 
-<script src="<%= request.getContextPath() %>/js/regist_student.js"></script>
-
+<script src="${registJsUrl}"></script>
 
 <script>
 function validateForm() {
@@ -211,11 +230,12 @@ function validateForm() {
 	  const type = document.querySelector('input[name="type"]:checked');
 	  const day = document.getElementById('day_of_week');
 	  const period = document.getElementById('period');
+	  const classId = document.getElementById('classId');  
 	  const content = document.getElementById('content');
 
 	  const errorMessage = document.getElementById('jsErrorMessage');
 
-	  if (!year.value || !semester.value || !type || !day.value || !period.value || content.value.trim() === '') {
+	  if (!year.value || !semester.value || !type || !day.value || !period.value  || !classId.value || content.value.trim() === '') {
 	    errorMessage.textContent = '必須項目を入力してください';
 	    errorMessage.style.display = 'block';
 
