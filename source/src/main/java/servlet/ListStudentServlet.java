@@ -184,15 +184,14 @@ public class ListStudentServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 
 		}else if(request.getParameter("add") !=null && request.getParameter("add").equals("提出物追加")){
-
-			Date date=new Date(); 
+			
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
 			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
 			String className =request.getParameter("className");                //クラス
 			String subjectName = request.getParameter("subjectName");           //教科
-			String content =request.getParameter("content");           //内容
+			String content =request.getParameter("content");                    //内容
 
 
 			request.setAttribute("grade", grade);
