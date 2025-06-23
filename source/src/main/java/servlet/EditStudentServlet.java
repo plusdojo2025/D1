@@ -160,6 +160,12 @@ public class EditStudentServlet extends HttpServlet {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+		Calendar cal = Calendar.getInstance();
+		Date today = new Date();
+		cal.setTime(today);
+		int today_Year = cal.get(Calendar.YEAR);
+		int today_Month = cal.get(Calendar.MONTH);
+		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
@@ -213,13 +219,40 @@ public class EditStudentServlet extends HttpServlet {
 			
 			// 提出記録の更新
 			AssignmentsDAO asDAO = new AssignmentsDAO();
-			int assignmentsAmount = Integer.parseInt(request.getParameter("assignmentsAmount"));
-			for (int i = 0; i < assignmentsAmount; i++) {
+			int submissionAmount = Integer.parseInt(request.getParameter("submissionAmount"));
+			for (int i = 0; i < submissionAmount; i++) {
 				int id = Integer.parseInt(request.getParameter("assignmentId" + i));
+				String content = request.getParameter("assignmentContent" + i);
+				String status = request.getParameter("submittionStatus" + i);
+				Date date = sdf.parse(request.getParameter("submittedDate" + i));
+				
+				if (asDAO.update(new Assignments(id, studentId, subjectId, status, content, date))) {
+					System.out.println("提出物記録 更新成功 " + id + " / " + status + " / " + content);
+				} else {
+					System.out.println("提出物記録 更新失敗 " + id + " / " + status + " / " + content);
+				}
 			}
 			
 			// 課題の追加
-			
+			int addSubmissionAmount = Integer.parseInt(request.getParameter("addSubmittionAmount"));
+			System.out.println("数 " + addSubmissionAmount);
+			for (int i = 0; i < addSubmissionAmount; i++) {
+				System.out.println("for文");
+				String content = request.getParameter("addAssignmentContent" + i);
+				String status = request.getParameter("addSubmittionStatus" + i);
+				Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
+				
+				if (!content.equals("") && content != null) {
+					System.out.println("入力あり");
+					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, today_Year, today_Month, date))) {
+						System.out.println("提出物記録 追加成功 / " + status + " / " + content);
+					} else {
+						System.out.println("提出物記録 追加失敗 / " + status + " / " + content);
+					}
+				} else {
+					System.out.println("提出物記録 追加失敗 / " + status + " / " + content);
+				}
+			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
