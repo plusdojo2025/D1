@@ -15,8 +15,8 @@
 <form action="LoginServlet" method="post">
 	<table>
 		<tr>
-			<td>教員ID：</td>
-			<td><input type="text" name="teacherId"></td>
+			<td>ログインID：</td>
+			<td><input type="text" name="userId"></td>
 		</tr>
 		<tr>
 			<td>パスワード：</td>

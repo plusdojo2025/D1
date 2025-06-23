@@ -5,16 +5,20 @@ import java.io.Serializable;
 public class Teacher implements Serializable {
 	private int teacherId;		//教員ID
 	private String name;		//教員氏名
+	private String userId;      //ログインID
 	private String password;	//パスワード 
 	
-	public Teacher(int teacherId, String name, String password) {
+	
+	
+	public Teacher(int teacherId, String name, String userId, String password) {
 		this.teacherId = teacherId;
 		this.name = name;
+		this.userId = userId;
 		this.password = password;
 	}
-	
-	public Teacher(int teacherId, String password) {
-		this.teacherId = teacherId;
+
+	public Teacher(String userId, String name, String password) {
+		this.userId = userId;
 		this.name = "";
 		this.password = password;
 	}
@@ -48,4 +52,14 @@ public class Teacher implements Serializable {
 	public void  setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	
 }
