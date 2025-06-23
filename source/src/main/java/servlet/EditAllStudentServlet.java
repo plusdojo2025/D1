@@ -216,7 +216,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
 			String className =request.getParameter("className");                //クラス
 			String subjectName = request.getParameter("subjectName");           //教科
-			String content =request.getParameter("content");           //内容
+			String period =request.getParameter("period");                      //時限
 
 
 			//classIDを取得
