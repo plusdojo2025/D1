@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css/info_student.css">
+<link rel="stylesheet" href="<c:url value='css/info_student.css'/>">
 </head>
 <body>
 	<header>
@@ -26,8 +26,8 @@
 			<input type="hidden" name="grade" value="${grade}">
 			<input type="hidden" name="year" value="${year}">
 			<input type="hidden" name="month" value="${month}">
-			<input type="submit" name="edit" value="編集完了" formaction='/D1/EditStudentServlet'> 
-			<input type="submit" name="back" value="キャンセル" formaction='/D1/InfoStudentServlet'>
+			<input type="submit" name="edit" value="編集完了" formaction="<c:url value='/EditStudentServlet'/>"> 
+			<input type="submit" name="back" value="キャンセル" formaction="<c:url value='/InfoStudentServlet'/>">
 
 			<!-- 基本情報 -->
 			<div class="baseInfo">
@@ -288,7 +288,7 @@
 
 	<footer> </footer>
 
-	<script src="js/info_student.js"></script>
-	<script src="js/edit_student.js"></script>
+	<script src="<c:url value='/js/info_student.js' />"></script>
+	<script src="<c:url value='/js/edit_student.js' />"></script>
 </body>
 </html>
