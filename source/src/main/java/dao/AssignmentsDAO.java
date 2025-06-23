@@ -157,7 +157,7 @@ public class AssignmentsDAO {
 				pStmt.setString(4, "");
 			}
 			
-			pStmt.setString(5, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(5, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 			
 			if (as.getContent() != null) {
 				pStmt.setString(6, as.getContent());
@@ -165,7 +165,8 @@ public class AssignmentsDAO {
 				pStmt.setString(6, "");
 			}
 			
-			pStmt.setString(7, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			
+			pStmt.setString(7, as.getCreatedYear() + "-" + as.getCreatedMonth() + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {

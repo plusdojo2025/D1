@@ -151,7 +151,7 @@ public class GradesDAO {
 				pStmt.setString(5, "");
 			}
 			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
