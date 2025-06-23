@@ -128,6 +128,8 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}
 		
+		System.out.println(attendanceList.get(0).getYear());	
+		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
 		request.setAttribute("gradesList", gradesList);
@@ -263,6 +265,9 @@ public class ListStudentServlet extends HttpServlet {
 			int testTypeListSize = testTypeList.size();
 
 
+			System.out.println("year"+year);
+			System.out.println("month"+month);
+			
 			for(int i=0;studentIdList.size()>i;i++) {
 				//studentId.add(studentList.get(i).getStudentId());
 				int studentId = studentIdList.get(i);
@@ -276,6 +281,7 @@ public class ListStudentServlet extends HttpServlet {
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 			}
 
+			
 			request.setAttribute("attendanceList", attendanceList);
 			request.setAttribute("assignmentsList", assignmentsList);
 			request.setAttribute("gradesList", gradesList);

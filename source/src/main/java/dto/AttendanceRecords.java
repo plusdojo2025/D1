@@ -45,12 +45,12 @@ public class AttendanceRecords {
 		this.status = status;
 		this.remarks = remarks;
 		
-		if (date != null) {
+		//if (date != null) {
 			this.setYear(year);
 			this.setMonth(month);
 			this.setDay(day);
-			setWeek(this.date);
-		}
+		//	setWeek(this.date);
+		//}
 	}
 	
 	public AttendanceRecords(int recordId, int studentId, int classId, String period, int subjectId, String status, String remarks) {
