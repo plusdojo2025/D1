@@ -44,9 +44,11 @@ public String getWeekday(String dateStr) {
 <head>
 <meta charset="UTF-8">
 <title>授業のメモ欄</title>
+<link rel="stylesheet" type="text/css" href="css/memo.css">
 </head>
 <body>
 <!-- メイン -->
+<div class="memo-wrapper">
  <h2>授業のメモ欄</h2>
  <!-- クラス、時限、曜日表示 -->
  <p>
@@ -90,7 +92,6 @@ public String getWeekday(String dateStr) {
 <!-- メモ新規登録・編集フォーム -->
 <h3>メモ新規登録・編集</h3>
 <form action="MemoServlet" method="post">
-	<input type="hidden" name="action" value="save">
     <input type="hidden" name="memoId" value="<%= isEditing ? memoIdStr : "" %>">
     <input type="hidden" name="classId" value="<%= classId %>">
     <input type="hidden" name="period" value="<%= period %>">
@@ -102,12 +103,12 @@ public String getWeekday(String dateStr) {
     <textarea name="content" rows="1"><%= lines.length > 1 ? lines[1] : "" %></textarea><br>
     <textarea name="content" rows="1"><%= lines.length > 2 ? lines[2] : "" %></textarea><br>
     
-    <% if (isEditing) { %>
-    	<button type="submit" name="action" value="update">更新</button>
-        <button type="submit" name="action" value="delete">削除</button>
-	<% } else { %>
-    	<button type="submit" name="action" value="save">登録</button>
-    <% } %>
+    <!-- ★ 登録・編集・削除ボタンを横並びで中央表示 -->
+    <div class="button-group">
+      <button type="submit" name="action" value="save">登録</button>
+      <button type="submit" name="action" value="update">編集</button>
+      <button type="submit" name="action" value="delete">削除</button>
+    </div>
 </form>
 <!-- 戻るボタン -->
 <form action="InfoScheduleServlet" method="post">
@@ -115,6 +116,7 @@ public String getWeekday(String dateStr) {
     <input type="hidden" name="semester" value="前期">
     <input type="submit" value="戻る">
 </form>
+</div>
 <!-- JavaScript -->
 <script src="js/memo.js"></script>
 </body>
