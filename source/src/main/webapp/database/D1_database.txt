@@ -241,14 +241,14 @@ name varchar (50),
 userId varchar (255),
 password varchar(255)
 );
-INSERT INTO Teachers (name, password) 
-VALUES ('山田太郎', '#SEplus2025SEplus');
-INSERT INTO Teachers (name, password) 
-VALUES ('田中花子', '#SEplus2025SEplus');
-INSERT INTO Teachers (name, password) 
-VALUES ('梅田梅雄', '#SEplus2025SEplus');
-INSERT INTO Teachers (name, password) 
-VALUES ('伊藤加奈子', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('山田太郎', 'dojouser1', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('田中花子', 'dojouser2', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('梅田梅雄', 'dojouser3', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, userId, password) 
+VALUES ('伊藤加奈子', 'dojouser4', '#SEplus2025SEplus');
 CREATE TABLE Memo (
     memoId INT AUTO_INCREMENT PRIMARY KEY,
     teacherId INT,
