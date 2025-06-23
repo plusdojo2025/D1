@@ -99,9 +99,9 @@ public String getWeekday(String dateStr) {
     <input type="hidden" name="teacherId" value="<%= teacherId %>">
     
     <% String[] lines = (memoContent != null ? memoContent : "").split("\n", -1); %>
-    <textarea name="content" rows="1"><%= lines.length > 0 ? lines[0] : "" %></textarea><br>
-    <textarea name="content" rows="1"><%= lines.length > 1 ? lines[1] : "" %></textarea><br>
-    <textarea name="content" rows="1"><%= lines.length > 2 ? lines[2] : "" %></textarea><br>
+    <textarea name="line1" rows="1"><%= lines.length > 0 ? lines[0] : "" %></textarea><br>
+    <textarea name="line2" rows="1"><%= lines.length > 1 ? lines[1] : "" %></textarea><br>
+    <textarea name="line3" rows="1"><%= lines.length > 2 ? lines[2] : "" %></textarea><br>
     
     <!-- ★ 登録・編集・削除ボタンを横並びで中央表示 -->
     <div class="button-group">
