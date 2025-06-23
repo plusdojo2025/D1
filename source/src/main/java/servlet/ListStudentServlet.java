@@ -128,6 +128,12 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}	
 		
+		for(int i=0;studentIdList.size()>i;i++) {
+			for(int j=0;attendanceList.size()>j;j++) {
+				if(studentIdList.get(i).getStudentId ==  assignmentsList.get(i).getStudentId)
+			}
+		}
+		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
 		request.setAttribute("gradesList", gradesList);
