@@ -139,7 +139,7 @@ public class ClassWork {
 	public int dateToMonth(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		return calendar.get(Calendar.MONTH);
+		return calendar.get(Calendar.MONTH) + 1;
 	}
 	
 	public int dateToDay(Date date) {

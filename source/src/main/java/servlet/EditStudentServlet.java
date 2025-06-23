@@ -164,7 +164,7 @@ public class EditStudentServlet extends HttpServlet {
 		Date today = new Date();
 		cal.setTime(today);
 		int today_Year = cal.get(Calendar.YEAR);
-		int today_Month = cal.get(Calendar.MONTH);
+		int today_Month = cal.get(Calendar.MONTH) + 1;
 		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
@@ -323,7 +323,6 @@ public class EditStudentServlet extends HttpServlet {
 
 			// 前年度の面談の更新
 			int lastInterviewAmount = Integer.parseInt(request.getParameter("lastInterviewAmount"));
-			System.out.println("lastInterview num /" + lastInterviewAmount);
 			for (int i = 0; i < lastInterviewAmount; i++) {
 				int id = Integer.parseInt(request.getParameter("lastInterviewId" + i));
 				Date date = sdf.parse(request.getParameter("lastInterviewDate" + i));
@@ -339,7 +338,6 @@ public class EditStudentServlet extends HttpServlet {
 			
 			// 前年度の面談の追加
 			int addLastInterviewAmount = Integer.parseInt(request.getParameter("addLastInterviewAmount"));
-			System.out.println("addLastInterview num /" + addLastInterviewAmount);
 			for (int i = 0; i < addLastInterviewAmount; i++) {
 				String contents = request.getParameter("addLastInterviewContents" + i);
 				
@@ -374,7 +372,7 @@ public class EditStudentServlet extends HttpServlet {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 
 		for (int i = 0; i < as.size(); i++) {
@@ -433,7 +431,7 @@ public class EditStudentServlet extends HttpServlet {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 
 		for (int i = 0; i < as.size(); i++) {
