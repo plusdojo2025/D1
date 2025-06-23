@@ -1,0 +1,408 @@
+create table assignments(
+    assignmentId int primary key auto_increment,
+    studentId int not null,
+    subjectId int(50) not null,
+    submissionStatus varchar(30),
+    submissionDate datetime,
+    content varchar(255),
+    createdDate datetime not null
+ );
+insert into assignments values( 1, 1, 1, '◯', '2025-6-12', 'プリント', '2025-6-12 0:00' );
+insert into assignments values( 2, 2, 2, '✕', '2025-6-13', 'ノート', '2025-6-13 0:00');
+insert into assignments values( 3, 3, 3, '◯', '2025-6-14', 'ワーク', '2025-6-14 0:00');
+insert into assignments values( 4, 4, 4, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 5, 5, 5, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 6, 6, 6, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 7, 7, 7, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 8, 8, 8, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 9, 9, 9, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 10, 10, 10, '◯', '2025-1-1', '課題内容', '2025-1-1 0:00');
+insert into assignments values( 0, 37, 1, '◯', '2025-6-12', 'プリント', '2025-6-12 0:00' );
+insert into assignments values( 0, 38, 1, '✕', '2025-6-12', 'プリント', '2025-6-12 0:00' );
+insert into assignments values( 0, 39, 1, '◯', '2025-6-12', 'プリント', '2025-6-12 0:00' );
+insert into assignments values( 0, 37, 1, '◯', '2025-6-18', 'ワーク', '2025-6-12 0:00' );
+insert into assignments values( 0, 38, 1, '◯', '2025-6-18', 'ワーク', '2025-6-12 0:00' );
+insert into assignments values( 0, 39, 1, '✕', '2025-6-18', 'ワーク', '2025-6-12 0:00' );
+insert into assignments values( 0, 37, 1, '✕', '2025-6-19', 'ノート', '2025-6-12 0:00' );
+insert into assignments values( 0, 38, 1, '◯', '2025-6-19', 'ノート', '2025-6-12 0:00' );
+insert into assignments values( 0, 39, 1, '◯', '2025-6-19', 'ノート', '2025-6-12 0:00' );
+insert into assignments values( 0, 37, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
+insert into assignments values( 0, 38, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
+insert into assignments values( 0, 39, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
+CREATE TABLE AttendanceRecords (
+recordId int auto_increment PRIMARY KEY,
+studentId int,
+classId int,
+date datetime,
+period varchar(30),
+subjectId int,
+status varchar(30),
+remarks varchar(255)
+);
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 4, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 5, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-01', 6, 6, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 1, 1, '遅', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 4, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 5, 4, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-02', 6, 6, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 2, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 3, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 4, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 5, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-05-03', 6, 6, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 4, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 5, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-01', 6, 6, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 1, 1, '遅', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 4, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 5, 5, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-02', 6, 6, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 2, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 3, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 4, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 5, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 1, 1, '2025-06-03', 6, 6, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 1, 1, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 2, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 3, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 4, 4, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 5, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-01', 6, 6, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 1, 1, '遅', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 2, 3, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 3, 5, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 4, 2, '◯', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 5, 4, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-02', 6, 6, '公', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 1, 1, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 2, 2, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 3, 3, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 4, 4, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 5, 5, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 2, 1, '2025-06-03', 6, 6, '✕', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-01', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-02', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-02', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-02', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 37, 13, '2025-06-03', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 38, 13, '2025-06-03', 6, 6, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 1, 1, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 2, 2, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 3, 3, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 4, 4, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 5, 5, '○', ''); 
+INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 6, 6, '○', '');
+create table Class (		
+classId int primary key auto_increment,		
+grade int not null,		
+className varchar(20) not null		
+);
+insert into class values( 0, 3, '1組'); 
+insert into class values( 0, 3, '2組');
+insert into class values( 0, 3, '3組');
+insert into class values( 0, 3, '4組');
+insert into class values( 0, 3, '5組');
+insert into class values( 0, 3, '6組');
+insert into class values( 0, 2, '1組');
+insert into class values( 0, 2, '2組');
+insert into class values( 0, 2, '3組');
+insert into class values( 0, 2, '4組');
+insert into class values( 0, 2, '5組');
+insert into class values( 0, 2, '6組');
+insert into class values( 0, 1, '1組');
+insert into class values( 0, 1, '2組');
+insert into class values( 0, 1, '3組');
+insert into class values( 0, 1, '4組');
+insert into class values( 0, 1, '5組');
+insert into class values( 0, 1, '6組');
+CREATE TABLE ClassWork (
+classWorkId int auto_increment PRIMARY KEY,
+teacherId int,
+classid int,
+date datetime, 
+period varchar(30),
+contents varchar(255),
+subjectId int
+);
+INSERT INTO ClassWork VALUES (0, 1, 0, '2025-06-01', 1, '', 1);
+INSERT INTO ClassWork VALUES (0, 1, 1, '2025-06-01', 2, '1組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 2, '2025-06-01', 3, '2組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 0, '2025-06-01', 4, '課題チェック', 1);
+INSERT INTO ClassWork VALUES (0, 1, 0, '2025-06-01', 5, '採点', 1);
+INSERT INTO ClassWork VALUES (0, 1, 4, '2025-06-01', 6, '4組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 3, '2025-06-02', 1, '3組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 5, '2025-06-02', 2, '5組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 1, '2025-06-02', 3, '小テスト作成', 1);
+INSERT INTO ClassWork VALUES (0, 1, 1, '2025-06-02', 4, '小テスト作成', 1);
+INSERT INTO ClassWork VALUES (0, 1, 6, '2025-06-02', 5, '6組授業', 1);
+INSERT INTO ClassWork VALUES (0, 1, 1, '2025-06-02', 6, '課題チェック', 1);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 1, '3組授業', 2);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 2, '5組授業', 2);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 3, '小テスト作成', 2);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 4, '小テスト作成', 2);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 5, '6組授業', 2);
+INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 6, '課題チェック', 2);
+create table grades(
+    gradesId int primary key auto_increment,
+    studentId int not null,
+    subjectId int(30) not null,
+    score int(30),
+    testType varchar(30) not null,
+    date datetime not null
+ );
+insert into grades values( 1, 1, 1, '100', '一学期中間テスト', '2025-4-1 0:00' );
+insert into grades values( 2, 2, 2, '90', '一学期期末テスト', '2025-5-1 0:00' );
+insert into grades values( 3, 3, 3, '80', '二学期中間テスト', '2025-6-1 0:00' );
+insert into grades values( 4, 4, 4, '70', '二学期期末テスト', '2025-7-1 0:00' );
+insert into grades values( 5, 5, 5, '60', '三学期中間テスト', '2025-8-1 0:00' );
+insert into grades values( 6, 6, 6, '50', '三学期期末テスト', '2025-9-1 0:00' );
+insert into grades values( 7, 7, 7, '40', '三学期中間テスト', '2025-10-1 0:00' );
+insert into grades values( 0, 37, 1, '40', '一学期中間テスト', '2025-5-1 0:00' );
+insert into grades values( 0, 38, 1, '60', '一学期中間テスト', '2025-5-1 0:00' );
+insert into grades values( 0, 39, 1, '80', '一学期中間テスト', '2025-5-1 0:00' );
+insert into grades values( 0, 37, 1, '50', '一学期期末テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 38, 1, '70', '一学期期末テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 39, 1, '90', '一学期期末テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 37, 1, '80', '単元テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 38, 1, '100', '単元テスト', '2025-6-1 0:00' );
+insert into grades values( 0, 39, 1, '90', '単元テスト', '2025-6-1 0:00' );
+CREATE TABLE Interview (
+interviewId int auto_increment PRIMARY KEY,
+teacherId int,
+date dateTime,
+studentId int,
+contents varchar(255),
+remarks varchar(255),
+subjectId int
+);
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 1, '進路希望', '京都大学志望', 1);
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 1, '三者面談', '', 1);
+INSERT INTO Interview VALUES (0, 1, '2025-06-01', 2, '進路希望', '早稲田大学志望', 1);
+INSERT INTO Interview VALUES (0, 2, '2024-06-01', 2, '三者面談', '', 1);
+INSERT INTO Interview VALUES (0, 1, '2025-06-01', 1, '進路希望', '東京大学志望', 1);
+create table Teachers (
+teacherId int PRIMARY KEY AUTO_INCREMENT,
+name varchar (50),
+password varchar(255)
+);
+INSERT INTO Teachers (name, password) 
+VALUES ('山田太郎', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, password) 
+VALUES ('田中花子', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, password) 
+VALUES ('梅田梅雄', '#SEplus2025SEplus');
+INSERT INTO Teachers (name, password) 
+VALUES ('伊藤加奈子', '#SEplus2025SEplus');
+CREATE TABLE Memo (
+    memoId INT AUTO_INCREMENT PRIMARY KEY,
+    teacherId INT,
+    classId INT,
+    content VARCHAR(255),
+    date DATETIME,
+    period VARCHAR(30),
+    FOREIGN KEY (teacherId) REFERENCES Teachers(teacherId),
+    FOREIGN KEY (classId) REFERENCES Class(classId)
+);
+INSERT INTO Memo (teacherId, classId, content, date, period) VALUES
+(1, 2, '授業計画の確認', '2025-06-01 09:00:00', '1限'),
+(2, 3, '小テスト実施予定', '2025-06-02 10:30:00', '2限'),
+(3, 1, '保護者面談準備', '2025-06-03 13:00:00', '5限'),
+(1, 4, '教材印刷依頼', '2025-06-04 11:00:00', '3限'),
+(2, 5, 'グループ発表の順番決め', '2025-06-05 14:00:00', '6限'),
+(3, 2, '進捗確認メモ', '2025-06-06 09:45:00', '1限'),
+(1, 5, '課題提出状況チェック', '2025-06-07 15:00:00', '7限'),
+(2, 1, '生徒面談', '2025-06-08 08:50:00', '1限'),
+(3, 3, '学級会の記録', '2025-06-09 12:00:00', '4限'),
+(1, 1, '補講予定メモ', '2025-06-10 16:00:00', '2限');
+CREATE TABLE Schedule (
+    scheduleId INT AUTO_INCREMENT PRIMARY KEY,
+    teacherId INT,
+    classId INT,
+    date DATETIME,
+    period VARCHAR(20),
+    content VARCHAR(50),
+    type VARCHAR(30),  
+    year INT,
+    semester VARCHAR(20),  
+    memo VARCHAR(255),
+    day_of_week VARCHAR(20),
+
+    CONSTRAINT fk_teacher FOREIGN KEY (teacherId) REFERENCES Teachers(teacherId),
+    CONSTRAINT fk_class FOREIGN KEY (classId) REFERENCES Class(classId)
+);
+INSERT INTO schedule 
+(teacherId, classId, date, period, content, type, year, semester, memo, day_of_week)
+VALUES
+(1, 1, '2025-04-08 08:45:00', '1限', '現代文', 'class', '2023', '前期', '初回授業', '月曜日'),
+(2, 1, '2025-04-08 10:30:00', '2限', '英語表現', 'class', '2023', '前期', '教科書配布', '月曜日'),
+(3, 2, '2025-04-09 08:45:00', '1限', '保健体育', 'class', '2023', '前期', 'グラウンド使用', '火曜日'),
+(1, 2, '2025-04-10 13:00:00', '5限', '学活', 'personal', '2024', '前期', '担任業務', '水曜日'),
+(2, 3, '2025-04-11 08:45:00', '1限', '化学', 'class', '2024', '前期', '実験準備', '木曜日'),
+(1, 1, '2025-04-12 16:00:00', '4限', '音楽', 'personal', '2024', '前期', '合唱練習', '金曜日'),
+(2, 1, '2025-09-02 08:45:00', '1限', '数学IA', 'class', '2025', '後期', '復習内容', '月曜日'),
+(3, 2, '2025-09-03 08:45:00', '1限', '地理', 'class', '2025', '後期', '地形の復習', '火曜日'),
+(1, 3, '2025-09-04 13:00:00', '5限', '公民', 'class', '2025', '後期', '法と政治', '水曜日'),
+(2, 2, '2025-09-05 08:45:00', '1限', '家庭科', 'class', '2025', '後期', '調理実習', '木曜日');
+INSERT INTO schedule (teacherId, classId, date, period, content, type, year, semester, memo, day_of_week) VALUES
+(1, 2, '2024-04-08 08:45:00', '1限', '数学IA', 'class', 2024, '前期', '導入授業', '月曜日'),
+(2, 3, '2024-04-09 10:30:00', '2限', '英語表現', 'class', 2024, '前期', 'プリント配布', '火曜日'),
+(3, 1, '2024-04-10 13:00:00', '5限', '学活', 'personal', 2024, '前期', 'ホームルーム確認', '水曜日'),
+(2, 1, '2024-04-11 16:00:00', '3限', '音楽', 'personal', 2024, '前期', '楽器調整', '木曜日'),
+(1, 2, '2024-04-12 08:45:00', '1限', '化学', 'class', 2024, '前期', '化学反応式確認', '金曜日'),
+(2, 1, '2024-09-03 08:45:00', '1限', '公民', 'class', 2024, '後期', '憲法の学習', '火曜日'),
+(3, 2, '2024-09-05 10:30:00', '2限', '家庭科', 'class', 2024, '後期', '調理実習案内', '木曜日'),
+(1, 3, '2025-04-07 08:45:00', '1限', '現代文', 'class', 2025, '前期', '古文導入', '月曜日'),
+(2, 2, '2025-04-10 14:30:00', '4限', '地理', 'class', 2025, '前期', '地形区分の説明', '木曜日'),
+(3, 1, '2025-09-06 16:00:00', '2限', '学活', 'personal', 2025, '後期', '三者面談準備', '金曜日');
+create table students(
+studentId int primary key auto_increment,
+year int not null,
+grade int not null,
+classId int not null,
+studentNum int not null,
+name varchar(50) not null,
+nameRuby varchar(50) not null,
+enrollmentStatus varchar(255),
+extracurricularActivities varchar(255),
+attitude varchar(255)
+);
+insert into students values( 1, 2023, 3, 1, 1, '石田　悠真', 'いしだ　ゆうま', '', '', '');
+insert into students values( 2, 2023, 3, 1, 2, '鈴木　海斗', 'すずき　かいと', '', 'ボランティア活動', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 3, 2023, 3, 1, 3, '土井　千夏', 'どい　ちなつ', '', '', '');
+insert into students values( 4, 2023, 3, 2, 1, '高橋　翔', 'たかはし　しょう', '', '', '');
+insert into students values( 5, 2023, 3, 2, 2, '長谷川　千里', 'はせがわ　ちさと', '', '', '');
+insert into students values( 6, 2023, 3, 2, 3, '寺田　舞', 'てらだ　まい', '', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
+insert into students values( 7, 2023, 3, 3, 1, '原田　拓海', 'はらだ　たくみ', '', '', '授業内容への理解を深めようとする姿勢が発言によく表れている。');
+insert into students values( 8, 2023, 3, 3, 2, '沢口　さえ', 'さわぐち　さえ', '', '', '');
+insert into students values( 9, 2023, 3, 3, 3, '関口　涼音', 'せきぐち　すずね', '', 'ボランティア活動', '');
+insert into students values( 10, 2023, 3, 4, 1, '岩本　翼', 'いわもと　つばさ', '', '', '');
+insert into students values( 11, 2023, 3, 4, 2, '松本　大地', 'まつもと　だいち', '', '', '');
+insert into students values( 12, 2023, 3, 4, 3, '北村　雲母', 'きたむら　きらら', '', '', '');
+insert into students values( 13, 2023, 3, 5, 1, '小林　大翔', 'こばやし　はると', '', '', '');
+insert into students values( 14, 2023, 3, 5, 2, '増田　陸', 'ますだ　りく', '', '', '');
+insert into students values( 15, 2023, 3, 5, 3, '岩田　礼', 'いわた　れい', '', 'ボランティア活動', '');
+insert into students values( 16, 2023, 3, 6, 1, '永井　匠', 'ながい　たくみ', '', '', '授業中に眠気から集中力を欠く場面が散見される。');
+insert into students values( 17, 2023, 3, 6, 2, '西川　俊', 'にしかわ　しゅん', '', '', '');
+insert into students values( 18, 2023, 3, 6, 3, '伊藤　郁美', 'いとう　いくみ', '', '', '');
+insert into students values( 19, 2024, 2, 7, 1, '岸　孝之', 'きし　たかゆき', '', '', '');
+insert into students values( 20, 2024, 2, 7, 2, '小林　誠', 'こばやし　まこと', '', '', '');
+insert into students values( 21, 2024, 2, 7, 3, '小山　小春', 'こやま　こはる', '', '柔道部全国大会出場', '');
+insert into students values( 22, 2024, 2, 8, 1, '森　琢磨', 'もり　たくま', '停学', '', '授業中に周囲との私語が多く、学習への集中に課題が見られる。');
+insert into students values( 23, 2024, 2, 8, 2, '古賀　涼', 'こが　すず', '休学', '', '');
+insert into students values( 24, 2024, 2, 8, 3, '坂本　紗耶香', 'さかもと　さやか', '', 'ボランティア活動', '');
+insert into students values( 25, 2024, 2, 9, 1, '大野　青空', 'おおの　そら', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 26, 2024, 2, 9, 2, '藤井　敬', 'ふじい　けい', '', '', '');
+insert into students values( 27, 2024, 2, 9, 3, '佐野　静香', 'さの　しずか', '', '', '');
+insert into students values( 28, 2024, 2, 10, 1, '青木　春斗', 'あおき　はると', '', 'ボランティア活動', '');
+insert into students values( 29, 2024, 2, 10, 2, '岡崎　壮太', 'おかざき　そうた', '', '', '');
+insert into students values( 30, 2024, 2, 10, 3, '杉山　香里', 'すぎやま　かおり', '', '', '');
+insert into students values( 31, 2024, 2, 11, 1, '加藤　優斗', 'かとう　ゆうと', '', '男子バスケットボール部県大会出場', '');
+insert into students values( 32, 2024, 2, 11, 2, '川口　花蓮', 'かわぐち　かれん', '', '', '');
+insert into students values( 33, 2024, 2, 11, 3, '喜田　楓', 'きた　かえで', '', '', '');
+insert into students values( 34, 2024, 2, 12, 1, '柴田　玲央', 'しばた　れお', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
+insert into students values( 35, 2024, 2, 12, 2, '谷口　晴喜', 'たにぐち　はるき', '', '', '');
+insert into students values( 36, 2024, 2, 12, 3, '遠藤　悦子', 'えんどう　えつこ', '', '女子卓球部県大会出場', '');
+insert into students values( 37, 2025, 1, 13, 1, '安藤　治', 'あんどう　はる', '', '', '');
+insert into students values( 38, 2025, 1, 13, 2, '金子　翔琉', 'かねこ　かける', '', '', '');
+insert into students values( 39, 2025, 1, 13, 3, '大久保　恵那', 'おおくぼ　えな', '', 'ボランティア活動', '');
+insert into students values( 40, 2025, 1, 14, 1, '飯田　龍', 'いしだ　りゅう', '', '', '');
+insert into students values( 41, 2025, 1, 14, 2, '福田　流星', 'ふくだ　りゅうせい', '', '', '');
+insert into students values( 42, 2025, 1, 14, 3, '秋山　茜', 'あきやま　あかね', '', '', '');
+insert into students values( 43, 2025, 1, 15, 1, '竹内　真人', 'たけうち　まさと', '', '', '疑問点や意見を積極的に発言する姿勢が見られ、主体的に学習に取り組んでいる。');
+insert into students values( 44, 2025, 1, 15, 2, '平田　和真', 'ひらた　かずま', '', '', '');
+insert into students values( 45, 2025, 1, 15, 3, '津田　司', 'つだ　つかさ', '', '', '');
+insert into students values( 46, 2025, 1, 16, 1, '小松　圭太', 'こまつ　けいた', '', '', '');
+insert into students values( 47, 2025, 1, 16, 2, '白石　鈴', 'しらいし　すず', '', '', '');
+insert into students values( 48, 2025, 1, 16, 3, '筒井　千尋', 'つつい　ちひろ', '', 'ボランティア活動', '');
+insert into students values( 49, 2025, 1, 17, 1, '黒田　琉希', 'くろだ　りゅうき', '', '', '');
+insert into students values( 50, 2025, 1, 17, 2, '和田　日向', 'わだ　ひなた', '', '', '');
+insert into students values( 51, 2025, 1, 17, 3, '戸田　天', 'とだ　てん', '', '', '授業中に居眠りをする場面が複数回見られる。');
+insert into students values( 52, 2025, 1, 18, 1, '柳　陽介', 'やなぎ　ようすけ', '', '', '授業中に積極的に発言し、学習に対する関心の高さがうかがえる。');
+insert into students values( 53, 2025, 1, 18, 2, '後藤　ことね', 'ごとう　ことね', '', 'ボランティア活動', '');
+insert into students values( 54, 2025, 1, 18, 3, '田辺　凛', 'たなべ　りん', '', '', '');
+
+create table subject(
+    subjectId int primary key auto_increment,
+    subjectName varchar(30) not null
+ );
+insert into subject values( 1, '現代文' );
+insert into subject values( 2, '古典' );
+insert into subject values( 3, '数学IA' );
+insert into subject values( 4, '数学ⅡB' );
+insert into subject values( 5, '数学ⅢC' );
+insert into subject values( 6, '英語表現' );
+insert into subject values( 7, '物理' );
+insert into subject values( 8, '化学' );
+insert into subject values( 9, '生物' );
+insert into subject values( 10, '地学' );
+insert into subject values( 11, '日本史' );
+insert into subject values( 12, '世界史' );
+insert into subject values( 13, '地理' );
+insert into subject values( 14, '公民' );
+insert into subject values( 15, '情報' );
+insert into subject values( 16, '技術' );
+insert into subject values( 17, '家庭科' );
+insert into subject values( 18, '美術' );
+insert into subject values( 19, '書道' );
+insert into subject values( 20, '保健体育' );
+insert into subject values( 21, '音楽' );
+insert into subject values( 22, '学活' );
+insert into subject values( 23, 'その他' );
+
+
+
