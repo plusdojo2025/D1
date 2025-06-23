@@ -12,18 +12,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const formObj = document.getElementById('regist_form');
   const errorMessageObj = document.getElementById('error_message');
 
-  gradeSelect.addEventListener('change', () => {
+  function updateClassOptions(gradeValue, selectedClassNum = "") {
     classSelect.innerHTML = '<option value="">-- クラスを選択 --</option>';
-    const g = gradeSelect.value;
-    if (classMap[g]) {
-      Object.entries(classMap[g]).forEach(([num, id]) => {
+    if (classMap[gradeValue]) {
+      Object.entries(classMap[gradeValue]).forEach(([num, id]) => {
         const opt = document.createElement('option');
         opt.value = num;
         opt.text = num + "組";
         classSelect.appendChild(opt);
       });
     }
-    classIdInput.value = "";
+    classSelect.value = selectedClassNum;
+    classIdInput.value = (classMap[gradeValue] && classMap[gradeValue][selectedClassNum]) ? classMap[gradeValue][selectedClassNum] : "";
+  }
+
+  // 学年は初期値「1年」だけセット、クラスは空（未選択）
+  const initialGrade = gradeSelect.value || "1";
+  gradeSelect.value = initialGrade;
+  updateClassOptions(initialGrade, ""); // クラス未選択
+
+  gradeSelect.addEventListener('change', () => {
+    updateClassOptions(gradeSelect.value, "");
   });
 
   classSelect.addEventListener('change', () => {
@@ -32,16 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
     classIdInput.value = (classMap[g] && classMap[g][c]) ? classMap[g][c] : "";
   });
 
-  // Enterキーでも送信トリガー  + 暗黙投稿防止
   formObj.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      formObj.requestSubmit(); // Enterでもsubmitイベントへ
+      formObj.requestSubmit();
     }
   });
 
   formObj.addEventListener('submit', e => {
-    e.preventDefault();  // とりあえず止める
+    e.preventDefault();
     const fullWidth = '　';
     const name = formObj.name.value.trim();
     const ruby = formObj.nameRuby.value.trim();
@@ -58,9 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (msg) {
       errorMessageObj.textContent = msg;
-      return; // 停止
+      return;
     }
-    formObj.submit(); // バリデーションOKなら送信
+
+    formObj.submit();
   });
- 
 });
