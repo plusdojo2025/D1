@@ -51,6 +51,7 @@ public class EditAllStudentServlet extends HttpServlet {
 		if(request.getParameter("editCompleted") !=null && request.getParameter("editCompleted").equals("編集完了")){
  
 			Date date= new Date();
+			Date dateNull= null;
 			int year = Integer.parseInt(request.getParameter("year"));                 //年
 			int month = Integer.parseInt(request.getParameter("month"));               //月
 			int grade = Integer.parseInt(request.getParameter("grade"));               //学年
@@ -75,7 +76,6 @@ public class EditAllStudentServlet extends HttpServlet {
 			for(int i=0;studentList.size()>i;i++) {
 				studentIdList.add(studentList.get(i).getStudentId());
 			}
-			System.out.println("studentIdList"+studentIdList);
 			
 			//recordIdのリストを取得
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
@@ -128,14 +128,18 @@ public class EditAllStudentServlet extends HttpServlet {
 			String submissionStatus = null;             //課題情報
 			for(int i=0;assignmentsIdList.size()>i;i++) {
 				assignmentId = assignmentsIdList.get(i);
-				System.out.println("assignmentId"+assignmentId);
+				
+				List<Assignments> contentList = assignmentsDao.select(new Assignments
+						(assignmentId,-1,-1,"","",-1,-1,dateNull));
+				String content = contentList.get(0).getContent();
+		
+				
 				String searchassignment =Integer.toString(assignmentId).concat("assign");
-				System.out.println("searchassignment"+searchassignment);
 				submissionStatus = request.getParameter(searchassignment);         
 
-				//出欠情報を取得
-				if (assignmentsDao.update(new Assignments(assignmentId, 0, 0, submissionStatus, "", date))) { // 更新成功
-					System.out.println("更新成功");
+				//提出物情報を取得
+				if (assignmentsDao.update(new Assignments(assignmentId, 0, 0, submissionStatus, content, date))) { // 更新成功
+					System.out.println("提出物更新成功");
 				} else { // 更新失敗
 					System.out.println("提出物更新失敗");
 				}
@@ -155,15 +159,20 @@ public class EditAllStudentServlet extends HttpServlet {
 			}
 			
 			int gradesId = 0;
-			int score = 0;             //出欠情報
+			int score = 0;             //テストの点
 			for(int i=0;gradesIdList.size()>i;i++) {
 				gradesId = gradesIdList.get(i);
 				String searchgrades =Integer.toString(gradesId).concat("grades");
-				score = Integer.parseInt(request.getParameter(searchgrades));         //出欠ID
+				score = Integer.parseInt(request.getParameter(searchgrades));         //成績ID
+				
+				
+				List<Grades> testTypeList = gradesDao.select(
+						new Grades(gradesId,-1,-1,-1,"",-1,-1));
+				String testType = testTypeList.get(0).getTestType();
 	
 
 				//出欠情報を取得
-				if (gradesDao.update(new Grades(gradesId, 0, 0, score, "", 0, 0))) { // 更新成功
+				if (gradesDao.update(new Grades(gradesId, 0, 0, score, testType, 0, 0))) { // 更新成功
 					System.out.println("更新成功");
 				} else { // 更新失敗
 					System.out.println("テスト更新失敗");
@@ -198,7 +207,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 			
-		}else if(request.getParameter("content") !=null){
+		}else if(request.getParameter("content") !=null && request.getParameter("content") !=""){
 
 			Date date=new Date(); 
 
