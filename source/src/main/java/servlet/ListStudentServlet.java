@@ -281,9 +281,6 @@ public class ListStudentServlet extends HttpServlet {
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 			}
 
-			System.out.println(attendanceList.get(0).getYear());
-			System.out.println(attendanceList.get(0).getMonth());
-			System.out.println(attendanceList.get(0).getStudentId());
 			
 			request.setAttribute("attendanceList", attendanceList);
 			request.setAttribute("assignmentsList", assignmentsList);

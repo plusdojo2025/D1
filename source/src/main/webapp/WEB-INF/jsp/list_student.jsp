@@ -154,7 +154,7 @@
 
 			<div id="submission">
 				<span> 提出物状況 </span> <span>
-					<button id="submissionButton" type="button">課題追加</button>
+					<button id="submissionButton">課題追加</button>
 					<div id="submissionModal" class="modal">
 						<div class="modal-content">
 							<span class="close">&times;</span> <select name="subject">
