@@ -137,6 +137,7 @@
 
 			<div id="submission">
 				提出物状況 <span>提出率</span> <span>${subjectSubmittedRate}%</span>
+				<input type="hidden" name="submissionAmount" value="${assignmentsList.size()}">
 				<table>
 					<tr>
 						<td>課題内容</td>
@@ -145,7 +146,6 @@
 					</tr>
 
 					<c:forEach var="sub" items="${assignmentsList}" varStatus="status">
-					<input type="hidden" name="submissionAmount" value="${assignmentsList.size()}">
 						<input type="hidden" name="assignmentId${status.index}" value="${sub.assignmentId}">
 						<tr>
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
@@ -167,9 +167,9 @@
 					</c:forEach>
 					
 					<tr id="addSubmission">
-						<td><input type="text" name="addAssignmentContent0" class="submittionContent"></td>
+						<td><input type="text" name="addAssignmentContent0" class="addSubmittionContent"></td>
 						<td>
-							<select name="addSubmittionStatus0" class="submittionStatus">
+							<select name="addSubmittionStatus0" class="addSubmittionStatus">
 								<option value="◯" class="submittedStatus">◯</option>
 								<option value="✕" class="submittedStatus" selected>✕</option>
 							</select>
@@ -178,12 +178,13 @@
 					</tr>
 
 				</table>
-				<input type="button" value="＋" onclick="addSubmission()">
+				<input type="button" value="＋" onclick="addSubmission()" class="addButton">
 				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount" value="1">
 				<br>
 			</div>
 
 			<div id="grades">
+				<input type="hidden" name="gradesAmount" value="${gradesList.size()}">
 				成績状況 <br>
 				<table>
 					<tr>
@@ -191,17 +192,21 @@
 						<td>点数</td>
 					</tr>
 
-					<c:forEach var="gra" items="${gradesList}">
-					<input type="hidden" name="gradeId" value="${gra.gradeId}">
+					<c:forEach var="gra" items="${gradesList}" varStatus="status">
+					<input type="hidden" name="gradeId${status.index}" value="${gra.gradeId}">
 						<tr>
-							<td><input type="text" name="gradeTestType" value="${gra.testType}"></td>
-							<td><input type="number" name="gradeScore" value="${gra.score}"></td>
+							<td><input type="text" name="gradeTestType${status.index}" value="${gra.testType}"></td>
+							<td><input type="number" name="gradeScore${status.index}" value="${gra.score}"></td>
 						</tr>
 					</c:forEach>
 					
-					<!-- 空白欄 -->
+					<tr id="addGrade">
+						<td><input type="text" name="addGradeTestType0" class="addGradeTestType"></td>
+						<td><input type="number" name="addGradeScore0" class="addGradeScore"></td>
+					</tr>
 				</table>
-				<!-- 欄追加ボタン -->
+				<input type="button" value="＋" onclick="addGrade()" class="addButton">
+				<input type="hidden" name="addGradesAmount" id="addGradesAmount" value="1">
 				<br>
 			</div>
 
