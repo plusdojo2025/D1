@@ -95,7 +95,7 @@ public class InterviewDAO {
 		return itvList;
 	}
 
-	public List<Interview> select_thisYear(int studentId) {
+	public List<Interview> select_thisYear(int studentId, int fiscalYear) {
 		Connection conn = null;
 		List<Interview> itvList = new ArrayList<Interview>();
 
@@ -122,12 +122,12 @@ public class InterviewDAO {
 			}
 			
 			Calendar cal = Calendar.getInstance();
-			if (cal.get(Calendar.MONTH) >= 4) {
-				pStmt.setString(2, cal.get(Calendar.YEAR) + "-4-1");
-				pStmt.setString(3, (cal.get(Calendar.YEAR) + 1) + "-3-31");
+			if (cal.get(Calendar.MONTH) + 1 >= 4) {
+				pStmt.setString(2, fiscalYear + "-4-1");
+				pStmt.setString(3, (fiscalYear + 1) + "-3-31");
 			} else {
-				pStmt.setString(2, (cal.get(Calendar.YEAR) - 1) + "-4-1");
-				pStmt.setString(3, (cal.get(Calendar.YEAR)) + "-3-31");
+				pStmt.setString(2, (fiscalYear - 1) + "-4-1");
+				pStmt.setString(3, fiscalYear + "-3-31");
 			}
 
 			// SQLの実行
@@ -166,7 +166,7 @@ public class InterviewDAO {
 		return itvList;
 	}
 	
-	public List<Interview> select_lastYear(int studentId) {
+	public List<Interview> select_lastYear(int studentId, int fiscalYear) {
 		Connection conn = null;
 		List<Interview> itvList = new ArrayList<Interview>();
 
@@ -193,12 +193,12 @@ public class InterviewDAO {
 			}
 			
 			Calendar cal = Calendar.getInstance();
-			if (cal.get(Calendar.MONTH) >= 4) {
-				pStmt.setString(2, (cal.get(Calendar.YEAR) - 1) + "-4-1");
-				pStmt.setString(3, cal.get(Calendar.YEAR) + "-3-31");
+			if (cal.get(Calendar.MONTH) + 1 >= 4) {
+				pStmt.setString(2, (fiscalYear - 1) + "-4-1");
+				pStmt.setString(3, fiscalYear + "-3-31");
 			} else {
-				pStmt.setString(2, (cal.get(Calendar.YEAR) - 2) + "-4-1");
-				pStmt.setString(3, (cal.get(Calendar.YEAR) - 1) + "-3-31");
+				pStmt.setString(2, (fiscalYear - 2) + "-4-1");
+				pStmt.setString(3, (fiscalYear - 1) + "-3-31");
 			}
 
 			// SQLの実行
@@ -251,7 +251,7 @@ public class InterviewDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Interview VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO Interview VALUES (?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -311,34 +311,26 @@ public class InterviewDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Interview SET interviewId=?, teacherId=?, date=?, studentId=?, "
-					+ "contents=?, remarks=? WHERE subjectId LIKE ?;";
+			String sql = "UPDATE Interview SET date=?, contents=?, remarks=? WHERE interviewId LIKE ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			pStmt.setInt(1, _itv.getInterviewId());
-			pStmt.setInt(2, _itv.getTeacherId());
-			pStmt.setString(3,  _itv.getYear() + "-" + _itv.getMonth() + "-" + _itv.getDay());
-			pStmt.setInt(4, _itv.getStudentId());
+			pStmt.setString(1,  _itv.getYear() + "-" + _itv.getMonth() + "-" + _itv.getDay());
 			
 			if (_itv.getContents() != null) {
-				pStmt.setString(5, _itv.getContents());
+				pStmt.setString(2, _itv.getContents());
 			} else {
-				pStmt.setString(5, "");
+				pStmt.setString(2, "");
 			}
 			
 			if (_itv.getRemarks() != null) {
-				pStmt.setString(6, _itv.getRemarks());
+				pStmt.setString(3, _itv.getRemarks());
 			} else {
-				pStmt.setString(6, "");
+				pStmt.setString(3, "");
 			}
 			
-			if (_itv.getSubjectId() > 0) {
-				pStmt.setString(7, "" + _itv.getSubjectId());
-			} else {
-				pStmt.setString(7, "");
-			}
-
+			pStmt.setInt(4, _itv.getInterviewId());
+			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
 				result = true;

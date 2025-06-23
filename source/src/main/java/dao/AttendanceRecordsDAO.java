@@ -497,12 +497,9 @@ public class AttendanceRecordsDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(_ar.getDate());
-
 			pStmt.setInt(1, _ar.getStudentId());
 			pStmt.setInt(2, _ar.getClassId());
-			pStmt.setString(3, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(3, _ar.getYear() + "-" + _ar.getMonth() + "-" + _ar.getDay());
 
 			if (_ar.getPeriod() != null) {
 				pStmt.setString(4, _ar.getPeriod());
@@ -828,7 +825,7 @@ public class AttendanceRecordsDAO {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 
 		if (isFirstSemester(month, day)) {
@@ -855,7 +852,7 @@ public class AttendanceRecordsDAO {
 		int count = 0;
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
+		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 
 		if (isFirstSemester(month, day)) {
