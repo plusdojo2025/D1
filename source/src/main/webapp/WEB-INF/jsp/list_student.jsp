@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/list_student.css">
+<link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
 <title>項目ごとに閲覧</title>
 </head>
 
@@ -18,7 +18,7 @@
 
 	<main>
 	
-		<form action="/D1/ListStudentServlet" method="POST"
+		<form action="<c:url value='/ListStudentServlet'/>" method="POST"
 			id="list_student_form">
 
 			
@@ -279,8 +279,8 @@
 			</div>
 		</form>
 	</main>
-
-	<script src="js/list_student.js"></script>
+	<script src="<c:url value='/js/list_student.js' />"></script>
+	
 
 </body>
 
