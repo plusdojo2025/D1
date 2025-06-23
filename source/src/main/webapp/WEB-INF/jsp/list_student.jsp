@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
+<link rel="stylesheet" href="<c:url value='/css/header.css' />">
+<link rel="stylesheet" href="<c:url value='/css/common.css' />">
 <title>項目ごとに閲覧</title>
 </head>
 
@@ -125,7 +127,25 @@
 			<div id="attendance">
 				<span> 出席状況 </span> <span>
 					<button id="attendanceButton" name="add" value="出席日追加">出席日追加</button>
-					<span> <input type="text" name="day" placeholder="出席日"></span>
+					<span><select name="day">
+							<option>出席日</option>
+							<c:if test="${month == 2}">
+								<c:forEach var="e" begin="1" end="29">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+							<c:if test="${month == 4 || month == 6 || month == 9 || month == 11}">
+								<c:forEach var="e" begin="1" end="30">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+							<c:if test="${month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12}">
+								<c:forEach var="e" begin="1" end="31">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+					</select></span>
+					<span>日</span> 
 					<span><select name="period">
 							<option>時限</option>
 							<option value="1">1</option>
@@ -135,7 +155,7 @@
 							<option value="5">5</option>
 							<option value="6">6</option>
 					</select></span>
-				</span>
+				</span><span>限</span> 
 				<table border="1">
 					<tr>
 						<td></td>

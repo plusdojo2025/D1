@@ -183,7 +183,9 @@ public class ListStudentServlet extends HttpServlet {
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
-		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && (request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加"))){
+		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && 
+				(request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加")
+						|| request.getParameter("add").equals("出席日追加"))){
 			
 			String content =null;                    //内容
 			String testType =null;                    //内容
