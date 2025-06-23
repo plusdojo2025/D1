@@ -145,7 +145,7 @@
 					</tr>
 
 					<c:forEach var="sub" items="${assignmentsList}" varStatus="status">
-					<input type="hidden" name="assignmentsAmount" value="${assignmentsList.size()}">
+					<input type="hidden" name="submissionAmount" value="${assignmentsList.size()}">
 						<input type="hidden" name="assignmentId${status.index}" value="${sub.assignmentId}">
 						<tr>
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
@@ -155,7 +155,14 @@
 									<option value="✕" class="submittedStatus">✕</option>
 								</select>
 							</td>
-							<td><input type="date" name="submittionDate${status.index}" value="<fmt:formatDate value="${sub.submissionDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+							<td>
+								<c:if test="${sub.submissionStatus == '◯'}">
+									<input type="date" name="submittedDate${status.index}" value="<fmt:formatDate value="${sub.submissionDate}" pattern="yyyy-MM-dd"></fmt:formatDate>">
+								</c:if>
+								<c:if test="${sub.submissionStatus == '✕'}">
+									<input type="date" name="submittedDate${status.index}" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>">
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 					
@@ -167,12 +174,12 @@
 								<option value="✕" class="submittedStatus" selected>✕</option>
 							</select>
 						</td>
-						<td><input type="date" name="addSubmittionDate0" class="addSubmittionDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+						<td><input type="date" name="addSubmittedDate0" class="addSubmittionDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
 					</tr>
 
 				</table>
 				<input type="button" value="＋" onclick="addSubmission()">
-				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount" value="0">
+				<input type="hidden" name="addSubmittionAmount" id="addSubmittionAmount">
 				<br>
 			</div>
 

@@ -1,7 +1,9 @@
 'use strict';
+addSubmissionAmount.value = 0;
 let addSubmitNum = 1;
 let submissionObj = document.getElementById("addSubmission");
 let addSubmissionAmount = document.getElementById("addSubmittionAmount");
+
 function addSubmission() {
 	// 複製
 	let clone_submission = submissionObj.cloneNode(true);
