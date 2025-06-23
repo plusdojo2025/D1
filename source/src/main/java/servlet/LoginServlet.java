@@ -60,16 +60,15 @@ public class LoginServlet extends HttpServlet {
 		Teacher loginTeacher = dao.findByIdAndPassword(input);
 		
 		if (loginTeacher != null) { 
-			// ログイン成功→セッションスコープにIDを格納する
-			HttpSession session = request.getSession();
-			session.setAttribute("loginTeacher", loginTeacher);
-			
-		//スケジュール管理閲覧画面に遷移
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
-		dispatcher.forward(request, response);
+		    // ログイン成功→セッションスコープにIDを格納する
+		    HttpSession session = request.getSession();
+		    session.setAttribute("loginTeacher", loginTeacher);
+		    
+		    // スケジュール閲覧用のサーブレットへリダイレクト
+		    response.sendRedirect("InfoScheduleServlet");
 		} else { 
-			// 認証失敗時にリダイレクト（JS が ?error=1 を検知して表示）
-			response.sendRedirect("LoginServlet?error=1");
+		    // 認証失敗時にリダイレクト
+		    response.sendRedirect("LoginServlet?error=1");
 		}
 	}
 }
