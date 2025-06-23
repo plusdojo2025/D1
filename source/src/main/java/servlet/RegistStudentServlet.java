@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.StudentsDAO;
 import dto.Students;
@@ -34,12 +33,12 @@ public class RegistStudentServlet extends HttpServlet {
 		 
 		 
 		 
-		HttpSession session = request.getSession();
+		/*HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
 		} 
-		 
+		 */
 		 
 		 
 		 
@@ -62,14 +61,14 @@ public class RegistStudentServlet extends HttpServlet {
 		
 		
 		
-		
+		/*
 		HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
 		}
 
-		
+		*/
 		
 		
 		

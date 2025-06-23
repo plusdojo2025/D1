@@ -60,8 +60,8 @@ public class Schedule implements Serializable {
     public int getClassId() {
         return classId;
     }
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public void setClassId(int classId2) {
+        this.classId = classId2;
     }
     public LocalDateTime getDate() {
         return date;
