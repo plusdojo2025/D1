@@ -82,7 +82,7 @@
         <tr>
           <td colspan="2">
            <div class="button-area">
-            <button type="button" onclick="location.href="<c:url value='/InfoScheduleServlet'/>">キャンセル</button>
+            <button type="button" onclick="location.href='<c:url value='/InfoScheduleServlet'/>'">キャンセル</button>
             <button type="submit" name="regist" id="regist_btn">登録</button>
            </div> 
           </td>

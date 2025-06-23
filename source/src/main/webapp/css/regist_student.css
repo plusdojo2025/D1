@@ -1,9 +1,9 @@
-/* フォント */
+
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
   color: #2c3e50;
-  min-height: 70vh;
+  min-height: 100vh;
   padding: 40px 20px;
 }
 
