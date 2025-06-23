@@ -1,1 +1,115 @@
 @charset "UTF-8";
+
+/* 全体の背景・中央配置 */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;   /* 横方向中央 */
+  align-items: flex-start;   /* 上寄せ */
+  background-color: #f7f7f7;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* メモ画面本体（最大化） */
+.memo-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: none;             /* 横幅制限を解除 */
+  margin: 0;
+  padding: 40px 80px;          /* 内側の余白は確保 */
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* 見出し */
+.memo-wrapper h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* クラス・時限・曜日表示 */
+.memo-wrapper p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* セクションタイトル */
+.memo-wrapper h3 {
+  font-size: 18px;
+  margin: 20px 0 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+/* メモ一覧 */
+ul {
+  list-style: disc inside;
+  padding-left: 0;
+  margin-bottom: 30px;
+}
+
+ul li {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+/* 編集・削除ボタン */
+form input[type="submit"] {
+  margin-left: 10px;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+/* メモ入力欄 */
+textarea[name="content"] {
+  width: 100%;
+  border: 1px solid #999;
+  padding: 6px;
+  font-size: 16px;
+  resize: none;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* 登録・更新・削除ボタン */
+button,
+input[type="submit"][value="登録"],
+input[type="submit"][value="更新"],
+input[type="submit"][value="削除"],
+input[type="submit"][value="戻る"] {
+  padding: 8px 24px;
+  margin-right: 20px;
+  font-size: 16px;
+  border: 2px solid #336699;
+  background-color: #e6f0ff;
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: #cce0ff;
+}
+
+/* 戻るボタンだけ黒フレーム */
+input[type="submit"][value="戻る"] {
+  border-color: #000;
+  background-color: #fff;
+}
+input[type="submit"][value="戻る"]:hover {
+  background-color: #f0f0f0;
+}
+/*ボタン3つを横並び中央*/
+.button-group {                     /* ★ フォーム内で3ボタンを囲む div */
+  display: flex;
+  justify-content: center;          /* 中央寄せ */
+  gap: 20px;                        /* ボタン間の余白 */
+  margin-top: 20px;
+}
+
+/* ボタングループ内ボタンは左右余白をリセット */
+.button-group button { margin: 0; } 
