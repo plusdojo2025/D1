@@ -29,6 +29,7 @@ insert into assignments values( 0, 39, 1, '◯', '2025-6-19', 'ノート', '2025
 insert into assignments values( 0, 37, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
 insert into assignments values( 0, 38, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
 insert into assignments values( 0, 39, 1, '✕', '2025-6-12', 'ドリル', '2025-6-12 0:00' );
+
 CREATE TABLE AttendanceRecords (
 recordId int auto_increment PRIMARY KEY,
 studentId int,
@@ -147,6 +148,7 @@ INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 3, 3, '○', '');
 INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 4, 4, '○', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 5, 5, '○', ''); 
 INSERT INTO AttendanceRecords VALUES (0, 39, 13, '2025-06-03', 6, 6, '○', '');
+
 create table Class (		
 classId int primary key auto_increment,		
 grade int not null,		
@@ -170,6 +172,7 @@ insert into class values( 0, 1, '3組');
 insert into class values( 0, 1, '4組');
 insert into class values( 0, 1, '5組');
 insert into class values( 0, 1, '6組');
+
 CREATE TABLE ClassWork (
 classWorkId int auto_increment PRIMARY KEY,
 teacherId int,
@@ -197,6 +200,7 @@ INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 3, '小テスト作成', 2)
 INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 4, '小テスト作成', 2);
 INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 5, '6組授業', 2);
 INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 6, '課題チェック', 2);
+
 create table grades(
     gradesId int primary key auto_increment,
     studentId int not null,
@@ -221,6 +225,7 @@ insert into grades values( 0, 39, 1, '90', '一学期期末テスト', '2025-6-1
 insert into grades values( 0, 37, 1, '80', '単元テスト', '2025-6-1 0:00' );
 insert into grades values( 0, 38, 1, '100', '単元テスト', '2025-6-1 0:00' );
 insert into grades values( 0, 39, 1, '90', '単元テスト', '2025-6-1 0:00' );
+
 CREATE TABLE Interview (
 interviewId int auto_increment PRIMARY KEY,
 teacherId int,
@@ -235,6 +240,7 @@ INSERT INTO Interview VALUES (0, 2, '2024-06-01', 1, '三者面談', '', 1);
 INSERT INTO Interview VALUES (0, 1, '2025-06-01', 2, '進路希望', '早稲田大学志望', 1);
 INSERT INTO Interview VALUES (0, 2, '2024-06-01', 2, '三者面談', '', 1);
 INSERT INTO Interview VALUES (0, 1, '2025-06-01', 1, '進路希望', '東京大学志望', 1);
+
 create table Teachers (
 teacherId int PRIMARY KEY AUTO_INCREMENT,
 name varchar (50),
@@ -249,6 +255,7 @@ INSERT INTO Teachers (name, userId, password)
 VALUES ('梅田梅雄', 'dojouser3', '#SEplus2025SEplus');
 INSERT INTO Teachers (name, userId, password) 
 VALUES ('伊藤加奈子', 'dojouser4', '#SEplus2025SEplus');
+
 CREATE TABLE Memo (
     memoId INT AUTO_INCREMENT PRIMARY KEY,
     teacherId INT,
@@ -270,6 +277,7 @@ INSERT INTO Memo (teacherId, classId, content, date, period) VALUES
 (2, 1, '生徒面談', '2025-06-08 08:50:00', '1限'),
 (3, 3, '学級会の記録', '2025-06-09 12:00:00', '4限'),
 (1, 1, '補講予定メモ', '2025-06-10 16:00:00', '2限');
+
 CREATE TABLE Schedule (
     scheduleId INT AUTO_INCREMENT PRIMARY KEY,
     teacherId INT,
@@ -310,6 +318,7 @@ INSERT INTO schedule (teacherId, classId, date, period, content, type, year, sem
 (1, 3, '2025-04-07 08:45:00', '1限', '現代文', 'class', 2025, '前期', '古文導入', '月曜日'),
 (2, 2, '2025-04-10 14:30:00', '4限', '地理', 'class', 2025, '前期', '地形区分の説明', '木曜日'),
 (3, 1, '2025-09-06 16:00:00', '2限', '学活', 'personal', 2025, '後期', '三者面談準備', '金曜日');
+
 create table students(
 studentId int primary key auto_increment,
 year int not null,
