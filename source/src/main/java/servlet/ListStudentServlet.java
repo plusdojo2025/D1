@@ -126,7 +126,7 @@ public class ListStudentServlet extends HttpServlet {
 					(0,studentId,subjectId,"","",year,month,date)));
 			
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
-		}
+		}	
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -182,6 +182,31 @@ public class ListStudentServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
+
+		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && (request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加"))){
+			
+			
+			
+			
+			int year = Integer.parseInt(request.getParameter("year"));          //年
+			int month = Integer.parseInt(request.getParameter("month"));        //月
+			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
+			String className =request.getParameter("className");                //クラス
+			String subjectName = request.getParameter("subjectName");           //教科
+			String content =request.getParameter("content");                    //内容
+
+			System.out.println(request.getParameter("add"));
+
+			request.setAttribute("grade", grade);
+			request.setAttribute("className", className);
+			request.setAttribute("year", year);
+			request.setAttribute("month", month);
+			request.setAttribute("subjectName", subjectName);
+			request.setAttribute("content", content);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
+			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
+			dispatcher.forward(request, response);
 
 		}else if(request.getParameter("studentNum") ==null){
 			// リクエストパラメータを取得する
@@ -262,7 +287,7 @@ public class ListStudentServlet extends HttpServlet {
 			List<Grades> testTypeList = gradesDao.select(new Grades(0,studentOne,subjectId,-1,"",year,month));
 			int testTypeListSize = testTypeList.size();
 
-
+			
 			for(int i=0;studentIdList.size()>i;i++) {
 				//studentId.add(studentList.get(i).getStudentId());
 				int studentId = studentIdList.get(i);
@@ -276,6 +301,7 @@ public class ListStudentServlet extends HttpServlet {
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 			}
 
+			
 			request.setAttribute("attendanceList", attendanceList);
 			request.setAttribute("assignmentsList", assignmentsList);
 			request.setAttribute("gradesList", gradesList);

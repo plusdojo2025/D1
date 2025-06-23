@@ -128,7 +128,7 @@ public class GradesDAO {
 			if (gs.getGradesId() > 0) {
 				pStmt.setString(1, "" + gs.getGradesId());
 			} else {
-				pStmt.setString(1, "%");
+				pStmt.setString(1, "0");
 			}
 			if (gs.getStudentId() > 0) {
 				pStmt.setString(2, "" + gs.getStudentId());
@@ -143,7 +143,7 @@ public class GradesDAO {
 			if (gs.getScore() >= 0) {
 				pStmt.setString(4, "" + gs.getScore());
 			} else {
-				pStmt.setString(4, "%");
+				pStmt.setString(4, "0");
 			}
 			if (gs.getTestType() != null) {
 				pStmt.setString(5, gs.getTestType());
@@ -151,7 +151,7 @@ public class GradesDAO {
 				pStmt.setString(5, "");
 			}
 			
-			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(6, calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -200,7 +200,7 @@ public class GradesDAO {
 			if (gs.getScore() >= 0) {
 				pStmt.setString(1, "" + gs.getScore());
 			} else {
-				pStmt.setString(1, "%");
+				pStmt.setString(1, "0");
 			}
 			if (gs.getTestType() != null) {
 				pStmt.setString(2, gs.getTestType());

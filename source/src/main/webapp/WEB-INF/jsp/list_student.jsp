@@ -90,7 +90,7 @@
 				<option value="学活">学活</option>
 				<option value="その他">その他</option>
 			</select> 
-			<input type="submit" name="edit" placeholder="編集" id="edit" value="編集"> 
+			<input type="submit" name="edit" id="edit" value="編集"> 
 			<button id="downloadBtn">ダウンロード</button>
 
 			<p>表示項目選択</p>
@@ -154,7 +154,9 @@
 
 			<div id="submission">
 				<span> 提出物状況 </span> <span>
-					<button id="submissionButton" type="button">課題追加</button>
+					<button id="submissionButton" name="add" id="edit" value="提出物追加">提出物追加</button></span>
+					<span> <input type="text" name="content" placeholder="課題内容">
+					<!-- 
 					<div id="submissionModal" class="modal">
 						<div class="modal-content">
 							<span class="close">&times;</span> <select name="subject">
@@ -190,6 +192,7 @@
 							</span>
 						</div>
 					</div>
+					 -->
 				</span>
 
 				<table border="1">
@@ -229,7 +232,8 @@
 
 			<div id="grades">
 				<span> 成績状況 </span> <span>
-					<button id="gradesButton">テスト追加</button>
+					<button id="gradesButton" name="add" id="edit" value="テスト追加">テスト追加</button>
+					<span> <input type="text" name="content" placeholder="テスト名"></span>
 				</span>
 
 				<table border="1">

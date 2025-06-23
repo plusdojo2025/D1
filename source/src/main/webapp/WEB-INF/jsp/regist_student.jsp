@@ -1,17 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/jsp/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>生徒登録</title>
   <link rel="stylesheet" href="<c:url value='/css/regist_student.css'/>">
-  <link rel="stylesheet" href="<c:url value='/css/header.css'/>">
+  
 
 </head>
 <body>
 <div class="wrapper">
+	<div style="text-align: center; margin-bottom: 20px;">
+  <img src="<%= request.getContextPath() %>/img/header_banner.jpg" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<nav>
+  <ul class="cute-menu">
+    <li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
+    <li><a href="<c:url value='/InfoScheduleServlet'/>">📅 スケジュール</a></li>
+    <li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
+  </ul>
+</nav>
+	
   
   <div class="main-content">
     
@@ -53,18 +65,18 @@
           <td><label>出席番号（半角数字のみ）</label></td>
           <td>
            <div class="with-suffix">
-            <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short">
+            <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short" autocomplete="off">
             <span class="suffix-text">番</span>
             </div>
           </td>
         </tr>
         <tr>
           <td><label for="name">氏名</label></td>
-          <td><input type="text" name="name" id="name" placeholder="例) 山田　太郎" class="form-input"></td>
+          <td><input type="text" name="name" id="name" placeholder="例) 山田　太郎" class="form-input" autocomplete="name"></td>
         </tr>
         <tr>
           <td><label for="nameRuby">ふりがな</label></td>
-          <td><input type="text" name="nameRuby" id="nameRuby" placeholder="例) やまだ　たろう" class="form-input"></td>
+          <td><input type="text" name="nameRuby" id="nameRuby" placeholder="例) やまだ　たろう" class="form-input" autocomplete="off"></td>
         </tr>
         <tr>
           <td colspan="2">
@@ -82,7 +94,7 @@
         <tr>
           <td colspan="2">
            <div class="button-area">
-            <button type="button" onclick="location.href="<c:url value='/InfoScheduleServlet'/>">キャンセル</button>
+            <button type="button" onclick="location.href='<c:url value='/InfoScheduleServlet'/>'">キャンセル</button>
             <button type="submit" name="regist" id="regist_btn">登録</button>
            </div> 
           </td>
