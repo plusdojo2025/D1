@@ -65,18 +65,18 @@
           <td><label>出席番号（半角数字のみ）</label></td>
           <td>
            <div class="with-suffix">
-            <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short">
+            <input type="number" name="studentNum" id="studentNum" placeholder="例) 23" min="1" class="form-input-short" autocomplete="off">
             <span class="suffix-text">番</span>
             </div>
           </td>
         </tr>
         <tr>
           <td><label for="name">氏名</label></td>
-          <td><input type="text" name="name" id="name" placeholder="例) 山田　太郎" class="form-input"></td>
+          <td><input type="text" name="name" id="name" placeholder="例) 山田　太郎" class="form-input" autocomplete="name"></td>
         </tr>
         <tr>
           <td><label for="nameRuby">ふりがな</label></td>
-          <td><input type="text" name="nameRuby" id="nameRuby" placeholder="例) やまだ　たろう" class="form-input"></td>
+          <td><input type="text" name="nameRuby" id="nameRuby" placeholder="例) やまだ　たろう" class="form-input" autocomplete="off"></td>
         </tr>
         <tr>
           <td colspan="2">
