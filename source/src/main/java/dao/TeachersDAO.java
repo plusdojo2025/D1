@@ -24,11 +24,11 @@ public class TeachersDAO {
                     "root", "password");
 			
 			// SQL文の準備する
-            String sql = "SELECT * FROM Teachers WHERE teacherId = ? AND password = ?";
+            String sql = "SELECT * FROM Teachers WHERE userId = ? AND password = ?";
             PreparedStatement pStmt = conn.prepareStatement(sql);
             
             // SQL文を完成させる
-            pStmt.setInt(1, t.getTeacherId());
+            pStmt.setString(1, t.getUserId());
 			pStmt.setString(2, t.getPassword());
             
 			// SQL文を実行し、結果表を取得する
@@ -38,6 +38,7 @@ public class TeachersDAO {
 			if (rs.next()) {
 				teacher = new Teacher(
 					rs.getInt("teacherId"),
+					rs.getString("userId"),
 					rs.getString("name"),
 					rs.getString("password"));
 			}		

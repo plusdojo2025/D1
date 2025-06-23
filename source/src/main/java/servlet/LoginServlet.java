@@ -40,20 +40,16 @@ public class LoginServlet extends HttpServlet {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 		
-		String idStr = request.getParameter("teacherId");
+		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		
-		int teacherId = 0;
-		try {
-			teacherId = Integer.parseInt(idStr);
-		} catch (NumberFormatException e) {
-			// 数字変換エラー → ログイン失敗扱いで戻す
-			response.sendRedirect("LoginServlet");
+		if (userId == null || userId.isEmpty()) {
+			response.sendRedirect("LoginServlet?error=1");
 			return;
 		}
 		
 		// DTOに格納
-		Teacher input = new Teacher(teacherId, null, password);
+		Teacher input = new Teacher(userId, null, password);
 		
 		// DAOで照合
 		TeachersDAO dao = new TeachersDAO();
