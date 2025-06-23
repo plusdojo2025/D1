@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
+<link rel="stylesheet" href="css/list_student.css">
 <title>項目ごとに閲覧</title>
 </head>
 
@@ -18,18 +18,18 @@
 
 	<main>
 	
-		<form action="<c:url value='/ListStudentServlet'/>" method="POST"
+		<form action="/webapp/ListStudentServlet" method="POST"
 			id="list_student_form">
 
 			
-			<input type="hidden" name="number" value="${subjectId}}"> <select
+			<input type="hidden" name="number" value="${subjectId}"> <select
 				name="grade" onchange="this.form.submit()">
 				<option>${grade}</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 			</select>
-			<spsan>年</span> <select name="className"
+			<span>年</span> <select name="className"
 				onchange="this.form.submit()">
 				<option>${className}</option>
 				<option value="1組">1組</option>
@@ -91,7 +91,29 @@
 				<option value="その他">その他</option>
 			</select> 
 			<input type="submit" name="edit" placeholder="編集" id="edit" value="編集"> 
-			<input type="submit" name="download" placeholder="ダウンロード" id="download" value="ダウンロード">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!--  改造 -->
+			<button id="downloadBtn">ダウンロード</button>
+            <!-- 終了 -->
+
+
+
+
+
+
+
+
+
+
+
 
 
 			<p>表示項目選択</p>
@@ -279,9 +301,10 @@
 			</div>
 		</form>
 	</main>
-	<script src="<c:url value='/js/list_student.js' />"></script>
-	
 
+	<script src="js/list_student.js"></script>
+	
 </body>
 
 </html>
+

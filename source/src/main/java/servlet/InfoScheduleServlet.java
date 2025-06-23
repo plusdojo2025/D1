@@ -23,27 +23,19 @@ public class InfoScheduleServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // セッション確認
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginTeacher") == null) {
             response.sendRedirect("LoginServlet");
             return;
         }
 
-        int teacherId = ((Teacher) session.getAttribute("loginTeacher")).getTeacherId();
+        Teacher teacher = (Teacher) session.getAttribute("loginTeacher");
+        int teacherId = teacher.getTeacherId();
 
         String yearStr = request.getParameter("year");
         String semester = request.getParameter("semester");
 
-        int year = 2025;
-        if (yearStr != null && !yearStr.isEmpty()) {
-            try {
-                year = Integer.parseInt(yearStr);
-            } catch (NumberFormatException e) {
-                year = 2025;
-            }
-        }
-
+        int year = (yearStr != null && !yearStr.isEmpty()) ? Integer.parseInt(yearStr) : 2025;
         if (semester == null || semester.isEmpty()) {
             semester = "前期";
         }
@@ -52,13 +44,18 @@ public class InfoScheduleServlet extends HttpServlet {
         Schedule condition = new Schedule(-1, teacherId, -1, null, "", "", "", year, semester, "", "");
         List<Schedule> scheduleList = sDao.select(condition);
 
+        request.setAttribute("loginTeacher", teacher); // ✨これが JSP に渡される
         request.setAttribute("scheduleList", scheduleList);
         request.setAttribute("paramYear", year);
         request.setAttribute("paramSemester", semester);
+        request.setAttribute("teacherId", teacherId);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
         dispatcher.forward(request, response);
     }
+
+
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -114,6 +111,7 @@ public class InfoScheduleServlet extends HttpServlet {
             request.setAttribute("scheduleList", scheduleList);
             request.setAttribute("paramYear", year);
             request.setAttribute("paramSemester", semester);
+            request.setAttribute("teacherId", teacherId);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
             dispatcher.forward(request, response);

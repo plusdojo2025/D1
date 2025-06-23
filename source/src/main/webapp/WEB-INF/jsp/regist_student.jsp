@@ -24,7 +24,7 @@
           <td><label  for="year">入学年（半角数字のみ）</label></td>
           <td>
           <div class="with-suffix">
-           <input type="number" name="year" id="year" placeholder="例) 2023" class="form-input">
+           <input type="number" name="year" id="year" placeholder="例) 2023"  min="2000" max="2500" class="form-input">
             <span class="suffix-text">年</span>
            
           </div>

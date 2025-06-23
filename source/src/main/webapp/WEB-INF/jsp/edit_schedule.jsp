@@ -28,6 +28,8 @@
 
 <h1>スケジュールの編集</h1>
 
+<p>教師ID：<c:out value="${loginTeacher.teacherId}" /></p>
+
 <!-- 年度・学期の検索フォーム -->
 <form action="EditScheduleServlet" method="post">
   <div class="form-row">
@@ -108,7 +110,7 @@
   </div>
 </form>
 
-<!-- キャンセルは別フォームで外に出す -->
+<!-- キャンセルボタン -->
 <form action="InfoScheduleServlet" method="post" style="display: inline;">
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
@@ -116,26 +118,26 @@
   <button type="submit" class="btn">キャンセル</button>
 </form>
 
+<!-- JavaScript：教師IDごとにメモを保存・読み込み -->
 <script>
-  // メモ読み込み
-  window.addEventListener('load', () => {
-    const savedMemo = localStorage.getItem('scheduleMemo');
-    if (savedMemo) {
-      document.getElementById('memoBox').value = savedMemo;
-    }
-  });
+	document.getElementById('editForm').addEventListener('submit', function(event) {
+	  event.preventDefault();
+	  const teacherId = "${loginTeacher.teacherId}";
+	  const memoKey = `scheduleMemo_${teacherId}`; // ✅ 教師IDだけをキーに
+	  const memoContent = document.getElementById('memoBox').value;
 
-  // フォーム送信前に確実にローカルストレージに保存してから送信
-  document.getElementById('editForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 送信を一旦止める
-    const memoContent = document.getElementById('memoBox').value;
-    localStorage.setItem('scheduleMemo', memoContent);
+	  try {
+	    localStorage.setItem(memoKey, memoContent);
+	  } catch (e) {
+	    console.error("メモ保存エラー", e);
+	  }
 
-    // 少しだけ遅延を入れてから送信（確実に保存されるように）
-    setTimeout(() => {
-      this.submit();
-    }, 100);
-  });
+	  setTimeout(() => {
+	    this.submit(); // 保存してから送信
+	  }, 100);
+	});
+
+
 </script>
 
 </body>

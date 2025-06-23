@@ -75,7 +75,10 @@ public class EditScheduleServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect("InfoScheduleServlet?year=" + year + "&semester=" + java.net.URLEncoder.encode(semester, "UTF-8"));
+            request.setAttribute("year", year);
+            request.setAttribute("semester", semester);
+            request.setAttribute("action", "search");
+            request.getRequestDispatcher("InfoScheduleServlet").forward(request, response);
             return;
         }
 
