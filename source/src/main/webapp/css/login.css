@@ -1,1 +1,55 @@
 @charset "UTF-8";
+
+/* 全体を縦横中央に配置 */
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* 横方向中央 */
+  align-items: center;     /* 縦方向中央 */
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+/* ログインボックス全体 */
+.login-wrapper {
+  background-color: #ffffff;
+  padding: 40px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* タイトル中央揃え */
+.login-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* テーブルの入力行の余白調整 */
+table td {
+  padding: 8px;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 6px;
+  font-size: 16px;
+}
+
+/* ログインボタン中央揃え */
+input[type="submit"] {
+  display: block;
+  margin: 10px auto 0;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* エラーメッセージ */
+#errorBox {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
