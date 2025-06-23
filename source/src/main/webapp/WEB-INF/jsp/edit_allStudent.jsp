@@ -13,7 +13,25 @@
 </head>
 
 <body>
-    <header></header>
+    <header>
+    	<div style="text-align: center; margin-bottom: 20px;">
+  <img src="${headerBannerUrl}" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<!-- ナビ全体を中央に寄せる -->
+<div style="text-align: center;">
+  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+    <!-- ロゴ画像 -->
+     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
+    <!-- メニュー -->
+    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+    </ul>
+  </nav>
+</div>
+    </header>
 
     <main>
         <form action="<c:url value='/EditAllStudentServlet' />" method ="POST" id="edit_allstudent_form">
