@@ -218,6 +218,7 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(1, "");
 			}
+
 			pStmt.setString(2, calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 						
