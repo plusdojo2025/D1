@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.StudentsDAO;
 import dto.Students;
@@ -29,11 +30,19 @@ public class RegistStudentServlet extends HttpServlet {
 	
 			throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
-		/*HttpSession session = request.getSession();
+		 
+		 
+		 
+		 
+		HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
-		} */
+		} 
+		 
+		 
+		 
+		 
 
 		// 登録ページにフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
@@ -48,12 +57,24 @@ public class RegistStudentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする "/webapp/LoginServlet"のwebappをD1に変更
-		/*HttpSession session = request.getSession();
+		
+		
+		
+		
+		
+		
+		HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 			return;
-		}*/
+		}
 
+		
+		
+		
+		
+		
+		
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 		//入学年
@@ -128,12 +149,12 @@ public class RegistStudentServlet extends HttpServlet {
 		
 		// 登録処理を行う
 		if (sDao.insert(new Students(0, year, grade, classId, studentNum, name, nameRuby, "", "", ""))) { // 登録成功時は、"InfoStudentServlet"にフォワード  "/webapp/InfoStudentServlet"のwebappをD1に変更 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/InfoStudentServlet");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/ListStudentServlet");
             dispatcher.forward(request, response);
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
             //登録失敗時は"Servlet"にフォワード                                "/D1/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/D1/RegistStudentServlet");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/RegistStudentServlet");
             dispatcher.forward(request, response);
             return;
 		}
