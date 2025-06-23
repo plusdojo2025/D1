@@ -138,7 +138,7 @@ public class AssignmentsDAO {
 			if (as.getAssignmentId() != -1) {
 				pStmt.setString(1, "" + as.getAssignmentId());
 			} else {
-				pStmt.setString(1, "");
+				pStmt.setString(1, "0");
 			}
 			if (as.getStudentId() != -1) {
 				pStmt.setString(2, "" + as.getStudentId());
@@ -157,7 +157,7 @@ public class AssignmentsDAO {
 				pStmt.setString(4, "");
 			}
 			
-			pStmt.setString(5, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+			pStmt.setString(5, calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 			
 			if (as.getContent() != null) {
 				pStmt.setString(6, as.getContent());
@@ -167,6 +167,7 @@ public class AssignmentsDAO {
 			
 			
 			pStmt.setString(7, as.getCreatedYear() + "-" + as.getCreatedMonth() + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -219,7 +220,8 @@ public class AssignmentsDAO {
 			} else {
 				pStmt.setString(1, "");
 			}
-			pStmt.setString(2, calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH +1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+
+			pStmt.setString(2, calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
 
 						
 			if (as.getAssignmentId() > 0) {
