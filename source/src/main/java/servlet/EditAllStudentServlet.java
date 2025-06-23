@@ -207,7 +207,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 			
-		}else if(request.getParameter("period") !=null && request.getParameter("period") !=""){
+		}else if(request.getParameter("period") !=null && request.getParameter("period") !="" && !request.getParameter("day").equals("出席日")){
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
