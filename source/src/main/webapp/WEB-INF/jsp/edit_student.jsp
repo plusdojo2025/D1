@@ -193,7 +193,7 @@
 					</tr>
 
 					<c:forEach var="gra" items="${gradesList}" varStatus="status">
-					<input type="hidden" name="gradeId${status.index}" value="${gra.gradeId}">
+					<input type="hidden" name="gradeId${status.index}" value="${gra.gradesId}">
 						<tr>
 							<td><input type="text" name="gradeTestType${status.index}" value="${gra.testType}"></td>
 							<td><input type="number" name="gradeScore${status.index}" value="${gra.score}"></td>
@@ -206,10 +206,9 @@
 					</tr>
 				</table>
 				<input type="button" value="＋" onclick="addGrade()" class="addButton">
-				<input type="hidden" name="addGradesAmount" id="addGradesAmount" value="1">
+				<input type="hidden" name="addGradesAmount" id="addGradesAmount" value="0">
 				<br>
 			</div>
-
 
 			<div id="attitude">
 				授業態度 <br>
@@ -228,6 +227,7 @@
 
 			<div id="interview">
 				面談記録 <br>
+				<input type="hidden" name="interviewAmount" value="${interviewList.size()}">
 				<table>
 					<tr>
 						<td>日付</td>
@@ -235,16 +235,27 @@
 						<td>備考</td>
 					</tr>
 
-					<c:forEach var="itv" items="${interviewList}">
-						<input type="hidden" name="interviewId" value="${itv.interviewId}">
+					<c:forEach var="itv" items="${interviewList}" varStatus="status">
+						<input type="hidden" name="interviewId${status.index}" value="${itv.interviewId}">
 						<tr>
-							<td><input type="date" name="interviewDate" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
-							<td><input type="text" name="interviweContents" value="${itv.contents}"></td>
-							<td><input type="text" name="interviweRemarks" value="${itv.remarks}"></td>
+							<td><input type="date" name="interviewDate${status.index}" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+							<td><input type="text" name="interviweContents${status.index}" value="${itv.contents}"></td>
+							<td><input type="text" name="interviweRemarks${status.index}" value="${itv.remarks}"></td>
 						</tr>
 					</c:forEach>
+					
+					<tr id="addInterview">
+						<td><input type="date" name="addInterviewDate0" class="addInterviewDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+						<td><input type="text" name="addInterviewContents0" class="addInterviewContents"></td>
+						<td><input type="text" name="addInterviewRemarks0" class="addInterviewRemarks"></td>
+					</tr>
 				</table>
-				<br> 前年度面談記録 <br>
+				<input type="button" value="＋" onclick="addInterview()" class="addButton">
+				<input type="hidden" name="addInterviewAmount" id="addInterviewAmount" value="1">
+				<br> 
+				
+				前年度面談記録 <br>
+				<input type="hidden" name="lastInterviewAmount" value="${lastInterviewList.size()}">
 				<table>
 					<tr>
 						<td>日付</td>
@@ -252,15 +263,23 @@
 						<td>備考</td>
 					</tr>
 
-					<c:forEach var="itv" items="${lastInterviewList}">
-						<input type="hidden" name="lastInterviewId" value="${itv.interviewId}">
+					<c:forEach var="itv" items="${lastInterviewList}" varStatus="status">
+						<input type="hidden" name="lastInterviewId${status.index}" value="${itv.interviewId}">
 						<tr>
-							<td><input type="date" name="lastInterviewDate" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
-							<td><input type="text" name="lastInterviweContents" value="${itv.contents}"></td>
-							<td><input type="text" name="lastInterviweRemarks" value="${itv.remarks}"></td>
+							<td><input type="date" name="lastInterviewDate${status.index}" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+							<td><input type="text" name="lastInterviewContents${status.index}" value="${itv.contents}"></td>
+							<td><input type="text" name="lastInterviewRemarks${status.index}" value="${itv.remarks}"></td>
 						</tr>
 					</c:forEach>
+					
+					<tr id="addLastInterview">
+						<td><input type="date" name="addLastInterviewDate0" class="addLastInterviewDate" value="<fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
+						<td><input type="text" name="addLastInterviewContents0" class="addLastInterviewContents"></td>
+						<td><input type="text" name="addLastInterviewRemarks0" class="addLastInterviewRemarks"></td>
+					</tr>
 				</table>
+				<input type="button" value="＋" onclick="addLastInterview()" class="addButton">
+				<input type="hidden" name="addLastInterviewAmount" id="addLastInterviewAmount" value="1">
 				<br>
 			</div>
 

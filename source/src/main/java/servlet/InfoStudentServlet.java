@@ -142,8 +142,8 @@ public class InfoStudentServlet extends HttpServlet {
 
 			//面談
 			InterviewDAO itvDAO = new InterviewDAO();
-			List<Interview> itvList = itvDAO.select_thisYear(studentId);
-			List<Interview> lastItvList = itvDAO.select_lastYear(studentId);
+			List<Interview> itvList = itvDAO.select_thisYear(studentId, (student.getYear() + grade - 1));
+			List<Interview> lastItvList = itvDAO.select_lastYear(studentId, (student.getYear() + grade - 1));
 			request.setAttribute("interviewList", itvList);
 			request.setAttribute("lastInterviewList", lastItvList);
 
