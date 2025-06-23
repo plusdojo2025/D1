@@ -155,7 +155,7 @@
 			<div id="submission">
 				<span> 提出物状況 </span> <span>
 					<button id="submissionButton" name="add" id="edit" value="提出物追加">提出物追加</button></span>
-					<span> 課題内容 </span> <span> <input type="text" name="content">
+					<span> 課題内容 </span> <span> <input type="text" name="content" placeholder="テスト名">
 					<!-- 
 					<div id="submissionModal" class="modal">
 						<div class="modal-content">
@@ -233,6 +233,7 @@
 			<div id="grades">
 				<span> 成績状況 </span> <span>
 					<button id="gradesButton" name="add" id="edit" value="テスト追加">テスト追加</button>
+					<span> <input type="text" name="content" placeholder="テスト名"></span>
 				</span>
 
 				<table border="1">

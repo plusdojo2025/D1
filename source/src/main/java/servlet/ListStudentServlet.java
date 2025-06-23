@@ -183,7 +183,7 @@ public class ListStudentServlet extends HttpServlet {
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
-		}else if(request.getParameter("add") !=null && request.getParameter("add").equals("提出物追加")){
+		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && request.getParameter("add").equals("提出物追加")){
 			
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
@@ -193,6 +193,7 @@ public class ListStudentServlet extends HttpServlet {
 			String subjectName = request.getParameter("subjectName");           //教科
 			String content =request.getParameter("content");                    //内容
 
+			System.out.println(request.getParameter("add"));
 
 			request.setAttribute("grade", grade);
 			request.setAttribute("className", className);

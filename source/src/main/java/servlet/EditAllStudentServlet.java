@@ -124,10 +124,6 @@ public class EditAllStudentServlet extends HttpServlet {
 				assignmentsIdList.add(assignmentsList.get(i).getAssignmentId());
 			}
 			
-			System.out.println("aaa");
-			System.out.println("attendanceList.size()"+attendanceList.size());
-			System.out.println("assignmentsIdList"+assignmentsIdList);
-			
 			int assignmentId = 0;
 			String submissionStatus = null;             //課題情報
 			for(int i=0;assignmentsIdList.size()>i;i++) {
@@ -240,9 +236,6 @@ public class EditAllStudentServlet extends HttpServlet {
 				studentIdList.add(studentList.get(i).getStudentId());
 			}
 
-			System.out.println(studentIdList.size());
-			System.out.println(request.getParameter("add"));
-
 			for (int i=0;studentIdList.size()>i;i++) {
 				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
 				if (assignmentsDao.insert(new Assignments(0, studentIdList.get(i), subjectId, "✕", content, 
@@ -259,6 +252,8 @@ public class EditAllStudentServlet extends HttpServlet {
 			request.setAttribute("year", year);
 			request.setAttribute("month", month);
 			request.setAttribute("subjectName", subjectName);
+			
+			request.setAttribute("add", "aaa");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
