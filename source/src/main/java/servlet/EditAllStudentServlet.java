@@ -241,6 +241,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			}
 
 			System.out.println(studentIdList.size());
+			System.out.println(request.getParameter("add"));
 
 			for (int i=0;studentIdList.size()>i;i++) {
 				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
