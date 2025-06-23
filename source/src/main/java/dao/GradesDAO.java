@@ -36,7 +36,7 @@ public class GradesDAO {
 			if (gs.getGradesId() > 0) {
 				pStmt.setString(1, "" + gs.getGradesId());
 			} else {
-				pStmt.setString(1, "%");
+				pStmt.setString(1, "0");
 			}
 			if (gs.getStudentId() > 0) {
 				pStmt.setString(2, "" + gs.getStudentId());
