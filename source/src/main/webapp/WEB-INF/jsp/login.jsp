@@ -15,7 +15,7 @@
 <form action="LoginServlet" method="post">
 	<table>
 		<tr>
-			<td>ログインID：</td>
+			<td>教員ID：</td>
 			<td><input type="text" name="userId"></td>
 		</tr>
 		<tr>
