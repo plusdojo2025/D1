@@ -91,8 +91,7 @@
 				<option value="その他">その他</option>
 			</select> 
 			<input type="submit" name="edit" placeholder="編集" id="edit" value="編集"> 
-			<input type="submit" name="download" placeholder="ダウンロード" id="download" value="ダウンロード">
-
+			<button id="downloadBtn">ダウンロード</button>
 
 			<p>表示項目選択</p>
 
