@@ -12,11 +12,11 @@
 <div class = "login-wrapper">
 	<h2>ログイン</h2>
 	
-<form action="LoginServlet" method="post">
+<form action="<%= request.getContextPath() %>/LoginServlet" method="post">
 	<table>
 		<tr>
 			<td>教員ID：</td>
-			<td><input type="text" name="userId"></td>
+			<td><input type="text" name="teacherId"></td>
 		</tr>
 		<tr>
 			<td>パスワード：</td>
