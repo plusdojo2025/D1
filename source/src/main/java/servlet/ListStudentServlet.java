@@ -142,7 +142,7 @@ public class ListStudentServlet extends HttpServlet {
 				}
 			}
 			attendanceRate.get(i).add(studentIdList.get(i));
-			attendanceRate.get(i).add(attendanceSum / sum * 100);
+			attendanceRate.get(i).add((Math.floor(attendanceSum / sum * 100 * 10)) / 10);
 		}
 		
 		

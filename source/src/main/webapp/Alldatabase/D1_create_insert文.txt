@@ -294,7 +294,7 @@ CREATE TABLE Schedule (
     CONSTRAINT fk_teacher FOREIGN KEY (teacherId) REFERENCES Teachers(teacherId),
     CONSTRAINT fk_class FOREIGN KEY (classId) REFERENCES Class(classId)
 );
-INSERT INTO schedule 
+INSERT INTO Schedule 
 (teacherId, classId, date, period, content, type, year, semester, memo, day_of_week)
 VALUES
 (1, 1, '2025-04-08 08:45:00', '1限', '現代文', 'class', '2023', '前期', '初回授業', '月曜日'),
@@ -307,7 +307,7 @@ VALUES
 (3, 2, '2025-09-03 08:45:00', '1限', '地理', 'class', '2025', '後期', '地形の復習', '火曜日'),
 (1, 3, '2025-09-04 13:00:00', '5限', '公民', 'class', '2025', '後期', '法と政治', '水曜日'),
 (2, 2, '2025-09-05 08:45:00', '1限', '家庭科', 'class', '2025', '後期', '調理実習', '木曜日');
-INSERT INTO schedule (teacherId, classId, date, period, content, type, year, semester, memo, day_of_week) VALUES
+INSERT INTO Schedule (teacherId, classId, date, period, content, type, year, semester, memo, day_of_week) VALUES
 (1, 2, '2024-04-08 08:45:00', '1限', '数学IA', 'class', 2024, '前期', '導入授業', '月曜日'),
 (2, 3, '2024-04-09 10:30:00', '2限', '英語表現', 'class', 2024, '前期', 'プリント配布', '火曜日'),
 (3, 1, '2024-04-10 13:00:00', '5限', '学活', 'personal', 2024, '前期', 'ホームルーム確認', '水曜日'),
