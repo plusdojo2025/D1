@@ -128,6 +128,29 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}	
 		
+		ArrayList<Double> attendanceRate = new ArrayList<>();
+		double attendanceSum = 0;
+		double sum = 0;
+		for(int i=0;studentIdList.size()>i;i++) { //表示する生徒の分繰り返す
+			for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
+				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
+					String attendanceStatus = attendanceList.get(j).getStatus();
+					if (attendanceStatus.equals("◯")) {
+						attendanceSum+=1;
+					}
+					sum+=1;
+				}
+			}
+			attendanceRate.get(i).add(studentIdList.get(i));
+			attendanceRate.get(i).add((Math.floor(attendanceSum / sum * 100 * 10)) / 10);
+		}
+		
+		
+		System.out.println("1");
+		System.out.println("attendanceRate "+attendanceRate);
+		System.out.println("sum "+sum);
+		System.out.println("attendanceRate "+attendanceRate);
+		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
 		request.setAttribute("gradesList", gradesList);
@@ -136,6 +159,8 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("contentList", contentList);
 		request.setAttribute("testTypeList", testTypeList);
 		request.setAttribute("testTypeListSize", testTypeListSize);
+		
+		request.setAttribute("attendanceRate", attendanceRate);
 		
 		request.setAttribute("grade", grade);
 		request.setAttribute("className", className);
@@ -183,7 +208,9 @@ public class ListStudentServlet extends HttpServlet {
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
 
-		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && (request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加"))){
+		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && 
+				(request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加")
+						|| request.getParameter("add").equals("出席日追加"))){
 			
 			String content =null;                    //内容
 			String testType =null;                    //内容

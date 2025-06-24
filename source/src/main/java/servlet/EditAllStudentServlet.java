@@ -207,12 +207,11 @@ public class EditAllStudentServlet extends HttpServlet {
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 			
-		}else if(request.getParameter("period") !=null && request.getParameter("period") !=""){
-
-			Date date=new Date(); 
+		}else if(request.getParameter("period") !=null && request.getParameter("period") !="" && !request.getParameter("day").equals("出席日")){
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
+			int day = Integer.parseInt(request.getParameter("day"));            //日
 			int grade = Integer.parseInt(request.getParameter("grade"));        //学年
 			String className =request.getParameter("className");                //クラス
 			String subjectName = request.getParameter("subjectName");           //教科
@@ -246,13 +245,13 @@ public class EditAllStudentServlet extends HttpServlet {
 			}
 
 			for (int i=0;studentIdList.size()>i;i++) {
-				AssignmentsDAO assignmentsDao = new AssignmentsDAO();
-				if (assignmentsDao.insert(new Assignments(0, studentIdList.get(i), subjectId, "✕", content, 
-						year, month, date))) { // 登録成功
-					System.out.println("更新成功");
+				AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
+				if (attendanceRecordsDao.insert(new AttendanceRecords(0, studentIdList.get(i), classId, year, month, 
+						day,period,subjectId, "◯", ""))) { // 登録成功
+					System.out.println("出席追加成功");
 
 				} else { // 登録失敗
-					System.out.println("提出物更新失敗");
+					System.out.println("出席追加失敗");
 				}
 			}
 

@@ -1,5 +1,58 @@
-@charset "UTF-8";
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #2c3e50;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* メインコンテンツ中央寄せ */
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* 基本情報部分 */
+.baseInfo {
+	margin: 10px auto;
+	border: 2px solid black;
+}
+
+.baseInfo .rateExplain {
+	width: 100px;
+}
+
+.baseInfo .rate {
+	width: 50px;
+}
+
+.baseInfo .amountExplain {
+	width: 80px;
+}
+
+.baseInfo .amount, .baseInfo .shouldAmount {
+	width: 50px;
+}
+
+.baseInfo .shouldAmountExplain {
+	width: 150px;
+}
 
 .field {
 	display: flex;
+	border-bottom: 1px solid black;
+}
+
+.field div {
+	height: 25px;
+	padding: 5px 7px;
 }

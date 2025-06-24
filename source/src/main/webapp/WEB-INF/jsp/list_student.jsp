@@ -10,36 +10,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
+<!-- <link rel="stylesheet" href="<c:url value='/css/header.css' />">
+<link rel="stylesheet" href="<c:url value='/css/common.css' />">-->
 <title>項目ごとに閲覧</title>
 </head>
 
 <body>
 	<header>
 		<div style="text-align: center; margin-bottom: 20px;">
-  <img src="${headerBannerUrl}" alt="バナー画像"
-       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
-</div>
-<!-- ナビ全体を中央に寄せる -->
-<div style="text-align: center;">
-  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
-    <!-- ロゴ画像 -->
-     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
-    <!-- メニュー -->
-    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
-     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
-      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
-      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
-    </ul>
-  </nav>
-</div>
+			<img src="${headerBannerUrl}" alt="バナー画像"
+				style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+		</div>
+		<!-- ナビ全体を中央に寄せる -->
+		<div style="text-align: center;">
+			<nav
+				style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+				<!-- ロゴ画像 -->
+				<img src="${logo2Url}" alt="ロゴ2"
+					style="height: 50px; position: relative; top: -0.2cm;">
+				<!-- メニュー -->
+				<ul class="cute-menu"
+					style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+					<li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+					<li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+					<li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 
 	<main>
-	
+
 		<form action="<c:url value='/ListStudentServlet'/>" method="POST"
 			id="list_student_form">
 
-			
+
 			<input type="hidden" name="number" value="${subjectId}}"> <select
 				name="grade" onchange="this.form.submit()">
 				<option>${grade}</option>
@@ -107,8 +112,7 @@
 				<option value="音楽">音楽</option>
 				<option value="学活">学活</option>
 				<option value="その他">その他</option>
-			</select> 
-			<input type="submit" name="edit" id="edit" value="編集"> 
+			</select> <input type="submit" name="edit" id="edit" value="編集">
 			<button id="downloadBtn">ダウンロード</button>
 
 			<p>表示項目選択</p>
@@ -125,8 +129,26 @@
 			<div id="attendance">
 				<span> 出席状況 </span> <span>
 					<button id="attendanceButton" name="add" value="出席日追加">出席日追加</button>
-					<span> <input type="text" name="day" placeholder="出席日"></span>
-					<span><select name="period">
+					<span><select name="day">
+							<option>出席日</option>
+							<c:if test="${month == 2}">
+								<c:forEach var="e" begin="1" end="29">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+							<c:if
+								test="${month == 4 || month == 6 || month == 9 || month == 11}">
+								<c:forEach var="e" begin="1" end="30">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+							<c:if
+								test="${month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12}">
+								<c:forEach var="e" begin="1" end="31">
+									<option value="${e}">${e}</option>
+								</c:forEach>
+							</c:if>
+					</select></span> <span>日</span> <span><select name="period">
 							<option>時限</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -135,7 +157,7 @@
 							<option value="5">5</option>
 							<option value="6">6</option>
 					</select></span>
-				</span>
+				</span><span>限</span>
 				<table border="1">
 					<tr>
 						<td></td>
@@ -161,6 +183,8 @@
 						<c:forEach var="e" items="${attendanceDateList}">
 							<td>${e.period}限</td>
 						</c:forEach>
+						
+						<td>出席率</td>
 					</tr>
 
 
@@ -177,6 +201,12 @@
 									<td>${a.status}</td>
 								</c:if>
 							</c:forEach>
+							
+							<c:forEach var="r" items="${attendanceRate}">
+								<c:if test="${e.studentId == r.1}">
+									<td>${r.2}</td>
+								</c:if>
+							</c:forEach> 
 						</tr>
 					</c:forEach>
 
@@ -185,8 +215,8 @@
 
 			<div id="submission">
 				<span> 提出物状況 </span> <span>
-					<button id="submissionButton" name="add" id="edit" value="提出物追加">提出物追加</button></span>
-					<span> <input type="text" name="content" placeholder="課題内容">
+					<button id="submissionButton" name="add" id="edit" value="提出物追加">提出物追加</button>
+				</span> <span> <input type="text" name="content" placeholder="課題内容">
 					<!-- 
 					<div id="submissionModal" class="modal">
 						<div class="modal-content">
@@ -244,18 +274,23 @@
 						<c:forEach var="e" items="${contentList}">
 							<td>${e.content}</td>
 						</c:forEach>
+						
+						<td>提出率</td>
 					</tr>
 
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
+							<td><input type="submit" name="studentNum"
+								placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${assignmentsList}">
 								<c:if test="${e.studentId == a.studentId}">
 									<td>${a.submissionStatus}</td>
 								</c:if>
 							</c:forEach>
+							
+							<!-- <td>${submissionRate}</td>  -->
 						</tr>
 					</c:forEach>
 				</table>
@@ -300,13 +335,16 @@
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<td><input type="submit" name="studentNum" placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
+							<td><input type="submit" name="studentNum"
+								placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 							<td>${e.nameRuby}</td>
 							<c:forEach var="a" items="${gradesList}">
 								<c:if test="${e.studentId == a.studentId}">
 									<td>${a.score}</td>
 								</c:if>
 							</c:forEach>
+							
+							<!-- <td>${attendanceRate}</td>  -->
 						</tr>
 					</c:forEach>
 				</table>
@@ -314,7 +352,7 @@
 		</form>
 	</main>
 	<script src="<c:url value='/js/list_student.js' />"></script>
-	
+
 
 </body>
 

@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.ClassRoomDAO;
 import dao.ScheduleDAO;
+import dto.ClassRoom;
 import dto.Schedule;
 import dto.Teacher;
 
@@ -52,7 +56,23 @@ public class InfoScheduleServlet extends HttpServlet {
         request.setAttribute("paramYear", year);
         request.setAttribute("paramSemester", semester);
         request.setAttribute("teacherId", teacherId);
+        
+        
+        
+        ClassRoomDAO classDao = new ClassRoomDAO();
+        List<ClassRoom> classList = classDao.selectAll();
 
+        // Map作成：classId → "〇年〇組"
+        Map<Integer, String> classIdNameMap = new HashMap<>();
+        for (ClassRoom cls : classList) {
+            String name = cls.getGrade() + "年" + cls.getClassName() + "組";
+            classIdNameMap.put(cls.getClassId(), name);
+        }
+
+        request.setAttribute("classList", classList);
+        request.setAttribute("classIdNameMap", classIdNameMap);
+        
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
         dispatcher.forward(request, response);
     }
@@ -112,6 +132,15 @@ public class InfoScheduleServlet extends HttpServlet {
             request.setAttribute("paramYear", year);
             request.setAttribute("paramSemester", semester);
             request.setAttribute("teacherId", teacherId);
+            
+            
+            
+            ClassRoomDAO classDao = new ClassRoomDAO();
+            List<ClassRoom> classList = classDao.select(new ClassRoom());
+            request.setAttribute("classList", classList);
+            
+            
+            
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
             dispatcher.forward(request, response);
@@ -125,6 +154,15 @@ public class InfoScheduleServlet extends HttpServlet {
         request.setAttribute("scheduleList", scheduleList);
         request.setAttribute("paramYear", year);
         request.setAttribute("paramSemester", semester);
+        
+        
+        
+        ClassRoomDAO classDao = new ClassRoomDAO();
+        List<ClassRoom> classList = classDao.select(new ClassRoom());
+        request.setAttribute("classList", classList);
+        
+        
+        
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
         dispatcher.forward(request, response);

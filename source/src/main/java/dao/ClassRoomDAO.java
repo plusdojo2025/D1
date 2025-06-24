@@ -244,4 +244,32 @@ public class ClassRoomDAO {
 		// 結果を返す
 		return result;
 	}
+	
+	
+	
+	
+	//テストで追加
+	public List<ClassRoom> selectAll() {
+	    Connection conn = null;
+	    List<ClassRoom> crList = new ArrayList<>();
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9", "root", "password");
+
+	        String sql = "SELECT * FROM Class";
+	        PreparedStatement pStmt = conn.prepareStatement(sql);
+	        ResultSet rs = pStmt.executeQuery();
+
+	        while (rs.next()) {
+	            ClassRoom classroom = new ClassRoom(rs.getInt("classId"), rs.getInt("grade"), rs.getString("className"));
+	            crList.add(classroom);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        crList = null;
+	    } finally {
+	        if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+	    }
+	    return crList;
+	}
 }	

@@ -46,7 +46,7 @@
           <td>
             <select name="grade" id="grade-select" class="form-input">
               <option value="">-- 学年を選択 --</option>
-              <option value="1">1年</option>
+              <option value="1" selected>1年</option>
               <option value="2">2年</option>
               <option value="3">3年</option>
             </select>
