@@ -24,3 +24,16 @@ select{
 .score{
     width: 3rem;
 }
+input[type="text"],
+select {
+	width: 100%;
+	Min-width:3rem;
+	padding: 14px 0px;
+	margin-bottom: 1px;
+	border: 1.5px solid #bdc3c7;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	transition: all 0.3s ease;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
