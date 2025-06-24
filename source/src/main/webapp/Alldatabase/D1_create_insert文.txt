@@ -154,24 +154,24 @@ classId int primary key auto_increment,
 grade int not null,		
 className varchar(20) not null		
 );
-insert into class values( 0, 3, '1組'); 
-insert into class values( 0, 3, '2組');
-insert into class values( 0, 3, '3組');
-insert into class values( 0, 3, '4組');
-insert into class values( 0, 3, '5組');
-insert into class values( 0, 3, '6組');
-insert into class values( 0, 2, '1組');
-insert into class values( 0, 2, '2組');
-insert into class values( 0, 2, '3組');
-insert into class values( 0, 2, '4組');
-insert into class values( 0, 2, '5組');
-insert into class values( 0, 2, '6組');
-insert into class values( 0, 1, '1組');
-insert into class values( 0, 1, '2組');
-insert into class values( 0, 1, '3組');
-insert into class values( 0, 1, '4組');
-insert into class values( 0, 1, '5組');
-insert into class values( 0, 1, '6組');
+insert into Class values( 0, 3, '1組'); 
+insert into Class values( 0, 3, '2組');
+insert into Class values( 0, 3, '3組');
+insert into Class values( 0, 3, '4組');
+insert into Class values( 0, 3, '5組');
+insert into Class values( 0, 3, '6組');
+insert into Class values( 0, 2, '1組');
+insert into Class values( 0, 2, '2組');
+insert into Class values( 0, 2, '3組');
+insert into Class values( 0, 2, '4組');
+insert into Class values( 0, 2, '5組');
+insert into Class values( 0, 2, '6組');
+insert into Class values( 0, 1, '1組');
+insert into Class values( 0, 1, '2組');
+insert into Class values( 0, 1, '3組');
+insert into Class values( 0, 1, '4組');
+insert into Class values( 0, 1, '5組');
+insert into Class values( 0, 1, '6組');
 
 CREATE TABLE ClassWork (
 classWorkId int auto_increment PRIMARY KEY,

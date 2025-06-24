@@ -128,20 +128,28 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}	
 		
-		int attendance = 0;
-		int sum = 0;
-		for(int i=0;studentIdList.size()>i;i++) {
-			for(int j=0;attendanceList.size()>j;j++) {
-				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {
+		ArrayList<Double> attendanceRate = new ArrayList<>();
+		double attendanceSum = 0;
+		double sum = 0;
+		for(int i=0;studentIdList.size()>i;i++) { //表示する生徒の分繰り返す
+			for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
+				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 					String attendanceStatus = attendanceList.get(j).getStatus();
 					if (attendanceStatus.equals("◯")) {
-						attendance+=1;
+						attendanceSum+=1;
 					}
 					sum+=1;
 				}
 			}
+			attendanceRate.get(i).add(studentIdList.get(i));
+			attendanceRate.get(i).add(attendanceSum / sum * 100);
 		}
-		int attendanceRate = attendance / sum *100;
+		
+		
+		System.out.println("1");
+		System.out.println("attendanceRate "+attendanceRate);
+		System.out.println("sum "+sum);
+		System.out.println("attendanceRate "+attendanceRate);
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);

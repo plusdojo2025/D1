@@ -202,7 +202,11 @@
 								</c:if>
 							</c:forEach>
 							
-							<!-- <td>${attendanceRate}</td>  -->
+							<c:forEach var="r" items="${attendanceRate}">
+								<c:if test="${e.studentId == r.1}">
+									<td>${r.2}</td>
+								</c:if>
+							</c:forEach> 
 						</tr>
 					</c:forEach>
 
