@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+<%@ page import="java.util.ArrayList" %>
 
 
 <html>
@@ -187,7 +188,7 @@
 						<td>出席率</td>
 					</tr>
 
-
+					<% int i = 0; %>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
@@ -202,11 +203,22 @@
 								</c:if>
 							</c:forEach>
 							
-							<c:forEach var="r" items="${attendanceRate}">
-								<c:if test="${e.studentId == r.1}">
-									<td>${r.2}</td>
-								</c:if>
-							</c:forEach> 
+							<%-- 
+							<% String attend = request.getParameter("studId"+i); %>
+							<% String attendA = request.getParameter(Integer.toString(i)); %>
+							<% System.out.println("attend "+attend); %>
+							<% System.out.println("attendA "+attendA); %>
+							<% System.out.println("studId+i "+"studId"+i); %>
+							 
+							<td><%=attendA %></td>
+							<% i += 1; %>
+							--%>
+							
+							<%
+							ArrayList<Double> attendanceRate = (ArrayList<Double>)request.getAttribute("attendanceRate");
+							 %>
+							<td><%= attendanceRate.get(i)%></td>
+							<% i+=1; %>
 						</tr>
 					</c:forEach>
 
@@ -278,6 +290,7 @@
 						<td>提出率</td>
 					</tr>
 
+					<% int j = 0; %>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
@@ -290,7 +303,11 @@
 								</c:if>
 							</c:forEach>
 							
-							<!-- <td>${submissionRate}</td>  -->
+							<%
+							ArrayList<Double> submissionRate = (ArrayList<Double>)request.getAttribute("submissionRate");
+							 %>
+							<td><%= submissionRate.get(j)%></td>
+							<% j+=1; %>
 						</tr>
 					</c:forEach>
 				</table>
