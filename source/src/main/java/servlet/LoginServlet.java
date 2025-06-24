@@ -49,13 +49,13 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		// DTOに格納
-		Teacher input = new Teacher(teacherId, null, password);
+		Teacher input = new Teacher(teacherId, password);
 		
 		// DAOで照合
 		TeachersDAO dao = new TeachersDAO();
 		Teacher loginTeacher = dao.findByIdAndPassword(input);
 		
-		if (loginTeacher != null) { 
+		if (loginTeacher != null && loginTeacher.getTeacherId() > 0) { 
 		    // ログイン成功→セッションスコープにIDを格納する
 		    HttpSession session = request.getSession();
 		    session.setAttribute("loginTeacher", loginTeacher);

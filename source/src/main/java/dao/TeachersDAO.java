@@ -38,8 +38,8 @@ public class TeachersDAO {
 			if (rs.next()) {
 				teacher = new Teacher(
 					rs.getInt("teacherId"),
-					rs.getString("userId"),
 					rs.getString("name"),
+					rs.getString("userId"),
 					rs.getString("password"));
 			}		
 		} catch (SQLException e) {

@@ -17,9 +17,10 @@ public class Teacher implements Serializable {
 		this.password = password;
 	}
 
-	public Teacher(String userId, String name, String password) {
-		this.userId = userId;
+	public Teacher(String userId, String password) {
+		this.teacherId = -1;
 		this.name = "";
+		this.userId = userId;
 		this.password = password;
 	}
 	
