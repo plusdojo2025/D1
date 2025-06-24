@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:url value="/img/header_banner.jpg" var="headerBannerUrl"/>
+<c:url value="/img/IMG_ロゴ2.png" var="logo2Url"/>
+<c:url value="/ListStudentServlet" var="listStudentUrl"/>
+<c:url value="/InfoScheduleServlet" var="infoScheduleUrl"/>
+<c:url value="/LoginServlet" var="logoutUrl"/>
+<c:url value="/RegistScheduleServlet" var="registScheduleUrl"/>
+<c:url value="/js/regist_student.js" var="registJsUrl"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +16,24 @@
 <link rel="stylesheet" href="<c:url value='/css/info_schedule.css' />">
 </head>
 <body>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="${headerBannerUrl}" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<!-- ナビ全体を中央に寄せる -->
+<div style="text-align: center;">
+  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+    <!-- ロゴ画像 -->
+     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
+    <!-- メニュー -->
+    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+    </ul>
+  </nav>
+</div>
 
 <h1>スケジュールの閲覧</h1>
 <p>教師ID：<c:out value="${loginTeacher.teacherId}" /></p>
