@@ -140,8 +140,6 @@ public class InfoScheduleServlet extends HttpServlet {
             request.setAttribute("classList", classList);
             
             
-            
-
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/info_schedule.jsp");
             dispatcher.forward(request, response);
             return;

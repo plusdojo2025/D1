@@ -1,9 +1,161 @@
 @charset "UTF-8";
 body {
-    font-family: sans-serif;
-    background-color: #ffffff;
-    padding: 20px;
-  }
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #2c3e50;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.cute-menu {
+  list-style: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 24px !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+  font-family: 'Comic Sans MS', cursive, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+}
+
+.cute-menu li a {
+  text-decoration: none;
+  color: #3498db;  /* 水色 */
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 0 5px #85c1e9;  /* 水色の薄い影 */
+}
+
+.cute-menu li a:hover {
+  background-color: #85c1e9;  /* 水色の薄い背景 */
+  color: #fff;
+  box-shadow: 0 0 8px #3498db;  /* 濃い水色の影 */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 700px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* 見出し */
+h1 {
+	font-size: 2.5rem;
+	border-bottom: 3px solid #2980b9;
+	padding-bottom: 8px;
+}
+
+h2 {
+	font-size: 1.8rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
+
+h1, h2, h3 {
+  color: #2980b9;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+
+
+
+/*ラベル*/
+label {
+	font-weight:600;
+	margin-bottom:8px;
+	display: block;
+	color: #34495e;
+	font-size: 1.2rem;
+}
+
+/*ボタン*/
+button,
+input[type="submit"],
+input[type="reset"] {
+	background: linear-gradient(45deg, #3498db, #2980b9);
+	color: white;
+	border: none;
+	padding: 14px 28px;
+	font-size:1.1rem;
+	border-radius:14px;
+	cursor: pointer;
+	transition: background 0.4s ease, transform 0.3s ease;
+	box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+	 margin-right: 12px;
+}
+.back-button {
+  width: 150px;
+  padding: 10.5px 0;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+  z-index: 9999;
+  text-align: center;
+  border: none;
+  user-select: none; /* 選択防止 */
+  pointer-events: auto; /* ボタンを操作可能に */
+}
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+	background: linear-gradient(45deg, #2980b9, #1c5980);
+	transform: scale(1.05);
+	box-shadow: 0 8px 20px rgba(41, 128, 185, 0.6);
+}
+
+/* ラジオボタン */
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  accent-color: #3498db;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+
+/* エラーメッセージ */
+.message-error {
+  color: #e74c3c;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+/*　メディアクエリ(スマホ対応) */
+@media(max-width: 600px) {
+	.container {
+	padding: 30px 20px;
+	}
+	
+	button,
+	input[type="submit"],
+	input[type="reset"] {
+	width: 100%;
+	margin: 10px 0;
+	}
+}
+
+
+
+
+
+/* ======= Reset & Basic ======= */
 
   h1 {
     font-size: 24px;
@@ -35,13 +187,15 @@ body {
     font-weight: bold;
   }
 
-  .memo-box {
-    width: 600px;
-    height: 80px;
-    border: 1px solid #555;
-    padding: 10px;
-    background-color: #fff;
-  }
+.memo-box {
+  white-space: pre-wrap;
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 100px;
+  max-height: 200px; /* ← 最大高さを設定 */
+  overflow-y: auto;  /* ← スクロールバーを表示 */
+  box-sizing: border-box;
+}
 
   .btn {
     padding: 8px 20px;
@@ -66,4 +220,21 @@ body {
   th:first-child {
   width: 80px;      /* お好みで調整 */
   white-space: nowrap; /* 改行させない */
+}
+/* 横並びにするためのスタイル */
+.button-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start; /* または center で中央寄せ */
+}
+
+/* ボタンformを横並び用に inline-block にする */
+.button-row form {
+  display: inline-block;
+  margin: 0;
+}
+.cancel{
+	
 }
