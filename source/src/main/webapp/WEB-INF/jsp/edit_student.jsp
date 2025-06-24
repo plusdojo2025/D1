@@ -11,11 +11,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<c:url value='css/common.css'/>">
 <link rel="stylesheet" href="<c:url value='css/info_student.css'/>">
 </head>
 <body>
 	<header>
-		<!-- ヘッダー挿入箇所 -->
+		<div class="wrapper">
+			<div style="text-align: center; margin-bottom: 20px;">
+				<img src="<%=request.getContextPath()%>/img/header_banner.jpg"
+					alt="バナー画像"
+					style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+			</div>
+			<nav>
+				<ul class="cute-menu">
+					<li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
+					<li><a href="<c:url value='/InfoScheduleServlet'/>">📅
+							スケジュール</a></li>
+					<li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 
 	<main>

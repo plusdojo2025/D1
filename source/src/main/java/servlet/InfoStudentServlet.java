@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
@@ -44,6 +45,12 @@ public class InfoStudentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+//		HttpSession session = request.getSession(false);
+//        if (session == null || session.getAttribute("loginTeacher") == null) {
+//            response.sendRedirect("LoginServlet");
+//            return;
+//        }
 
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
@@ -86,7 +93,7 @@ public class InfoStudentServlet extends HttpServlet {
 			List<AttendanceRecords> arList = arDAO.select_Fiscal((student.getYear() + grade - 1), studentId, month, subjectId);
 
 			ClassRoomDAO crDAO = new ClassRoomDAO();
-			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(),""));
+			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(), null));
 			ClassRoom classRoom = new ClassRoom();
 			if (classList.size() > 0) classRoom = classList.get(0);
 			request.setAttribute("className", classRoom.getClassName());

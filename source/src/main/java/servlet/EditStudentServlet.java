@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.AssignmentsDAO;
 import dao.AttendanceRecordsDAO;
@@ -39,6 +40,12 @@ public class EditStudentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+//		HttpSession session = request.getSession(false);
+//      if (session == null || session.getAttribute("loginTeacher") == null) {
+//          response.sendRedirect("LoginServlet");
+//          return;
+//      }
 
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
@@ -157,14 +164,18 @@ public class EditStudentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+//		HttpSession session = request.getSession(false);
+//        if (session == null || session.getAttribute("loginTeacher") == null) {
+//            response.sendRedirect("LoginServlet");
+//            return;
+//        }
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Calendar cal = Calendar.getInstance();
 		Date today = new Date();
 		cal.setTime(today);
-		int today_Year = cal.get(Calendar.YEAR);
-		int today_Month = cal.get(Calendar.MONTH) + 1;
 		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
