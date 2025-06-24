@@ -128,11 +128,20 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}	
 		
+		int attendance = 0;
+		int sum = 0;
 		for(int i=0;studentIdList.size()>i;i++) {
 			for(int j=0;attendanceList.size()>j;j++) {
-				if(studentIdList.get(i).getStudentId ==  assignmentsList.get(i).getStudentId)
+				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {
+					String attendanceStatus = attendanceList.get(j).getStatus();
+					if (attendanceStatus.equals("◯")) {
+						attendance+=1;
+					}
+					sum+=1;
+				}
 			}
 		}
+		int attendanceRate = attendance / sum *100;
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -142,6 +151,8 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("contentList", contentList);
 		request.setAttribute("testTypeList", testTypeList);
 		request.setAttribute("testTypeListSize", testTypeListSize);
+		
+		request.setAttribute("attendanceRate", attendanceRate);
 		
 		request.setAttribute("grade", grade);
 		request.setAttribute("className", className);
