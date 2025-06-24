@@ -3,37 +3,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+<%@ page import="java.util.ArrayList" %>
 
 
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="<c:url value='/css/common.css' />">
+<link rel="stylesheet" href="<c:url value='/css/header.css' />">
 <link rel="stylesheet" href="<c:url value='/css/list_student.css' />">
-<!-- <link rel="stylesheet" href="<c:url value='/css/header.css' />">
-<link rel="stylesheet" href="<c:url value='/css/common.css' />">-->
 <title>項目ごとに閲覧</title>
 </head>
 
 <body>
 	<header>
-		<div style="text-align: center; margin-bottom: 20px;">
-			<img src="${headerBannerUrl}" alt="バナー画像"
-				style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
-		</div>
-		<!-- ナビ全体を中央に寄せる -->
-		<div style="text-align: center;">
-			<nav
-				style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
-				<!-- ロゴ画像 -->
-				<img src="${logo2Url}" alt="ロゴ2"
-					style="height: 50px; position: relative; top: -0.2cm;">
-				<!-- メニュー -->
-				<ul class="cute-menu"
-					style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
-					<li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
-					<li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
-					<li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+		<div class="wrapper">
+			<div style="text-align: center; margin-bottom: 20px;">
+				<img src="<%=request.getContextPath()%>/img/header_banner.jpg"
+					alt="バナー画像"
+					style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+			</div>
+			<nav>
+				<ul class="cute-menu">
+					<li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
+					<li><a href="<c:url value='/InfoScheduleServlet'/>">📅 スケジュール</a></li>
+					<li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -184,10 +179,10 @@
 							<td>${e.period}限</td>
 						</c:forEach>
 						
-						<td>出席率</td>
+						<td>出席率(%)</td>
 					</tr>
 
-
+					<% int i = 0; %>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
@@ -201,8 +196,11 @@
 									<td>${a.status}</td>
 								</c:if>
 							</c:forEach>
-							
-							<!-- <td>${attendanceRate}</td>  -->
+							<%
+							ArrayList<Double> attendanceRate = (ArrayList<Double>)request.getAttribute("attendanceRate");
+							 %>
+							<td><%= attendanceRate.get(i)%></td>
+							<% i+=1; %>
 						</tr>
 					</c:forEach>
 
@@ -271,9 +269,10 @@
 							<td>${e.content}</td>
 						</c:forEach>
 						
-						<td>提出率</td>
+						<td>提出率(%)</td>
 					</tr>
 
+					<% int j = 0; %>
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
@@ -286,7 +285,11 @@
 								</c:if>
 							</c:forEach>
 							
-							<!-- <td>${submissionRate}</td>  -->
+							<%
+							ArrayList<Double> submissionRate = (ArrayList<Double>)request.getAttribute("submissionRate");
+							 %>
+							<td><%= submissionRate.get(j)%></td>
+							<% j+=1; %>
 						</tr>
 					</c:forEach>
 				</table>

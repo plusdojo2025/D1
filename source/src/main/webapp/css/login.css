@@ -1,55 +1,94 @@
 @charset "UTF-8";
 
-/* 全体を縦横中央に配置 */
+/* ===== 全体共通に合わせる（フォント・背景） ===== */
 body {
-  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #2c3e50;
+  min-height: 100vh;
   margin: 0;
+  padding: 0;
   display: flex;
-  justify-content: center; /* 横方向中央 */
-  align-items: center;     /* 縦方向中央 */
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ログインボックス全体 */
-.login-wrapper {
+/* ===== ログイン用中央レイアウト ===== */
+.login-container {
   background-color: #ffffff;
-  padding: 40px;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
-/* タイトル中央揃え */
-.login-wrapper h2 {
+/* ===== 見出し ===== */
+.login-container h2 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #2980b9;
+  margin-bottom: 30px;
 }
 
-/* テーブルの入力行の余白調整 */
-table td {
-  padding: 8px;
-  font-size: 16px;
-}
-
-input[type="text"],
-input[type="password"] {
-  padding: 6px;
-  font-size: 16px;
-}
-
-/* ログインボタン中央揃え */
-input[type="submit"] {
+/* ===== フォームラベル・入力 ===== */
+.login-container label {
   display: block;
-  margin: 10px auto 0;
-  padding: 8px 20px;
-  font-size: 16px;
-  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #34495e;
+  margin-bottom: 8px;
 }
 
-/* エラーメッセージ */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #bdc3c7;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.login-container input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+/* ===== ログインボタン ===== */
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+}
+
+.login-container button:hover {
+  background: linear-gradient(45deg, #2980b9, #1c5980);
+  transform: scale(1.03);
+}
+
+/* ===== エラーメッセージ ===== */
 #errorBox {
-  color: red;
+  color: #e74c3c;
+  font-weight: 700;
   text-align: center;
-  margin-top: 10px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+/* ===== スマホ対応 ===== */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 30px 20px;
+  }
 }

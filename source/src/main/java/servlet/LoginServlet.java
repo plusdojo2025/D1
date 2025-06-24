@@ -40,22 +40,22 @@ public class LoginServlet extends HttpServlet {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 		
-		String userId = request.getParameter("userId");
+		String teacherId = request.getParameter("teacherId");
 		String password = request.getParameter("password");
 		
-		if (userId == null || userId.isEmpty()) {
+		if (teacherId == null || teacherId.isEmpty()) {
 			response.sendRedirect("LoginServlet?error=1");
 			return;
 		}
 		
 		// DTOに格納
-		Teacher input = new Teacher(userId, null, password);
+		Teacher input = new Teacher(teacherId, password);
 		
 		// DAOで照合
 		TeachersDAO dao = new TeachersDAO();
 		Teacher loginTeacher = dao.findByIdAndPassword(input);
 		
-		if (loginTeacher != null) { 
+		if (loginTeacher != null && loginTeacher.getTeacherId() > 0) { 
 		    // ログイン成功→セッションスコープにIDを格納する
 		    HttpSession session = request.getSession();
 		    session.setAttribute("loginTeacher", loginTeacher);

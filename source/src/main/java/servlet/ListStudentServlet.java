@@ -128,20 +128,46 @@ public class ListStudentServlet extends HttpServlet {
 			gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 		}	
 		
-		int attendance = 0;
-		int sum = 0;
-		for(int i=0;studentIdList.size()>i;i++) {
-			for(int j=0;attendanceList.size()>j;j++) {
-				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {
+		
+		ArrayList<Double> attendanceRate = new ArrayList<>();
+		double attendanceSum = 0;
+		double sum = 0;
+		for(int i=0;studentIdList.size()>i;i++) { //表示する生徒の分繰り返す
+			sum=0;
+			attendanceSum=0;
+			for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
+				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 					String attendanceStatus = attendanceList.get(j).getStatus();
 					if (attendanceStatus.equals("◯")) {
-						attendance+=1;
+						attendanceSum+=1;
 					}
 					sum+=1;
 				}
 			}
+			double attend = (Math.floor(attendanceSum * 100 / sum * 10)) / 10;
+			attendanceRate.add(attend);
 		}
-		int attendanceRate = attendance / sum *100;
+		
+		ArrayList<Double> submissionRate = new ArrayList<>();
+		double submissionSum = 0;
+		double sumS = 0;
+		for(int k=0;studentIdList.size()>k;k++) { //表示する生徒の分繰り返す
+			sumS=0;
+			submissionSum=0;
+			
+			for(int l=0;assignmentsList.size()>l;l++) {  //あるクラスの出席状況の文繰り返す
+				if(studentIdList.get(k) ==  assignmentsList.get(l).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
+					String assignmentsSubmissionStatus = assignmentsList.get(l).getSubmissionStatus();
+					if (assignmentsSubmissionStatus.equals("◯")) {
+						submissionSum+=1;
+					}
+					sumS+=1;
+				}
+			}
+			double sub = (Math.floor(submissionSum * 100 / sumS * 10)) / 10;
+			submissionRate.add(sub);
+			
+		}
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -153,6 +179,7 @@ public class ListStudentServlet extends HttpServlet {
 		request.setAttribute("testTypeListSize", testTypeListSize);
 		
 		request.setAttribute("attendanceRate", attendanceRate);
+		request.setAttribute("submissionRate", submissionRate);
 		
 		request.setAttribute("grade", grade);
 		request.setAttribute("className", className);
@@ -331,6 +358,45 @@ public class ListStudentServlet extends HttpServlet {
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
 			}
 
+			ArrayList<Double> attendanceRate = new ArrayList<>();
+			double attendanceSum = 0;
+			double sum = 0;
+			for(int i=0;studentIdList.size()>i;i++) { //表示する生徒の分繰り返す
+				sum=0;
+				attendanceSum=0;
+				for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
+					if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
+						String attendanceStatus = attendanceList.get(j).getStatus();
+						if (attendanceStatus.equals("◯")) {
+							attendanceSum+=1;
+						}
+						sum+=1;
+					}
+				}
+				double attend = (Math.floor(attendanceSum * 100 / sum * 10)) / 10;
+				attendanceRate.add(attend);
+			}
+			
+			ArrayList<Double> submissionRate = new ArrayList<>();
+			double submissionSum = 0;
+			double sumS = 0;
+			for(int k=0;studentIdList.size()>k;k++) { //表示する生徒の分繰り返す
+				sumS=0;
+				submissionSum=0;
+				
+				for(int l=0;assignmentsList.size()>l;l++) {  //あるクラスの出席状況の文繰り返す
+					if(studentIdList.get(k) ==  assignmentsList.get(l).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
+						String assignmentsSubmissionStatus = assignmentsList.get(l).getSubmissionStatus();
+						if (assignmentsSubmissionStatus.equals("◯")) {
+							submissionSum+=1;
+						}
+						sumS+=1;
+					}
+				}
+				double sub = (Math.floor(submissionSum * 100 / sumS * 10)) / 10;
+				submissionRate.add(sub);
+				
+			}
 			
 			request.setAttribute("attendanceList", attendanceList);
 			request.setAttribute("assignmentsList", assignmentsList);
@@ -340,6 +406,9 @@ public class ListStudentServlet extends HttpServlet {
 			request.setAttribute("contentList", contentList);
 			request.setAttribute("testTypeList", testTypeList);
 			request.setAttribute("testTypeListSize", testTypeListSize);
+			
+			request.setAttribute("attendanceRate", attendanceRate);
+			request.setAttribute("submissionRate", submissionRate);
 
 			request.setAttribute("grade", grade);
 			request.setAttribute("className", className);

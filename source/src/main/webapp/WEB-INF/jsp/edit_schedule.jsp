@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:url value="/img/header_banner.jpg" var="headerBannerUrl"/>
+<c:url value="/img/IMG_ロゴ2.png" var="logo2Url"/>
+<c:url value="/ListStudentServlet" var="listStudentUrl"/>
+<c:url value="/InfoScheduleServlet" var="infoScheduleUrl"/>
+<c:url value="/LoginServlet" var="logoutUrl"/>
+<c:url value="/RegistScheduleServlet" var="registScheduleUrl"/>
+<c:url value="/js/regist_student.js" var="registJsUrl"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +32,23 @@
 </style>
 </head>
 <body>
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="${headerBannerUrl}" alt="バナー画像"
+       style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+</div>
+<!-- ナビ全体を中央に寄せる -->
+<div style="text-align: center;">
+  <nav style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+    <!-- ロゴ画像 -->
+     <img src="${logo2Url}" alt="ロゴ2" style="height: 50px; position: relative; top: -0.2cm;">
+    <!-- メニュー -->
+    <ul class="cute-menu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 20px;">
+     <li><a href="${listStudentUrl}">🐰 生徒管理</a></li>
+      <li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+      <li><a href="${logoutUrl}">🚪 ログアウト</a></li>
+    </ul>
+  </nav>
+</div>
 
 <h1>スケジュールの編集</h1>
 
@@ -116,11 +140,11 @@
   <!-- メモ欄 -->
   <div class="memo-section">
     <label class="memo-label">② メモ欄：</label><br>
-    <textarea id="memoBox" name="memo" class="memo-box" placeholder="ここにメモを入力してください"></textarea>
+    <textarea id="memoBox" name="memo" class="memo-box" placeholder="ここにメモを入力してください" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 100px;"></textarea>
   </div>
 
   <div class="button-row">
-  <input type="hidden" name="semester" value="${semester}" />
+  	<input type="hidden" name="semester" value="${semester}" />
     <button type="submit" class="btn">保存</button>
   </div>
 </form>
@@ -130,25 +154,31 @@
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
   <input type="hidden" name="action" value="search" />
-  <button type="submit" class="btn">キャンセル</button>
+  <button type="submit" class="btn cancel">キャンセル</button>
 </form>
 
 <!-- JavaScript：教師IDごとにメモを保存・読み込み -->
 <script>
-  document.getElementById('editForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const teacherId = "${loginTeacher.teacherId}";
-    const memoKey = `scheduleMemo_${teacherId}`;
-    const memoContent = document.getElementById('memoBox').value;
+document.getElementById('editForm').addEventListener('submit', function(event) {
+	  event.preventDefault();
 
-    try {
-      localStorage.setItem(memoKey, memoContent);
-      this.submit();  // すぐsubmitする
-    } catch (e) {
-      console.error("メモ保存エラー", e);
-      this.submit();
-    }
-  });
+	  const confirmSave = confirm("変更を保存してよろしいですか？");
+	  if (!confirmSave) {
+	    return; // 「いいえ」が選ばれたら送信中止
+	  }
+
+	  const teacherId = "${loginTeacher.teacherId}";
+	  const memoKey = `scheduleMemo_${teacherId}`;
+	  const memoContent = document.getElementById('memoBox').value;
+
+	  try {
+	    localStorage.setItem(memoKey, memoContent);
+	    this.submit();  // 「はい」なら送信実行
+	  } catch (e) {
+	    console.error("メモ保存エラー", e);
+	    this.submit();  // エラーでも送信は行う
+	  }
+	});
 
   window.addEventListener('load', () => {
     const teacherId = "${loginTeacher.teacherId}";
@@ -158,11 +188,19 @@
   });
   
   document.querySelector('form[action="InfoScheduleServlet"]').addEventListener("submit", function(event) {
-	    const teacherId = "${loginTeacher.teacherId}";
-	    const memoKey = `scheduleMemo_${teacherId}`;
-	    const memoContent = document.getElementById('memoBox').value;
-	    localStorage.setItem(memoKey, memoContent);
-	  });
+	  const confirmCancel = confirm("変更内容が保存されていません。\nキャンセルすると全て破棄されます。\nこのまま画面を閉じてもよろしいですか？");
+
+	  if (!confirmCancel) {
+	    event.preventDefault();  // 「いいえ」なら送信キャンセル
+	    return;
+	  }
+
+	  const teacherId = "${loginTeacher.teacherId}";
+	  const memoKey = `scheduleMemo_${teacherId}`;
+	  const memoContent = document.getElementById('memoBox').value;
+	  localStorage.setItem(memoKey, memoContent);
+	});
+  
 </script>
 
 </body>
