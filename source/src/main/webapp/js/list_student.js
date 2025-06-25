@@ -238,4 +238,4 @@ function changeDisplay(event) {
             }
 		}
           
-    }
+    };

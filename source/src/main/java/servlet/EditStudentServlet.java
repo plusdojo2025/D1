@@ -40,12 +40,12 @@ public class EditStudentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-//		HttpSession session = request.getSession(false);
-//      if (session == null || session.getAttribute("loginTeacher") == null) {
-//          response.sendRedirect("LoginServlet");
-//          return;
-//      }
+
+		//		HttpSession session = request.getSession(false);
+		//      if (session == null || session.getAttribute("loginTeacher") == null) {
+		//          response.sendRedirect("LoginServlet");
+		//          return;
+		//      }
 
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
@@ -70,7 +70,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
-			
+
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
 
@@ -88,7 +88,7 @@ public class EditStudentServlet extends HttpServlet {
 			List<AttendanceRecords> arList = arDAO.select_Fiscal((student.getYear() + grade - 1), studentId, month, subjectId);
 
 			ClassRoomDAO crDAO = new ClassRoomDAO();
-			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(),""));
+			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(), null));
 			ClassRoom classRoom = new ClassRoom();
 			if (classList.size() > 0) classRoom = classList.get(0);
 			request.setAttribute("className", classRoom.getClassName());
@@ -124,7 +124,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("shouldSubmitNum", shouldSubmittedNum);
 
 			// 指定した教科の提出物
-			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", year, month, null));
+			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", (student.getYear() + grade - 1), month, null));
 			List<Assignments> asList2 = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", -1, -1, null));
 			int subjectSubmittedNum = 0, subjectShouldSubmittedNum = 0;
 			subjectSubmittedNum = GetSubmittedNum(asList2, year, month);
@@ -134,7 +134,7 @@ public class EditStudentServlet extends HttpServlet {
 
 			// 成績
 			GradesDAO grdDAO = new GradesDAO();
-			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", year, month));
+			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", (student.getYear() + grade - 1), month));
 			request.setAttribute("gradesList", grdList);
 			String[] average = new String[grdList.size()];
 			for (int i = 0; i < grdList.size(); i++) {
@@ -164,21 +164,21 @@ public class EditStudentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-//		HttpSession session = request.getSession(false);
-//        if (session == null || session.getAttribute("loginTeacher") == null) {
-//            response.sendRedirect("LoginServlet");
-//            return;
-//        }
+
+		//		HttpSession session = request.getSession(false);
+		//        if (session == null || session.getAttribute("loginTeacher") == null) {
+		//            response.sendRedirect("LoginServlet");
+		//            return;
+		//        }
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Calendar cal = Calendar.getInstance();
 		Date today = new Date();
 		cal.setTime(today);
-		
+
 		try {
-			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
+			int subjectId = 1, fiscalYear = cal.get(Calendar.YEAR), year = 1, grade = 1, month = 1, studentId = 1;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -199,7 +199,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
-
+			
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
 
@@ -220,23 +220,25 @@ public class EditStudentServlet extends HttpServlet {
 				int id = Integer.parseInt(request.getParameter("recordId" + i));
 				String status = request.getParameter("attendedStatus" + i);
 				String remarks = request.getParameter("attendanceRemarks" + i);
-				
+
 				if (arDAO.update(new AttendanceRecords(id, -1, -1, "", -1, status, remarks))) {
 					System.out.println("出欠記録 更新成功 " + id + " / " + status + " / " + remarks);
 				} else {
 					System.out.println("出欠記録 更新失敗 " + id + " / " + status + " / " + remarks);
 				}
 			}
-			
+
 			// 提出記録の更新
 			AssignmentsDAO asDAO = new AssignmentsDAO();
+			System.out.println("test");
+			System.out.println(request.getParameter("submissionAmount"));
 			int submissionAmount = Integer.parseInt(request.getParameter("submissionAmount"));
 			for (int i = 0; i < submissionAmount; i++) {
 				int id = Integer.parseInt(request.getParameter("assignmentId" + i));
 				String content = request.getParameter("assignmentContent" + i);
 				String status = request.getParameter("submittionStatus" + i);
 				Date date = sdf.parse(request.getParameter("submittedDate" + i));
-				
+
 				if (asDAO.update(new Assignments(id, -1, -1, status, content, date))) {
 					System.out.println("提出物記録 更新成功 " + id + " / " + status + " / " + content);
 				} else {
@@ -248,11 +250,11 @@ public class EditStudentServlet extends HttpServlet {
 			int addSubmissionAmount = Integer.parseInt(request.getParameter("addSubmittionAmount"));
 			for (int i = 0; i < addSubmissionAmount; i++) {
 				String content = request.getParameter("addAssignmentContent" + i);
-				
+
 				if (!content.equals("") && content != null) {
 					String status = request.getParameter("addSubmittionStatus" + i);
 					Date date = sdf.parse(request.getParameter("addSubmittedDate" + i));
-					
+
 					if (asDAO.insert(new Assignments(-1, studentId, subjectId, status, content, year, month, date))) {
 						System.out.println("提出物記録 追加成功 / " + status + " / " + content);
 					} else {
@@ -270,7 +272,7 @@ public class EditStudentServlet extends HttpServlet {
 				int id = Integer.parseInt(request.getParameter("gradeId" + i));
 				String testType = request.getParameter("gradeTestType" + i);
 				int score = Integer.parseInt(request.getParameter("gradeScore" + i));
-				
+
 				if (grdDAO.update(new Grades(id, -1, -1, score, testType))) {
 					System.out.println("成績記録 更新成功 / " + testType + " / " + score);
 				} else {
@@ -280,13 +282,12 @@ public class EditStudentServlet extends HttpServlet {
 			
 			// 成績の追加
 			int addGradesAmount = Integer.parseInt(request.getParameter("addGradesAmount"));
-			System.out.println("addGradesAmount  num / " + addGradesAmount );
 			for (int i = 0; i < addGradesAmount; i++) {
 				String testType = request.getParameter("addGradeTestType" + i);
-				
+
 				if (!testType.equals("") && testType != null) {
 					int score = Integer.parseInt(request.getParameter("addGradeScore" + i));
-					
+
 					if (grdDAO.insert(new Grades(0, studentId, subjectId, score, testType, year, month))) {
 						System.out.println("成績記録 追加成功 / " + testType + " / " + score);
 					} else {
@@ -305,7 +306,7 @@ public class EditStudentServlet extends HttpServlet {
 				Date date = sdf.parse(request.getParameter("interviewDate" + i));
 				String contents = request.getParameter("interviewContents" + i);
 				String remarks = request.getParameter("interviewRemarks" + i);
-				
+
 				if (itvDAO.update(new Interview(id, -1, date, studentId, contents, remarks, subjectId))) {
 					System.out.println("面談記録 更新成功 / " + id + " / " + date + " / " + contents + " / " + remarks);
 				} else {
@@ -317,11 +318,11 @@ public class EditStudentServlet extends HttpServlet {
 			int addInterviewAmount = Integer.parseInt(request.getParameter("addInterviewAmount"));
 			for (int i = 0; i < addInterviewAmount; i++) {
 				String contents = request.getParameter("addInterviewContents" + i);
-				
+
 				if (!contents.equals("") && contents != null) {
 					String remarks = request.getParameter("addInterviewRemarks" + i);
 					Date date = sdf.parse(request.getParameter("addInterviewDate" + i));
-					
+
 					if (itvDAO.insert(new Interview(0, -1, date, studentId, contents, remarks, subjectId))) {
 						System.out.println("面談記録 追加成功 / " + date + " / " + contents + " / " + remarks);
 					} else {
@@ -331,7 +332,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("面談記録 追加失敗 / 内容未入力");
 				}
 			}
-
+			
 			// 前年度の面談の更新
 			int lastInterviewAmount = Integer.parseInt(request.getParameter("lastInterviewAmount"));
 			for (int i = 0; i < lastInterviewAmount; i++) {
@@ -339,7 +340,7 @@ public class EditStudentServlet extends HttpServlet {
 				Date date = sdf.parse(request.getParameter("lastInterviewDate" + i));
 				String contents = request.getParameter("lastInterviewContents" + i);
 				String remarks = request.getParameter("lastInterviewRemarks" + i);
-				
+
 				if (itvDAO.update(new Interview(id, -1, date, studentId, contents, remarks, subjectId))) {
 					System.out.println("前年度面談記録 更新成功 / " + id + " / " + date + " / " + contents + " / " + remarks);
 				} else {
@@ -351,11 +352,11 @@ public class EditStudentServlet extends HttpServlet {
 			int addLastInterviewAmount = Integer.parseInt(request.getParameter("addLastInterviewAmount"));
 			for (int i = 0; i < addLastInterviewAmount; i++) {
 				String contents = request.getParameter("addLastInterviewContents" + i);
-				
+
 				if (!contents.equals("") && contents != null) {
 					Date date = sdf.parse(request.getParameter("addLastInterviewDate" + i));
 					String remarks = request.getParameter("addLastInterviewRemarks" + i);
-					
+
 					if (itvDAO.insert(new Interview(0, -1, date, studentId, contents, remarks, subjectId))) {
 						System.out.println("前年度面談記録 追加成功 / " + date + " / " + contents + " / " + remarks);
 					} else {
@@ -375,7 +376,7 @@ public class EditStudentServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 	// 引数で指定した生徒の課題提出数を返す
 	public int GetSubmittedNum(List<Assignments> as) {
 		if (as.size() == 0) return 0;

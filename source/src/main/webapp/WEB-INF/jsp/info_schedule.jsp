@@ -44,7 +44,7 @@
 <c:set var="selectedSemester" value="${not empty paramSemester ? paramSemester : (not empty param.semester ? param.semester : '前期')}" />
 
 <!-- 年度・学期の検索フォーム -->
-<form action="InfoScheduleServlet" method="get" id="searchForm">
+<form action="<c:url value='/InfoScheduleServlet' />" method="get" id="searchForm">
   <div class="form-row">
     <label>① 年度：</label>
     <select name="year">
@@ -88,7 +88,7 @@
                             and item.semester == selectedSemester 
                             and item.day_of_week == day 
                             and item.period == period}">
-                  <form action="MemoServlet" method="post">
+                  <form action="<c:url value='/MemoServlet' />" method="post">
   <input type="hidden" name="scheduleId" value="${item.scheduleId}" />
   <input type="hidden" name="teacherId" value="${item.teacherId}" />
   <input type="hidden" name="year" value="${item.year}" />
@@ -134,14 +134,14 @@ window.addEventListener('load', () => {
 </script>
 
 <!-- 編集ボタン -->
-<form action="EditScheduleServlet" method="post" style="display: inline;">
+<form action="<c:url value='/EditScheduleServlet' />" method="post" style="display: inline;">
   <input type="hidden" name="year" value="${selectedYear}">
   <input type="hidden" name="semester" value="${selectedSemester}">
   <button type="submit" class="btn">編集</button>
 </form>
 
 <!-- 登録ボタン -->
-<form action="RegistScheduleServlet" method="get" style="display: inline;">
+<form action="<c:url value='/RegistScheduleServlet' />" method="get" style="display: inline;">
   <button type="submit" class="btn">登録</button>
 </form>
 

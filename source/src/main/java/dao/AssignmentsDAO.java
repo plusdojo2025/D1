@@ -29,7 +29,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "SELECT * FROM Assignments "
+			String sql = "SELECT * FROM assignments "
 					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? AND "
 					+ "year(createdDate) like ? AND month(createdDate) like ? ";
 
@@ -128,7 +128,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Assignments VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO assignments VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -207,7 +207,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Assignments SET submissionStatus=?, submissionDate=?, content=?"
+			String sql = "UPDATE assignments SET submissionStatus=?, submissionDate=?, content=?"
 					+ "WHERE assignmentId like ? AND studentId like ? AND subjectId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -285,7 +285,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Assignments WHERE assignmentId=?";
+			String sql = "DELETE FROM assignments WHERE assignmentId=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -329,7 +329,7 @@ public class AssignmentsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Assignments WHERE assignmentId=?";
+			String sql = "DELETE FROM assignments WHERE assignmentId=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

@@ -29,7 +29,7 @@ public class InfoScheduleServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginTeacher") == null) {
-            response.sendRedirect("LoginServlet");
+        	response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
 
@@ -83,7 +83,7 @@ public class InfoScheduleServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginTeacher") == null) {
-            response.sendRedirect("LoginServlet");
+        	response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
 

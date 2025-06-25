@@ -48,7 +48,7 @@
 
 			<!-- 基本情報 -->
 			<div class="baseInfo">
-				<div><input type="text" name="nameRuby" value="${student.nameRuby}" placeholder="ふりがな"></div>
+				<div style="width: 200px; padding: 2px 8px;"><input type="text" name="nameRuby" value="${student.nameRuby}" placeholder="ふりがな"></div>
 				<div class="field">
 					<div style="width: 200px"><input type="text" name="name" value="${student.name}" placeholder="氏名"> </div>
 					<div style="width: 70px">${student.grade}年</div>
@@ -127,6 +127,7 @@
 			</div><br>
 
 			<div id="attendance" style="width: 100%;">
+				<input type="hidden" name="recordAmount" value="${attendanceRecords.size()}">
 				<div class="contentTitle">出席状況</div>
 				<div class="rate">
 					<div>出席率</div>
@@ -141,7 +142,6 @@
 					</tr>
 
 					<c:forEach var="att" items="${attendanceRecords}" varStatus="status">
-						<input type="hidden" name="recordAmount" value="${attendanceRecords.size()}">
 						<input type="hidden" name="recordId${status.index}" value="${att.recordId}">
 						<tr>
 							<td><fmt:formatDate value="${att.date}" pattern="yyyy-MM-dd"></fmt:formatDate></td>
@@ -274,8 +274,8 @@
 						<input type="hidden" name="interviewId${status.index}" value="${itv.interviewId}">
 						<tr>
 							<td><input type="date" name="interviewDate${status.index}" value="<fmt:formatDate value="${itv.date}" pattern="yyyy-MM-dd"></fmt:formatDate>"></td>
-							<td><input type="text" name="interviweContents${status.index}" value="${itv.contents}"></td>
-							<td><input type="text" name="interviweRemarks${status.index}" value="${itv.remarks}"></td>
+							<td><input type="text" name="interviewContents${status.index}" value="${itv.contents}"></td>
+							<td><input type="text" name="interviewRemarks${status.index}" value="${itv.remarks}"></td>
 						</tr>
 					</c:forEach>
 					
@@ -325,5 +325,8 @@
 
 	<script src="<c:url value='/js/info_student.js' />"></script>
 	<script src="<c:url value='/js/edit_student.js' />"></script>
+	<script>
+	console.log(${assignmentsList.size()});
+	</script>
 </body>
 </html>
