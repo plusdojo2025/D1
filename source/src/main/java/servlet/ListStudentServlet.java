@@ -138,7 +138,7 @@ public class ListStudentServlet extends HttpServlet {
 			for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
 				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 					String attendanceStatus = attendanceList.get(j).getStatus();
-					if (attendanceStatus.equals("◯")) {
+					if (attendanceStatus.equals("◯")||attendanceStatus.equals("公")) {
 						attendanceSum+=1;
 					}
 					sum+=1;
@@ -168,6 +168,8 @@ public class ListStudentServlet extends HttpServlet {
 			submissionRate.add(sub);
 			
 		}
+		
+		
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -367,7 +369,7 @@ public class ListStudentServlet extends HttpServlet {
 				for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
 					if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 						String attendanceStatus = attendanceList.get(j).getStatus();
-						if (attendanceStatus.equals("◯")) {
+						if (attendanceStatus.equals("◯")||attendanceStatus.equals("公")) {
 							attendanceSum+=1;
 						}
 						sum+=1;
