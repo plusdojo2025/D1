@@ -50,7 +50,7 @@ public class EditScheduleServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginTeacher") == null) {
-            response.sendRedirect("LoginServlet");
+        	response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
 
@@ -109,7 +109,7 @@ public class EditScheduleServlet extends HttpServlet {
             request.setAttribute("action", "search");
             
             String encodedSemester = URLEncoder.encode(semester, StandardCharsets.UTF_8.name());
-            response.sendRedirect("InfoScheduleServlet?year=" + year + "&semester=" + encodedSemester + "&action=search");
+            response.sendRedirect(request.getContextPath() + "InfoScheduleServlet?year=" + year + "&semester=" + encodedSemester + "&action=search");
             return;
         }
 
