@@ -201,7 +201,7 @@ INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 4, '小テスト作成', 2)
 INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 5, '6組授業', 2);
 INSERT INTO ClassWork VALUES (0, 2, 1, '2025-06-01', 6, '課題チェック', 2);
 
-create table grades(
+create table Grades(
     gradesId int primary key auto_increment,
     studentId int not null,
     subjectId int(30) not null,
@@ -209,22 +209,22 @@ create table grades(
     testType varchar(30) not null,
     date datetime not null
  );
-insert into grades values( 1, 1, 1, '100', '一学期中間テスト', '2025-4-1 0:00' );
-insert into grades values( 2, 2, 2, '90', '一学期期末テスト', '2025-5-1 0:00' );
-insert into grades values( 3, 3, 3, '80', '二学期中間テスト', '2025-6-1 0:00' );
-insert into grades values( 4, 4, 4, '70', '二学期期末テスト', '2025-7-1 0:00' );
-insert into grades values( 5, 5, 5, '60', '三学期中間テスト', '2025-8-1 0:00' );
-insert into grades values( 6, 6, 6, '50', '三学期期末テスト', '2025-9-1 0:00' );
-insert into grades values( 7, 7, 7, '40', '三学期中間テスト', '2025-10-1 0:00' );
-insert into grades values( 0, 37, 1, '40', '一学期中間テスト', '2025-5-1 0:00' );
-insert into grades values( 0, 38, 1, '60', '一学期中間テスト', '2025-5-1 0:00' );
-insert into grades values( 0, 39, 1, '80', '一学期中間テスト', '2025-5-1 0:00' );
-insert into grades values( 0, 37, 1, '50', '一学期期末テスト', '2025-6-1 0:00' );
-insert into grades values( 0, 38, 1, '70', '一学期期末テスト', '2025-6-1 0:00' );
-insert into grades values( 0, 39, 1, '90', '一学期期末テスト', '2025-6-1 0:00' );
-insert into grades values( 0, 37, 1, '80', '単元テスト', '2025-6-1 0:00' );
-insert into grades values( 0, 38, 1, '100', '単元テスト', '2025-6-1 0:00' );
-insert into grades values( 0, 39, 1, '90', '単元テスト', '2025-6-1 0:00' );
+insert into Grades values( 1, 1, 1, '100', '一学期中間テスト', '2025-4-1 0:00' );
+insert into Grades values( 2, 2, 2, '90', '一学期期末テスト', '2025-5-1 0:00' );
+insert into Grades values( 3, 3, 3, '80', '二学期中間テスト', '2025-6-1 0:00' );
+insert into Grades values( 4, 4, 4, '70', '二学期期末テスト', '2025-7-1 0:00' );
+insert into Grades values( 5, 5, 5, '60', '三学期中間テスト', '2025-8-1 0:00' );
+insert into Grades values( 6, 6, 6, '50', '三学期期末テスト', '2025-9-1 0:00' );
+insert into Grades values( 7, 7, 7, '40', '三学期中間テスト', '2025-10-1 0:00' );
+insert into Grades values( 0, 37, 1, '40', '一学期中間テスト', '2025-5-1 0:00' );
+insert into Grades values( 0, 38, 1, '60', '一学期中間テスト', '2025-5-1 0:00' );
+insert into Grades values( 0, 39, 1, '80', '一学期中間テスト', '2025-5-1 0:00' );
+insert into Grades values( 0, 37, 1, '50', '一学期期末テスト', '2025-6-1 0:00' );
+insert into Grades values( 0, 38, 1, '70', '一学期期末テスト', '2025-6-1 0:00' );
+insert into Grades values( 0, 39, 1, '90', '一学期期末テスト', '2025-6-1 0:00' );
+insert into Grades values( 0, 37, 1, '80', '単元テスト', '2025-6-1 0:00' );
+insert into Grades values( 0, 38, 1, '100', '単元テスト', '2025-6-1 0:00' );
+insert into Grades values( 0, 39, 1, '90', '単元テスト', '2025-6-1 0:00' );
 
 CREATE TABLE Interview (
 interviewId int auto_increment PRIMARY KEY,
