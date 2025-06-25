@@ -25,7 +25,7 @@ public class SubjectDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "SELECT * FROM Subject WHERE subjectId LIKE ? AND subjectName LIKE ?";
+			String sql = "SELECT * FROM subject WHERE subjectId LIKE ? AND subjectName LIKE ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
