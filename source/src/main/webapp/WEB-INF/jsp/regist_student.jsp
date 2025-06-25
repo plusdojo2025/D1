@@ -46,7 +46,7 @@
   <div class="main-content">
     
     <form id="regist_form" method="POST" action="<c:url value='/RegistStudentServlet'/>">
-    <h2 class="form-title">新規登録</h2>
+    <h2 class="form-title">新規登録</h2><p><span class="all">※全て必須項目です</span>
       <!-- 暗黙送信防止ダミーボタン -->
       <button type="submit" disabled style="display:none" aria-hidden="true"></button>
       <table class="form-table">
@@ -98,8 +98,10 @@
         </tr>
         <tr>
           <td colspan="2">
+            
             <p><span class="zenkaku">※【氏名・ふりがな】は姓名の間に全角1文字空けてください</span></p>
             <p><span class="hankaku">※【入学年・出席番号】は半角数字で入力してください</span></p>
+            
           </td>
         </tr>
         <tr>
