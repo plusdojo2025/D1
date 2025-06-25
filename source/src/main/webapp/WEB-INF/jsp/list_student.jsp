@@ -36,10 +36,12 @@
 				<!-- ロゴ画像 -->
 				<img src="${logo2Url}" alt="ロゴ2"
 					style="height: 50px; position: relative; top: -0.2cm;">
+
 				<!-- メニュー -->
 				<ul class="cute-menu"
 					style="display: flex; list-style: none; gap: 20px;">
-					<li class="menu-item-with-sub"><a class="menu-label" href="#">🐰生徒管理</a>
+					<li class="menu-item-with-sub"><a class="menu-label" href="#">🐰
+							生徒管理</a>
 						<div class="submenu">
 							<a href="${pageContext.request.contextPath}/RegistStudentServlet">➕
 								生徒登録</a> <a href="${listStudentUrl}">📄 生徒一覧</a>
