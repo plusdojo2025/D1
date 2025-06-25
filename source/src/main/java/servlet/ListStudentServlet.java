@@ -432,12 +432,11 @@ public class ListStudentServlet extends HttpServlet {
 			//studentID subjectID year month
 			int grade = Integer.parseInt(request.getParameter("grade")); 
 			String className =request.getParameter("className");
-			String name =request.getParameter("name");
+			String name =request.getParameter("studentNum");
 
 			//classIDを取得
 			ClassRoomDAO classDao = new ClassRoomDAO();
 			List<ClassRoom> classList = classDao.select(new ClassRoom(-1,grade,className));
-			request.setAttribute("classList", classList);
 
 			int classId = classList.get(0).getClassId();        //クラス
 			request.setAttribute("classId", classId);

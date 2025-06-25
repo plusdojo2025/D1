@@ -186,7 +186,6 @@
 					<c:forEach var="e" items="${studentList}">
 						<tr>
 							<td>${e.studentNum}</td>
-							<!-- <td><a href="InfoStudentServlet">${e.name}</a></td>  -->
 							<td><input type="submit" name="studentNum"
 								placeholder="${e.name}" id="studentNum" value="${e.name}"></td>
 
