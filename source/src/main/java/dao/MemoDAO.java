@@ -52,8 +52,8 @@ public class MemoDAO {
 		return memoList;
 	}
 
-	// 条件検索（content の部分一致）
-	public List<Memo> select(Memo search) {
+	// 授業に紐づくメモの取得
+	public List<Memo> selectByClassAndPeriod(int classId, String period, java.sql.Date date) {
 		Connection conn = null;
 		List<Memo> memoList = new ArrayList<>();
 
@@ -63,14 +63,11 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "SELECT * FROM Memo WHERE content LIKE ? ORDER BY memoid";
+			String sql = "SELECT * FROM Memo WHERE classId = ? AND period = ? AND date = ? ORDER BY memoid";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			if (search.getContent() != null && !search.getContent().isEmpty()) {
-				pStmt.setString(1, "%" + search.getContent() + "%");
-			} else {
-				pStmt.setString(1, "%");
-			}
+			pStmt.setInt(1, classId);
+			pStmt.setString(2, period);
+			pStmt.setDate(3, date);
 
 			ResultSet rs = pStmt.executeQuery();
 
