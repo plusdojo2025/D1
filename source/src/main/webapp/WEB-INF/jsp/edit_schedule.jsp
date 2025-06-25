@@ -154,7 +154,7 @@
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
   <input type="hidden" name="action" value="search" />
-  <button type="submit" class="btn cancel">キャンセル</button>
+  <button type="submit" class="btn cancel">戻る</button>
 </form>
 
 <!-- JavaScript：教師IDごとにメモを保存・読み込み -->
@@ -188,7 +188,7 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
   });
   
   document.querySelector('form[action="InfoScheduleServlet"]').addEventListener("submit", function(event) {
-	  const confirmCancel = confirm("変更内容が保存されていません。\nキャンセルすると全て破棄されます。\nこのまま画面を閉じてもよろしいですか？");
+	  const confirmCancel = confirm("変更内容が保存されていません。\n戻ると全て破棄されます。\nこのまま画面を閉じてもよろしいですか？");
 
 	  if (!confirmCancel) {
 	    event.preventDefault();  // 「いいえ」なら送信キャンセル
