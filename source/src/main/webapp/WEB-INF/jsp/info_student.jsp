@@ -30,7 +30,7 @@
 
 	<main>
 	<!-- 一覧ページから生徒IDを受け取り、データベースを検索→各項目に代入 -->
-		<form method="get" action="?">
+		<form method="get" action="?" class="submitButtons">
 			<input type="hidden" name="studentId" value="${student.studentId}">
 			<input type="hidden" name="subjectId" value="${subjectId}">
 			<input type="hidden" name="grade" value="${grade}">
@@ -66,18 +66,18 @@
 				<div class="shouldAmount">${shouldSubmitNum}</div>
 			</div>
 			<div class="field">
-				<div>授業外活動</div>
-				<div>休学・停学・復学・退学・留年等</div>
+				<div class="extra">授業外活動</div>
+				<div class="enroll">休学・停学・復学・退学・留年等</div>
 			</div>
 			<div class="field">
-				<div>${student.extracurricularActivities}</div>
-				<div>${student.enrollmentStatus}</div>
+				<div class="extra" style="height: 80px">${student.extracurricularActivities}</div>
+				<div class="enroll" style="height: 80px">${student.enrollmentStatus}</div>
 			</div>
 		</div><br>
 
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
-		<form action="<c:url value='/InfoStudentServlet'/>" method="post">
+		<form action="<c:url value='/InfoStudentServlet'/>" method="post" id="pulldowns">
 		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()" >
 			<option value="1" class="subject">現代文</option>
 			<option value="2" class="subject">古典</option>
@@ -119,24 +119,28 @@
 		</form><br>
 		
 
-		<div id="display">表示項目選択 <br>
-			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked>出席状況</label>
-			<label><input type="checkbox" name="display" value="提出物状況" id="submissionCheck" checked>提出物状況</label>
-			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked>成績状況</label>
-			<label><input type="checkbox" name="display" value="授業態度" id="attitudeCheck" checked>授業態度</label>
-			<label><input type="checkbox" name="display" value="面談記録" id="interviewCheck" checked>面談記録</label>
+		<div class="contentTitle">表示項目選択</div>
+		<div id="display">
+			<label><input type="checkbox" name="display" value="出席状況" id="attendanceCheck" checked><span>出席状況</span></label>
+			<label><input type="checkbox" name="display" value="提出物状況" id="submissionCheck" checked><span>提出物状況 </span></label>
+			<label><input type="checkbox" name="display" value="成績状況" id="gradesCheck" checked><span>成績状況 </span></label>
+			<label><input type="checkbox" name="display" value="授業態度" id="attitudeCheck" checked><span>授業態度 </span></label>
+			<label><input type="checkbox" name="display" value="面談記録" id="interviewCheck" checked><span>面談記録 </span></label>
 		</div><br>
 		
-		<div id="attendance">出席状況
-			<span>出席率</span>
-			<span>${subjectAttendedRate}%</span>
-			<table>
-				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>時限</td>
-					<td>出席</td>
-					<td>備考</td>
+		<div id="attendance" style="width: 100%;">
+			<div class="contentTitle">出席状況</div>
+			<div class="rate">
+				<div>出席率</div>
+				<div style="border-right: 1px solid black;">${subjectAttendedRate}%</div>
+			</div>
+			<table style="width: 100%;">
+				<tr style="width: 100%;">
+					<td style="width: 14%;">日付</td>
+					<td style="width: 6%;">曜日</td>
+					<td style="width: 6%;">時限</td>
+					<td style="width: 6%;">出席</td>
+					<td style="width: 68%;">備考</td>
 				</tr>
 				
 				<c:forEach var="att" items="${attendanceRecords}">
@@ -151,14 +155,17 @@
 			</table><br>
 		</div>
 		
-		<div id="submission">提出物状況
-			<span>提出率</span>
-			<span>${subjectSubmittedRate}%</span>
+		<div id="submission">
+			<div class="contentTitle">提出物状況</div>
+			<div class="rate">
+				<div>提出率</div>
+				<div style="border-right: 1px solid black;">${subjectSubmittedRate}%</div>
+			</div>
 			<table>
 				<tr>
-					<td>課題内容</td>
-					<td>提出状況</td>
-					<td>提出日</td>
+					<td style="width: 100px;">課題内容</td>
+					<td style="width: 100px;">提出状況</td>
+					<td style="width: 100px;">提出日</td>
 				</tr>
 				
 				<c:forEach var="sub" items="${assignmentsList}">
@@ -175,12 +182,13 @@
 			</table><br>
 		</div>
 		
-		<div id="grades">成績状況 <br>
+		<div id="grades">
+			<div class="contentTitle">成績状況</div>
 			<table>
 				<tr>
-					<td>種別</td>
-					<td>点数</td>
-					<td>平均点</td>
+					<td style="width: 100px;">種別</td>
+					<td style="width: 80px;">点数</td>
+					<td style="width: 80px;">平均点</td>
 				</tr>
 				
 				<c:forEach var="gra" items="${gradesList}" varStatus="status">
@@ -193,27 +201,28 @@
 			</table><br>
 		</div>
 		
-		<div id="attitude">授業態度 <br>
-			<table>
-				<tr>
-					<td>授業態度</td>
-					<td>前年度授業態度</td>
+		<div id="attitude" style="width: 100%;">
+			<div class="contentTitle">授業態度</div>
+			<table style="width: 100%;">
+				<tr style="width: 100%;">
+					<td style="width: 50%;">授業態度</td>
+					<td style="width: 50%;">前年度授業態度</td>
 				</tr>
 				<tr>
-					<td>${student.attitude}</td>
-					<td></td>
+					<td style="height: 80px;">${student.attitude}</td>
+					<td style="height: 80px;"></td>
 				</tr>
 			</table><br>
 		</div>
 		
-		<div id="interview">
-			面談記録 <br>
-			<table>
+		<div id="interview"  style="width: 100%;">
+			<div class="contentTitle">面談記録</div>
+			<table  style="width: 100%;">
 				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>内容</td>
-					<td>備考</td>
+					<td style="width: 14%;">日付</td>
+					<td style="width: 6%;">曜日</td>
+					<td style="width: 40%;">内容</td>
+					<td style="width: 40%;">備考</td>
 				</tr>
 				
 				<c:forEach var="itv" items="${interviewList}">
@@ -226,13 +235,13 @@
 				</c:forEach>
 			</table><br>
 			
-			前年度面談記録 <br>
-			<table>
-				<tr>
-					<td>日付</td>
-					<td>曜日</td>
-					<td>内容</td>
-					<td>備考</td>
+			<div class="contentTitle">前年度面談記録</div>
+			<table style="width: 100%;">
+				<tr style="width: 100%;">
+					<td style="width: 14%;">日付</td>
+					<td style="width: 6%;">曜日</td>
+					<td style="width: 40%;">内容</td>
+					<td style="width: 40%;">備考</td>
 				</tr>
 				
 				<c:forEach var="itv" items="${lastInterviewList}">
@@ -244,7 +253,7 @@
 				</tr>
 				</c:forEach>
 			</table><br>
-		</div>
+		</div>	
 		 
 	</main>
 	

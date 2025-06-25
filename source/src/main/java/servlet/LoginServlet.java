@@ -40,16 +40,16 @@ public class LoginServlet extends HttpServlet {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 		
-		String teacherId = request.getParameter("teacherId");
+		String userId = request.getParameter("teacherId");
 		String password = request.getParameter("password");
 		
-		if (teacherId == null || teacherId.isEmpty()) {
+		if (userId == null || userId.isEmpty()) {
 			response.sendRedirect("LoginServlet?error=1");
 			return;
 		}
 		
 		// DTOに格納
-		Teacher input = new Teacher(teacherId, password);
+		Teacher input = new Teacher(userId, password);
 		
 		// DAOで照合
 		TeachersDAO dao = new TeachersDAO();

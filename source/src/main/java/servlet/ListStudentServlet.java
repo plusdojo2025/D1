@@ -138,7 +138,7 @@ public class ListStudentServlet extends HttpServlet {
 			for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
 				if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 					String attendanceStatus = attendanceList.get(j).getStatus();
-					if (attendanceStatus.equals("◯")) {
+					if (attendanceStatus.equals("◯")||attendanceStatus.equals("公")) {
 						attendanceSum+=1;
 					}
 					sum+=1;
@@ -168,6 +168,8 @@ public class ListStudentServlet extends HttpServlet {
 			submissionRate.add(sub);
 			
 		}
+		
+		
 		
 		request.setAttribute("attendanceList", attendanceList);
 		request.setAttribute("assignmentsList", assignmentsList);
@@ -238,11 +240,11 @@ public class ListStudentServlet extends HttpServlet {
 			
 			if(request.getParameter("add").equals("出席日追加")) {
 				day =Integer.parseInt(request.getParameter("day"));            //出席日
-				period =request.getParameter("period");                    //内容
+				period =request.getParameter("period");                        //内容
 				request.setAttribute("day", day);
 				request.setAttribute("period", period);
 			}else if(request.getParameter("add").equals("提出物追加")) {
-				content =request.getParameter("content");                    //内容
+				content =request.getParameter("content");                      //提出物内容
 				request.setAttribute("content", content);
 			}else{
 				testType =request.getParameter("testType");                    //テスト種別
@@ -367,7 +369,7 @@ public class ListStudentServlet extends HttpServlet {
 				for(int j=0;attendanceList.size()>j;j++) {  //あるクラスの出席状況の文繰り返す
 					if(studentIdList.get(i) ==  attendanceList.get(j).getStudentId()) {  //ある生徒の該当する出席状況の個所を割り出す
 						String attendanceStatus = attendanceList.get(j).getStatus();
-						if (attendanceStatus.equals("◯")) {
+						if (attendanceStatus.equals("◯")||attendanceStatus.equals("公")) {
 							attendanceSum+=1;
 						}
 						sum+=1;

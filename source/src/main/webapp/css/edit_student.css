@@ -1,4 +1,3 @@
-
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
@@ -7,281 +6,158 @@ body {
   padding: 40px 20px;
 }
 
-
-.cute-menu {
-  list-style: none !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 24px !important;
-  padding: 0 !important;
-  margin: 0 0 20px 0 !important;
-  font-family: 'Comic Sans MS', cursive, sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 18px !important;
-}
-
-.cute-menu li a {
-  text-decoration: none;
-  color: #3498db;  /* 水色 */
-  padding: 6px 12px;
-  border-radius: 12px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 0 5px #85c1e9;  /* 水色の薄い影 */
-}
-
-.cute-menu li a:hover {
-  background-color: #85c1e9;  /* 水色の薄い背景 */
-  color: #fff;
-  box-shadow: 0 0 8px #3498db;  /* 濃い水色の影 */
-}
-
-
-/* メインコンテンツ中央寄せ */
-.main-content {
+main{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   background: #ffffff;
   padding: 40px 50px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
-  
-  
-  
-  
-  
-  
-  
-/* 見出し */
-h1 {
-	font-size: 2.5rem;
-	border-bottom: 3px solid #2980b9;
-	padding-bottom: 8px;
+
+/* ボタン */
+.submitButtons {
+	margin: 0 0 0 600px;
 }
 
-h2 {
-	font-size: 1.8rem;
+/* 基本情報部分 */
+.baseInfo {
+	margin: 10px auto;
+	border: 2px solid black;
+	border-collapse: collapse;
 }
 
-h3 {
-	font-size: 1.5rem;
+.baseInfo .rateExplain, .baseInfo .amountExplain, .baseInfo .shouldAmountExplain {
+	width: 150px;
+	border-right: 1px solid black;
 }
 
-h1, h2, h3 {
-  color: #2980b9;
-  margin-bottom: 40px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-  
-
-
-/* タイトル */
-.form-title {
-  text-align: center;
-  margin-bottom: 30px;
+.baseInfo .rate, .baseInfo .amount {
+	width: 120px;
+	border-right: 1px solid black;
+	text-align: right;
+	border-collapse: collapse;
 }
 
-
-
-
-
-
-
-
-
-/* フォームボックス */
-form {
-  background-color: #f9f9f9;
-  padding: 30px 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
+.baseInfo .shouldAmount {
+	width: 120px;
+	text-align: right;
 }
 
-
-
-/* テーブル中央揃えと間隔調整 */
-.form-table {
-  width: 100%;
-  margin: 0 auto;
-  border-spacing: 10px 10px; /* 縦の間隔を狭くした */
+.field {
+	display: flex;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
 }
 
-.form-table td {
-  vertical-align: middle;
-  padding: 6px 8px; /* 上下のパディングを少し詰める */
+.field div {
+	height: 25px;
+	padding: 5px 7px;
 }
 
-/* ラベル列右寄せ */
-.form-table td:first-child {
-  text-align: right;
-  width: 160px;
-  white-space: nowrap;
+.field .extra {
+	width: 430px;
+	border-right: 1px solid black;
+	border-collapse: collapse;
 }
 
-/* テキスト＋サフィックスを横並びにするためのWrapper */
-.with-suffix {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.field .enroll {
+	width: 430px;
 }
 
-.with-suffix input {
-  width: auto;
-  flex: 1 0 80px;
+/*プルダウン*/
+#selection {
+	display: flex;
+	margin: 0 auto 0 0;
+	font-size: 18px;
 }
 
-.with-suffix .suffix-text {
-  white-space: nowrap;
-  margin-left: 4px;
-}
-
-
-
-
-
-
-
-
-
-/* 入力欄スタイル統一 */
-.form-input,
-.form-input-short,
-.form-table select,
-
-.form-table input[type="number"] {
-  padding: 8px 12px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  
-}
-
-
-
-
-
-
-.form-table input[type="text"], 
-            input[type="number"],
-select {
-	width: 100%;
-	padding: 14px 16px;
+#subjectSelect {
+	width: 260px;
+	margin: 0 5px;
+	border:1px solid black;
+	border-collapse: collapse;
 	margin-bottom: 1px;
 	border: 1.5px solid #bdc3c7;
 	border-radius: 12px;
 	font-size: 1.1rem;
 	transition: all 0.3s ease;
 	box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+	text-align: center;
 }
 
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-select:focus {
-	border-color: #3498db;
-	box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-	outline: none;
+#gradeSelect, #monthSelect {
+	width: 100px;
+	margin: 0 5px;
+	border:1px solid black;
+	border-collapse: collapse;
+	margin-bottom: 1px;
+	border: 1.5px solid #bdc3c7;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	transition: all 0.3s ease;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+	text-align: center;
 }
 
-
-
-
-
-
-
-
-/* ボタンスタイル */
-button {
-  background: linear-gradient(45deg, #3498db, #2980b9);
-	color: white;
-	border: none;
-	padding: 14px 28px;
-	font-size:1.1rem;
-	border-radius:14px;
-	cursor: pointer;
-	transition: background 0.4s ease, transform 0.3s ease;
-	box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
-	 margin-right: 12px;
-
+#display {
+	display: flex;
+	font-size: 18px;
 }
 
-button:hover {
-  background: linear-gradient(45deg, #2980b9, #1c5980);
-	transform: scale(1.05);
-	box-shadow: 0 8px 20px rgba(41, 128, 185, 0.6);
-
+#display span {
+	margin: 0 20px 0 0px;
+	font-size: 16px;
 }
 
-/* ボタンエリア中央揃え＋間隔調整 */
-.button-area {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin: 12px 0 0; /* ボタン上の余白を詰め、下はデフォルト */
+.contentTitle {
+	font-size: 18px; 
+	font-weight: bold;
 }
 
-.button-area button {
-  margin: 0;
+#attendance .rate, #submission .rate{
+	display: flex;
 }
 
-
-
-/* エラーメッセージ */
-#error_message {
-  color: #e74c3c;
-  font-weight: bold;
-  margin: 6px 0;
-  text-align: center;
-  display: block;
-  width: 100%;
+#attendance .rate div, #submission .rate div{
+	width: 102px;
+	height: 25px;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
 }
 
-/* 注意文 */
-.zenkaku {
-  font-size: 15px;
-  color: #555;
-  text-align: center;
-  display: block;
-  margin: 4px auto 8px;
+#attitude {
+	margin: 0 auto;
+	width: auto;
 }
 
-.hankaku {
-  font-size: 15px;
-  color: #555;
-  text-align: center;
-  display: block;
-  margin: 4px auto 8px;
+/* テーブル */
+table, tr, td {
+	border: 1px solid black;
+	border-collapse: collapse;
 }
 
-/* スマホ対応 */
-@media (max-width: 600px) {
-  .form-table td:first-child {
-    text-align: left;
-    width: 100%;
-  }
+td {
+	width: 50px;
+	text-align: center;
+}
 
-  .form-input,
-  .form-input-short,
-  .form-table select,
-  .form-table input[type="text"],
-  .form-table input[type="number"] {
-    width: 100%;
-  }
+/* 入力 */
+input[type="text"], select {
+	width: 90%;
+	margin: 0px;
+	padding: 3px 0;
+	border: 1.5px solid #bdc3c7;
+	border-radius: 6px;
+}
 
-  .button-area {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .button-area button {
-    width: 100%;
-  }
+textarea {
+  resize: none;
 }

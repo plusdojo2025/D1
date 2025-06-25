@@ -6,12 +6,11 @@ body {
   padding: 40px 20px;
 }
 
-/* メインコンテンツ中央寄せ */
 main{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   
   max-width: 900px;
   margin: 0 auto;
@@ -21,30 +20,33 @@ main{
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
+/* ボタン */
+.submitButtons {
+	margin: 0 0 0 auto;
+}
+
 /* 基本情報部分 */
 .baseInfo {
 	margin: 10px auto;
 	border: 2px solid black;
+	border-collapse: collapse;
 }
 
-.baseInfo .rateExplain {
-	width: 100px;
-}
-
-.baseInfo .rate {
-	width: 50px;
-}
-
-.baseInfo .amountExplain {
-	width: 80px;
-}
-
-.baseInfo .amount, .baseInfo .shouldAmount {
-	width: 50px;
-}
-
-.baseInfo .shouldAmountExplain {
+.baseInfo .rateExplain, .baseInfo .amountExplain, .baseInfo .shouldAmountExplain {
 	width: 150px;
+	border-right: 1px solid black;
+}
+
+.baseInfo .rate, .baseInfo .amount {
+	width: 120px;
+	border-right: 1px solid black;
+	text-align: right;
+	border-collapse: collapse;
+}
+
+.baseInfo .shouldAmount {
+	width: 120px;
+	text-align: right;
 }
 
 .field {
@@ -55,4 +57,78 @@ main{
 .field div {
 	height: 25px;
 	padding: 5px 7px;
+}
+
+.field .extra {
+	width: 430px;
+	border-right: 1px solid black;
+	border-collapse: collapse;
+}
+
+.field .enroll {
+	width: 430px;
+}
+
+/*プルダウン*/
+#pulldowns {
+	display: flex;
+	margin: 0 auto 0 0;
+}
+
+#subjectSelect {
+	width: 260px;
+	margin: 0 5px;
+}
+
+#gradeSelect, #monthSelect {
+	width: 100px;
+	margin: 0 5px;
+}
+
+#display {
+	display: flex;
+	font-size: 18px;
+}
+
+#display span {
+	margin: 0 20px 0 0px;
+	font-size: 16px;
+}
+
+input[type="checkbox"] {
+	margin: 5px 5px;
+}
+
+.contentTitle {
+	font-size: 18px; 
+	font-weight: bold;
+}
+
+#attendance .rate, #submission .rate{
+	display: flex;
+}
+
+#attendance .rate div, #submission .rate div{
+	width: 102px;
+	height: 25px;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+#attitude {
+	margin: 0 auto;
+	width: auto;
+}
+
+/* テーブル */
+table, tr, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+td {
+	width: 50px;
+	text-align: center;
 }
