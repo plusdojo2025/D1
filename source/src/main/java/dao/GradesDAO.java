@@ -21,12 +21,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "SELECT * FROM Grades "
+			String sql = "SELECT * FROM grades "
 					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? AND score like ? "
 					+ "AND testType like ? AND year(date) like ? AND month(date) like ? ";
 
@@ -114,12 +114,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Grades VALUES (?, ?, ?, ?, ?, ?) ";
+			String sql = "INSERT INTO grades VALUES (?, ?, ?, ?, ?, ?) ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -186,12 +186,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE Grades SET score = ?, testType = ? "
+			String sql = "UPDATE grades SET score = ?, testType = ? "
 					+ "WHERE gradesId like ? AND studentId like ? AND subjectId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
@@ -258,12 +258,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Grades WHERE gradesId=? ";
+			String sql = "DELETE FROM grades WHERE gradesId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -302,12 +302,12 @@ public class GradesDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM Grades WHERE gradesId=? ";
+			String sql = "DELETE FROM grades WHERE gradesId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

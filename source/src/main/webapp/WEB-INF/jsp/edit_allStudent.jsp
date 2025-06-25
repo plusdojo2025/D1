@@ -33,8 +33,8 @@
 	</header>
 
     <main>
-        <form action="<c:url value='/EditAllStudentServlet' />" method ="POST" id="edit_allstudent_form">
-
+        <form action="<c:url value='/EditAllStudentServlet' />" method ="POST" id="edit_allstudent_form" onsubmit="return check_data()">
+ 		<button type="submit" disabled style="display: none;"></button>
 			<c:out value="${grade}" />年
 			<c:out value="${className}" />
 			<c:out value="${year}" />年
@@ -47,8 +47,8 @@
 			<input type="hidden" name="month" id="editCompleted" value="${month}">
 			<input type="hidden" name="subjectName" id="editCompleted" value="${subjectName}">
 			
-            <input type="submit" name="editCompleted" id="editCompleted" value="編集完了">
-            <input type="submit" name="cancel" id="cancel" value="キャンセル">
+            <input type="submit" name="editCompleted" id="editCompleted" value="編集完了" onclick="key='editCompleted'">
+            <input type="submit" name="cancel" id="cancel" value="キャンセル" onclick="key='cancel'">
 
 
             <p>表示項目選択</p>

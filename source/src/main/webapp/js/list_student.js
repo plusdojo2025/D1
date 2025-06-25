@@ -176,3 +176,66 @@ function changeDisplay(event) {
     document.body.removeChild(link);   // ダウンロード後、リンクをDOMから削除
     
 });
+
+
+
+	
+	document.getElementById('list_student_form').onsubmit = function (event) {
+    	const searchDay = document.getElementById('list_student_form').day.value;
+        const searchPeriod = document.getElementById('list_student_form').period.value;
+        const searchContent = document.getElementById('list_student_form').content.value;
+        const searchTestType = document.getElementById('list_student_form').testType.value;
+
+		if (key == 'attendanceButton') {
+            if (searchDay == '出席日') {
+                event.preventDefault();
+                window.alert('出席日を指定してください。');
+            }
+
+            else if (searchPeriod == '時限') {
+                event.preventDefault();
+                window.alert('時限を指定してください。');
+            }
+            
+            else if (searchDay !== '出席日' && searchPeriod !== '時限') {
+
+            	if (!window.confirm('出欠を登録します。よろしいですか？')) {
+                    return false;
+                }
+                errorMessageObj.textContent = null;
+
+			}
+		}
+
+		if (key == 'submissionButton') {
+            if (searchContent === '' || searchContent === null) {
+                event.preventDefault();
+                window.alert('課題内容を指定してください。');
+            }
+            
+            else if (searchContent !== '' && searchContent !== null) {
+
+            	if (!window.confirm('課題内容を登録します。よろしいですか？')) {
+                    return false;
+                }
+                errorMessageObj.textContent = null;
+            }
+         }
+            
+            
+        if (key == 'gradesButton') {
+            if (searchTestType === '' || searchTestType === null) {
+                event.preventDefault();
+                window.alert('テスト名を指定してください。');
+            }
+            
+            else if (searchTestType !== '' && searchTestType !== null) {
+
+            	if (!window.confirm('テスト名を登録します。よろしいですか？')) {
+                    return false;
+                }
+                errorMessageObj.textContent = null;
+            }
+		}
+          
+    }
