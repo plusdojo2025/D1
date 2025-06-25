@@ -88,10 +88,20 @@
                             and item.semester == selectedSemester 
                             and item.day_of_week == day 
                             and item.period == period}">
-                  <div>
-                    ${item.content} <br/>
-                    <c:out value="${classIdNameMap[item.classId]}" default="${item.classId}" />
-                  </div>
+                  <form action="MemoServlet" method="post">
+  <input type="hidden" name="scheduleId" value="${item.scheduleId}" />
+  <input type="hidden" name="teacherId" value="${item.teacherId}" />
+  <input type="hidden" name="year" value="${item.year}" />
+  <input type="hidden" name="semester" value="${item.semester}" />
+  <input type="hidden" name="day_of_week" value="${item.day_of_week}" />
+  <input type="hidden" name="period" value="${item.period}" />
+  <input type="hidden" name="content" value="${item.content}" />
+  <input type="hidden" name="classId" value="${item.classId}" />
+  <button type="submit" class="link-button">
+    ${item.content} <br/>
+    <c:out value="${classIdNameMap[item.classId]}" default="${item.classId}" />
+  </button>
+</form>
                 </c:if>
               </c:forEach>
             </td>

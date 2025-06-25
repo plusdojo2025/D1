@@ -43,11 +43,12 @@ public class LoginServlet extends HttpServlet {
 		String userId = request.getParameter("teacherId");
 		String password = request.getParameter("password");
 		
+		/*
 		if (userId == null || userId.isEmpty()) {
 			response.sendRedirect("LoginServlet?error=1");
 			return;
 		}
-		
+		*/
 		// DTOに格納
 		Teacher input = new Teacher(userId, password);
 		

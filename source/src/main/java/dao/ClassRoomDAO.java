@@ -21,7 +21,7 @@ public class ClassRoomDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			// SQL文を準備する
@@ -94,7 +94,7 @@ public class ClassRoomDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -148,7 +148,7 @@ public class ClassRoomDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			
@@ -211,7 +211,7 @@ public class ClassRoomDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
@@ -254,7 +254,7 @@ public class ClassRoomDAO {
 	    List<ClassRoom> crList = new ArrayList<>();
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/D1?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9", "root", "password");
+	        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d1?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9", "root", "password");
 
 	        String sql = "SELECT * FROM Class";
 	        PreparedStatement pStmt = conn.prepareStatement(sql);
