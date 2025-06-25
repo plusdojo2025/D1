@@ -123,7 +123,7 @@
 
 			<div id="attendance">
 				<span> 出席状況 </span> <span>
-					<button id="attendanceButton" name="add" value="出席日追加">出席日追加</button>
+					
 					<span><select name="day">
 							<option>出席日</option>
 							<c:if test="${month == 2}">
@@ -153,6 +153,7 @@
 							<option value="6">6</option>
 					</select></span>
 				</span><span>限</span>
+				<button id="attendanceButton" name="add" value="出席日追加">出席日追加</button>
 				<table border="1">
 					<tr>
 						<td></td>
@@ -178,7 +179,7 @@
 						<c:forEach var="e" items="${attendanceDateList}">
 							<td>${e.period}限</td>
 						</c:forEach>
-						
+
 						<td>出席率(%)</td>
 					</tr>
 
@@ -208,9 +209,10 @@
 			</div>
 
 			<div id="submission">
-				<span> 提出物状況 </span> <span>
+				<span> 提出物状況 </span>  <span> <input type="text" name="content" placeholder="課題内容">
+				<span>
 					<button id="submissionButton" name="add" id="edit" value="提出物追加">提出物追加</button>
-				</span> <span> <input type="text" name="content" placeholder="課題内容">
+				</span>
 					<!-- 
 					<div id="submissionModal" class="modal">
 						<div class="modal-content">
@@ -296,9 +298,9 @@
 			</div>
 
 			<div id="grades">
-				<span> 成績状況 </span> <span>
+				<span> 成績状況 </span> <input type="text" name="testType" placeholder="テスト名">
+				<span>
 					<button id="gradesButton" name="add" id="edit" value="テスト追加">テスト追加</button>
-					<span> <input type="text" name="testType" placeholder="テスト名"></span>
 				</span>
 
 				<table border="1">
