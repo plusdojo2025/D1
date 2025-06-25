@@ -443,7 +443,7 @@ public class ListStudentServlet extends HttpServlet {
 
 			//生徒情報を取得
 			StudentsDAO studentDao = new StudentsDAO();
-			List<Students> studentList = studentDao.select(new Students(0,0,grade,classId,0, name, "", "", "", ""));
+			List<Students> studentList = studentDao.select(new Students(0,0,grade,classId,0,name, "", "", "", ""));
 
 			int studentId = studentList.get(0).getStudentId();
 			request.setAttribute("studentId", studentId);
@@ -452,7 +452,9 @@ public class ListStudentServlet extends HttpServlet {
 			String subjectName = request.getParameter("subjectName");
 			SubjectDAO subjectDao = new SubjectDAO();
 			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
-			request.setAttribute("subjectList", subjectList);
+			
+			int subjectId = subjectList.get(0).getSubjectId();
+			request.setAttribute("subjectId", subjectId);
 
 			int year = Integer.parseInt(request.getParameter("year"));
 			int month = Integer.parseInt(request.getParameter("month"));
@@ -460,7 +462,15 @@ public class ListStudentServlet extends HttpServlet {
 			request.setAttribute("year", year);
 			request.setAttribute("month", month);
 
-
+			System.out.println(grade);
+			System.out.println(className);
+			System.out.println(classId);
+			System.out.println(name);
+			System.out.println("studentId"+studentId);
+			System.out.println(subjectId);
+			System.out.println(year);
+			System.out.println(month);
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("InfoStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/InfoStudentServlet");
 			dispatcher.forward(request, response);
