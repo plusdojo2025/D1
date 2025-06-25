@@ -454,7 +454,7 @@ public class ListStudentServlet extends HttpServlet {
 			List<Subject> subjectList = subjectDao.select(new Subject(-1,subjectName));
 			
 			int subjectId = subjectList.get(0).getSubjectId();
-			request.setAttribute("subjectId", subjectId);
+			request.setAttribute("studentId", studentId);
 
 			int year = Integer.parseInt(request.getParameter("year"));
 			int month = Integer.parseInt(request.getParameter("month"));
