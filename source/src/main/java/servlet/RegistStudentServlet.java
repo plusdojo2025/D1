@@ -33,7 +33,7 @@ public class RegistStudentServlet extends HttpServlet {
 		 
 		 
 		 
-		 
+		
 		HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginTeacher") == null) {
         	response.sendRedirect(request.getContextPath() + "/LoginServlet");
