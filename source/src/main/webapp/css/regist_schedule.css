@@ -38,3 +38,40 @@
   bottom: -38px;
   left: -250px;
 }
+
+.menu-item-with-sub {
+  position: relative;
+}
+
+.menu-label {
+  cursor: pointer;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: white;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.menu-item-with-sub:hover .submenu {
+  display: block;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  display: block;
+}
+
+.submenu a:hover {
+  background-color: #f0f0f0;
+}
