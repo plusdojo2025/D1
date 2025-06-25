@@ -25,7 +25,7 @@ public class StudentsDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 			// SQL文を準備する
-			String sql = "SELECT * FROM Students "     //変更箇所//
+			String sql = "SELECT * FROM students "     //変更箇所//
 					+ "WHERE studentId like ? AND year like ? AND grade like ? AND "
 					+ "classId like ? AND studentNum like ?;";
 					
@@ -114,7 +114,7 @@ public class StudentsDAO {
 
 
 			// SQL文を準備する      変更箇所
-			String sql = "INSERT INTO Students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
 			
 			// SQL文を完成させる			
@@ -196,7 +196,7 @@ public class StudentsDAO {
 					"root", "password");
 			
 			// SQL文を準備する  変更箇所
-			String sql = "UPDATE Students SET year=?, grade=?, classId=?, "
+			String sql = "UPDATE students SET year=?, grade=?, classId=?, "
 					+ "studentNum =?, name=?, nameRuby=?, enrollmentStatus=?, "
 					+ "extracurricularActivities=?, attitude=? WHERE studentId like ? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);			
@@ -296,7 +296,7 @@ public class StudentsDAO {
 					"root", "password");
 
 			// SQL文を準備する            変更箇所
-			String sql = "DELETE FROM Students WHERE studentId=? ";
+			String sql = "DELETE FROM students WHERE studentId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
