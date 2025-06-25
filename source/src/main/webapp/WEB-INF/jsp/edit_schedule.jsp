@@ -55,7 +55,7 @@
 <p>教師ID：<c:out value="${loginTeacher.teacherId}" /></p>
 
 <!-- 年度・学期の検索フォーム -->
-<form action="EditScheduleServlet" method="post">
+<form action="<c:url value='/EditScheduleServlet' />" method="post">
   <div class="form-row">
     <label>① 年度：</label>
     <select name="year">
@@ -79,7 +79,7 @@
 <c:set var="periods" value="1限,2限,3限,4限,5限,6限,7限" />
 
 <!-- 編集フォーム -->
-<form action="EditScheduleServlet" id="editForm" method="post">
+<form action="<c:url value='/EditScheduleServlet' />" id="editForm" method="post">
   <input type="hidden" name="action" value="save">
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
@@ -150,7 +150,7 @@
 </form>
 
 <!-- キャンセルボタン -->
-<form action="InfoScheduleServlet" method="get" style="display: inline;">
+<form action="<c:url value='/InfoScheduleServlet' />" method="get" style="display: inline;">
   <input type="hidden" name="year" value="${year}" />
   <input type="hidden" name="semester" value="${semester}" />
   <input type="hidden" name="action" value="search" />

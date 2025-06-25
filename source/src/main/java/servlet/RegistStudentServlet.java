@@ -34,11 +34,12 @@ public class RegistStudentServlet extends HttpServlet {
 		 
 		 
 		 
-		HttpSession session = request.getSession();
-		if (session.getAttribute("id") == null) {
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
-			return;
-		} 
+		HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("loginTeacher") == null) {
+        	response.sendRedirect(request.getContextPath() + "/LoginServlet");
+            return;
+        }
+
 		 
 		 
 		 
@@ -63,12 +64,13 @@ public class RegistStudentServlet extends HttpServlet {
 		
 		
 		
-		HttpSession session = request.getSession();
-		if (session.getAttribute("id") == null) {
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
-			return;
-		}
+		HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("loginTeacher") == null) {
+        	response.sendRedirect(request.getContextPath() + "/LoginServlet");
+            return;
+        }
 
+		
 		
 		
 		
@@ -177,8 +179,8 @@ public class RegistStudentServlet extends HttpServlet {
 		    return;
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
-            //登録失敗時は"Servlet"にフォワード                                "/D1/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/RegistStudentServlet");
+            //登録失敗時は"Servlet"にフォワード                                "/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
             dispatcher.forward(request, response);
             return;
 		}

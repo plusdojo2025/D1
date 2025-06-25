@@ -129,7 +129,7 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("shouldSubmitNum", shouldSubmittedNum);
 
 			// 指定した教科の提出物
-			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", year, month, null));
+			List<Assignments> asList = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", (student.getYear() + grade - 1), month, null));
 			List<Assignments> asList2 = asDAO.select(new Assignments(-1, studentId, subjectId, "", "", -1, -1, null));
 			int subjectSubmittedNum = 0, subjectShouldSubmittedNum = 0;
 			subjectSubmittedNum = GetSubmittedNum(asList2, year, month);
@@ -139,7 +139,7 @@ public class InfoStudentServlet extends HttpServlet {
 
 			// 成績
 			GradesDAO grdDAO = new GradesDAO();
-			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", year, month));
+			List<Grades> grdList = grdDAO.select(new Grades(-1, studentId, subjectId, -1, "", (student.getYear() + grade - 1), month));
 			request.setAttribute("gradesList", grdList);
 			String[] average = new String[grdList.size()];
 			for (int i = 0; i < grdList.size(); i++) {
