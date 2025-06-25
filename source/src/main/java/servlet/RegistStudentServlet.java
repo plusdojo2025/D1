@@ -69,7 +69,7 @@ public class RegistStudentServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
-
+		
 		
 		
 		
