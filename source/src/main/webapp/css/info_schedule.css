@@ -215,16 +215,17 @@ input[type="radio"] {
   }
 
   table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    width: 90%;
-  }
+  border-collapse: collapse;
+  margin-top: 20px;
+  width: 100%;               /* 横幅を100%に固定 */
+  table-layout: fixed;       /* 列幅を均等にする（折り返しに必要） */
+}
 
-  table, th, td {
-    border: 1px solid #999;
-  }
+th, td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #999;
 
-  th, td {
-    padding: 8px;
-    text-align: center;
-  }
+  word-wrap: break-word;     /* 長い単語の途中でも折り返し可能に */
+  white-space: normal;       /* 折り返しを許可（nowrapは無効化） */
+}
