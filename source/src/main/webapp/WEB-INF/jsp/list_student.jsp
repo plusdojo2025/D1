@@ -4,6 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <%@ page import="java.util.ArrayList" %>
+<c:url value="/img/header_banner.jpg" var="headerBannerUrl"/>
+<c:url value="/img/IMG_ロゴ2.png" var="logo2Url"/>
+<c:url value="/ListStudentServlet" var="listStudentUrl"/>
+<c:url value="/InfoScheduleServlet" var="infoScheduleUrl"/>
+<c:url value="/LoginServlet" var="logoutUrl"/>
+<c:url value="/RegistScheduleServlet" var="registScheduleUrl"/>
+<c:url value="/js/regist_student.js" var="registJsUrl"/>
 
 
 <html>
@@ -18,17 +25,27 @@
 
 <body>
 	<header>
-		<div class="wrapper">
-			<div style="text-align: center; margin-bottom: 20px;">
-				<img src="<%=request.getContextPath()%>/img/header_banner.jpg"
-					alt="バナー画像"
-					style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
-			</div>
-			<nav>
-				<ul class="cute-menu">
-					<li><a href="<c:url value='/ListStudentServlet'/>">🐰 生徒管理</a></li>
-					<li><a href="<c:url value='/InfoScheduleServlet'/>">📅 スケジュール</a></li>
-					<li><a href="<c:url value='/LoginServlet'/>">🚪 ログアウト</a></li>
+		<div style="text-align: center; margin-bottom: 20px;">
+			<img src="${headerBannerUrl}" alt="バナー画像"
+				style="width: 100%; max-width: 650px; height: 400px; object-fit: cover;">
+		</div>
+		<!-- ナビ全体を中央に寄せる -->
+		<div style="text-align: center;">
+			<nav
+				style="display: inline-flex; align-items: center; gap: 30px; padding: 10px;">
+				<!-- ロゴ画像 -->
+				<img src="${logo2Url}" alt="ロゴ2"
+					style="height: 50px; position: relative; top: -0.2cm;">
+				<!-- メニュー -->
+				<ul class="cute-menu"
+					style="display: flex; list-style: none; gap: 20px;">
+					<li class="menu-item-with-sub"><a class="menu-label" href="#">🐰生徒管理</a>
+						<div class="submenu">
+							<a href="${pageContext.request.contextPath}/RegistStudentServlet">➕
+								生徒登録</a> <a href="${listStudentUrl}">📄 生徒一覧</a>
+						</div></li>
+					<li><a href="${infoScheduleUrl}">📅 スケジュール</a></li>
+					<li><a href="${logoutUrl}">🚪 ログアウト</a></li>
 				</ul>
 			</nav>
 		</div>
