@@ -97,7 +97,7 @@ public class ListStudentServlet extends HttpServlet {
 		for(int i=0;studentList.size()>i;i++) {
 			studentIdList.add(studentList.get(i).getStudentId());
 		}
-		int studentOne = studentIdList.get(1);
+		int studentOne = studentIdList.get(0);
 
 		AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
 		List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
@@ -329,7 +329,7 @@ public class ListStudentServlet extends HttpServlet {
 			for(int i=0;studentList.size()>i;i++) {
 				studentIdList.add(studentList.get(i).getStudentId());
 			}
-			int studentOne = studentIdList.get(1);
+			int studentOne = studentIdList.get(0);
 
 			AttendanceRecordsDAO attendanceRecordsDao = new AttendanceRecordsDAO();
 			List<AttendanceRecords> attendanceList = new ArrayList<AttendanceRecords>();
