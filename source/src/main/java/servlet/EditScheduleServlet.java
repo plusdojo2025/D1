@@ -32,7 +32,7 @@ public class EditScheduleServlet extends HttpServlet {
 
         Map<Integer, String> classIdNameMap = new HashMap<>();
         for (ClassRoom cls : classList) {
-            String name = cls.getGrade() + "年" + cls.getClassName() + "組";
+            String name = cls.getGrade() + "年" + cls.getClassName() ;
             classIdNameMap.put(cls.getClassId(), name);
         }
 
@@ -129,7 +129,7 @@ public class EditScheduleServlet extends HttpServlet {
 
         Map<Integer, String> classIdNameMap = new HashMap<>();
         for (ClassRoom cls : classList) {
-            String name = cls.getGrade() + "年" + cls.getClassName() + "組";
+            String name = cls.getGrade() + "年" + cls.getClassName();
             classIdNameMap.put(cls.getClassId(), name);
         }
 
