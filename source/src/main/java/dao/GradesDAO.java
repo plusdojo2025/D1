@@ -307,7 +307,7 @@ public class GradesDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "DELETE FROM grades WHERE gradesId=? ";
+			String sql = "DELETE FROM Grades WHERE gradesId=? ";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
