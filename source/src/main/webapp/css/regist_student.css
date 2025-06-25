@@ -389,14 +389,3 @@ button:hover {
 
 
 
-#footer {
-  position: absolute;
-  bottom: -100px;
-  left: -650px;
-  width: 100%;
-  background-color: #f8f8f8; /* お好みで */
-  text-align: center;
-  padding: 4px 0;
-  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
-  z-index: 1000; /* 他の要素より前面に */
-}
