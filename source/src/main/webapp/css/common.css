@@ -224,19 +224,18 @@ input[type="radio"] {
 }
 /* .cute-menu のリンクと .menu-label の高さ・縦位置を揃える */
 .cute-menu li a,
-.menu-item-with-sub > .menu-label {
-  display: inline-flex;       /* インラインフレックスにして縦中央揃え */
-  align-items: center;        /* テキスト縦中央 */
+.menu-item-with-sub > .cute-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* メニュー間のスペース */
+  padding-left: 12px; /* 少し内側に寄せたい場合 */
+}
+
+.menu-item-with-sub > .cute-menu li a {
+  height: auto; /* 高さ固定を解除 */
+  display: inline-flex;
+  align-items: center;
   padding: 6px 12px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 0 5px #85c1e9;
-  color: #3498db;             /* 色をリンクの水色に合わせる */
-  text-decoration: none;
-  height: 38px;               /* 高さ固定、微調整可能 */
 }
 
 /* ホバー時も統一 */
