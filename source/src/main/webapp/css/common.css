@@ -182,3 +182,77 @@ input[type="radio"] {
 	margin: 10px 0;
 	}
 }
+.menu-item-with-sub {
+  position: relative;
+}
+
+.menu-label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 12px;
+  text-decoration: none;
+  color: black;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 150px;
+  z-index: 999;
+}
+
+.submenu a {
+  display: block;
+  padding: 8px 16px;
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.submenu a:hover {
+  background-color: #f0f0f0;
+}
+
+.menu-item-with-sub:hover .submenu {
+  display: block;
+}
+/* .cute-menu のリンクと .menu-label の高さ・縦位置を揃える */
+.cute-menu li a,
+.menu-item-with-sub > .menu-label {
+  display: inline-flex;       /* インラインフレックスにして縦中央揃え */
+  align-items: center;        /* テキスト縦中央 */
+  padding: 6px 12px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 0 5px #85c1e9;
+  color: #3498db;             /* 色をリンクの水色に合わせる */
+  text-decoration: none;
+  height: 38px;               /* 高さ固定、微調整可能 */
+}
+
+/* ホバー時も統一 */
+.cute-menu li a:hover,
+.menu-item-with-sub:hover > .menu-label {
+  background-color: #85c1e9;
+  color: #fff;
+  box-shadow: 0 0 8px #3498db;
+}
+
+/* .menu-labelは黒からリンク色へ変更 */
+.menu-label {
+  /* color: black; 削除 */
+}
+
+/* サブメニューはそのままでOK */
+.menu-item-with-sub:hover .submenu {
+  display: block;
+}
