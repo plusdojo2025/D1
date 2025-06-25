@@ -52,8 +52,10 @@ public class InfoStudentServlet extends HttpServlet {
 //            return;
 //        }
 
+		
+		
 		try {
-			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 1;
+			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = -1;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -81,9 +83,12 @@ public class InfoStudentServlet extends HttpServlet {
 			
 			StudentsDAO stuDAO = new StudentsDAO();
 
-			if (request.getParameter("studentId") != null) {
+			if (request.getAttribute("studentId") != null) {
+				studentId = (int)request.getAttribute("studentId");
+			} else if (request.getParameter("studentId") != null) {
 				studentId = Integer.parseInt(request.getParameter("studentId"));
 			}
+			
 			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, -1, "", "", "", "", ""));
 			Students student = new Students();
 			if (studentsList.size() > 0) student = studentsList.get(0);
