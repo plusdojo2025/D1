@@ -1,127 +1,142 @@
 package servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ClassRoomDAO;          // ★ 追加
 import dao.MemoDAO;
 import dao.SubjectDAO;
+import dto.ClassRoom;            // ★ 追加
 import dto.Memo;
 import dto.Subject;
 
 @WebServlet("/MemoServlet")
 public class MemoServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private final MemoDAO dao = new MemoDAO();
+    private static final long serialVersionUID = 1L;
+    private final MemoDAO    dao        = new MemoDAO();
+    private final SubjectDAO subjectDAO = new SubjectDAO();
+    private final ClassRoomDAO classRoomDAO = new ClassRoomDAO();  // ★ 追加
 
-	/* ========== メモ一覧表示(GET) ========== */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
-		String classIdStr   = request.getParameter("classId");
-		String period       = request.getParameter("period");
-		String dateStr      = request.getParameter("date");
-		String teacherIdStr = request.getParameter("teacherId");
+        req.setCharacterEncoding("UTF-8");
 
-		List<Memo> memoList = null;
-		Map<Integer, String> subjectMap = new HashMap<>();
+        String action       = req.getParameter("action");
+        String classIdStr   = req.getParameter("classId");
+        String period       = req.getParameter("period");
+        String dateStr      = req.getParameter("date");
+        String teacherIdStr = req.getParameter("teacherId");
+        String subjectIdStr = req.getParameter("subjectId");
+        String memoIdStr    = req.getParameter("memoId");
+        String content      = req.getParameter("content");
 
-		try {
-			if (classIdStr != null && period != null && teacherIdStr != null) {
+        /* ───────── 必須パラメータ不足 ───────── */
+        if (classIdStr == null || classIdStr.isEmpty()
+         || period     == null || period.isEmpty()
+         || teacherIdStr == null || teacherIdStr.isEmpty()) {
 
-				int classId   = Integer.parseInt(classIdStr);
-				int teacherId = Integer.parseInt(teacherIdStr);
+            req.setAttribute("errorMessage", "パラメータが不足しています。");
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
+            return;
+        }
 
-				/* ▼ メモ取得ロジック */
-				if (dateStr != null && !dateStr.isEmpty()) {
-					/*   日付が送られてくるパターン   */
-					java.sql.Date sqlDate = java.sql.Date.valueOf(dateStr);
-					memoList = dao.selectByClassAndPeriod(classId, period, sqlDate);
+        try {
+            int classId   = Integer.parseInt(classIdStr);
+            int teacherId = Integer.parseInt(teacherIdStr);
+            int subjectId = (subjectIdStr != null && !subjectIdStr.isEmpty())
+                            ? Integer.parseInt(subjectIdStr) : 23;
 
-				} else {
-					/*   date が送れない場合の救済処理   */
-					memoList = dao.selectAll();
-					// classId・period・teacherId で絞り込み
-					memoList.removeIf(m -> !(m.getClassId() == classId &&
-					                         period.equals(m.getPeriod())   &&
-					                         m.getTeacherId() == teacherId));
-				}
+            Timestamp ts = (dateStr == null || dateStr.isEmpty())
+                    ? new Timestamp(System.currentTimeMillis())
+                    : Timestamp.valueOf(dateStr + " 09:00:00");
 
-				/* ▼ 科目名マッピング（SubjectDAO は変更不可なので全件取得 → Map） */
-				SubjectDAO sdao = new SubjectDAO();
-				for (Subject s : sdao.select(new Subject())) {
-					subjectMap.put(s.getSubjectId(), s.getSubjectName());
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            /* ───────── 更新・削除処理 ───────── */
+            if ("delete".equals(action) && memoIdStr != null && !memoIdStr.isEmpty()) {
+                dao.delete(Integer.parseInt(memoIdStr));
 
-		/* ▼ JSP へ渡す */
-		request.setAttribute("memoList",  memoList);
-		request.setAttribute("classId",   classIdStr);
-		request.setAttribute("period",    period);
-		request.setAttribute("date",      dateStr);
-		request.setAttribute("teacherId", teacherIdStr);
-		request.setAttribute("subjectMap", subjectMap);
+            } else if ("update".equals(action)) {
+                if (memoIdStr != null && !memoIdStr.isEmpty()) {                 // 既存メモ
+                    if (content != null && !content.trim().isEmpty()) {
+                        dao.update(new Memo(Integer.parseInt(memoIdStr), teacherId,
+                                classId, content.trim(), ts, period, subjectId));
+                    }
+                } else {                                                         // 新規メモ
+                    for (String line : new String[]{
+                            req.getParameter("memo1"),
+                            req.getParameter("memo2"),
+                            req.getParameter("memo3")}) {
 
-		RequestDispatcher dsp = request.getRequestDispatcher("/WEB-INF/jsp/memo.jsp");
-		dsp.forward(request, response);
-	}
+                        if (line != null && !line.trim().isEmpty()) {
+                            dao.insert(new Memo(0, teacherId, classId,
+                                    line.trim(), ts, period, subjectId));
+                        }
+                    }
+                }
+            }
 
-	/* ========== メモ更新・削除処理(POST) ========== */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+            /* ───────── 一覧再取得 ───────── */
+            List<Memo> memoList;
+            if (dateStr != null && !dateStr.isEmpty()) {
+                memoList = dao.selectByClassAndPeriod(
+                        classId, period, java.sql.Date.valueOf(dateStr));
+            } else {
+                memoList = dao.selectAll();
+                memoList.removeIf(m -> !(m.getClassId()==classId &&
+                                         period.equals(m.getPeriod()) &&
+                                         m.getTeacherId()==teacherId));
+            }
 
-		request.setCharacterEncoding("UTF-8");
+            /* ───────── 科目マップ作成 ───────── */
+            Map<Integer,String> subjectMap = new HashMap<>();
+            for (Subject s : subjectDAO.select(new Subject())) {
+                subjectMap.put(s.getSubjectId(), s.getSubjectName());
+            }
 
-		String action        = request.getParameter("action");   // update / delete 以外は info_schedule からの POST
-		String classIdStr    = request.getParameter("classId");
-		String period        = request.getParameter("period");
-		String dateStr       = request.getParameter("date");
-		String teacherIdStr  = request.getParameter("teacherId");
-		String memoIdStr     = request.getParameter("memoId");
-		String content       = request.getParameter("content");
+            /* ───────── クラス名取得 ───────── */
+            ClassRoom criteria = new ClassRoom();
+            criteria.setClassId(classId);
+            List<ClassRoom> found = classRoomDAO.select(criteria);
+            String classNameDisplay = "不明";
+            if (!found.isEmpty()) {
+                ClassRoom cr = found.get(0);
+                classNameDisplay = cr.getGrade() + "年" + cr.getClassName();
+            }
 
-		/* ▼ 1) info_schedule から来る POST (action 無し) → GET 相当の処理 */
-		if (action == null || action.isEmpty()) {
-			doGet(request, response);   // 同じロジックで表示
-			return;
-		}
+            /* ───────── JSP へ渡す ───────── */
+            req.setAttribute("memoList",  memoList);
+            req.setAttribute("classId",   classIdStr);
+            req.setAttribute("period",    period);
+            req.setAttribute("date",      dateStr);
+            req.setAttribute("teacherId", teacherIdStr);
+            req.setAttribute("subjectMap", subjectMap);
+            req.setAttribute("classNameDisplay", classNameDisplay);
+            if (!memoList.isEmpty()) {
+                req.setAttribute("subjectName",
+                        subjectMap.getOrDefault(memoList.get(0).getSubjectId(),"不明"));
+            }
 
-		/* ▼ 2) 更新 or 削除 */
-		try {
-			if ("update".equals(action)) {
-				if (content != null && !content.trim().isEmpty()) {
-					Memo memo = new Memo();
-					memo.setMemoId(Integer.parseInt(memoIdStr));
-					memo.setClassId(Integer.parseInt(classIdStr));
-					memo.setTeacherId(Integer.parseInt(teacherIdStr));
-					memo.setPeriod(period);
-					memo.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateStr));
-					memo.setContent(content.trim());
-					dao.update(memo);
-				}
-			} else if ("delete".equals(action)) {
-				if (memoIdStr != null && !memoIdStr.isEmpty()) {
-					dao.delete(Integer.parseInt(memoIdStr));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            /* ───────── 正常時 forward ───────── */
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
 
-		/* ▼ PRG: 編集・削除後は GET 表示にリダイレクト */
-		response.sendRedirect(String.format("MemoServlet?classId=%s&period=%s&date=%s&teacherId=%s",
-				classIdStr, period, dateStr, teacherIdStr));
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("errorMessage", "メモ処理中にエラーが発生しました。");
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
+        }
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        doPost(req, res);  // すべて POST に集約
+    }
 }

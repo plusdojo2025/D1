@@ -344,7 +344,7 @@ public class StudentsDAO {
 	                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 	                "root", "password");
 
-	        String sql = "SELECT COUNT(*) FROM Students WHERE classId = ? AND studentNum = ?";
+	        String sql = "SELECT COUNT(*) FROM students WHERE classId = ? AND studentNum = ?";
 	        PreparedStatement pStmt = conn.prepareStatement(sql);
 	        pStmt.setInt(1, classId);
 	        pStmt.setInt(2, studentNum);
