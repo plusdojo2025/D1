@@ -23,7 +23,7 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "SELECT * FROM Memo ORDER BY memoid";
+			String sql = "SELECT * FROM memo ORDER BY memoid";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			ResultSet rs = pStmt.executeQuery();
 
@@ -64,7 +64,7 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "SELECT * FROM Memo WHERE classId = ? AND period = ? AND DATE(date) = ? ORDER BY memoid";
+			String sql = "SELECT * FROM memo WHERE classId = ? AND period = ? AND DATE(date) = ? ORDER BY memoid";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, classId);
 			pStmt.setString(2, period);
@@ -109,16 +109,15 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "INSERT INTO Memo (teacherId, classId, content, date, period, subjectId) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO memo (teacherId, classId, content, date, period) "
+					+ "VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, memo.getTeacherId());
 			pStmt.setInt(2, memo.getClassId());
 			pStmt.setString(3, memo.getContent());
 			pStmt.setDate(4, new java.sql.Date(memo.getDate().getTime()));
 			pStmt.setString(5, memo.getPeriod());
-			pStmt.setInt(6, memo.getSubjectId());
-
+			
 			if (pStmt.executeUpdate() == 1) {
 				result = true;
 			}
@@ -145,7 +144,7 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "UPDATE Memo SET teacherId = ?, classId = ?, content = ?, date = ?, period = ?, subjectId = ? "
+			String sql = "UPDATE memo SET teacherId = ?, classId = ?, content = ?, date = ?, period = ?, subjectId = ? "
 					+ "WHERE memoid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, memo.getTeacherId());
@@ -182,7 +181,7 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "DELETE FROM Memo WHERE memoid = ?";
+			String sql = "DELETE FROM memo WHERE memoid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, memoId);
 
