@@ -3,24 +3,26 @@ package dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Memo implements Serializable{
-	private int memoId;     //メモID
-	private int teacherId;  //教員ID
-	private int classId;    //対象クラスID
-	private String content; //メモ内容
-	private Date date;      //授業日
-	private String period;  //時限
+public class Memo implements Serializable {
+	private int memoId;     // メモID
+	private int teacherId;  // 教員ID
+	private int classId;    // 対象クラスID
+	private String content; // メモ内容
+	private Date date;      // 授業日
+	private String period;  // 時限
+	private int subjectId;  // 科目ID 
 	
 	public Memo(int memoId, int teacherId, int classId, String content,
-			Date date, String period) {
+			Date date, String period, int subjectId) { 
 		this.memoId = memoId;
 		this.teacherId = teacherId;
 		this.classId = classId;
 		this.content = content;
 		this.date = date;
 		this.period = period;
+		this.subjectId = subjectId; 
 	}
-	
+
 	public Memo() {
 		this.memoId = -1;
 		this.teacherId = -1;
@@ -28,6 +30,7 @@ public class Memo implements Serializable{
 		this.content = "";
 		this.date = new Date();
 		this.period = "";
+		this.subjectId = -1; 
 	}
 
 	public int getMemoId() {
@@ -76,5 +79,13 @@ public class Memo implements Serializable{
 
 	public void setPeriod(String period) {
 		this.period = period;
-	}	
+	}
+
+	public int getSubjectId() { 
+		return subjectId;
+	}
+
+	public void setSubjectId(int subjectId) { 
+		this.subjectId = subjectId;
+	}
 }
