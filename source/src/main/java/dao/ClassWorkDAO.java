@@ -65,7 +65,7 @@ public class ClassWorkDAO {
 				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
 				Date date = sdFormat.parse(rs.getString("date"));
 
-				ClassWork cw = new ClassWork(rs.getInt("ClassWorkId"), rs.getInt("teacherId"), rs.getInt("classId"), date, 
+				ClassWork cw = new ClassWork(rs.getInt("ClassWorkId"), rs.getInt("teacherId"), rs.getInt("classid"), date, 
 						rs.getString("period"), rs.getString("contents"), rs.getInt("subjectId"));
 				cwList.add(cw);
 			}
@@ -167,7 +167,7 @@ public class ClassWorkDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "UPDATE ClassWork SET teacherId=?, classId=?, date=?, period=?, "
+			String sql = "UPDATE ClassWork SET teacherId=?, classid=?, date=?, period=?, "
 					+ "contents=?, subjectId=? WHERE classWorkId LIKE ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 

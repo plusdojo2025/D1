@@ -326,8 +326,8 @@ public class AttendanceRecordsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join Students "
-					+ "On AttendanceRecords.studentId = Students.studentId"
+			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join students "
+					+ "On AttendanceRecords.studentId = students.studentId"
 					+ "WHERE grade LIKE ? AND classId LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -407,8 +407,8 @@ public class AttendanceRecordsDAO {
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join Students "
-					+ "On AttendanceRecords.studentId = Students.studentId "
+			String sql = "SELECT * FROM AttendanceRecords RIGHT OUTER Join students "
+					+ "On AttendanceRecords.studentId = students.studentId "
 					+ "WHERE AttendanceRecords.studentId LIKE ? AND year(date) LIKE ? AND month(date) LIKE ? AND subjectId LIKE ?;";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -828,8 +828,6 @@ public class AttendanceRecordsDAO {
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 		
-		System.out.println("attend " + year + "/" + month + "/" + day);
-
 		if (isFirstSemester(month, day)) {
 			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, "○") + count(studentId, subjectId, year, 4, 1, year, 10, 15, "◯");
 			else count = count(studentId, year, 4, 1, year, 10, 14, "○") + count(studentId, year, 4, 1, year, 10, 14, "◯");
@@ -857,8 +855,6 @@ public class AttendanceRecordsDAO {
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
 		
-		System.out.println("shouldAttend " + year + "/" + month + "/" + day);
-
 		if (isFirstSemester(month, day)) {
 			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, null) - count(studentId, subjectId, year, 4, 1, year, 10, 15, "公");
 			else count = count(studentId, year, 4, 1, year, 10, 14, null) - count(studentId, year, 4, 1, year, 10, 14, "公");
