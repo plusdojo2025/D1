@@ -130,7 +130,7 @@ if (selectedDay == null) {
     selectedDay = request.getParameter("day_of_week");
 }
 
-String[] days = {"月", "火", "水", "木", "金", "土", "日"};
+String[] days = {"月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"};
 %>
 <select id="day_of_week" name="day_of_week">
 <option value="">-- 選択してください --</option>
@@ -159,7 +159,7 @@ for (String day : days) {
 	for (int i = 1; i <= 7; i++) {
 		String selected = String.valueOf(i).equals(selectedPeriod) ? " selected" : "";
 %>
-	<option value="<%= i %>" <%= selected %>><%= i %>限</option>
+	<option value="<%= i %>限" <%= selected %>><%= i %>限</option>
 <%
 	}
 %>
@@ -174,32 +174,15 @@ for (String day : days) {
     }
 %>
 
-<%
-String selectedClassId = (String)request.getAttribute("classId");
-if(selectedClassId == null) {
-	selectedClassId = request.getParameter("classId");
-}
-
-String[] grades = {"1年", "2年", "3年"};
-String[] groups = {"A組", "B組", "C組", "D組", "E組", "F組"};
-%>
-
 <label for="classId">クラス
 <select id="classId" name="classId">
-<option value="">-- 選択してください --</option>
-<%
-for(String grade : grades) {
-	for(String group : groups) {
-		String classOption = grade + group;
-		String selected = classOption .equals(selectedClassId) ? " selected" : "";
-%>
-<option value="<%=classOption %>"<%= selected %>><%= classOption %></option>
-<% 
-			
-	}
-}
-%>
-</select>
+    <option value="" selected>-- 選択してください --</option>
+    <c:forEach var="cls" items="${classList}">
+     <option value="${cls.classId}" <c:if test="${cls.classId == param.classId}">selected</c:if>>
+  ${cls.grade}年${cls.className}
+	</option>
+    </c:forEach>
+  </select>
 </label>
 <br><br>
 
@@ -255,6 +238,14 @@ function validateForm() {
 	    return true;
 	  }
 	}
+</script>
+<script>
+function goToClassSchedule(classId) {
+  if (classId) {
+    const url = '<c:url value="/InfoScheduleServlet" />?classId=' + encodeURIComponent(classId);
+    window.location.href = url;
+  }
+}
 </script>
 
 </body>
