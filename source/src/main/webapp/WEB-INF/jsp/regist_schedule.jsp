@@ -176,7 +176,7 @@ for (String day : days) {
 
 <label for="classId">クラス
 <select id="classId" name="classId">
-    <option value="" selected>（未選択）</option>
+    <option value="" selected>-- 選択してください --</option>
     <c:forEach var="cls" items="${classList}">
      <option value="${cls.classId}" <c:if test="${cls.classId == param.classId}">selected</c:if>>
   ${cls.grade}年${cls.className}組
