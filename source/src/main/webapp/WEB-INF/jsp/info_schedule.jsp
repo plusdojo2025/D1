@@ -57,6 +57,9 @@
       <option value="2025" <c:if test="${selectedYear eq 2025}">selected</c:if>>2025</option>
       <option value="2024" <c:if test="${selectedYear eq 2024}">selected</c:if>>2024</option>
       <option value="2023" <c:if test="${selectedYear eq 2023}">selected</c:if>>2023</option>
+      <option value="2022" <c:if test="${selectedYear eq 2022}">selected</c:if>>2022</option>
+      <option value="2021" <c:if test="${selectedYear eq 2021}">selected</c:if>>2021</option>
+      <option value="2020" <c:if test="${selectedYear eq 2020}">selected</c:if>>2020</option>
     </select>
 
     <label>① 学期：</label>

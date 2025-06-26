@@ -138,7 +138,6 @@ public class EditScheduleServlet extends HttpServlet {
         request.setAttribute("classList", classList);
         
         
-        
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/edit_schedule.jsp");
         dispatcher.forward(request, response);
