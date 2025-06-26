@@ -237,5 +237,5 @@ function changeDisplay(event) {
                 errorMessageObj.textContent = null;
             }
 		}
-          
+          key=null;
     };
