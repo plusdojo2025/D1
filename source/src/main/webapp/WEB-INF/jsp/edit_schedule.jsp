@@ -128,7 +128,7 @@
     <option value="" selected>（未選択）</option>
     <c:forEach var="cls" items="${classList}">
       <option value="${cls.classId}">
-        ${cls.grade}年${cls.className}組
+        ${cls.grade}年${cls.className}
       </option>
     </c:forEach>
   </select>
