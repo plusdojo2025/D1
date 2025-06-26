@@ -44,14 +44,14 @@ function changeDisplay(event) {
 
 	document.getElementById('edit_allstudent_form').onsubmit = function () {
 
-		if (key === 'editCompleted') {
+		if (key == 'editCompleted') {
         	if (!window.confirm('編集を完了します。よろしいですか？')) {
              	return false;
         	}
             errorMessageObj.textContent = null;
 		}
 
-		if (key === 'cancel') {
+		if (key == 'cancel') {
            	if (!window.confirm('キャンセルすると編集した内容がリセットされます。よろしいですか？')) {
              	return false;
          	}
