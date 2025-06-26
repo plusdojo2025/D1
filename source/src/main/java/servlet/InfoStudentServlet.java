@@ -38,15 +38,15 @@ public class InfoStudentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-//		HttpSession session = request.getSession(false);
-//		if (session == null || session.getAttribute("loginTeacher") == null) {
-//			response.sendRedirect("LoginServlet");
-//			return;
-//		}
-		
+
+		//		HttpSession session = request.getSession(false);
+		//		if (session == null || session.getAttribute("loginTeacher") == null) {
+		//			response.sendRedirect("LoginServlet");
+		//			return;
+		//		}
+
 		try {
-			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = -1;
+			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = 37;
 			// プルダウンの情報
 			if (request.getParameter("subjectId") != null) {
 				subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -71,13 +71,13 @@ public class InfoStudentServlet extends HttpServlet {
 
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
-			
+
 			StudentsDAO stuDAO = new StudentsDAO();
-			
+
 			if (request.getParameter("studentId") != null) {
 				studentId = Integer.parseInt(request.getParameter("studentId"));
 			}
-			
+
 			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, -1, "", "", "", "", ""));
 			Students student = new Students();
 			if (studentsList.size() > 0) student = studentsList.get(0);
@@ -93,23 +93,24 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("className", classRoom.getClassName());
 
 			// 全体の今学期の出席
-			int attendedNum = arDAO.GetAttendedNum(studentId, -1);
-			int shouldAttendedNum = arDAO.GetShouldAttendedNum(studentId, -1);
-			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
+			int attendedNum = 0, shouldAttendedNum = 0;
+			attendedNum = GetAttendedNum(arDAO.select(studentId));
+			shouldAttendedNum = GetShouldAttendedNum(arDAO.select(studentId));
+			request.setAttribute("attendedRate", GetAttendedRate(attendedNum, shouldAttendedNum));
 			request.setAttribute("attendedNum", attendedNum);
 			request.setAttribute("shouldAttendNum", shouldAttendedNum);
-			
+
 			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
-				if (arList.get(i).getStatus().equals("◯")) {
+				if (arList.get(i).getStatus().equals("◯") || arList.get(i).getStatus().equals("○")) {
 					subAttendedNum++;
 				}
 				if (!arList.get(i).getStatus().equals("公")) {
 					subShouldAttendedNum++;
 				}
 			}
-			request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(subAttendedNum, subShouldAttendedNum));
+			request.setAttribute("subjectAttendedRate", GetAttendedRate(subAttendedNum, subShouldAttendedNum));
 			request.setAttribute("attendanceRecords", arList);
 
 			// 全教科・今学期の提出物
@@ -163,13 +164,13 @@ public class InfoStudentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-//		HttpSession session = request.getSession(false);
-//        if (session == null || session.getAttribute("loginTeacher") == null) {
-//            response.sendRedirect("LoginServlet");
-//            return;
-//        }
-		
+
+		//		HttpSession session = request.getSession(false);
+		//        if (session == null || session.getAttribute("loginTeacher") == null) {
+		//            response.sendRedirect("LoginServlet");
+		//            return;
+		//        }
+
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = -1;
 			// プルダウンの情報
@@ -196,13 +197,13 @@ public class InfoStudentServlet extends HttpServlet {
 
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
-			
+
 			StudentsDAO stuDAO = new StudentsDAO();
 
 			if (request.getAttribute("studentId") != null) {
 				studentId = (int)request.getAttribute("studentId");
 			}
-			
+
 			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, -1, "", "", "", "", ""));
 			Students student = new Students();
 			if (studentsList.size() > 0) student = studentsList.get(0);
@@ -218,12 +219,13 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("className", classRoom.getClassName());
 
 			// 全体の今学期の出席
-			int attendedNum = arDAO.GetAttendedNum(studentId, -1);
-			int shouldAttendedNum = arDAO.GetShouldAttendedNum(studentId, -1);
-			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
+			int attendedNum = 0, shouldAttendedNum = 0;
+			attendedNum = GetAttendedNum(arDAO.select(studentId));
+			shouldAttendedNum = GetShouldAttendedNum(arDAO.select(studentId));
+			request.setAttribute("attendedRate", GetAttendedRate(attendedNum, shouldAttendedNum));
 			request.setAttribute("attendedNum", attendedNum);
 			request.setAttribute("shouldAttendNum", shouldAttendedNum);
-			
+
 			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
@@ -234,7 +236,7 @@ public class InfoStudentServlet extends HttpServlet {
 					subShouldAttendedNum++;
 				}
 			}
-			request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(subAttendedNum, subShouldAttendedNum));
+			request.setAttribute("subjectAttendedRate", GetAttendedRate(subAttendedNum, subShouldAttendedNum));
 			request.setAttribute("attendanceRecords", arList);
 
 			// 全教科・今学期の提出物
@@ -283,6 +285,103 @@ public class InfoStudentServlet extends HttpServlet {
 		}
 	}
 
+	// 引数で指定した生徒の出席数を返す
+	public int GetAttendedNum(List<AttendanceRecords> ar) {
+		if (ar.size() == 0) return 0;
+
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
+		int day = now.get(Calendar.DAY_OF_WEEK);
+
+		for (int i = 0; i < ar.size(); i++) {
+			int cYear = ar.get(i).getYear() > 0 ? ar.get(i).getYear() : 2025;
+			int cMonth = ar.get(i).getMonth() > 0 && ar.get(i).getMonth() <= 12 ? ar.get(i).getMonth() : 6;
+
+			LocalDate created = LocalDate.of(cYear, cMonth, 1);
+
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				LocalDate begin = LocalDate.of(year, 3, 31);
+				LocalDate end = LocalDate.of(year, 10, 15);
+				if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+						&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					LocalDate begin = LocalDate.of(year-1, 10, 15);
+					LocalDate end = LocalDate.of(year, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+							&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+						count++;
+					}
+				} else {
+					LocalDate begin = LocalDate.of(year, 10, 15);
+					LocalDate end = LocalDate.of(year+1, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+							&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+						count++;
+					}
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 引数で指定した生徒の出席すべき日数を返す
+	public int GetShouldAttendedNum(List<AttendanceRecords> ar) {
+		if (ar.size() == 0) return 0;
+
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
+		int day = now.get(Calendar.DAY_OF_WEEK);
+
+		for (int i = 0; i < ar.size(); i++) {
+			int cYear = ar.get(i).getYear() > 0 ? ar.get(i).getYear() : 2025;
+			int cMonth = ar.get(i).getMonth() > 0 && ar.get(i).getMonth() <= 12 ? ar.get(i).getMonth() : 6;
+			LocalDate created = LocalDate.of(cYear, cMonth, 1);
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				LocalDate begin = LocalDate.of(year, 3, 31);
+				LocalDate end = LocalDate.of(year, 10, 15);
+				if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					LocalDate begin = LocalDate.of(year-1, 10, 15);
+					LocalDate end = LocalDate.of(year, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+						count++;
+					}
+				} else {
+					LocalDate begin = LocalDate.of(year, 10, 15);
+					LocalDate end = LocalDate.of(year+1, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+						count++;
+					}
+				}
+			}
+		}
+
+		return count;
+	}
+
+	// 出席率を百分率/小数点第二位までのString型で返す
+	public String GetAttendedRate(int attendedNum, int shouldAttendedNum) {
+		if (attendedNum == 0 || shouldAttendedNum == 0) return "0.0";
+		String rate = String.format("%.1f", ((float)attendedNum / (float)shouldAttendedNum * 100.0f));
+		return rate;
+	}
+
 	// 引数で指定した生徒の課題提出数を返す
 	public int GetSubmittedNum(List<Assignments> as) {
 		if (as.size() == 0) return 0;
@@ -296,9 +395,9 @@ public class InfoStudentServlet extends HttpServlet {
 		for (int i = 0; i < as.size(); i++) {
 			int cYear = as.get(i).getCreatedYear() > 0 ? as.get(i).getCreatedYear() : 2025;
 			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 6;
-			
+
 			LocalDate created = LocalDate.of(cYear, cMonth, 1);
-			
+
 			if (isFirstSemester(month, day) ) {
 				// 前期
 				LocalDate begin = LocalDate.of(year, 3, 31);
@@ -342,7 +441,7 @@ public class InfoStudentServlet extends HttpServlet {
 		// 結果を返す
 		return count;
 	}
-	
+
 	// 引数で指定した生徒の提出すべき課題数を返す
 	public int GetShouldSubmittedNum(List<Assignments> as) {
 		if (as.size() == 0) return 0;
@@ -352,7 +451,7 @@ public class InfoStudentServlet extends HttpServlet {
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
-		
+
 		for (int i = 0; i < as.size(); i++) {
 			int cYear = as.get(i).getCreatedYear() > 0 ? as.get(i).getCreatedYear() : 2025;
 			int cMonth = as.get(i).getCreatedMonth() > 0 && as.get(i).getCreatedMonth() <= 12 ? as.get(i).getCreatedMonth() : 6;
@@ -381,7 +480,7 @@ public class InfoStudentServlet extends HttpServlet {
 				}
 			}
 		}
-		
+
 		return count;
 	}
 
@@ -396,7 +495,7 @@ public class InfoStudentServlet extends HttpServlet {
 		}
 		return count;
 	}
-	
+
 	// 提出率を百分率/小数点第二位までのString型で返す
 	public String GetSubmittedRate(int submittedNum, int shouldSubmittedNum) {
 		if (submittedNum == 0 || shouldSubmittedNum == 0) return "0.0";
@@ -414,7 +513,7 @@ public class InfoStudentServlet extends HttpServlet {
 			return false;
 		}
 	}
-	
+
 	public String GetAverage(int subjectId, String testType, int year, int month) {
 		float sum = 0;
 		GradesDAO grdDAO = new GradesDAO();

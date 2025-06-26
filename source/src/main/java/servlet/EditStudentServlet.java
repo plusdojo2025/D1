@@ -94,9 +94,10 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("className", classRoom.getClassName());
 
 			// 全体の今学期の出席
-			int attendedNum = arDAO.GetAttendedNum(studentId, -1);
-			int shouldAttendedNum = arDAO.GetShouldAttendedNum(studentId, -1);
-			request.setAttribute("attendedRate", arDAO.GetAttendedRate(attendedNum, shouldAttendedNum));
+			int attendedNum = 0, shouldAttendedNum = 0;
+			attendedNum = GetAttendedNum(arDAO.select(studentId));
+			shouldAttendedNum = GetShouldAttendedNum(arDAO.select(studentId));
+			request.setAttribute("attendedRate", GetAttendedRate(attendedNum, shouldAttendedNum));
 			request.setAttribute("attendedNum", attendedNum);
 			request.setAttribute("shouldAttendNum", shouldAttendedNum);
 
@@ -110,7 +111,7 @@ public class EditStudentServlet extends HttpServlet {
 					subShouldAttendedNum++;
 				}
 			}
-			request.setAttribute("subjectAttendedRate", arDAO.GetAttendedRate(subAttendedNum, subShouldAttendedNum));
+			request.setAttribute("subjectAttendedRate", GetAttendedRate(subAttendedNum, subShouldAttendedNum));
 			request.setAttribute("attendanceRecords", arList);
 
 			// 全教科・今学期の提出物
@@ -199,7 +200,7 @@ public class EditStudentServlet extends HttpServlet {
 			request.setAttribute("year", fiscalYear);
 			request.setAttribute("grade", grade);
 			request.setAttribute("month", month);
-			
+
 			if (month >= 1 && month < 4) year = fiscalYear + 1; // 年度から年に変換する
 			else year = fiscalYear;
 
@@ -245,7 +246,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("提出物記録 更新失敗 " + id + " / " + status + " / " + content);
 				}
 			}
-			
+
 			// 課題の追加
 			int addSubmissionAmount = Integer.parseInt(request.getParameter("addSubmittionAmount"));
 			for (int i = 0; i < addSubmissionAmount; i++) {
@@ -264,7 +265,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("提出物記録 追加失敗 / 内容未入力");
 				}
 			}
-			
+
 			// 成績の変更
 			GradesDAO grdDAO = new GradesDAO();
 			int gradesAmount = Integer.parseInt(request.getParameter("gradesAmount"));
@@ -279,7 +280,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("成績記録 更新失敗 / " + testType + " / " + score);
 				}
 			}
-			
+
 			// 成績の追加
 			int addGradesAmount = Integer.parseInt(request.getParameter("addGradesAmount"));
 			for (int i = 0; i < addGradesAmount; i++) {
@@ -297,7 +298,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("成績記録 追加失敗 / 内容未入力");
 				}
 			}
-			
+
 			// 面談の更新
 			InterviewDAO itvDAO = new InterviewDAO();
 			int interviewAmount = Integer.parseInt(request.getParameter("interviewAmount"));
@@ -313,7 +314,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("面談記録 更新失敗 / " + id + " / " + date + " / " + contents + " / " + remarks);
 				}
 			}
-			
+
 			// 面談の追加
 			int addInterviewAmount = Integer.parseInt(request.getParameter("addInterviewAmount"));
 			for (int i = 0; i < addInterviewAmount; i++) {
@@ -332,7 +333,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("面談記録 追加失敗 / 内容未入力");
 				}
 			}
-			
+
 			// 前年度の面談の更新
 			int lastInterviewAmount = Integer.parseInt(request.getParameter("lastInterviewAmount"));
 			for (int i = 0; i < lastInterviewAmount; i++) {
@@ -347,7 +348,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("前年度面談記録 更新失敗 / " + id + " / " + date + " / " + contents + " / " + remarks);
 				}
 			}
-			
+
 			// 前年度の面談の追加
 			int addLastInterviewAmount = Integer.parseInt(request.getParameter("addLastInterviewAmount"));
 			for (int i = 0; i < addLastInterviewAmount; i++) {
@@ -366,7 +367,7 @@ public class EditStudentServlet extends HttpServlet {
 					System.out.println("前年度面談記録 追加失敗 / 内容未入力");
 				}
 			}
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
@@ -375,6 +376,103 @@ public class EditStudentServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
 			dispatcher.forward(request, response);
 		}
+	}
+
+	// 引数で指定した生徒の出席数を返す
+	public int GetAttendedNum(List<AttendanceRecords> ar) {
+		if (ar.size() == 0) return 0;
+
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
+		int day = now.get(Calendar.DAY_OF_WEEK);
+
+		for (int i = 0; i < ar.size(); i++) {
+			int cYear = ar.get(i).getYear() > 0 ? ar.get(i).getYear() : 2025;
+			int cMonth = ar.get(i).getMonth() > 0 && ar.get(i).getMonth() <= 12 ? ar.get(i).getMonth() : 6;
+
+			LocalDate created = LocalDate.of(cYear, cMonth, 1);
+
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				LocalDate begin = LocalDate.of(year, 3, 31);
+				LocalDate end = LocalDate.of(year, 10, 15);
+				if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+						&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					LocalDate begin = LocalDate.of(year-1, 10, 15);
+					LocalDate end = LocalDate.of(year, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+							&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+						count++;
+					}
+				} else {
+					LocalDate begin = LocalDate.of(year, 10, 15);
+					LocalDate end = LocalDate.of(year+1, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")
+							&& (ar.get(i).getStatus().equals("◯") || ar.get(i).getStatus().equals("○") || ar.get(i).getStatus().equals("早") || ar.get(i).getStatus().equals("遅"))) {
+						count++;
+					}
+				}
+			}
+		}
+
+		// 結果を返す
+		return count;
+	}
+
+	// 引数で指定した生徒の出席すべき日数を返す
+	public int GetShouldAttendedNum(List<AttendanceRecords> ar) {
+		if (ar.size() == 0) return 0;
+
+		int count = 0;
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		int month = now.get(Calendar.MONTH) + 1;
+		int day = now.get(Calendar.DAY_OF_WEEK);
+
+		for (int i = 0; i < ar.size(); i++) {
+			int cYear = ar.get(i).getYear() > 0 ? ar.get(i).getYear() : 2025;
+			int cMonth = ar.get(i).getMonth() > 0 && ar.get(i).getMonth() <= 12 ? ar.get(i).getMonth() : 6;
+			LocalDate created = LocalDate.of(cYear, cMonth, 1);
+			if (isFirstSemester(month, day) ) {
+				// 前期
+				LocalDate begin = LocalDate.of(year, 3, 31);
+				LocalDate end = LocalDate.of(year, 10, 15);
+				if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+					count++;
+				}
+			} else {
+				// 年明け後
+				if (month + 1 >= 1 && day >= 1) {
+					LocalDate begin = LocalDate.of(year-1, 10, 15);
+					LocalDate end = LocalDate.of(year, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+						count++;
+					}
+				} else {
+					LocalDate begin = LocalDate.of(year, 10, 15);
+					LocalDate end = LocalDate.of(year+1, 3, 31);
+					if (created.isAfter(begin) && created.isBefore(end) && ar.get(i).getPeriod().equals("1")) {
+						count++;
+					}
+				}
+			}
+		}
+
+		return count;
+	}
+
+	// 出席率を百分率/小数点第二位までのString型で返す
+	public String GetAttendedRate(int attendedNum, int shouldAttendedNum) {
+		if (attendedNum == 0 || shouldAttendedNum == 0) return "0.0";
+		String rate = String.format("%.1f", ((float)attendedNum / (float)shouldAttendedNum * 100.0f));
+		return rate;
 	}
 
 	// 引数で指定した生徒の課題提出数を返す
