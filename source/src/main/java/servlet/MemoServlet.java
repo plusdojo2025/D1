@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ClassRoomDAO;          // ★ 追加
 import dao.MemoDAO;
 import dao.SubjectDAO;
-import dto.ClassRoom;            // ★ 追加
 import dto.Memo;
 import dto.Subject;
 
@@ -24,7 +22,6 @@ public class MemoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final MemoDAO    dao        = new MemoDAO();
     private final SubjectDAO subjectDAO = new SubjectDAO();
-    private final ClassRoomDAO classRoomDAO = new ClassRoomDAO();  // ★ 追加
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -40,13 +37,13 @@ public class MemoServlet extends HttpServlet {
         String memoIdStr    = req.getParameter("memoId");
         String content      = req.getParameter("content");
 
-        /* ───────── 必須パラメータ不足 ───────── */
         if (classIdStr == null || classIdStr.isEmpty()
          || period     == null || period.isEmpty()
          || teacherIdStr == null || teacherIdStr.isEmpty()) {
 
             req.setAttribute("errorMessage", "パラメータが不足しています。");
-            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp")
+               .forward(req, res);    
             return;
         }
 
@@ -65,12 +62,14 @@ public class MemoServlet extends HttpServlet {
                 dao.delete(Integer.parseInt(memoIdStr));
 
             } else if ("update".equals(action)) {
-                if (memoIdStr != null && !memoIdStr.isEmpty()) {                 // 既存メモ
+                if (memoIdStr != null && !memoIdStr.isEmpty()) {
+                    /* 既存メモ更新 */
                     if (content != null && !content.trim().isEmpty()) {
                         dao.update(new Memo(Integer.parseInt(memoIdStr), teacherId,
                                 classId, content.trim(), ts, period, subjectId));
                     }
-                } else {                                                         // 新規メモ
+                } else {
+                    /* 新規メモ（最大3行） */
                     for (String line : new String[]{
                             req.getParameter("memo1"),
                             req.getParameter("memo2"),
@@ -102,36 +101,29 @@ public class MemoServlet extends HttpServlet {
                 subjectMap.put(s.getSubjectId(), s.getSubjectName());
             }
 
-            /* ───────── クラス名取得 ───────── */
-            ClassRoom criteria = new ClassRoom();
-            criteria.setClassId(classId);
-            List<ClassRoom> found = classRoomDAO.select(criteria);
-            String classNameDisplay = "不明";
-            if (!found.isEmpty()) {
-                ClassRoom cr = found.get(0);
-                classNameDisplay = cr.getGrade() + "年" + cr.getClassName();
-            }
-
-            /* ───────── JSP へ渡す ───────── */
-            req.setAttribute("memoList",  memoList);
-            req.setAttribute("classId",   classIdStr);
-            req.setAttribute("period",    period);
-            req.setAttribute("date",      dateStr);
-            req.setAttribute("teacherId", teacherIdStr);
+            /* ───────── JSP へ渡す属性 ───────── */
+            req.setAttribute("memoList", memoList);
+            req.setAttribute("classId",  classIdStr);
+            req.setAttribute("period",   period);
+            req.setAttribute("date",     dateStr);
+            req.setAttribute("teacherId",teacherIdStr);
             req.setAttribute("subjectMap", subjectMap);
-            req.setAttribute("classNameDisplay", classNameDisplay);
+            req.setAttribute("classNameDisplay",
+                    String.format("%s年%s組", classId/10, classId%10));
             if (!memoList.isEmpty()) {
                 req.setAttribute("subjectName",
                         subjectMap.getOrDefault(memoList.get(0).getSubjectId(),"不明"));
             }
 
             /* ───────── 正常時 forward ───────── */
-            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp")
+               .forward(req, res);
 
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("errorMessage", "メモ処理中にエラーが発生しました。");
-            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp")
+               .forward(req, res);
         }
     }
 
