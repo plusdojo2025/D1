@@ -39,6 +39,7 @@ public class RegistStudentServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath() + "/LoginServlet");
             return;
         }
+        
 
 		 
 		 
@@ -180,7 +181,7 @@ public class RegistStudentServlet extends HttpServlet {
 		} else {
             request.setAttribute("error", "登録済みの出席番号です");
             //登録失敗時は"Servlet"にフォワード                                "/RegistStudentServlet"                                 "/webapp/LoginServlet"のwebappをD1に変更
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/regist_student.jsp");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/RegistStudentServlet");
             dispatcher.forward(request, response);
             return;
 		}
