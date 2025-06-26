@@ -39,11 +39,11 @@ public class InfoStudentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		HttpSession session = request.getSession(false);
-      if (session == null || session.getAttribute("loginTeacher") == null) {
-          response.sendRedirect("LoginServlet");
-          return;
-      }
+//		HttpSession session = request.getSession(false);
+//		if (session == null || session.getAttribute("loginTeacher") == null) {
+//			response.sendRedirect("LoginServlet");
+//			return;
+//		}
 		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = -1;
@@ -164,11 +164,11 @@ public class InfoStudentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("loginTeacher") == null) {
-            response.sendRedirect("LoginServlet");
-            return;
-        }
+//		HttpSession session = request.getSession(false);
+//        if (session == null || session.getAttribute("loginTeacher") == null) {
+//            response.sendRedirect("LoginServlet");
+//            return;
+//        }
 		
 		try {
 			int subjectId = 1, fiscalYear = 2025, year = 1, grade = 1, month = 1, studentId = -1;
@@ -303,7 +303,7 @@ public class InfoStudentServlet extends HttpServlet {
 				// 前期
 				LocalDate begin = LocalDate.of(year, 3, 31);
 				LocalDate end = LocalDate.of(year, 10, 15);
-				if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
+				if (created.isAfter(begin) && created.isBefore(end) && (as.get(i).getSubmissionStatus().equals("◯") || as.get(i).getSubmissionStatus().equals("○"))) {
 					count++;
 				}
 			} else {
@@ -311,13 +311,13 @@ public class InfoStudentServlet extends HttpServlet {
 				if (month + 1 >= 1 && day >= 1) {
 					LocalDate begin = LocalDate.of(year-1, 10, 15);
 					LocalDate end = LocalDate.of(year, 3, 31);
-					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
+					if (created.isAfter(begin) && created.isBefore(end) && (as.get(i).getSubmissionStatus().equals("◯") || as.get(i).getSubmissionStatus().equals("○"))) {
 						count++;
 					}
 				} else {
 					LocalDate begin = LocalDate.of(year, 10, 15);
 					LocalDate end = LocalDate.of(year+1, 3, 31);
-					if (created.isAfter(begin) && created.isBefore(end) && as.get(i).getSubmissionStatus().equals("◯")) {
+					if (created.isAfter(begin) && created.isBefore(end) && (as.get(i).getSubmissionStatus().equals("◯") || as.get(i).getSubmissionStatus().equals("○"))) {
 						count++;
 					}
 				}
