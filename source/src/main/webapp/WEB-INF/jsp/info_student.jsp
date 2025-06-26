@@ -96,7 +96,8 @@
 
 		<!-- 科目・月選択プルダウン -->
 		<!-- 初期値を一覧ページで選択した値にする -->
-		<form action="<c:url value='/InfoStudentServlet'/>" method="post" id="pulldowns">
+		<form action="<c:url value='/InfoStudentServlet'/>" method="get" id="pulldowns">
+			<input type="hidden" name="studentId" value="${student.studentId}">
 		<select name="subjectId" id="subjectSelect" onchange="this.form.submit()" >
 			<option value="1" class="subject">現代文</option>
 			<option value="2" class="subject">古典</option>
