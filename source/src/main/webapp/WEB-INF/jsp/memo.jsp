@@ -60,7 +60,7 @@ if (memoList != null && !memoList.isEmpty()) {
 <% } %>
 </ul>
 
-<!-- 新規登録（更新） -->
+<!-- メモ新規登録 -->
 <h3>メモ新規登録</h3>
 <form action="MemoServlet" method="post">
   <input type="hidden" name="action" value="update">
@@ -74,7 +74,9 @@ if (memoList != null && !memoList.isEmpty()) {
   <input type="text" name="memo2" size="100" placeholder="2行目"><br><br>
   <input type="text" name="memo3" size="100" placeholder="3行目"><br><br>
 
-  <button type="submit" onclick="return confirm('登録してよろしいですか？');">更新</button>
+  <div class="button-right">
+    <button type="submit" onclick="return confirm('登録してよろしいですか？');">更新</button>
+  </div>
 </form>
 
 <!-- 戻る -->
