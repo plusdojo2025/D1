@@ -36,6 +36,7 @@ public class MemoServlet extends HttpServlet {
         String subjectIdStr = req.getParameter("subjectId");
         String memoIdStr    = req.getParameter("memoId");
         String content      = req.getParameter("content");
+        
 
         /* ───────── 必須パラメータ不足の場合は memo.jsp へ forward ───────── */
         if (classIdStr == null || classIdStr.isEmpty()
