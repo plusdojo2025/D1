@@ -427,7 +427,8 @@ public class EditStudentServlet extends HttpServlet {
 
 		int count = 0;
 		for (int i = 0; i < as.size(); i++) {
-			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth && as.get(i).getSubmissionStatus().equals("◯")) {
+			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth &&
+					(as.get(i).getSubmissionStatus().equals("◯") || as.get(i).getSubmissionStatus().equals("○"))) {
 				count++;
 			}
 		}
