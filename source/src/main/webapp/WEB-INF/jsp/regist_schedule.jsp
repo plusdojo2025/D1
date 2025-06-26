@@ -179,7 +179,7 @@ for (String day : days) {
     <option value="" selected>-- 選択してください --</option>
     <c:forEach var="cls" items="${classList}">
      <option value="${cls.classId}" <c:if test="${cls.classId == param.classId}">selected</c:if>>
-  ${cls.grade}年${cls.className}組
+  ${cls.grade}年${cls.className}
 	</option>
     </c:forEach>
   </select>
