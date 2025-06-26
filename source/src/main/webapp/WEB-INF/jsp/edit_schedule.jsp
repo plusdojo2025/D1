@@ -112,7 +112,7 @@
   <option value="">（未選択）</option>
   <c:forEach var="cls" items="${classList}">
     <option value="${cls.classId}" <c:if test="${item.classId == cls.classId}">selected</c:if>>
-      ${cls.grade}年${cls.className}組
+      ${cls.grade}年${cls.className}
     </option>
   </c:forEach>
 </select>
