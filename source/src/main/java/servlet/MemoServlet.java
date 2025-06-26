@@ -37,13 +37,14 @@ public class MemoServlet extends HttpServlet {
         String memoIdStr    = req.getParameter("memoId");
         String content      = req.getParameter("content");
 
+        /* ───────── 必須パラメータ不足の場合は memo.jsp へ forward ───────── */
         if (classIdStr == null || classIdStr.isEmpty()
          || period     == null || period.isEmpty()
          || teacherIdStr == null || teacherIdStr.isEmpty()) {
 
             req.setAttribute("errorMessage", "パラメータが不足しています。");
             req.getRequestDispatcher("/WEB-INF/jsp/memo.jsp")
-               .forward(req, res);    
+               .forward(req, res);                // ← forward なので 404 にならない
             return;
         }
 
