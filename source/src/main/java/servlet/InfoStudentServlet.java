@@ -137,7 +137,7 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("gradesList", grdList);
 			String[] average = new String[grdList.size()];
 			for (int i = 0; i < grdList.size(); i++) {
-				average[i] = GetAverage(grdList.get(i).getGradesId());
+				average[i] = GetAverage(grdList.get(i).getSubjectId(), grdList.get(i).getTestType(), grdList.get(i).getYear(), grdList.get(i).getMonth());
 			}
 			request.setAttribute("average", average);
 
@@ -227,7 +227,7 @@ public class InfoStudentServlet extends HttpServlet {
 			// 指定した教科の出席
 			int subAttendedNum = 0, subShouldAttendedNum = 0;
 			for (int i = 0; i < arList.size(); i++) {
-				if (arList.get(i).getStatus().equals("◯")) {
+				if (arList.get(i).getStatus().equals("◯") || arList.get(i).getStatus().equals("○")) {
 					subAttendedNum++;
 				}
 				if (!arList.get(i).getStatus().equals("公")) {
@@ -262,7 +262,7 @@ public class InfoStudentServlet extends HttpServlet {
 			request.setAttribute("gradesList", grdList);
 			String[] average = new String[grdList.size()];
 			for (int i = 0; i < grdList.size(); i++) {
-				average[i] = GetAverage(grdList.get(i).getGradesId());
+				average[i] = GetAverage(grdList.get(i).getSubjectId(), grdList.get(i).getTestType(), grdList.get(i).getYear(), grdList.get(i).getMonth());
 			}
 			request.setAttribute("average", average);
 
@@ -333,7 +333,8 @@ public class InfoStudentServlet extends HttpServlet {
 
 		int count = 0;
 		for (int i = 0; i < as.size(); i++) {
-			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth && as.get(i).getSubmissionStatus().equals("◯")) {
+			if (as.get(i).getCreatedYear() == selectYear && as.get(i).getCreatedMonth() == selectMonth && 
+					(as.get(i).getSubmissionStatus().equals("◯") || as.get(i).getSubmissionStatus().equals("○"))) {
 				count++;
 			}
 		}
@@ -400,7 +401,7 @@ public class InfoStudentServlet extends HttpServlet {
 	public String GetSubmittedRate(int submittedNum, int shouldSubmittedNum) {
 		if (submittedNum == 0 || shouldSubmittedNum == 0) return "0.0";
 
-		String rate = String.format("%.1f", (submittedNum / shouldSubmittedNum * 100.0f));
+		String rate = String.format("%.1f", ((float)submittedNum / (float)shouldSubmittedNum * 100.0f));
 		return rate;
 	}
 
@@ -413,11 +414,11 @@ public class InfoStudentServlet extends HttpServlet {
 			return false;
 		}
 	}
-
-	public String GetAverage(int gradesId) {
+	
+	public String GetAverage(int subjectId, String testType, int year, int month) {
 		float sum = 0;
 		GradesDAO grdDAO = new GradesDAO();
-		List<Grades> grdList = grdDAO.select(new Grades(gradesId, -1, -1, -1, "", -1, -1));
+		List<Grades> grdList = grdDAO.select(new Grades(-1, -1, subjectId, -1, testType, year, (month + 1)));
 		for (int i = 0; i < grdList.size(); i++) {
 			sum += grdList.get(i).getScore();
 		}

@@ -827,6 +827,8 @@ public class AttendanceRecordsDAO {
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
+		
+		System.out.println("attend " + year + "/" + month + "/" + day);
 
 		if (isFirstSemester(month, day)) {
 			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, "○") + count(studentId, subjectId, year, 4, 1, year, 10, 15, "◯");
@@ -854,6 +856,8 @@ public class AttendanceRecordsDAO {
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH) + 1;
 		int day = now.get(Calendar.DAY_OF_WEEK);
+		
+		System.out.println("shouldAttend " + year + "/" + month + "/" + day);
 
 		if (isFirstSemester(month, day)) {
 			if (subjectId > 0) count = count(studentId, subjectId, year, 4, 1, year, 10, 15, null) - count(studentId, subjectId, year, 4, 1, year, 10, 15, "公");
