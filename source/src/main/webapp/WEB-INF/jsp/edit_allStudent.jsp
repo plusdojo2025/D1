@@ -91,9 +91,8 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <c:forEach var="e" items="${attendanceDateList}">
-							<td><fmt:formatDate value="${e.date}" type="DATE"
-									pattern="dd日" /></td>
+                        <c:forEach var="e" items="${attendanceDateSortList}">
+							<td>${e}</td>
 						</c:forEach>
                     </tr>
 

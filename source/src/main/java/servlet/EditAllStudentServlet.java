@@ -2,7 +2,9 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -441,17 +443,30 @@ public class EditAllStudentServlet extends HttpServlet {
 			int testTypeListSize = testTypeList.size();
 
 
+			//attendanceDateListを日付順にソート
+			List<Integer> attendanceDateSortList = new ArrayList<>();
+			for(int i=0;attendanceDateList.size()>i;i++) {
+				attendanceDateSortList.add(attendanceDateList.get(i).getDay());	
+			}
+			Collections.sort(attendanceDateSortList);
+			List<Integer> attendanceDateSortEditList =  new ArrayList<Integer>(new HashSet<>(attendanceDateSortList));
+			
+			System.out.println("attendanceDateList"+attendanceDateList);
+			System.out.println("attendanceDateSortList"+attendanceDateSortList);
+			System.out.println("attendanceDateSortEditList"+attendanceDateSortEditList);
+			
+			
 			for(int i=0;studentIdList.size()>i;i++) {
-				//studentId.add(studentList.get(i).getStudentId());
 				int studentId = studentIdList.get(i);
-
-				attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
-						(0,studentId, classId, year, month,0,"",subjectId,"","")));
-
+				for(int j=0;attendanceDateSortEditList.size()>j;j++) {
+					attendanceList.addAll(attendanceRecordsDao.select(new AttendanceRecords
+							(0,studentId, classId, year, month,attendanceDateSortEditList.get(j),"",subjectId,"","")));
+				}
 				assignmentsList.addAll(assignmentsDao.select(new Assignments
 						(0,studentId,subjectId,"","",year,month,date)));
 
 				gradesList.addAll(gradesDao.select(new Grades(0,studentId,subjectId,-1,"",year,month)));
+
 			}
 
 
@@ -475,6 +490,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			request.setAttribute("gradesList", gradesList);
 
 			request.setAttribute("attendanceDateList", attendanceDateList);
+			request.setAttribute("attendanceDateSortList", attendanceDateSortList);
 			request.setAttribute("contentList", contentList);
 			request.setAttribute("testTypeList", testTypeList);
 			request.setAttribute("testTypeListSize", testTypeListSize);

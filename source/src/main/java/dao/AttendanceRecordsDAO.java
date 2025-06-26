@@ -31,7 +31,7 @@ public class AttendanceRecordsDAO {
 			// SQL文を準備する
 			String sql = "SELECT * FROM AttendanceRecords "
 					+ "WHERE studentId LIKE ? AND classId LIKE ? AND "
-					+ "year(date) LIKE ? AND month(date) LIKE ? AND "
+					+ "year(date) LIKE ? AND month(date) LIKE ? AND day(date) LIKE ? AND "
 					+ "period LIKE ? AND subjectId LIKE ? AND "
 					+ "status LIKE ? AND remarks LIKE ?;";
 
@@ -60,29 +60,35 @@ public class AttendanceRecordsDAO {
 			} else {
 				pStmt.setString(4, "%");
 			}
-
-			if (_ar.getPeriod() != null) {
-				pStmt.setString(5, "%" + _ar.getPeriod() + "%");
+			
+			if (_ar.getDay() > 0 && _ar.getDay() <= 31) {
+				pStmt.setString(5, "" + _ar.getDay());
 			} else {
 				pStmt.setString(5, "%");
 			}
 
-			if (_ar.getSubjectId() > 0) {
-				pStmt.setString(6, "" + _ar.getSubjectId());
+			if (_ar.getPeriod() != null) {
+				pStmt.setString(6, "%" + _ar.getPeriod() + "%");
 			} else {
 				pStmt.setString(6, "%");
 			}
 
-			if (_ar.getStatus() != null) {
-				pStmt.setString(7, "%" + _ar.getStatus() + "%");
+			if (_ar.getSubjectId() > 0) {
+				pStmt.setString(7, "" + _ar.getSubjectId());
 			} else {
 				pStmt.setString(7, "%");
 			}
 
-			if (_ar.getRemarks() != null) {
-				pStmt.setString(8, "%" + _ar.getRemarks() + "%");
+			if (_ar.getStatus() != null) {
+				pStmt.setString(8, "%" + _ar.getStatus() + "%");
 			} else {
 				pStmt.setString(8, "%");
+			}
+
+			if (_ar.getRemarks() != null) {
+				pStmt.setString(9, "%" + _ar.getRemarks() + "%");
+			} else {
+				pStmt.setString(9, "%");
 			}
 
 			// SQLの実行
