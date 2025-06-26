@@ -214,6 +214,14 @@ public class EditStudentServlet extends HttpServlet {
 			String attitude = request.getParameter("attitude");
 			stuDAO.update(new Students(studentId, student.getYear(), student.getGrade(), student.getClassId(), student.getStudentNum(), name, nameRuby, enrollmentStatus, extraActivities, attitude));
 
+			ClassRoomDAO crDAO = new ClassRoomDAO();
+			List<ClassRoom> classList = crDAO.select(new ClassRoom(student.getClassId(),student.getGrade(), null));
+			ClassRoom classRoom = new ClassRoom();
+			if (classList.size() > 0) classRoom = classList.get(0);
+			request.setAttribute("className", classRoom.getClassName());
+			
+			System.out.println("クラス名" + classRoom.getClassName());
+			
 			// 出欠記録の更新
 			AttendanceRecordsDAO arDAO = new AttendanceRecordsDAO();
 			int recordAmount = Integer.parseInt(request.getParameter("recordAmount"));
@@ -368,12 +376,12 @@ public class EditStudentServlet extends HttpServlet {
 				}
 			}
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			System.out.println(e);
 			request.setAttribute("result", "データがありません。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list_student.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			dispatcher.forward(request, response);
 		}
 	}

@@ -322,9 +322,9 @@ public class ListStudentServlet extends HttpServlet {
 				grade = 1;
 			}
 
-			String className =request.getParameter("className");                   //クラス
+			String className =(String)request.getAttribute("className");                   //クラス
 			if(className == null || className.isEmpty()) {
-				className = "1";
+				className = "1組";
 			}
 
 			String subjectName = request.getParameter("subjectName");              //教科

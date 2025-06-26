@@ -176,6 +176,8 @@ public class InfoStudentServlet extends HttpServlet {
 			// プルダウンの情報
 			if (request.getAttribute("subjectId") != null) {
 				subjectId = (int)request.getAttribute("subjectId");
+			} else if (request.getParameter("subjectId") != null) {
+				subjectId = Integer.parseInt(request.getParameter("subjectId"));
 			}
 
 			if (request.getParameter("year") != null) {
@@ -202,6 +204,8 @@ public class InfoStudentServlet extends HttpServlet {
 
 			if (request.getAttribute("studentId") != null) {
 				studentId = (int)request.getAttribute("studentId");
+			} else if (request.getParameter("studentId") != null) {
+				studentId = Integer.parseInt(request.getParameter("studentId"));
 			}
 
 			List<Students> studentsList = stuDAO.select(new Students(studentId, -1, -1, -1, -1, "", "", "", "", ""));
