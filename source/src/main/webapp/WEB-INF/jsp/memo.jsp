@@ -24,6 +24,7 @@ if (memoList != null && !memoList.isEmpty()) {
 <meta charset="UTF-8">
 <title>授業のメモ欄</title>
 <link rel="stylesheet" href="<c:url value='/css/memo.css'/>">
+<script src="<c:url value='/js/memo.js'/>"></script>
 </head>
 <body>
 <div class="memo-wrapper">
@@ -52,7 +53,7 @@ if (memoList != null && !memoList.isEmpty()) {
       <input type="hidden" name="date" value="<%= date != null && !date.isEmpty() ? date : new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
       <input type="hidden" name="teacherId" value="<%= teacherId %>">
       <input type="hidden" name="subjectId" value="<%= m.getSubjectId() %>">
-      <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
+      <button type="submit" class="delete-btn">削除</button>
     </form>
   </li>
 <% }} else { %>
@@ -62,7 +63,7 @@ if (memoList != null && !memoList.isEmpty()) {
 
 <!-- メモ新規登録 -->
 <h3>メモ新規登録</h3>
-<form action="MemoServlet" method="post">
+<form action="MemoServlet" method="post" id="newMemoForm">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="classId" value="<%= classId %>">
   <input type="hidden" name="period" value="<%= period %>">
@@ -75,7 +76,7 @@ if (memoList != null && !memoList.isEmpty()) {
   <input type="text" name="memo3" size="100" placeholder="3行目"><br><br>
 
   <div class="button-right">
-    <button type="submit" onclick="return confirm('登録してよろしいですか？');">更新</button>
+    <button type="submit" id="confirmUpdate">更新</button>
   </div>
 </form>
 
