@@ -31,9 +31,9 @@ if (memoList != null && !memoList.isEmpty()) {
 <h2>授業のメモ欄</h2>
 
 <p>
-  クラス：<%= classNameDisp != null ? classNameDisp : "不明" %>　
-  時限：<%= period != null ? period + "限" : "不明" %>　
-  科目名：<%= subjectName != null ? subjectName : "不明" %>
+  クラス：<%= classNameDisp != null ? classNameDisp : "" %>　
+  時限：<%= period != null ? period + "限" : "" %>　
+  科目名：<%= subjectName != null ? subjectName : "" %>
 </p>
 
 <!-- メモ一覧 -->
