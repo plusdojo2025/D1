@@ -172,6 +172,9 @@
 					</select></span>
 				</span><span>限</span>
 				<button id="attendanceButton" name="add" value="出席日追加" onclick="key='attendanceButton'">出席日追加</button>
+				<c:if test="${errorMessage != null}">
+					<span>${errorMessage}</span>
+				</c:if>
 				<table border="1">
 					<tr>
 						<td></td>

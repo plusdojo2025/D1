@@ -63,7 +63,7 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "SELECT * FROM memo WHERE classId = ? AND period = ? AND DATE(date) = ? ORDER BY memoid";
+			String sql = "SELECT * FROM memo WHERE classId = ? AND period = ? AND DATE(date) = ? ORDER BY memoId";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, classId);
 			pStmt.setString(2, period);
