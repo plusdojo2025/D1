@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:url value="/img/header_banner.jpg" var="headerBannerUrl"/>
+<c:url value="/img/IMG_ロゴ2.png" var="logo2Url"/>
+<c:url value="/ListStudentServlet" var="listStudentUrl"/>
+<c:url value="/InfoScheduleServlet" var="infoScheduleUrl"/>
+<c:url value="/LoginServlet" var="logoutUrl"/>
+<c:url value="/RegistScheduleServlet" var="registScheduleUrl"/>
+<c:url value="/js/regist_student.js" var="registJsUrl"/>
+<jsp:useBean id="date" class="java.util.Date"/>
 <!-- Javaから受け取ったDate型の変数を指定した形式に変換するためのライブラリ -->
 <%@ page import="java.util.Date" %>
 <%
