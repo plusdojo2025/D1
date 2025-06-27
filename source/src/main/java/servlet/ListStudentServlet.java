@@ -245,11 +245,14 @@ public class ListStudentServlet extends HttpServlet {
 				String className =request.getParameter("className");                //クラス
 				String subjectName = request.getParameter("subjectName");           //教科
 				
+				
 				request.setAttribute("grade", grade);
 				request.setAttribute("className", className);
 				request.setAttribute("year", year);
 				request.setAttribute("month", month);
 				request.setAttribute("subjectName", subjectName);
+				
+				request.setAttribute("err", "err");
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");

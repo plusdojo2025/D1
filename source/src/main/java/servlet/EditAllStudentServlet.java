@@ -209,7 +209,8 @@ public class EditAllStudentServlet extends HttpServlet {
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 			
-		}else if(request.getParameter("period") !=null && request.getParameter("period") !="" && !request.getParameter("day").equals("出席日")){
+		}else if(request.getParameter("period") !=null && request.getParameter("period") !="" && 
+				!request.getParameter("day").equals("出席日") ){
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
@@ -264,12 +265,13 @@ public class EditAllStudentServlet extends HttpServlet {
 			request.setAttribute("subjectName", subjectName);
 			
 			request.setAttribute("add", "aaa");
+			request.setAttribute("period", null);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 
-		}else if(request.getParameter("content") !=null && request.getParameter("content") !=""){
+		}else if(request.getParameter("content") !=null && request.getParameter("content") !="" && request.getParameter("edit")==null){
 
 			Date date=new Date(); 
 
@@ -279,6 +281,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			String className =request.getParameter("className");                //クラス
 			String subjectName = request.getParameter("subjectName");           //教科
 			String content =request.getParameter("content");           //内容
+			
 
 
 			//classIDを取得
@@ -325,12 +328,13 @@ public class EditAllStudentServlet extends HttpServlet {
 			request.setAttribute("subjectName", subjectName);
 			
 			request.setAttribute("add", "aaa");
+			request.setAttribute("content", null);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
 			dispatcher.forward(request, response);
 
-		}else if(request.getParameter("testType") !=null && request.getParameter("testType") !=""){
+		}else if(request.getParameter("testType") !=null && request.getParameter("testType") !="" && request.getParameter("edit")==null){
 
 			int year = Integer.parseInt(request.getParameter("year"));          //年
 			int month = Integer.parseInt(request.getParameter("month"));        //月
@@ -384,6 +388,7 @@ public class EditAllStudentServlet extends HttpServlet {
 			request.setAttribute("subjectName", subjectName);
 			
 			request.setAttribute("add", "aaa");
+			request.setAttribute("testType", null);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("ListStudentServlet");
 			//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/ListStudentServlet");
