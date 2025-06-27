@@ -254,6 +254,7 @@ public class ListStudentServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("EditAllStudentServlet");
 				//RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/EditAllStudentServlet");
 				dispatcher.forward(request, response);
+				return;
 
 		}else if(request.getAttribute("add") !="aaa" && request.getParameter("add") !=null && 
 				(request.getParameter("add").equals("提出物追加") || request.getParameter("add").equals("テスト追加")
