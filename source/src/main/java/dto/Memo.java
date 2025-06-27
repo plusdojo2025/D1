@@ -10,17 +10,15 @@ public class Memo implements Serializable {
 	private String content; // メモ内容
 	private Date date;      // 授業日
 	private String period;  // 時限
-	private int subjectId;  // 科目ID 
 	
 	public Memo(int memoId, int teacherId, int classId, String content,
-			Date date, String period, int subjectId) { 
+			Date date, String period) { 
 		this.memoId = memoId;
 		this.teacherId = teacherId;
 		this.classId = classId;
 		this.content = content;
 		this.date = date;
 		this.period = period;
-		this.subjectId = subjectId; 
 	}
 
 	public Memo() {
@@ -30,7 +28,6 @@ public class Memo implements Serializable {
 		this.content = "";
 		this.date = new Date();
 		this.period = "";
-		this.subjectId = -1; 
 	}
 
 	public int getMemoId() {
@@ -79,13 +76,5 @@ public class Memo implements Serializable {
 
 	public void setPeriod(String period) {
 		this.period = period;
-	}
-
-	public int getSubjectId() { 
-		return subjectId;
-	}
-
-	public void setSubjectId(int subjectId) { 
-		this.subjectId = subjectId;
 	}
 }

@@ -8,14 +8,7 @@ String classId = (String) request.getAttribute("classId");
 String period = (String) request.getAttribute("period");
 String date = (String) request.getAttribute("date");
 String teacherId = (String) request.getAttribute("teacherId");
-String subjectName = (String) request.getAttribute("subjectName");
 String classNameDisp = (String) request.getAttribute("classNameDisplay");
-Map<Integer, String> subjectMap = (Map<Integer, String>) request.getAttribute("subjectMap");
-
-int subjectId = -1;
-if (memoList != null && !memoList.isEmpty()) {
-    subjectId = memoList.get(0).getSubjectId();
-}
 %>
 
 <!DOCTYPE html>
@@ -33,7 +26,6 @@ if (memoList != null && !memoList.isEmpty()) {
 <p>
   クラス：<%= classNameDisp != null ? classNameDisp : "" %>　
   時限：<%= period != null ? period + "限" : "" %>　
-  科目名：<%= subjectName != null ? subjectName : "" %>
 </p>
 
 <!-- メモ一覧 -->
@@ -52,7 +44,6 @@ if (memoList != null && !memoList.isEmpty()) {
       <input type="hidden" name="period" value="<%= period %>">
       <input type="hidden" name="date" value="<%= date != null && !date.isEmpty() ? date : new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
       <input type="hidden" name="teacherId" value="<%= teacherId %>">
-      <input type="hidden" name="subjectId" value="<%= m.getSubjectId() %>">
       <button type="submit" class="delete-btn">削除</button>
     </form>
   </li>
@@ -69,11 +60,10 @@ if (memoList != null && !memoList.isEmpty()) {
   <input type="hidden" name="period" value="<%= period %>">
   <input type="hidden" name="date" value="<%= date != null && !date.isEmpty() ? date : new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
   <input type="hidden" name="teacherId" value="<%= teacherId %>">
-  <input type="hidden" name="subjectId" value="<%= subjectId %>">
-
-  <input type="text" name="memo1" size="100" placeholder="1行目"><br><br>
-  <input type="text" name="memo2" size="100" placeholder="2行目"><br><br>
-  <input type="text" name="memo3" size="100" placeholder="3行目"><br><br>
+  
+  <input type="text" name="memo1" size="100" placeholder=""><br><br>
+  <input type="text" name="memo2" size="100" placeholder=""><br><br>
+  <input type="text" name="memo3" size="100" placeholder=""><br><br>
 
   <div class="button-right">
     <button type="submit" id="confirmUpdate">更新</button>

@@ -34,8 +34,7 @@ public class MemoDAO {
 					rs.getInt("classId"),
 					rs.getString("content"),
 					rs.getDate("date"),
-					rs.getString("period"),
-					rs.getInt("subjectId")
+					rs.getString("period")
 				);
 				memoList.add(memo);
 			}
@@ -79,8 +78,7 @@ public class MemoDAO {
 					rs.getInt("classId"),
 					rs.getString("content"),
 					rs.getDate("date"),
-					rs.getString("period"),
-					rs.getInt("subjectId")
+					rs.getString("period")
 				);
 				memoList.add(memo);
 			}
@@ -98,7 +96,7 @@ public class MemoDAO {
 		return memoList;
 	}
 
-	// 追加
+	// 追加（新規登録）
 	public boolean insert(Memo memo) {
 		Connection conn = null;
 		boolean result = false;
@@ -133,7 +131,7 @@ public class MemoDAO {
 		return result;
 	}
 
-	// 更新
+	/* 更新 (使用しない）
 	public boolean update(Memo memo) {
 		Connection conn = null;
 		boolean result = false;
@@ -144,16 +142,15 @@ public class MemoDAO {
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
-			String sql = "UPDATE memo SET teacherId = ?, classId = ?, content = ?, date = ?, period = ?, subjectId = ? "
+			String sql = "UPDATE memo SET teacherId = ?, classId = ?, content = ?, date = ?, period = ? "
 					+ "WHERE memoid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, memo.getTeacherId());
 			pStmt.setInt(2, memo.getClassId());
 			pStmt.setString(3, memo.getContent());
-			pStmt.setDate(4, new java.sql.Date(memo.getDate().getTime()));
+			pStmt.setTimestamp(4, new java.sql.Timestamp(memo.getDate().getTime()));
 			pStmt.setString(5, memo.getPeriod());
-			pStmt.setInt(6, memo.getSubjectId());
-			pStmt.setInt(7, memo.getMemoId());
+			pStmt.setInt(6, memo.getMemoId());
 
 			if (pStmt.executeUpdate() == 1) {
 				result = true;
@@ -169,6 +166,7 @@ public class MemoDAO {
 		}
 		return result;
 	}
+	*/
 
 	// 削除
 	public boolean delete(int memoId) {
