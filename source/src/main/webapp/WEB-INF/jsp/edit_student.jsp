@@ -167,7 +167,8 @@
 							<td>${att.period}</td>
 							<td>
 								<select name="attendedStatus${status.index}">
-									<option value="◯" class="attendedStatus" selected>◯</option>
+									<option value="${att.status}" selected>${att.status}</option>
+									<option value="◯" class="attendedStatus">◯</option>
 									<option value="✕" class="attendedStatus">✕</option>
 									<option value="早" class="attendedStatus">早</option>
 									<option value="遅" class="attendedStatus">遅</option>
@@ -201,6 +202,7 @@
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
 							<td>
 								<select name="submittionStatus${status.index}">
+									<option value="${sub.status}" selected>${sub.status}</option>
 									<option value="◯" class="submittedStatus">◯</option>
 									<option value="✕" class="submittedStatus">✕</option>
 								</select>

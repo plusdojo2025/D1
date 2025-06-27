@@ -81,4 +81,3 @@ function addLastInterview() {
 	let addLastInterviewAmount = document.getElementById("addLastInterviewAmount");
 	addLastInterviewAmount.value = addLastInterviewNum;
 }
-
