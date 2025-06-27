@@ -301,7 +301,7 @@ public class ListStudentServlet extends HttpServlet {
 						(0,-1, classId, year, month,day,period,subjectId,"",""));
 				System.out.println(attendanceDateList);
 				if(!attendanceDateList.isEmpty()) {
-					errorMessage="入力された日にち・時限は、既に登録されています。";
+					errorMessage="入力された日・時限は、既に登録されています。";
 					request.setAttribute("add", add);
 					request.setAttribute("errorMessage", errorMessage);
 					System.out.println(1);
