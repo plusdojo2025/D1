@@ -24,17 +24,20 @@ String classNameDisp = (String) request.getAttribute("classNameDisplay");
 <h2>授業のメモ欄</h2>
 
 <p>
-  クラス：<%= classNameDisp != null ? classNameDisp : "" %>　
-  時限：<%= period != null ? period + "限" : "" %>　
+  クラス：1年1組<%= classNameDisp != null ? classNameDisp : "" %>　
+  時限：1限<%= period != null ? period + "限" : "" %>　
+  予定名：英語表現
 </p>
 
 <!-- メモ一覧 -->
 <h3>メモ一覧</h3>
 <hr>
-<ul>
+	<ul>
+<%--
 <% if (memoList != null && !memoList.isEmpty()) {
    for (Memo m : memoList) { %>
   <li>
+    
     ・<%= m.getContent() %>
     （<%= new java.text.SimpleDateFormat("yyyy/MM/dd").format(m.getDate()) %>）
     <form action="MemoServlet" method="post" style="display:inline;">
@@ -50,7 +53,10 @@ String classNameDisp = (String) request.getAttribute("classNameDisplay");
 <% }} else { %>
   <li>メモは登録されていません。</li>
 <% } %>
-</ul>
+ --%>
+		<li>・明日までにテスト採点</li>
+		<li>・来週のテスト作成</li>
+	</ul>
 
 <!-- メモ新規登録 -->
 <h3>メモ新規登録</h3>
