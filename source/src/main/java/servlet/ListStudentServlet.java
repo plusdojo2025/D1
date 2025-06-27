@@ -355,6 +355,10 @@ public class ListStudentServlet extends HttpServlet {
 			}
 
 			String className =(String)request.getAttribute("className");                   //クラス
+			if(className == null) {
+				className =(String)request.getParameter("className");                   //クラス
+			}
+			
 			if(className == null || className.isEmpty()) {
 				className = "1組";
 			}
