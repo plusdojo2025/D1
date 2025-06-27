@@ -202,7 +202,7 @@
 							<td><input type="text" name="assignmentContent${status.index}" value="${sub.content}"></td>
 							<td>
 								<select name="submittionStatus${status.index}">
-									<option value="${sub.status}" selected>${sub.submissionStatus}</option>
+									<option value="${sub.submissionStatus}" selected>${sub.submissionStatus}</option>
 									<option value="◯" class="submittedStatus">◯</option>
 									<option value="✕" class="submittedStatus">✕</option>
 								</select>
